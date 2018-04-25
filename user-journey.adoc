@@ -1,0 +1,180 @@
+= User Journey for Istio/Jaeger
+
+ *Authors:* Lincoln Baxter, III and Charles Moulliard, Diógenes Rettori
+ *Version:* 0.6 - April 25, 2018
+
+This document describes the steps required to install a local Istio Openshift instance, necessary prerequisites (JDK, Maven, Launcher, Jaeger, …), and the operations to grant access for the user to the project. It also describes how the user can experiment with a mission selected using the launcher
+
+The Fabric8 Launcher provides two workflows to play with an Istio mission (zip vs. git flow), and this document will apply to either - described below:
+
+== Flows description
+
+*“Zip flow”:* Selected mission is downloaded from the web site as a zip archive and extracted to the local filesystem.
+*“Git flow”:* Selected mission is saved to a github repository/account, and an Istio application is created under the user’s local Openshift instance - within the project defined (which corresponds to the same name as the git repo created).
+
+== Prerequisites
+. *Access to a docker engine - (skip to step 2 if you already have one)*
+.. Red Hat Docker Registry - Certificate Configuration
+... RHEL - Certificates are already installed. No action is required.
+... Fedora/CentOS/VM - it is required to have this package installed in order to install Red Hat certificate. This allows docker to access the Red Hat Docker Registry
++
+----
+yum install -y ansible python-rhsm-certificates
+----
+... Ubuntu/Debian with native Hypervisor, you will need to take a few extra steps:
++
+----
+wget https://rpmfind.net/linux/fedora/linux/updates/27/x86_64/Packages/p/python-rhsm-certificates-1.20.2-1.fc27.x86_64.rpm
+sudo alien python-rhsm-certificates-1.20.2-1.fc27.x86_64.rpm 
+sudo dpkg -i python-rhsm-certificates_1.20.2-2_amd64.deb
+----
+. *Know the *Ethernet IP* of your running docker daemon*
++
+The ETHERNET_IP_ADDRESS, as defined within this doc, is the ethernet IP accessible from the host to the VM. This address could be part of a private network created behind the host and the guest = vm. It can also be the address of the Docker Daemon network adapter if running natively.
++
+TIP: If, the host address of your MacOS, Window or Linux desktop is “192.168.99.20” and the Centos Linux VM running the Docker daemon is “192.168.99.50”, then, in this case, the ETHERNET_IP_ADDRESS is “192.168.99.50”
++
+See also Discovering Docker’s IP Address if you need more guidance in determining the correct IP address in a native installation.
+. *docker engine config*
+.. CentOS/Fedora with at least 6 Gb of RAM, 4 CPUs.
+... Install Atomic Docker package (if not yet done):
++
+----
+yum install docker
+systemctl enable docker
+systemctl start docker
+----
+... Edit the file “/etc/docker/daemon.json” to specify the IP Address and the  PORT on which the server can be access from the HOST:
++
+----
+{
+"insecure-registries" : [ "172.30.0.0/16" ],
+"hosts" : [ "unix://", "tcp://0.0.0.0:2376" ]
+}
+----
+... Define the DOCKER_HOST env var within the HOST machine
++
+----
+export DOCKER_HOST=tcp://ETHERNET_IP_ADDRESS:2376
+----
+.. Ubuntu with at least 6 Gb of RAM, 4 CPUs :
+... Follow installation instructions for Docker CE at https://docs.docker.com/install/linux/docker-ce/ubuntu/ 
+... Create the following file (and directories, if necessary)
++
+./etc/systemd/system/docker.service.d/overlay.conf
+----
+[Service]
+ExecStart=
+ExecStart=/usr/bin/dockerd -H tcp://0.0.0.0:2376 -H unix:///var/run/docker.sock --label provider=generic --insecure-registry 172.30.0.0/16
+Environment=
+----
+... Run the following commands
++
+----
+sudo systemctl daemon-reload
+sudo systemctl restart docker
+----
+.. Mac OSX
+... Configure a CentOS VM using as Hypervisor virtualbox or xhyve. The system will require at least 6 Gb of RAM and 4 CPUs - Process has been documented here: https://gist.github.com/cmoulliard/039e85e17ee99ad8c9e25b975d3f3a8a 
+... Next, the docker daemon and Red Hat certificates should be installed using the same instructions for CentOS/Fedora using yum or dnf (see 1. B., 3. a.).
+. Zip flow Java requirements
+.. http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html[JDK 8}
+.. http://maven.apache.org/download.cgi[Maven 3.5]
+. Git flow client and account requirements
+.. https://git-scm.com/downloads[Git SCM client]
+.. User needs to have a github account, create dev credentials, and an API access token / key - see instructions https://github.com/fabric8-launcher/launcher-documentation/blob/master/docs/topics/proc_creating-a-github-personal-access-token.adoc[here].
+
+== Use case scenario : “git flow”
+. User installs oc client and adds it to their path. (Note: a more recent version could be available from the *openshift-istio/origin* github repo! Make sure you have the latest `istiooc` version by going to https://github.com/openshift-istio/origin/releases  --- the following instructions assume version `*-alpha7`)
++
+----
+mkdir istiooc && cd istiooc
+ 
+#osx
+wget -O oc https://github.com/openshift-istio/origin/releases/download/istio-3.9-0.7.1-alpha7/istiooc_darwin
+chmod +x oc 
+ 
+#linux
+wget -O oc https://github.com/openshift-istio/origin/releases/download/istio-3.9-0.7.1-alpha7/istiooc_linux
+chmod +x oc
+
+# Add the client to your path
+export PATH=$(pwd):$PATH #or add to PATH variable in profile
+----
+. Ensure that the latest origin-ansible docker image has been downloaded, just in case it was updated recently:
++
+----
+docker pull openshiftistio/origin-ansible:0.7.1
+----
+. User starts the cluster using --istio and --launcher-* as a parameters (These install Istio and the Red Hat Launcher into the OpenShift cluster, respectively). You will need a GitHub account and API Access Token. Click https://github.com/settings/tokens[here] to generate your github token.
++
+----
+oc cluster up \
+   --public-hostname=ETHERNET_IP_ADDRESS \
+   --istio \
+   --launcher \
+   --launcher-catalog-git-branch=GIT_REF_BOOSTERS_REPO \
+   --launcher-catalog-git-repo=GIT_HUB_BOOSTERS_REPO \
+   --launcher-openshift-user=OPENSHIFT_ADMIN_USER \
+   --launcher-openshift-password=OPENSHIFT_ADMIN_PWD \
+   --launcher-github-username=GITHUB_USER \
+   --launcher-github-token=GITHUB_TOKEN
+----
++
+You can also use the sensible defaults we have in place and provide only the following info:
++
+----
+oc cluster up \
+   --public-hostname=ETHERNET_IP_ADDRESS \
+   --istio \
+   --launcher \
+   --launcher-openshift-user=OPENSHIFT_ADMIN_USER \
+   --launcher-openshift-password=OPENSHIFT_ADMIN_PWD \
+   --launcher-github-username=GITHUB_USER \
+   --launcher-github-token=GITHUB_TOKEN
+----
+. User logs in to the recently created cluster
+oc login -u system:admin
+. User adds the cluster-admin role  to the admin user
++
+----
+oc adm policy add-cluster-role-to-user cluster-admin admin
+----
+. Log on using the admin user
++
+----
+oc login -u admin -p admin
+----
+. User waits untill the “launcher-backend” and “launcher-fronted” pods have been started
++
+----
+oc get pods -n devex -w
+NAME                          READY     STATUS    RESTARTS   AGE
+configmapcontroller-1-vh78r   1/1       Running   0          1m
+launcher-backend-2-vb4vt      1/1       Running   0          1m
+launcher-frontend-2-bc7n2     1/1       Running   0          1m	
+----
+. User logs into openshift console: 
+.. https://ETHERNET_IP_ADDRESS:8443 
+. User opens the launcher UI URL, which is one of the featured applications.
+.. http://launcher-devex.ETHERNET_IP_ADDRESS.nip.io:8843/
++
+IMPORTANT: Do NOT use HTTPS
+. Launcher UI opens
+. User clicks on the “launch your project” button, select the deployment type - Use OpenShift online, a runtime and select an istio mission (see video for the AB Testing Booster using Spring Boot - https://www.youtube.com/watch?v=hsd6ezE2tpg) 
+. User sets name of project (by convention it corresponds to the name of the openshift project and github repo), GAVs detailed
+. User finishes launcher workflow and clicks the link to open booster UI at end of Launcher wizard.
+. User follows booster tutorial workflow.
+
+
+
+
+== Use case scenario : “zip flow”
+. User follows steps 1-9 of “git flow”
+. When download is complete, user unzips the file, then runs instructions from the booster documentation:
+.. https://github.com/snowdrop/spring-boot-istio-ab-testing-booster/blob/master/README.md 
+. This will generally involve running:
+----
+mvn clean fabric8:deploy -Popenshift
+----
+
