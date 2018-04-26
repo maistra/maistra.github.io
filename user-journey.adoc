@@ -1,8 +1,5 @@
 = User Journey for Istio/Jaeger
 
- *Authors:* Lincoln Baxter, III and Charles Moulliard, Diógenes Rettori
- *Version:* 0.6 - April 25, 2018
-
 This document describes the steps required to install a local Istio Openshift instance, necessary prerequisites, and describes how the your can experiment with Istio enabled missions using the launcher.
 
 == Flows description
@@ -13,8 +10,9 @@ The Fabric8 Launcher provides two workflows to play with an Istio mission (zip v
 . *`Git flow`:* Selected mission is saved to a GitHub repository/account, and an Istio enabled application is created in a local Openshift instance.
 
 == Prerequisites
+. At least 6 Gb of free RAM, 4 CPUs
 . *Install Java JDK 8* (necessary only for `Zip flow` and boosters using Fabric8 Maven Plugin)
-.. http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html[JDK 8}
+.. http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html[JDK 8]
 .. http://maven.apache.org/download.cgi[Maven 3.5]
 . *Set up Git SCM / GitHub account*
 .. Install https://git-scm.com/downloads[Git SCM client]
@@ -35,7 +33,7 @@ sudo alien python-rhsm-certificates-1.20.2-1.fc27.x86_64.rpm
 sudo dpkg -i python-rhsm-certificates_1.20.2-2_amd64.deb
 ----
 . *Install a docker daemon and configure it*
-.. CentOS/Fedora with at least 6 Gb of RAM, 4 CPUs.
+.. CentOS/Fedora
 ... Install Atomic docker package (if not yet done):
 +
 ----
@@ -75,7 +73,7 @@ sudo systemctl restart docker
 ----
 .. Mac OSX
 ... Configure a CentOS VM using as Hypervisor virtualbox or xhyve. The system will require at least 6 Gb of RAM and 4 CPUs - Process has been documented here: https://gist.github.com/cmoulliard/039e85e17ee99ad8c9e25b975d3f3a8a
-... Next, the docker daemon and Red Hat certificates should be installed using the same instructions for CentOS/Fedora using yum or dnf (see 1. B., 3. a.).
+... Next, the docker daemon and Red Hat certificates should be installed using the same instructions for CentOS/Fedora using `yum` or `dnf`.
 . *Determine the docker daemon `ETHERNET_IP_ADDRESS`*
 +
 The ETHERNET_IP_ADDRESS, as defined within this doc, is the ethernet IP accessible from the host to the VM. This address could be part of a private network created behind the host and the guest = vm. It can also be the address of the docker daemon network adapter if running natively.
@@ -155,7 +153,7 @@ IMPORTANT: Do NOT use HTTPS - nothing is listening there!
 . Click the “Launch your Project” button
 . Select the deployment type - "Use OpenShift online", click 'Next'
 . Select an Istio mission, click 'Next'
-. Select a runtime, click 'Next' (see video for the AB Testing Booster using Spring Boot - https://www.youtube.com/watch?v=hsd6ezE2tpg)
+. Select a runtime, click 'Next' (see video for the Routing Testing Booster using Spring Boot - https://www.youtube.com/watch?v=hsd6ezE2tpg)
 . Set project name
 +
 NOTE: By convention it will be used as the name of the OpenShift project and repository created in the specified GitHub account
