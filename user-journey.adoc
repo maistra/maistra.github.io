@@ -11,7 +11,7 @@ This document describes how to use the Istio installer to install the following 
 * Fabric8 integrated development platform launcher.
 * Four Istio-specific sample applications (boosters) and tutorials (missions) that let you explore some of the Istio features.
 
-== Platform launcher workflows
+== Fabric8 launcher workflows
 
 There are two separate workflows that you can use with the Fabric8 development platform launcher:
 
@@ -19,10 +19,10 @@ There are two separate workflows that you can use with the Fabric8 development p
 * *Build and run locally workflow* -  Use this workflow if you want to download the booster application files as a zip archive and extract it to your local file system.  Note that with this workflow you have to follow the instructions in the mission README file to deploy the application.
 
 == Prerequisites
-Before you can install Istio and Fabric8, you should already have met the following prerequisites:
+Before you can install Istio and the Fabric8 launcher, you should already have met the following prerequisites:
 
 * Fedora/CentOS OR Mac OSX OR Ubuntu with at least 6 Gb of RAM and 4 CPUs.
-* Red Hat Docker Registry with the appropriate configuration (see below for configuration instructions)
+* Red Hat Container Registry with the appropriate configuration (see below for configuration instructions)
 * Know the Ethernet IP of your running docker daemon (see below for instructions for determining this IP)
 
 If you are using the Continuous Integration (GitHub) workflow, there are the following additional prerequisites:
@@ -31,9 +31,6 @@ If you are using the Continuous Integration (GitHub) workflow, there are the fol
 * Set up a https://github.com[GitHub account] if you do not already have one.
 * Generate a https://github.com/fabric8-launcher/launcher-documentation/blob/master/docs/topics/proc_creating-a-github-personal-access-token.adoc[GitHub personal access token].
 
-////
-To install the {launcher} tool on a {OpenShiftLocal}, you must provide the {launcher} tool with a GitHub personal access token. This enables the {launcher} tool to create booster applications and save them as Git repositories in your GitHub namespace.
-////
 
 If you are using the Build and Run Locally (zip) workflow, there are the following additional prerequisites:
 
@@ -58,11 +55,11 @@ sudo alien python-rhsm-certificates-1.20.2-1.fc27.x86_64.rpm
 sudo dpkg -i python-rhsm-certificates_1.20.2-2_amd64.deb
 ----
 
-=== Install and configure Docker daemon
-Install and configure the Docker daemon, following the steps for your operating system:
+=== Install and configure docker daemon
+Install and configure the docker daemon, following the steps for your operating system:
 
 . *Fedora/CentOS*
-.. Install the Atomic Docker package (if not already installed):
+.. Install the Atomic docker package (if not already installed):
 +
 ----
 yum install docker
@@ -103,7 +100,7 @@ sudo systemctl restart docker
 
 . *Mac OSX*
 .. Configure a CentOS VM using a Hypervisor virtualbox or xhyve. The process has been documented here: https://gist.github.com/cmoulliard/039e85e17ee99ad8c9e25b975d3f3a8a
-.. Next, install the Docker daemon and Red Hat certificates using `yum` or `dnf` following the same instructions given for Fedora/CentOS.
+.. Next, install the docker daemon and Red Hat certificates using `yum` or `dnf` following the same instructions given for Fedora/CentOS.
 
 === Determine the docker daemon `ETHERNET_IP_ADDRESS`
 
