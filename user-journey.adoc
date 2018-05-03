@@ -54,22 +54,22 @@ yum install -y ansible python-rhsm-certificates
 +
 ----
 wget https://rpmfind.net/linux/fedora/linux/updates/27/x86_64/Packages/p/python-rhsm-certificates-1.20.2-1.fc27.x86_64.rpm
-sudo alien python-rhsm-certificates-1.20.2-1.fc27.x86_64.rpm 
+sudo alien python-rhsm-certificates-1.20.2-1.fc27.x86_64.rpm
 sudo dpkg -i python-rhsm-certificates_1.20.2-2_amd64.deb
 ----
 
 === Install and configure Docker daemon
 Install and configure the Docker daemon, following the steps for your operating system:
 
-* *Fedora/CentOS*
-. Install the Atomic Docker package (if not already installed):
+. *Fedora/CentOS*
+.. Install the Atomic Docker package (if not already installed):
 +
 ----
 yum install docker
 systemctl enable docker
 systemctl start docker
 ----
-. Edit the file `/etc/docker/daemon.json` to specify the IP Address and the PORT on which the server can be accessed from the HOST:
+.. Edit the file `/etc/docker/daemon.json` to specify the IP Address and the PORT on which the server can be accessed from the HOST:
 +
 ----
 {
@@ -77,15 +77,15 @@ systemctl start docker
 "hosts" : [ "unix://", "tcp://0.0.0.0:2376" ]
 }
 ----
-. Define the `DOCKER_HOST` environment variable within the HOST machine.
+.. Define the `DOCKER_HOST` environment variable within the HOST machine.
 +
 ----
 export DOCKER_HOST=tcp://ETHERNET_IP_ADDRESS:2376
 ----
 
-* *Ubuntu* 
-. Follow installation instructions for Docker CE at https://docs.docker.com/install/linux/docker-ce/ubuntu/.
-. Create the following file (and directories, if necessary).
+. *Ubuntu* 
+.. Follow installation instructions for Docker CE at https://docs.docker.com/install/linux/docker-ce/ubuntu/.
+.. Create the following file (and directories, if necessary).
 +
 ./etc/systemd/system/docker.service.d/overlay.conf
 ----
@@ -94,16 +94,16 @@ ExecStart=
 ExecStart=/usr/bin/dockerd -H tcp://0.0.0.0:2376 -H unix:///var/run/docker.sock --label provider=generic --insecure-registry 172.30.0.0/16
 Environment=
 ----
-. Run the following commands:
+.. Run the following commands:
 +
 ----
 sudo systemctl daemon-reload
 sudo systemctl restart docker
 ----
 
-* *Mac OSX*
-. Configure a CentOS VM using a Hypervisor virtualbox or xhyve. The process has been documented here: https://gist.github.com/cmoulliard/039e85e17ee99ad8c9e25b975d3f3a8a
-. Next, install the Docker daemon and Red Hat certificates using `yum` or `dnf` following the same instructions given for Fedora/CentOS.
+. *Mac OSX*
+.. Configure a CentOS VM using a Hypervisor virtualbox or xhyve. The process has been documented here: https://gist.github.com/cmoulliard/039e85e17ee99ad8c9e25b975d3f3a8a
+.. Next, install the Docker daemon and Red Hat certificates using `yum` or `dnf` following the same instructions given for Fedora/CentOS.
 
 === Determine the docker daemon `ETHERNET_IP_ADDRESS`
 
