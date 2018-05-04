@@ -180,7 +180,7 @@ launcher-frontend-2-bc7n2     1/1       Running   0          1m
 +
 . Log into the OpenShift console at https://{ETHERNET_IP_ADDRESS}:8443
 
-. Open the launcher user interface by going to: http://launcher-devex.{ETHERNET_IP_ADDRESS}.nip.io:8843/
+. Open the launcher user interface by going to: http://launcher-frontend-devex.{ETHERNET_IP_ADDRESS}.nip.io:8843/
 
 +
 IMPORTANT: Do NOT use HTTPS - nothing is listening there.
