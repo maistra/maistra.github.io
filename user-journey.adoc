@@ -121,11 +121,11 @@ TIP: Make sure you have the latest `istiooc` version by going to https://github.
 mkdir istiooc && cd istiooc
 
 #linux
-wget -O oc https://github.com/openshift-istio/origin/releases/download/istio-3.9-0.7.1-alpha7/istiooc_linux
+wget -O oc https://github.com/openshift-istio/origin/releases/download/istio-3.9-0.8.0-alpha1/istiooc_linux
 chmod +x oc
 
 #osx
-wget -O oc https://github.com/openshift-istio/origin/releases/download/istio-3.9-0.7.1-alpha7/istiooc_darwin
+wget -O oc https://github.com/openshift-istio/origin/releases/download/istio-3.9-0.8.0-alpha1/istiooc_darwin
 chmod +x oc
 
 #Add the client to your path
@@ -134,7 +134,7 @@ export PATH=$(pwd):$PATH #or add to PATH variable in profile
 . Ensure that you have downloaded the latest origin-ansible docker image so that you have the most recent updates:
 +
 ----
-docker pull openshiftistio/origin-ansible:0.7.1
+docker pull openshiftistio/origin-ansible:0.8.0
 ----
 +
 . Start the cluster using the `--istio` and `--launcher-*` parameters, which install Istio and the Red Hat Launcher into the OpenShift cluster. You will need your GitHub username and personal access token to perform this step. Click https://github.com/settings/tokens[here] to generate your GitHub token if you have not already done so.
@@ -187,7 +187,7 @@ IMPORTANT: Do NOT use HTTPS - nothing is listening there.
 +
 
 . On the Launcher home page, click the *Launch your Project* button to launch the project wizard.
-. Step 1 (Deployment type) Click the *Use Openshift* button and click *Next*.
+. Step 1 (Deployment type) Click the *Use OpenShift* button and click *Next*.
 . Step 2 (Mission) Select an Istio mission and click *Next*.
 . Step 3 (Runtime) Select a runtime and click *Next*.
 . Step 4 (Project Info) Specify a project name and click *Next*.
