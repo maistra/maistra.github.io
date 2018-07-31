@@ -1,0 +1,15 @@
+= Notes for GA
+
+== Short Name
+
+OSSM vs RH-OSSM
+
+== Registry URL
+
+For technology preview - registry.access.redhat.com - OK with referencing the unautheticated registry because we want the feedback.
+
+For GA - registry.redhat.io - want to transition customers over to the new (authenticated) registry
+
+== Upgrade Path
+
+Will shift to operators.  Upgrade may be rip it out and re-install?  or we may have a migration path.
