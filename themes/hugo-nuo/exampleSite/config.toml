@@ -1,10 +1,10 @@
 baseURL = "http://localhost:1313"
 languageCode = "en"
-title = "Maistra.io"
+title = "Hugo Blog"
 theme = "hugo-nuo"
 enableRobotsTXT = true
 PygmentsCodeFences = true
-canonifyurls = false
+canonifyurls = true
 
 # Disqus Username
 disqusShortname = "disqus_shortname"
@@ -26,7 +26,7 @@ copyright = "© This post is licensed under a Creative Commons Attribution-NonCo
   name = "Works"
   weight = 20
   identifier = "works"
-  url = "https://github.com/maistra"
+  url = "https://github.com/laozhu"
 
 [[menu.main]]
   name = "Tags"
@@ -38,18 +38,18 @@ copyright = "© This post is licensed under a Creative Commons Attribution-NonCo
 [params]
   author = "Ritchie Zhu"
   avatar = "/img/avatar.jpg"
-  seotitle = "Maistra.io Website"
+  seotitle = "Hugo Blog (SEO Version)"
   subtitle = "~ Keep It Simple & Stupid ~"
   description = "Hugo is one of the most popular open-source static site generators. With its amazing speed and flexibility, Hugo makes building websites fun again."
   paginate = 10
 
   # Choose your social networks
   email = "name@domain.com"
-  github = "maistra"
-  twitter = "maistraio"
-  #linkedin = "linkedin_username"
-  #weibo = "weibo_username"
-  #wechat= "/img/qrcode.jpg" # Replace with your wechat qrcode image
+  github = "github_username"
+  twitter = "twitter_username"
+  linkedin = "linkedin_username"
+  weibo = "weibo_username"
+  wechat= "/img/qrcode.jpg" # Replace with your wechat qrcode image
   # facebook = "facebook_username"
   # google = "googlplus_id_number"
   # instagram = "instagram_username"
@@ -67,9 +67,9 @@ copyright = "© This post is licensed under a Creative Commons Attribution-NonCo
   # bilibili = "bilibili_id_number"
 
   # Changyan Comments (China Only)
-  #changyan = false
-  #changyanId = "cyt3toRiB"
-  #changyanConf = "prod_0908b1cb9a581501753cce1ed074dbe3"
+  changyan = false
+  changyanId = "cyt3toRiB"
+  changyanConf = "prod_0908b1cb9a581501753cce1ed074dbe3"
 
   # Google Webmaster
   # https://www.google.com/webmasters/
