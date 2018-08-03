@@ -1,11 +1,11 @@
 baseURL = "http://localhost:1313"
 languageCode = "en"
 title = "Maistra.io"
-theme = "hugo-nuo"
+theme = "hugo-xmin"
 enableRobotsTXT = true
 PygmentsCodeFences = true
 canonifyurls = false
-
+ignorefiles=["DRAFTS/.*"]
 # Disqus Username
 disqusShortname = "disqus_shortname"
 
