@@ -1,15 +1,65 @@
+<script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-rss/3.3.0/jquery.rss.min.js"></script>
+
+<script>
+    visible = []
+    function show(index) {
+        visible[index]=!visible[index]
+        if(visible[index]) {
+            document.getElementById("article_" + index + "_full").style.display = "block"
+            document.getElementById("article_" + index + "_part").style.display = "none"
+        } else {
+            document.getElementById("article_" + index + "_full").style.display = "none"
+            document.getElementById("article_" + index + "_part").style.display = "block"
+        }
+    }
+    jQuery(function($) {
+      $("#rss-feeds").rss("https://developers.redhat.com/blog/category/topics/service-mesh/feed/",
+      {
+       /* entryTemplate:'<li><a href="{url}">[{author}@{date}] {title}</a><br/>{teaserImage}{shortBodyPlain}</li>'*/
+       limit: 40,
+       dateFormat: 'MMMM Do, YYYY',
+       entryTemplate:'index:{index} <article class="post"> \
+            <header> \
+                <div class="title"> \
+                        <h1><a href="{url}">{title}</a></h1> \
+                </div> \
+                <div class="meta"> \
+                        {date} \
+                    <span class="author">{author}</span> \
+                </div> \
+            </header> \
+            \
+            <div id="article_{index}_full" style="display: none"> \
+                {body} \
+            </div> \
+            <div id="article_{index}_part" style="display: block"> \
+                {shortBody} \
+            </div> \
+            <footer> \
+              <ul class="actions"> \
+                <li><a onclick="show({index})" class="button big">Continue Reading</a></li> \
+                <li><a href="{url}" class="button big">Continue Reading External</a></li> \
+              </ul> \
+            </footer> \
+          </article>'
+      })
+    })
+  </script>
 {{ partial "general-title" . }}
 
 {{ partial "header" . }}
     {{ partial "navbar" . }}
     <!-- Main -->
     <div id="main">
+            <div id="rss-feeds"></div>
         {{ $paginator := .Paginate .Data.Pages }}
         {{ range .Paginator.Pages }}
-            {{ .Render "content-list" }}
+        
+       
         {{ end }}
 
         {{ partial "pagination" . }}
     </div>
-    {{ partial "sidebar" . }}
 {{ partial "footer" . }}
