@@ -1,6 +1,6 @@
-<script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-rss/3.3.0/jquery.rss.min.js"></script>
+<script src="../js/moment.min.js"></script>
+<script src="../js/jquery.min.js"></script>
+<script src="../js/jquery.rss.min.js"></script>
 
 <script>
     visible = []
@@ -19,8 +19,8 @@
       {
        /* entryTemplate:'<li><a href="{url}">[{author}@{date}] {title}</a><br/>{teaserImage}{shortBodyPlain}</li>'*/
        limit: 40,
-       dateFormat: 'MMMM Do, YYYY',
-       entryTemplate:'index:{index} <article class="post"> \
+       dateFormat: 'MMMM Do, YYYY hh:mmA',
+       entryTemplate:'<article class="post"> \
             <header> \
                 <div class="title"> \
                         <h1><a href="{url}">{title}</a></h1> \
