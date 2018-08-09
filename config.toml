@@ -1,3 +1,4 @@
+contentDir="topics"
 baseURL = "http://localhost:1313"
 languageCode = "en"
 title = "Maistra.io"
@@ -137,7 +138,7 @@ copyright = "© This post is licensed under a Creative Commons Attribution-NonCo
 [social]
   # Coding Communities
   github           = "maistra"
-  
+
   # Publishing Communities
   wordpress        = ""
   medium           = ""
