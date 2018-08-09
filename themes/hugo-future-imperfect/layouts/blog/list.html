@@ -61,12 +61,5 @@ pre {
     <!-- Main -->
     <div id="main">
             <div id="rss-feeds"></div>
-        {{ $paginator := .Paginate .Data.Pages }}
-        {{ range .Paginator.Pages }}
-
-
-        {{ end }}
-
-        {{ partial "pagination" . }}
     </div>
 {{ partial "footer" . }}
