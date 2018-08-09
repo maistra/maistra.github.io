@@ -1,3 +1,11 @@
+<style>
+pre {
+  background: rgba(160, 160, 160, 0.075);
+  border: solid rgba(160,160,160,0.3);
+  border-width: 2px;
+}
+
+</style>
 <script src="../js/moment.min.js"></script>
 <script src="../js/jquery.min.js"></script>
 <script src="../js/jquery.rss.min.js"></script>
@@ -53,12 +61,5 @@
     <!-- Main -->
     <div id="main">
             <div id="rss-feeds"></div>
-        {{ $paginator := .Paginate .Data.Pages }}
-        {{ range .Paginator.Pages }}
-        
-       
-        {{ end }}
-
-        {{ partial "pagination" . }}
     </div>
 {{ partial "footer" . }}
