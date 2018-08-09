@@ -1,3 +1,4 @@
+contentDir="topics"
 baseURL = "http://localhost:1313"
 languageCode = "en"
 title = "Maistra.io"
@@ -26,7 +27,7 @@ copyright = "© This post is licensed under a Creative Commons Attribution-NonCo
   name = "Docs"
   weight = 2
   identifier = "docs"
-  url = "/docs/"
+  url = "/istiodocs/"
 
 [[menu.main]]
   name = "Blog"
@@ -137,7 +138,7 @@ copyright = "© This post is licensed under a Creative Commons Attribution-NonCo
 [social]
   # Coding Communities
   github           = "maistra"
-  
+
   # Publishing Communities
   wordpress        = ""
   medium           = ""

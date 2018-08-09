@@ -1,5 +1,6 @@
 [[install_istio]]
 = Installing {Productname}
+include::topics/docs/document-attributes.adoc[]
 
 ////
 Instructions for how to install go here.
