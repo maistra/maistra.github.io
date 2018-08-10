@@ -26,19 +26,19 @@ Deploying Bookinfo Application
 ------------------------------
 
 . Deploy Bookinfo application in "myproject" namespace:
-   
++   
 ```
   $ curl https://raw.githubusercontent.com/Maistra/bookinfo/master/bookinfo.yaml | oc apply -n myproject -f -
 ```
 
 . Create the ingress gateway for Bookinfo:
-
++
 ```
   $ curl https://raw.githubusercontent.com/Maistra/bookinfo/master/bookinfo-gateway.yaml | oc apply -f -
 ```
 
 . Set GATEWAY_URL:
-
++
 ```
   $ export GATEWAY_URL=$(oc get route istio-ingressgateway -n istio-system -o=jsonpath="{.spec.host}")
 ```
