@@ -28,7 +28,7 @@ Deploying Bookinfo Application
 . Download bookinfo.yaml into your local directory:
 +
 ```
-  $ curl https://raw.githubusercontent.com/Maistra/bookinfo/master/bookinfo.yaml
+  $ curl -o bookinfo.yaml https://raw.githubusercontent.com/Maistra/bookinfo/master/bookinfo.yaml
 ```
 
 . Deploy Bookinfo application in "myproject" namespace:
@@ -40,7 +40,7 @@ Deploying Bookinfo Application
 . Download bookinfo-gateway.yaml into your local directory:
 +
 ```
-  $ curl https://raw.githubusercontent.com/Maistra/bookinfo/master/bookinfo-gateway.yaml 
+  $ curl -o bookinfo-gateway.yaml https://raw.githubusercontent.com/Maistra/bookinfo/master/bookinfo-gateway.yaml 
 ```
 
 . Create the ingress gateway for Bookinfo:
