@@ -59,14 +59,14 @@ Cleanup
 -------
 
 . Delete bookinfo virtualservice, gateway, and terminate the pods:
-
++
 ```
   $ sh <(curl https://raw.githubusercontent.com/Maistra/bookinfo/master/cleanup.sh)
   namespace ? [default] myproject
 ```
 
 . Confirm shutdown:
-
++
 ```
   $ oc get virtualservices -n myproject
   No resources found.
