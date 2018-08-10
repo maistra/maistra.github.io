@@ -70,10 +70,16 @@ Alternatively, you can open `http://$GATEWAY_URL/productpage` in your browser.
 Cleanup
 -------
 
+. Download cleanup script:
++
+```
+  $ curl -o cleanup.sh https://raw.githubusercontent.com/Maistra/bookinfo/master/cleanup.sh && chmod +x ./cleanup.sh
+```
+
 . Delete bookinfo virtualservice, gateway, and terminate the pods:
 +
 ```
-  $ sh <(curl https://raw.githubusercontent.com/Maistra/bookinfo/master/cleanup.sh)
+  $ ./cleanup.sh
   namespace ? [default] myproject
 ```
 
