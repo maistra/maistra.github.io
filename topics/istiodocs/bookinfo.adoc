@@ -25,16 +25,28 @@ To add the service account used by Bookinfo application to anyuid SCC in "myproj
 Deploying Bookinfo Application
 ------------------------------
 
+. Download bookinfo.yaml into your local directory:
++
+```
+  $ curl https://raw.githubusercontent.com/Maistra/bookinfo/master/bookinfo.yaml
+```
+
 . Deploy Bookinfo application in "myproject" namespace:
 +   
 ```
-  $ curl https://raw.githubusercontent.com/Maistra/bookinfo/master/bookinfo.yaml | oc apply -n myproject -f -
+  $ oc apply -n myproject -f bookinfo.yaml
+```
+
+. Download bookinfo-gateway.yaml into your local directory:
++
+```
+  $ curl https://raw.githubusercontent.com/Maistra/bookinfo/master/bookinfo-gateway.yaml 
 ```
 
 . Create the ingress gateway for Bookinfo:
 +
 ```
-  $ curl https://raw.githubusercontent.com/Maistra/bookinfo/master/bookinfo-gateway.yaml | oc apply -f -
+  $ oc apply -f bookinfo-gateway.yaml
 ```
 
 . Set GATEWAY_URL:
