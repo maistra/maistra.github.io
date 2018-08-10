@@ -18,30 +18,30 @@ Update Security Context Constraints
 
 To add the service account used by Bookinfo application to anyuid SCC in "myproject" namespace:
 
-----------------------------------------------------------------
+```
   $ oc adm policy add-scc-to-user anyuid -z default -n myproject
-----------------------------------------------------------------
+```
 
 Deploying Bookinfo Application
 ------------------------------
 
 . Deploy Bookinfo application in "myproject" namespace:
    
--------------------------------------------------------------------------------------------------------------
+```
   $ curl https://raw.githubusercontent.com/Maistra/bookinfo/master/bookinfo.yaml | oc apply -n myproject -f -
--------------------------------------------------------------------------------------------------------------
+```
 
 . Create the ingress gateway for Bookinfo:
 
---------------------------------------------------------------------------------------------------------
+```
   $ curl https://raw.githubusercontent.com/Maistra/bookinfo/master/bookinfo-gateway.yaml | oc apply -f -
---------------------------------------------------------------------------------------------------------
+```
 
 . Set GATEWAY_URL:
 
-------------------------------------------------------------------------------------------------------
+```
   $ export GATEWAY_URL=$(oc get route istio-ingressgateway -n istio-system -o=jsonpath="{.spec.host}")
-------------------------------------------------------------------------------------------------------
+```
 
 
 Confirm Bookinfo is running
@@ -49,9 +49,9 @@ Confirm Bookinfo is running
 
 To confirm that the application has been successfully deployed:
 
-----------------------------------------------------------------------------
+```
   $ curl -o /dev/null -s -w "%{http_code}\n" http://$GATEWAY_URL/productpage
-----------------------------------------------------------------------------
+```
 
 Alternatively, you can open `http://$GATEWAY_URL/productpage` in your browser.
 
@@ -60,18 +60,18 @@ Cleanup
 
 . Delete bookinfo virtualservice, gateway, and terminate the pods:
 
------------------------------------------------------------------------------------
+```
   $ sh <(curl https://raw.githubusercontent.com/Maistra/bookinfo/master/cleanup.sh)
   namespace ? [default] myproject
------------------------------------------------------------------------------------
+```
 
 . Confirm shutdown:
 
-----------------------------------------
+```
   $ oc get virtualservices -n myproject
   No resources found.
   $ oc get gateway -n myproject
   No resources found.
   $ oc get pods -n myproject
   No resources found.
-----------------------------------------
+```
