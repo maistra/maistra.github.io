@@ -19,9 +19,6 @@
 
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-        
         {{ .Hugo.Generator }}
         {{ partial "favicon" . }}
 
@@ -84,3 +81,17 @@
 
       <!-- Wrapper -->
       <div id="wrapper">
+
+    {{ partial "navbar" . }}
+    <!-- Main -->
+    <div id="main"  style="padding: 3em 3em 1em 3em ;
+    background: #ffffff;
+    border: solid 1px rgba(160, 160, 160, 0.3);
+    min-height: 100%; margin-top: 0%; margin-bottom: 10%">
+            {{ $.Scratch.Set "h1" true }}
+            {{ .Render "header" }}
+            <div id="content">
+                {{ .Content }}
+            </div>
+    </div>
+{{ partial "footer" . }}
