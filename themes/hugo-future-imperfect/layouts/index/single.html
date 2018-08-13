@@ -82,3 +82,17 @@
 
       <!-- Wrapper -->
       <div id="wrapper">
+
+    {{ partial "navbar" . }}
+    <!-- Main -->
+    <div id="main"  style="padding: 3em 3em 1em 3em ;
+    background: #ffffff;
+    border: solid 1px rgba(160, 160, 160, 0.3);
+    min-height: 100%; margin-top: 0%; margin-bottom: 10%">
+            {{ $.Scratch.Set "h1" true }}
+            {{ .Render "header" }}
+            <div id="content">
+                {{ .Content }}
+            </div>
+    </div>
+{{ partial "footer" . }}
