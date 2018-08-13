@@ -1,65 +1,66 @@
 <style>
-pre {
-  background: rgba(160, 160, 160, 0.075);
-  border: solid rgba(160,160,160,0.3);
-  border-width: 2px;
-}
-
-</style>
-<script src="../js/moment.min.js"></script>
-<script src="../js/jquery.min.js"></script>
-<script src="../js/jquery.rss.min.js"></script>
-
-<script>
-    visible = []
-    function show(index) {
-        visible[index]=!visible[index]
-        if(visible[index]) {
-            document.getElementById("article_" + index + "_full").style.display = "block"
-            document.getElementById("article_" + index + "_part").style.display = "none"
-        } else {
-            document.getElementById("article_" + index + "_full").style.display = "none"
-            document.getElementById("article_" + index + "_part").style.display = "block"
-        }
+    pre {
+      background: rgba(160, 160, 160, 0.075);
+      border: solid rgba(160,160,160,0.3);
+      border-width: 2px;
     }
-    jQuery(function($) {
-      $("#rss-feeds").rss("https://developers.redhat.com/blog/category/topics/service-mesh/feed/",
-      {
-       /* entryTemplate:'<li><a href="{url}">[{author}@{date}] {title}</a><br/>{teaserImage}{shortBodyPlain}</li>'*/
-       limit: 40,
-       dateFormat: 'MMMM Do, YYYY hh:mmA',
-       entryTemplate:'<article class="post"> \
-            <header> \
-                <div class="title"> \
-                        <h1><a onclick="show({index})">{title}</a></h1> \
+    
+    </style>
+    <script src="../js/moment.min.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/jquery.rss.min.js"></script>
+    
+    <script>
+        visible = []
+        function show(index) {
+            visible[index]=!visible[index]
+            if(visible[index]) {
+                document.getElementById("article_" + index + "_full").style.display = "block"
+                document.getElementById("article_" + index + "_part").style.display = "none"
+            } else {
+                document.getElementById("article_" + index + "_full").style.display = "none"
+                document.getElementById("article_" + index + "_part").style.display = "block"
+            }
+        }
+        jQuery(function($) {
+          $("#rss-feeds").rss("https://developers.redhat.com/blog/category/topics/service-mesh/feed/",
+          {
+           /* entryTemplate:'<li><a href="{url}">[{author}@{date}] {title}</a><br/>{teaserImage}{shortBodyPlain}</li>'*/
+           limit: 40,
+           dateFormat: 'MMMM Do, YYYY hh:mmA',
+           entryTemplate:'<article class="post"> \
+                <header> \
+                    <div class="title"> \
+                            <h1><a onclick="show({index})">{title}</a></h1> \
+                    </div> \
+                    <div class="meta"> \
+                            {date} \
+                        <span class="author">{author}</span> \
+                    </div> \
+                </header> \
+                \
+                <div id="article_{index}_full" style="display: none"> \
+                    {body} \
                 </div> \
-                <div class="meta"> \
-                        {date} \
-                    <span class="author">{author}</span> \
+                <div id="article_{index}_part" style="display: block"> \
+                    {shortBody} \
                 </div> \
-            </header> \
-            \
-            <div id="article_{index}_full" style="display: none"> \
-                {body} \
-            </div> \
-            <div id="article_{index}_part" style="display: block"> \
-                {shortBody} \
-            </div> \
-            <footer> \
-              <ul class="actions"> \
-                <li><a onclick="show({index})" class="button big">Continue Reading</a></li> \
-              </ul> \
-            </footer> \
-          </article>'
-      })
-    })
-  </script>
-{{ partial "general-title" . }}
-
-{{ partial "header" . }}
-    {{ partial "navbar" . }}
-    <!-- Main -->
-    <div id="main">
-            <div id="rss-feeds"></div>
-    </div>
-{{ partial "footer" . }}
+                <footer> \
+                  <ul class="actions"> \
+                    <li><a onclick="show({index})" class="button big">Continue Reading</a></li> \
+                  </ul> \
+                </footer> \
+              </article>'
+          })
+        })
+      </script>
+      
+    {{ partial "general-title" . }}
+    
+    {{ partial "header" . }}
+        {{ partial "navbar" . }}
+        <!-- Main -->
+        <div id="main">
+                <div id="rss-feeds"></div>
+        </div>
+    {{ partial "footer" . }}

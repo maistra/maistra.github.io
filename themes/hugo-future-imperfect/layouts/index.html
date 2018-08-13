@@ -2,7 +2,5 @@
     {{ $.Scratch.Set "shareNav" true }}
     {{ partial "navbar" . }}
     <!-- Main -->
-    <div id="main">
-        <img src="https://images.unsplash.com/photo-1503634192480-e77a6436f075?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=192df6aa12e5def611abd86cf28c61de&auto=format&fit=crop&w=1000&q=80">
-    </div>
+    {{.Content}}
 {{ partial "footer" . }}
