@@ -35,6 +35,12 @@ copyright = "© This post is licensed under a Creative Commons Attribution-NonCo
   identifier = "blog"
   url = "/blog/"
 
+[[menu.main]]
+  name = "Contribute"
+  weight = 4
+  identifier = "contribute"
+  url = "/contribute/"
+
 [params]
   # Sets the meta tag description
   description          = "HTML5 UP theme, Future Imperfect with some extra goodies, ported by Julio Pescador. Powered by Hugo"
