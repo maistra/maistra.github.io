@@ -12,15 +12,15 @@ Maistra, built around Istio, integrates with Prometheus and Jaeger to give DevOp
               </div>
               <div class="col-lg-4 col-sm-6">
                 <ul class="iconlist m-0">
-                  <li class="pt-3 pt-lg-0">Openshift</li>
-                  <li class="pt-3">Kiali</li>
-                  <li class="pt-3">Istio</li>
+                  <li class="pt-3 pt-lg-0">Mutual TLS</li>
+                  <li class="pt-3">Metrics</li>
+                  <li class="pt-3">Tracing</li>
                 </ul>
               </div>
               <div class="col-lg-4 col-sm-6">
                 <ul class="iconlist m-0">
-                  <li class="pt-3 pt-lg-0">Jaeger</li>
-                  <li class="pt-3">Prometheus</li>
+                  <li class="pt-3 pt-lg-0">Traffic Management</li>
+                  <li class="pt-3">Authorization</li>
                   <li class="pt-3">Service discovery</li>
                 </ul>
               </div>
