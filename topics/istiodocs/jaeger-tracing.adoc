@@ -8,7 +8,7 @@ Before you Begin
 ----------------
 
 . Install Maistra by following the instructions here <<<add link>>>.
-. Deploy Bookinfo application by following these link:bookinfo[instructions].  
+. Deploy Bookinfo application by following these link:../bookinfo[instructions].  
 
 
 Generate Traces
