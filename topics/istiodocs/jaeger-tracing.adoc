@@ -44,5 +44,5 @@ The trace also shows calls to "istio-policy" which reflect authorization checks 
 Cleanup
 -------
 
-Follow Bookinfo cleanup link:../bookinfo[instructions] to remove the application.
+Follow <<bookinfo.adoc#cleanup, Bookinfo cleanup instructions>> to remove the application.
  
