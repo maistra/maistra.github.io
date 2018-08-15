@@ -67,6 +67,7 @@ To confirm that the application has been successfully deployed:
 
 Alternatively, you can open `http://$GATEWAY_URL/productpage` in your browser.
 
+[[cleanup]]
 Cleanup
 -------
 
