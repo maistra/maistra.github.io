@@ -32,11 +32,17 @@ image::grafana-home-screen.png[]
 Istio Mesh Metrics
 ------------------
 
-Select "Istio Mesh Dashboard" from a drop-down list in the top left corner to see Istio mesh metrics:
+Select "Istio Mesh Dashboard" from the drop-down list in the top left corner to see Istio mesh metrics:
 
 image::grafana-mesh-no-traffic.png[]
 
-Generate some traffic by accessing Bookinfo's /productpage, and the dashboard should reflect the traffic through the mesh, similarly to this:
+Generate some traffic by accessing Bookinfo application:
+
+```
+  curl -o /dev/null http://$GATEWAY_URL/productpage
+```
+ 
+The dashboard should reflect the traffic through the mesh, similarly to this:
 
 image::grafana-mesh-with-traffic.png[]
 
@@ -66,5 +72,4 @@ This dashboard shows workload's metrics, and metrics for client- (inbound) and s
 Cleanup
 -------
 
-Follow Bookinfo cleanup link:../bookinfo[instructions] to remove the application.
- 
+Follow link:../bookinfo/#cleanup[Bookinfo cleanup instructions] to remove the application. 
