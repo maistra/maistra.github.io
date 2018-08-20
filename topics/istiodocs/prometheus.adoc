@@ -33,7 +33,7 @@ Querying Metrics
 image::prometheus-home-screen.png[]
 
 
-. In the "Expression" input box enter "istio_request_duration_seconds_count", and click "Execute" button. You should see a screen similar to this:
+. In the "Expression" input box enter `istio_request_duration_seconds_count`, and click "Execute" button. You should see a screen similar to this:
 
 image::prometheus-metrics.png[]
 
