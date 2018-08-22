@@ -14,13 +14,13 @@ Before you Begin
 Querying Metrics
 ----------------
 
-. Generate network traffic by accessing Bookinfo application:
+. Generate network traffic by accessing the Bookinfo application:
 +
 ```
   curl -o /dev/null http://$GATEWAY_URL/productpage
 ```
 
-. A route to access Prometheus UI should already exist. Query openshift for details of the route:
+. A route to access the Prometheus UI should already exist. Query OpenShift for details of the route:
 +
 ```
   $ oc get routes prometheus -n istio-system
@@ -29,12 +29,12 @@ Querying Metrics
 ```
 
 . Open http://prometheus-istio-system.127.0.0.1.nip.io in a browser, you should see Prometheus' home screen, similar to this:
-
++
 image::prometheus-home-screen.png[]
 
 
-. In the "Expression" input box enter `istio_request_duration_seconds_count`, and click "Execute" button. You should see a screen similar to this:
-
+. In the "Expression" input box enter `istio_request_duration_seconds_count`, and click the `Execute` button. You should see a screen similar to this:
++
 image::prometheus-metrics.png[]
 
 
@@ -47,7 +47,7 @@ image::prometheus-metrics.png[]
   $ oc get prometheus -n istio-system -o jsonpath='{.items[*].spec.metrics[*].name}'
   requests_total request_duration_seconds request_bytes response_bytes tcp_sent_bytes_total tcp_received_bytes_total
 ```
-Note that these need to be prepended with `istio_` when used in queries.   
+Note that returned metric names need to be prepended with `istio_` when used in queries, e.g. `requests_total` will become `istio_requests_total`.
 
 Cleanup
 -------
