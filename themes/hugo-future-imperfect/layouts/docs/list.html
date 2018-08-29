@@ -4,7 +4,8 @@
 
 
  <div id="main">
-        {{ range .Pages.GroupByParam "category" }}
+        {{ $paginator := .Paginate (where .Pages "Type" "document") }}
+        {{ range .Paginator.Pages.GroupByParam "category" }}
         <h2>{{ .Key }}</h2>
         <ul>
             {{ range .Pages }}

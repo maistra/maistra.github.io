@@ -1,9 +1,8 @@
 ---
 title: "Installing Bookinfo"
-type: "docs"
-description: "Learn how to create a theme on Hugo"
+type: "document"
 category: "Examples"
-Description: "Bookinfo is an example application that shows you how to set up and monitor a service mesh using Istio."
+description: "Bookinfo is an example application that shows you how to set up and monitor a service mesh using Istio."
 ---
 
 Bookinfo Application
