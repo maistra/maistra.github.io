@@ -1,0 +1,158 @@
+---
+title: "Configuring Istio Initialization"
+---
+
+The istio-operator relies on a custom resource to set up Istio. This configuration gets passed to an ansible playbook which will then set up your environment. 
+
+Minimal Example
+---------------
+At a minimum, the following arguments are required. 
+
+[source,yaml]
+----
+apiVersion: "istio.openshift.com/v1alpha1"
+kind: "Installation"
+metadata:
+  name: "istio-installation"
+spec:
+    istio:
+      authentication: true
+      version: 0.1.0
+----
+
+Complete Example
+----------------
+Below, you can an example with all supported arguments populated.
+
+[source,yaml]
+----
+apiVersion: "istio.openshift.com/v1alpha1" 
+kind: "Installation" 
+metadata:
+  name: "istio-installation"
+spec:
+  deployment_type: openshift
+  istio:
+    authentication: true
+    community: false
+    prefix: openshift-istio-tech-preview/
+    version: 0.1.0
+  jaeger:
+    prefix: distributed-tracing-tech-preview/
+    version: 1.6.0
+    elasticsearch_memory: 1Gi
+  launcher:
+    openshift:
+      user: user
+      password: password
+    github:
+      username: username
+      token: token
+    catalog:
+      filter: filter
+      branch: branch
+      repo: repo
+----
+
+## [[General]] General
+
+|===
+|Parameter |Description |Values | Default
+
+|deployment_type
+|Cell in column 2, row 2
+|origin, openshift
+|
+|===
+
+## [[Istio]] Istio 
+|===
+|Parameter |Description |Values | Default
+
+|authentication
+|Whether to enable mutual authentication
+|true/false
+| 
+
+|community
+|Cell in column 2, row 2
+|Cell in column 3, row 2
+|
+
+|prefix
+|prefix to repository for images
+|string
+|Cell in column 3, row 2
+
+|version
+|Cell in column 2, row 2
+|Cell in column 3, row 2
+|===
+
+
+## [[Jaeger]] Jaeger
+|===
+|Parameter |Description |Default
+
+|prefix
+|Cell in column 2, row 1
+|Cell in column 3, row 1
+
+|version
+|Cell in column 2, row 2
+|Cell in column 3, row 2
+
+|elasticsearch_memory
+|The amount of memory to allocate to the elastic search install
+|512M
+
+|===
+
+## [[Launcher]] Launcher
+
+### [[Launcher_OpenShift]] Openshift
+
+|===
+|Parameter |Description |Default
+
+|user
+|Cell in column 2, row 1
+|Cell in column 3, row 1
+
+|password
+|Cell in column 2, row 1
+|Cell in column 3, row 1
+
+|===
+
+### [[Launcher_Github]] Github
+|===
+|Parameter |Description |Default
+
+|username
+|Cell in column 2, row 2
+|Cell in column 3, row 2
+
+|token
+|Cell in column 2, row 2
+|Cell in column 3, row 2
+
+|===
+
+### [[Launcher_Catalog]] Catalog
+|===
+|Parameter |Description |Default
+
+|filter
+|Cell in column 2, row 2
+|Cell in column 3, row 2
+
+|branch
+|Cell in column 2, row 2
+|Cell in column 3, row 2
+
+|repo
+|Cell in column 2, row 2
+|Cell in column 3, row 2
+
+|===
