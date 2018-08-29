@@ -1,5 +1,8 @@
 ---
 title: "Distributed Tracing"
+type: "docs"
+category: "Monitoring"
+description: "See how to use Istio to collect traces and send them to Jaeger to easily trace issues in configured services."
 ---
 
 :imagesdir: ../

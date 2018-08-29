@@ -1,5 +1,8 @@
 ---
 title: "Configuring Istio Initialization"
+type: "docs"
+category: "Getting started"
+description: "The Istio operator uses a custom resource to initialize your environment. This document describes the parameters and how to create a custom configuration for your environment"
 ---
 
 The istio-operator relies on a custom resource to set up Istio. This configuration gets passed to an ansible playbook which will then set up your environment. 
