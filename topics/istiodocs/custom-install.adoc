@@ -10,14 +10,8 @@ At a minimum, the following arguments are required.
 
 [source,yaml]
 ----
-apiVersion: "istio.openshift.com/v1alpha1"
-kind: "Installation"
 metadata:
   name: "istio-installation"
-spec:
-    istio:
-      authentication: true
-      version: 0.1.0
 ----
 
 Complete Example
@@ -60,9 +54,9 @@ spec:
 |Parameter |Description |Values | Default
 
 |deployment_type
-|Cell in column 2, row 2
+|Selects whether to use OpenShift or Origin default values for unset fields
 |origin, openshift
-|
+|origin
 |===
 
 ## [[Istio]] Istio 
@@ -72,35 +66,39 @@ spec:
 |authentication
 |Whether to enable mutual authentication
 |true/false
-| 
+|false
 
 |community
-|Cell in column 2, row 2
-|Cell in column 3, row 2
-|
+|Whether to modify image names to match community images.
+|true/false
+|false
 
 |prefix
-|prefix to repository for images
-|string
-|Cell in column 3, row 2
+|a prefix to apply to Istio image names used in docker pull.
+|valid image repo
+|maistra if deployment_type is origin and openshift-istio-tech-preview if deployment_type is openshift 
 
 |version
-|Cell in column 2, row 2
-|Cell in column 3, row 2
+|docker tag to use with Istio images
+|valid docker tag
+|1.0.0
 |===
 
 
 ## [[Jaeger]] Jaeger
 |===
-|Parameter |Description |Default
+|Parameter |Description |Values |Default
 
 |prefix
-|Cell in column 2, row 1
-|Cell in column 3, row 1
+|a prefix to apply to Jaeger image names used in docker pull.
+|valid image repo
+|maistra if deployment_type is origin and openshift-istio-tech-preview if deployment_type is openshift 
+
 
 |version
-|Cell in column 2, row 2
-|Cell in column 3, row 2
+|docker tag to use with Jaeger images
+|valid docker tag
+|v0.5.0
 
 |elasticsearch_memory
 |The amount of memory to allocate to the elastic search install
@@ -116,12 +114,12 @@ spec:
 |Parameter |Description |Default
 
 |user
-|Cell in column 2, row 1
-|Cell in column 3, row 1
+|OpenShift user to use in Fabric8
+|developer
 
 |password
-|Cell in column 2, row 1
-|Cell in column 3, row 1
+|OpenShift user password to use in Fabric8
+|developer
 
 |===
 
@@ -130,12 +128,12 @@ spec:
 |Parameter |Description |Default
 
 |username
-|Cell in column 2, row 2
-|Cell in column 3, row 2
+|GitHub user to use in Fabric8
+|
 
 |token
-|Cell in column 2, row 2
-|Cell in column 3, row 2
+|GitHub token to use in Fabric8
+|
 
 |===
 
@@ -144,15 +142,15 @@ spec:
 |Parameter |Description |Default
 
 |filter
-|Cell in column 2, row 2
-|Cell in column 3, row 2
+|Red Hat booster catalog filter
+|booster.mission.metadata.istio
 
 |branch
-|Cell in column 2, row 2
-|Cell in column 3, row 2
+|Red Hat Booster catalog to use for Fabric8
+|v35
 
 |repo
-|Cell in column 2, row 2
-|Cell in column 3, row 2
+|Repo to use for Fabric8
+|https://github.com/fabric8-launcher/launcher-booster-catalog.git
 
 |===
