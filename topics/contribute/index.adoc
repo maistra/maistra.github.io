@@ -2,9 +2,13 @@
 title = "Contributing"
 +++
 
-How do I contribute
--------------------
-We're happy to accept community contributions. Our source code can be found in the locations below.
+Reporting Issues
+----------------
+The Maistra team uses https://issues.jboss.org/projects/MAISTRA[Jira at JBoss.org] as it's preferred tracker. Please submit issues there or to the corresponding GitHub repo listed below.
+
+Sources
+-------
+Our source code can be found in the locations below.
 
 * Maistra.io -- https://github.com/maistra/maistra.github.io
 * Istio -- https://github.com/Maistra/istio
@@ -13,3 +17,7 @@ We're happy to accept community contributions. Our source code can be found in t
 * OC Application -- https://github.com/Maistra/origin
 * Proxy -- https://github.com/Maistra/proxy
 
+Upstream
+-------
+* Upstream Istio can be found at -- https://istio.io
+* A list of Istio working groups can be found at -- https://github.com/istio/community/blob/master/WORKING-GROUPS.md
