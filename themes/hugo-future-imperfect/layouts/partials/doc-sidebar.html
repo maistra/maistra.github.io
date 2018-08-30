@@ -1,0 +1,25 @@
+<!-- Sidebar -->
+<section id="sidebar">
+  <!-- Posts List -->
+  <section class="recent-posts">
+    <div class="mini-posts">
+      <div class="posts-container">
+        {{ $.Scratch.Set "recentPosts" .Site.Pages }}
+        {{ $foo := where ($.Scratch.Get "recentPosts") "Type" "document" }}
+        {{ range $foo.GroupByParam "category" }}
+        <h4>{{ .Key }}</h4>
+          <article class="mini-post">
+              {{ range .Pages }}
+              <header>
+                  <h5>
+                    <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+                  </h5>
+                </header>
+              {{ end }}
+          </article>
+        {{ end }}
+      </div>
+
+    </div>
+  </section>
+</section>

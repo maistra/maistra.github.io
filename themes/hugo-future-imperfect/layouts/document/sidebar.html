@@ -1,39 +1,11 @@
 <!-- Sidebar -->
 <section id="sidebar">
-
-  <!-- Intro -->
-  <!--<section id="intro">
-    {{ $pic := .Site.Params.intro.pic }}
-    {{ with $pic.src }}
-      {{ if $pic.circle }}
-        <a href='{{"/" | relURL}}'><img src="{{ . | relURL }}" class="intro-circle" width="{{ $pic.width }}" alt="{{ $pic.alt }}" /></a>
-      {{ else if $pic.imperfect }}
-        <a href='{{"/" | relURL}}' class="logo"><img src="{{ . | relURL }}" alt="{{ $pic.alt }}" /></a>
-      {{ else }}
-        <a href='{{"/" | relURL}}'><img src="{{ . | relURL }}" width="{{ $pic.width }}" alt="{{ $pic.alt }}" /></a>
-      {{ end }}
-    {{ end }}
-    {{ with .Site.Params.intro }}
-      <header>
-        <h2>{{ .header }}</h2>
-        <p>{{ .paragraph | safeHTML }}</p>
-      </header>
-    {{ end }}
-    {{ if .Site.Params.socialAppearAtTop }}
-      <ul class="icons">
-        {{ if .Site.Params.rssAppearAtTop }}
-          {{ partial "rss-icon" . }}
-        {{ end }}
-        {{ partial "social" . }}
-      </ul>
-    {{ end }}
-  </section>-->
-
+  FOOBAR
   <!-- Posts List -->
   <section class="recent-posts">
     <div class="mini-posts">
       <header>
-        <h3>Recent Partials Posts</h3>
+        <h3>Recent Broken Posts</h3>
       </header>
       <div class="posts-container">
         {{ $.Scratch.Set "recentPosts" .Site.Pages }}

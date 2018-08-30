@@ -2,5 +2,14 @@
 title = "Contributing"
 +++
 
+How do I contribute
+-------------------
+We're happy to accept community contributions. Our source code can be found in the locations below.
 
-# how do I contribute
+* Maistra.io -- https://github.com/maistra/maistra.github.io
+* Istio -- https://github.com/Maistra/istio
+* Ansible Installer -- https://github.com/Maistra/openshift-ansible
+* Operator -- https://github.com/Maistra/istio-operator
+* OC Application -- https://github.com/Maistra/origin
+* Proxy -- https://github.com/Maistra/proxy
+

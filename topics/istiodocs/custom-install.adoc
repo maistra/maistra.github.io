@@ -1,5 +1,5 @@
 ---
-title: "Configuring Istio Initialization"
+title: "Configuring Istio Operator"
 type: "document"
 category: "Getting started"
 description: "The Istio operator uses a custom resource to initialize your environment. This document describes the parameters and how to create a custom configuration for your environment"
@@ -84,7 +84,7 @@ spec:
 |version
 |docker tag to use with Istio images
 |valid docker tag
-|1.0.0
+|0.1.0
 |===
 
 

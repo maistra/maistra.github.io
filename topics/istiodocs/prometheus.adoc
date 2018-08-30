@@ -1,7 +1,7 @@
 ---
 title: "Prometheus"
-type: "docs"
-category: "Monitoring"
+type: "document"
+category: "Monitoring & Tracing"
 description: "Use Istio and Prometheus to collect and examine metrics in your service mesh"
 ---
 
