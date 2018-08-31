@@ -18,30 +18,42 @@ copyright = "© This post is licensed under a Creative Commons Attribution-NonCo
 
 # Initial site menu, you can extend menu with content.
 [[menu.main]]
-  name = "Home"
-  weight = 1
-  identifier = "home"
-  url = "/"
-
-[[menu.main]]
   name = "Docs"
-  weight = 2
+  weight = 1
   identifier = "docs"
   url = "/istiodocs/"
 
 [[menu.main]]
   name = "Blog"
-  weight = 3
+  weight = 2
   identifier = "blog"
   url = "/blog/"
 
 [[menu.main]]
   name = "Contribute"
-  weight = 4
+  weight = 3
   identifier = "contribute"
   url = "/contribute/"
 
+# Social icons to be shown on the right-hand side of the navigation bar
+# The "name" field should match the name of the icon to be used
+# The list of available icons can be found at http://fontawesome.io/icons/
+
+[[menu.icon]]
+    url = "https://github.com/maistra"
+    name = "github"
+    weight = 1
+
+[[menu.icon]]
+    url = "https://twitter.com/maistraio"
+    name = "twitter"
+    weight = 2
+
 [params]
+  accent = "#006264"
+  backgroundColor = "#f5f5f5"
+  highlightLanguages = ["r", "bash", "go", "yaml"]
+  
   # Sets the meta tag description
   description          = "HTML5 UP theme, Future Imperfect with some extra goodies, ported by Julio Pescador. Powered by Hugo"
   # Sets the navbarTitle that appears in the top left of the navigation bar
@@ -99,6 +111,7 @@ copyright = "© This post is licensed under a Creative Commons Attribution-NonCo
   MathJaxCDN = "//cdn.bootcss.com"
   MathJaxVersion = "2.7.1"
 
+
 # Disqus will take priority over Staticman (github.com/eduardoboucas/staticman)
 # due to its ease of use. Feel free to check out both and decide what you would
 # prefer to use. See Staticman.yml for additional settings.
@@ -134,25 +147,4 @@ copyright = "© This post is licensed under a Creative Commons Attribution-NonCo
     width     = ""
     alt       = "Hugo Future Imperfect"
 
-[params.postAmount]
-# Sets the number of recent posts to show in the sidebar. The default value is 5.
-    sidebar = 5
 
-# Sets Social Media icons to appear and link to your account. Value should be your
-# username unless otherwise noted. These are the icons affected by socialAppearAtTop
-# and socialAppearAtBottom.
-[social]
-  # Coding Communities
-  github           = "maistra"
-
-  # Publishing Communities
-  wordpress        = ""
-  medium           = ""
-
-  # WeChat and QQ need testing.
-  wechat         = ""
-  qq             = "" # User ID Number
-  twitter          = "maistraio"
-
-  # Email
-  email            = "example"

@@ -13,6 +13,8 @@ At a minimum, the following arguments are required.
 
 [source,yaml]
 ----
+apiVersion: "istio.openshift.com/v1alpha1"
+kind: "Installation"
 metadata:
   name: "istio-installation"
 ----
@@ -105,6 +107,7 @@ spec:
 
 |elasticsearch_memory
 |The amount of memory to allocate to the elastic search install
+|amount of memory to use (example: 1Gi, 512M)
 |512M
 
 |===

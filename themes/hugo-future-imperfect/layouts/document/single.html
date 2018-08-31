@@ -1,16 +1,34 @@
-{{ partial "general-title" . }}
 {{ partial "header" . }}
-{{ $.Scratch.Set "shareNav" true }}
-{{ partial "navbar" . }}
-{{ partial "share-menu" . }}
-    {{ partial "navbar" . }}
-    <!-- Main -->
-    <div id="main">
-        <article class="post">
-            {{ $.Scratch.Set "h1" true }}
-            {{ .Render "content-single" }}
-        </article>
-    </div>
-    {{ partial "doc-sidebar" . }}
-{{ partial "footer" . }}
+<div class="row">
+    <div class="col-2">
+    
+        {{ $.Scratch.Set "recentPosts" .Site.Pages }} 
+        {{ $foo := where ($.Scratch.Get "recentPosts") "Type" "document" }} 
+        {{ range $foo.GroupByParam "category" }}
 
+        <div class="card border mb-3">
+            <div class="card-header">
+                {{ .Key }}
+            </div>
+            <ul class="list-group list-group-flush">
+                {{ range .Pages }}
+                <a href="{{ .RelPermalink }}" class="btn btn-light list-group-item">{{.Title}}</a>
+                {{ end }}
+            </ul>
+        </div>
+
+
+        {{ end }}
+
+    </div>
+    <div class="col-10">
+        <!-- Main -->
+        <div id="main">
+
+            <article class="post">
+                {{ $.Scratch.Set "h1" true }} {{ .Render "content-single" }}
+            </article>
+        </div>
+    </div>
+</div>
+{{ partial "footer" . }}
