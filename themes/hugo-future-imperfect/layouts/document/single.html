@@ -1,11 +1,13 @@
 {{ partial "header" . }}
 <div class="row">
     <div class="col-2">
-    
-        {{ $.Scratch.Set "recentPosts" .Site.Pages }} 
-        {{ $foo := where ($.Scratch.Get "recentPosts") "Type" "document" }} 
-        {{ range $foo.GroupByParam "category" }}
 
+        {{ $categories := (slice "Getting started" "Examples" "Monitoring & Tracing")}}
+        {{ $.Scratch.Set "recentPosts" .Site.Pages }} 
+        {{ $pages := where ($.Scratch.Get "recentPosts") "Type" "document" }} 
+        {{ $categorized := $pages.GroupByParam "category" }}
+        {{ range $element := $categories }} 
+        {{ range where $categorized "Key" $element }}
         <div class="card border mb-3">
             <div class="card-header">
                 {{ .Key }}
@@ -17,7 +19,7 @@
             </ul>
         </div>
 
-
+        {{ end }}
         {{ end }}
 
     </div>
