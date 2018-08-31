@@ -1398,15 +1398,14 @@
 	    filter: alpha(opacity=70);
 
 	    /* Modern Browsers */
-	    opacity: 0.70;
+		opacity: 0.70;
+		
 	}
-
 	    article.post p,
 	    article.post ol,
 	    article.post h2,
 	    article.post h3,
 	    article.post h4 {
-	        color: #333333;
 	        /* Theoretically for IE 8 & 9 (more valid) */
 	        /* ...but not required as filter works too */
 	        /* should come BEFORE filter */
@@ -1418,8 +1417,26 @@
 
 	        /* Modern Browsers */
 	        opacity: 0.87;
-	    }
-
+		}
+		
+		/* Title */
+		article.post h1 {
+			font-size: 1.5em;
+		}
+	
+		/* Heading (------ underline) */
+		article.post h2 {
+			font-size: 1.3em;
+		}
+	
+		article.post h3 {
+			font-size: 1.1em;
+		}
+	
+		article.post h4, h5, h6, ol, p, li, span, code {
+			font-size: 0.9em;
+		}
+	
 /* Table */
 
 	table {
@@ -1649,7 +1666,7 @@
 		    height: inherit;
 		    line-height: inherit;
 		    padding: 0 0 0 1.5em;
-		    white-space: nowrap;
+			white-space: nowrap;
 		}
 
 			#header h2 a {
@@ -1658,7 +1675,7 @@
 
 	    @media screen and (max-width: 736px) {
 	        #header h2 {
-	            padding: 0 0 0 1em;
+				padding: 0 0 0 1em;
 	        }
 	    }
 
@@ -1742,7 +1759,7 @@
 						position: relative;
 						text-indent: 4em;
 						width: 4em;
-						color: #333333;
+
 						/* Theoretically for IE 8 & 9 (more valid) */
 						/* ...but not required as filter works too */
 						/* should come BEFORE filter */
