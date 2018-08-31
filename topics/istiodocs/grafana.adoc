@@ -1,5 +1,8 @@
 ---
 title: "Grafana"
+type: "document"
+category: "Monitoring & Tracing"
+description: "See how Istio allows you to monitor the health of your Service Mesh using Grafana"
 ---
 
 :imagesdir: ../

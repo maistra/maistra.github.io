@@ -1,14 +1,6 @@
 <article class="post">
   {{ .Render "header" }}
 
-  {{ if .Site.Params.socialShare }}
-    <section id="social-share">
-      <ul class="icons">
-        {{ partial "share-links" . }}
-      </ul>
-    </section>
-  {{ end }}
-
   {{ .Render "featured" }}
   <div id="content">
     {{ .Content }}
@@ -19,5 +11,4 @@
   </footer>
 
 </article>
-{{ .Render "comments" }}
 {{ .Render "prev-next" }}

@@ -28,5 +28,5 @@ Maistra, built around Istio, integrates with Prometheus and Jaeger to give DevOp
 </div>
 <br>
 <a href="/istiodocs">
-<button type="button" class="btn btn-outline-primary btn-lg">Get Started</button>
+<button type="button" class="btn btn-primary btn-lg">Get Started</button>
 </a>
