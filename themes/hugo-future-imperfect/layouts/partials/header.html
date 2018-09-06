@@ -1,86 +1,68 @@
-<!DOCTYPE HTML>
-<!--
-    Future Imperfect by HTML5 UP
-    html5up.net | @n33co
-    Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
-<html>
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode }}">
     <head>
-        {{ partial "seo_schema" . }}
-        {{ with $.Scratch.Get "generalTitle" }}
-            <title>{{ . }}</title>
-        {{ else }}
-            {{ with .Title }}
-                <title>{{ . }}</title>
-            {{ else }}
-                <title>{{ .Site.Title }}</title>
-            {{ end }}
-        {{ end }}
-
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-        
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{{ .Title }}</title>
+        {{ partial "css" . }} 
+        {{ partial "js" . }} 
         {{ .Hugo.Generator }}
-        {{ partial "favicon" . }}
-
-        {{ with .Params.author }}
-            <meta name="author" content="{{ . }}">
+        {{ if .RSSLink }}
+        <link href="{{ .RSSLink }}" rel="alternate" type="application/rss+xml" title="{{ .Site.Title }}" />
+        <link href="{{ .RSSLink }}" rel="feed" type="application/rss+xml" title="{{ .Site.Title }}" />
         {{ end }}
-        {{ with .Description }}
-            <meta name="description" content="{{ . }}">
-        {{ else }}
-            {{ with .Site.Params.description }}
-                <meta name="description" content="{{ . }}">
-            {{ end }}
-        {{ end }}
+        {{ if .Site.GoogleAnalytics }}
 
-        {{ template "_internal/twitter_cards.html" . }}
-        {{ template "_internal/opengraph.html" . }}
-        <meta property="og:image" content="{{ .Site.BaseURL }}/images/logo.png">
-        <meta property="og:image:type" content="image/png">
-        <meta property="og:image:width" content="512">
-        <meta property="og:image:height" content="512">
-        {{ template "_internal/schema.html" . }}
-        {{ template "_internal/google_news.html" . }}
-
-        {{ if isset .Site.Params "customcss" }}
-            {{ $.Scratch.Set "cssFiles" .Site.Params.customCSS }}
-        {{ else }}
-            {{ $.Scratch.Set "cssFiles" false }}
+        <!-- Global Site Tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id={{ .Site.GoogleAnalytics }}"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments)};
+          gtag('js', new Date());
+          gtag('config', '{{ .Site.GoogleAnalytics }}');
+        </script>
         {{ end }}
 
-        <!-- If the value "default" is passed into the param then we will first
-             load the standard css files associated with the theme -->
-        {{ if or (in ($.Scratch.Get "cssFiles") "default") (eq ($.Scratch.Get "cssFiles") false) }}
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css">
-            <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,800,900|Source+Sans+Pro:400,700">
-            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.1.25/jquery.fancybox.min.css">
-            <link rel="stylesheet" href="{{ "css/bootstrap.css" | relURL }}">
-            <link rel="stylesheet" href="{{ "css/main.css" | relURL }}">
-            <link rel="stylesheet" href="{{ "css/add-on.css" | relURL }}">
-        {{ end }}
+    <!-- Favicons - https://realfavicongenerator.net/ -->
+    <meta name="msapplication-TileColor" content="#2b5797">
+    <meta name="msapplication-config" content="/img/favicon/browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
 
-        {{ if ne ($.Scratch.Get "cssFiles") false }}
-            {{ range $.Scratch.Get "cssFiles" }}
-                {{ if ne . "default" }}
-                    <link rel="stylesheet" href="{{ . | relURL }}">
-                {{ end }}
-            {{ end }}
-        {{ end }}
-
-{{ if (not .Params.disable_highlight) }}
-  {{ $highTheme := .Site.Params.highlightjsTheme }}
-    {{ with .Site.Params.highlightjsVersion }}
-    <link href='{{ $.Site.Params.highlightjsCDN | default "//cdn.bootcss.com" }}/highlight.js/{{ . }}/styles/{{ $highTheme }}.min.css' rel='stylesheet' type='text/css' />
-  {{ end }}
-{{ end }}
-
-      {{ template "_internal/google_analytics.html" . }}
     </head>
-    <body>
 
-      <!-- Wrapper -->
-      <div id="wrapper">
+    {{ if .Site.Params.MathJax | default true }}
+    <!-- adds MathJax support -->
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+    {{ end }}
+    <body id = "bigbody">
+        <div class="navbar fixed-top navbar-light navbar-expand" style="background-color: #ffffff; border: solid 1px rgba(160, 160, 160, 0.3);">
+                <b><a class="navbar-brand" href="/">{{.Site.Title}}</a></b>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+              
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                  <ul class="navbar-nav mr-auto">
+                      
+
+                       {{ if .Site.Menus.main }}
+
+                       {{ range sort .Site.Menus.main }}
+                       <li class="nav-item active">
+                            <a class="nav-link" href="{{ .URL }}">{{ .Name }}  </a>
+                          </li>
+                          {{ end }}
+                    {{ end }}
+                  </ul>
+                 
+                 <ul class="nav navbar-nav navbar-right">
+                        {{ if .Site.Menus.icon }}
+                            {{ range sort .Site.Menus.icon }}
+                                <li><a href="{{ .URL }}"><i class="fa fa-{{ .Name }} fa-lg"></i></a></li>
+                            {{ end }}
+                    {{ end }}
+                 </ul>
+                </div>
+            </div>

@@ -4,10 +4,7 @@
             <h1><a href="{{ .RelPermalink }}">{{ .Title }}</a></h1>
             {{ $.Scratch.Set "h1" false }}
         {{ else }}
-            <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
-        {{ end }}
-        {{ with .Description }}
-            <p>{{ . }}</p>
+            <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
         {{ end }}
     </div>
 </header>
