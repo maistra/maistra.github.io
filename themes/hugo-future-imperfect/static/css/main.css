@@ -197,9 +197,6 @@
 		color: #3c3b3b;
 		font-family: "Raleway", Helvetica, sans-serif;
 		font-weight: 800;
-		letter-spacing: 0.25em;
-		line-height: 1.65;
-		margin: 0 0 1em 0;
 		text-transform: uppercase;
 	}
 
@@ -208,46 +205,19 @@
 			border-bottom: 0;
 		}
 
-    h1 {
-        font-size: 1.3em;
-    }
-
-	h2 {
-		font-size: 1.1em;
-	}
-
-	h3 {
-		font-size: 0.9em;
-	}
-
-	h4 {
-		font-size: 0.7em;
-	}
-
-	h5 {
-		font-size: 0.7em;
-	}
-
-	h6 {
-		font-size: 0.7em;
-	}
-
 	.undecorated-link {
 		color: inherit;
 		text-decoration: none; 
-		font-size: 0.7em;
 	}
 
 	
 
 	sub {
-		font-size: 0.8em;
 		position: relative;
 		top: 0.5em;
 	}
 
 	sup {
-		font-size: 0.8em;
 		position: relative;
 		top: -0.5em;
 	}
@@ -267,15 +237,11 @@
 		background: rgba(160, 160, 160, 0.075);
 		border: solid 1px rgba(160, 160, 160, 0.3);
 		font-family: "Courier New", monospace;
-		font-size: 0.9em;
-		margin: 0 0.25em;
-		padding: 0.25em 0.65em;
 	}
 
 	pre {
 		-webkit-overflow-scrolling: touch;
 		font-family: "Courier New", monospace;
-		font-size: 0.9em;
 		margin: 0 0 2em 0;
 		display: table;
     table-layout: fixed;
@@ -1418,24 +1384,6 @@
 	        /* Modern Browsers */
 	        opacity: 0.87;
 		}
-		
-		/* Title */
-		article.post h1 {
-			font-size: 1.5em;
-		}
-	
-		/* Heading (------ underline) */
-		article.post h2 {
-			font-size: 1.3em;
-		}
-	
-		article.post h3 {
-			font-size: 1.1em;
-		}
-	
-		article.post h4, h5, h6, ol, p, li, span, code {
-			font-size: 0.9em;
-		}
 	
 /* Table */
 
@@ -1654,7 +1602,6 @@
 			line-height: inherit;
 			padding: 0 0 0 1.5em;
 			white-space: nowrap;
-			min-width: 12.4em;
 		}
 
 			#header h1 a {
@@ -1963,7 +1910,6 @@
 
 				/* Modern Browsers */
 				opacity: 0.65;
-				font-size: 0.9em;
 				padding: 0;
 		}
 
