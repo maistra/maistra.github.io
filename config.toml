@@ -1,4 +1,5 @@
 contentDir="topics"
+baseURL = "/"
 languageCode = "en"
 title = "Maistra.io"
 theme = "hugo-future-imperfect"
