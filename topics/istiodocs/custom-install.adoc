@@ -5,11 +5,11 @@ category: "Getting started"
 description: "The Istio operator uses a custom resource to initialize your environment. This document describes the parameters and how to create a custom configuration for your environment"
 ---
 
-The istio-operator relies on a custom resource to set up Istio. This configuration gets passed to an ansible playbook which will then set up your environment. 
+The istio-operator relies on a custom resource to set up Istio. This configuration gets passed to an ansible playbook which will then set up your environment.
 
 Minimal Example
 ---------------
-At a minimum, the following arguments are required. 
+At a minimum, the following arguments are required.
 
 [source,yaml]
 ----
@@ -17,6 +17,8 @@ apiVersion: "istio.openshift.com/v1alpha1"
 kind: "Installation"
 metadata:
   name: "istio-installation"
+jaeger:
+  elasticsearch_memory: 1Gi
 ----
 
 Complete Example
@@ -25,8 +27,8 @@ Below, you can an example with all supported arguments populated.
 
 [source,yaml]
 ----
-apiVersion: "istio.openshift.com/v1alpha1" 
-kind: "Installation" 
+apiVersion: "istio.openshift.com/v1alpha1"
+kind: "Installation"
 metadata:
   name: "istio-installation"
 spec:
@@ -64,7 +66,7 @@ spec:
 |origin
 |===
 
-## [[Istio]] Istio 
+## [[Istio]] Istio
 |===
 |Parameter |Description |Values | Default
 
@@ -81,14 +83,13 @@ spec:
 |prefix
 |a prefix to apply to Istio image names used in docker pull.
 |valid image repo
-|maistra if deployment_type is origin and openshift-istio-tech-preview if deployment_type is openshift 
+|maistra/ if deployment_type is origin and openshift-istio-tech-preview/ if deployment_type is openshift
 
 |version
 |docker tag to use with Istio images
 |valid docker tag
 |0.1.0
 |===
-
 
 ## [[Jaeger]] Jaeger
 |===
@@ -97,18 +98,18 @@ spec:
 |prefix
 |a prefix to apply to Jaeger image names used in docker pull.
 |valid image repo
-|maistra if deployment_type is origin and openshift-istio-tech-preview if deployment_type is openshift 
+|jaegertracing/ if deployment_type is origin and distributed-tracing-tech-preview/ if deployment_type is openshift
 
 
 |version
 |docker tag to use with Jaeger images
 |valid docker tag
-|v0.5.0
+|1.6.0
 
 |elasticsearch_memory
 |The amount of memory to allocate to the elastic search install
 |amount of memory to use (example: 1Gi, 512M)
-|512M
+|1Gi
 
 |===
 
