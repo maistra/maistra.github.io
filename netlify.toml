@@ -29,3 +29,10 @@ HUGO_VERSION = "0.46"
 [context.next.environment]
 HUGO_ENABLEGITINFO = "true"
 
+
+[[redirects]]
+from = "/blog/sources/rhdevel/*"
+to = "https://developers.redhat.com/blog/:splat"
+status =  200
+
+
