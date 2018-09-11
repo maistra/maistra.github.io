@@ -1,60 +1,59 @@
-<style>
-    pre {
-      background: rgba(160, 160, 160, 0.075);
-      border: solid rgba(160,160,160,0.3);
-      border-width: 2px;
+<script>
+    //getSummary returns the first 80 words of the provided article
+    function getSummary (article) {
+        let summary = article.split(" ");
+        summary = summary.slice(0, 80);
+        summary = summary.join(" ");
+        summary += "...";
+        return summary;
     }
 
-    </style>
-    <script src="../js/moment.min.js"></script>
-    <script src="../js/jquery.min.js"></script>
-    <script src="../js/jquery.rss.min.js"></script>
+    //getDate takes an RFC3339 date and returns a JavaScript date string from it
+    function getDate(isoDate) {
+            return new Date(Date.parse(isoDate)).toDateString();
+    }
+</script>
 
-    <script>
-        visible = []
-        function show(index) {
-            visible[index]=!visible[index]
-            if(visible[index]) {
-                document.getElementById("article_" + index + "_full").style.display = "block"
-                document.getElementById("article_" + index + "_part").style.display = "none"
-            } else {
-                document.getElementById("article_" + index + "_full").style.display = "none"
-                document.getElementById("article_" + index + "_part").style.display = "block"
-            }
-        }
-        jQuery(function($) {
-          $("#rss-feeds").rss("https://developers.redhat.com/blog/category/topics/service-mesh/feed/",
-          {
-           limit: 5,
-           dateFormat: 'MMMM Do, YYYY hh:mmA',
-           entryTemplate:'<article class="post"> \
-                <header> \
-                    <div class="title"> \
-                            <h1><a onclick="show({index})">{title}</a></h1> \
-                    </div> \
-                    <div class="meta"> \
-                            {date} \
-                        <span class="author">{author}</span> \
-                    </div> \
-                </header> \
-                \
-                <div id="article_{index}_full" style="display: none"> \
-                    {body} \
-                </div> \
-                <div id="article_{index}_part" style="display: block"> \
-                    {shortBody} \
-                </div> \
-                <footer> \
-                  <ul class="actions"> \
-                    <li><a onclick="show({index})" class="button big">Continue Reading</a></li> \
-                  </ul> \
-                </footer> \
-              </article>'
-          })
-        })
-      </script>
+<script src="{{ "js/rss-parser.min.js" | absURL }}"></script>
 
+<script>
+//Note: to debug locally, CORS Proxy must be set and the FEED_URL must be set to a full URL
+//See: https://github.com/bobby-brennan/rss-parser
+const FEED_URL = '/blog/sources/rhdevel/category/service-mesh/feed/atom/'
 
+let parser = new RSSParser();
+parser.parseURL(FEED_URL, function(err, feed) {
+    if (!feed || feed.items.length == 0) {
+        return
+    }
+  feed.items.forEach(function(entry) {
+      let newChild = document.createElement('div');
+      let link = entry.title.split(' ').join(''); //trim spaces from title so we can include it in the URL
+      newChild.innerHTML="<article class=\"post\"> \
+            <header> \
+                            <div class=\"title\"> \
+                                    <h1><a href=post/#" + link + ">" + entry.title + "</a></h1> \
+                            </div> \
+                            <div class=\"meta\"> \
+                                    " + getDate(entry.isoDate) + " \
+                                <span class=\"author\"> " + entry.author + " </span> \
+                            </div> \
+                        </header>" + 
+                        "<div id=\"article_{index}_part\" style=\"display: block\"> \
+                            " + getSummary(entry.content) + " \
+                        </div>" +
+                        "<footer>" + 
+                          "<ul class=\"actions\"> \
+                            <li><a href=post/#" + link + " class=\"button big\">Continue Reading</a></li> \
+                          </ul> \
+                        </footer> </article>";
+        
+        
+        appendElement("#rss-feeds", newChild);
+  })
+})
+
+</script>
 
     {{ partial "header" . }}
         <!-- Main -->
