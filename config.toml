@@ -53,7 +53,7 @@ copyright = "© This post is licensed under a Creative Commons Attribution-NonCo
   accent = "#006264"
   backgroundColor = "#f5f5f5"
   highlightLanguages = ["r", "bash", "go", "yaml"]
-  
+
   # Sets the meta tag description
   description          = "HTML5 UP theme, Future Imperfect with some extra goodies, ported by Julio Pescador. Powered by Hugo"
   # Sets the navbarTitle that appears in the top left of the navigation bar
@@ -104,12 +104,10 @@ copyright = "© This post is licensed under a Creative Commons Attribution-NonCo
 
   # options for highlight.js (version, additional languages, and theme)
   disable_highlight = false # set to true to disable Highlight
-  highlightjsVersion = "9.11.0"
+  highlightjsVersion = "9.12.0"
   highlightjsCDN = "//cdn.bootcss.com"
   highlightjsLang = ["r", "yaml", "css"]
   highlightjsTheme = "github"
-  MathJaxCDN = "//cdn.bootcss.com"
-  MathJaxVersion = "2.7.1"
 
 
 # Disqus will take priority over Staticman (github.com/eduardoboucas/staticman)

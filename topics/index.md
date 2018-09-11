@@ -1,5 +1,5 @@
 +++
-title = "About Maistra"
+title = "Maistra"
 type="index"
 +++
 

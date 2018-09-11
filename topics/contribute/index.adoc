@@ -4,7 +4,7 @@ title = "Contributing"
 
 Reporting Issues
 ----------------
-The Maistra team uses https://issues.jboss.org/projects/MAISTRA[Jira at JBoss.org] as its preferred tracker. Please submit issues there or to the corresponding GitHub repo listed below.
+Please report issues to https://issues.jboss.org/projects/MAISTRA[Jira].
 
 Sources
 -------

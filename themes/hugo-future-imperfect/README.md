@@ -21,7 +21,6 @@ interested in seeing a live example.
 	- [Hugo's Built-In Server](#hugos-built-in-server)
     - [Hugo's website SEO](#hugos-website-seo)
 - [Shortcodes](#shortcodes)
-	- [fancybox](#fancybox)
 	- [img-post](#img-post)
 	- [img-fit](#img-fit)
 	- [url-link](#url-link)
@@ -42,53 +41,6 @@ git clone https://github.com/jpescador/hugo-future-imperfect.git
 
 You will then have access to the theme at _themes/hugo-future-imperfect_ from within
 your project folder.
-
-### exampleSite
-
-Within the hugo-future-imperfect folder, there will be a folder in this theme called
-_exampleSite_. The structure of the folder will look like this:
-
-```
-exampleSite
-├── config.toml
-├── staticman.yml
-├── content
-|   ├── about
-|   |   └── _index.md
-|   ├── blog
-|   │   ├── creating-a-new-theme.md
-|   │   ├── goisforlovers.md
-|   │   ├── hugoisforlovers.md
-|   │   └── migrate-from-jekyll.md
-|   ├── contact
-|   │   └── _index.md
-|   └── itemized
-|       ├── item1.md
-|       ├── item2.md
-|       ├── item3.md
-|       └── item4.md
-├── data
-│   └── comments
-│       └── .gitkeep
-└── static
-    ├── css
-    │   └── add-on.css
-    ├── img
-    |   ├── 2014
-    |   |   ├── 04
-    |   |   |   ├── pic02.jpg
-    |   |   |   └── pic03.jpg
-    |   |   └── 09
-    |   |       └── pic01.jpg
-    |   └── main
-    |       └── logo.jpg
-    └── js
-        └── add-on.js
-```
-
-Copy _config.toml_ from _exampleSite_ to the root directory of your Hugo site.
-If you want static comments hosted by [Staticman](https://staticman.net/), also
-copy the _staticman.yml_.
 
 ### config.toml
 
@@ -119,7 +71,7 @@ You will then be able to view your live website at [localhost:1313](http://local
 ### Hugo's website SEO
 
 This theme support SEO elements for your website.
-It was adapted and integrated thanks to the following guide:  
+It was adapted and integrated thanks to the following guide:
 [https://keithpblog.org/post/hugo-website-seo/](https://keithpblog.org/post/hugo-website-seo/)
 
 If you wish to enable SEO on this theme, follow these instructions:
@@ -142,7 +94,7 @@ canonifyURLs = true
     - Submit the sitemap (/sitemap.xml) for indexing
     - Wait
 
-3. Add your website to Bing 
+3. Add your website to Bing
     - Login to the [Bing Webmaster Console](https://www.bing.com/toolbox/webmaster/)
     - Add your site, details and verify
     - From the 3 option, we recommend adding the xml file to you website
@@ -150,27 +102,8 @@ canonifyURLs = true
 ## Shortcodes
 In addition to the native [Hugo shortcodes](https://gohugo.io/extras/shortcodes/),
 the theme also includes the following codes that I hope you find useful:
-fancybox, img-post, img-fit, and url-link.
+img-post, img-fit, and url-link.
 
-### fancybox
-[Fancybox](http://fancyapps.com/fancybox/3/) is a jQuery lightbox script for displaying images, videos and more. It is touch
-enabled, responsive and fully customizable. The commands are shown below:
-
-**Named**
-```
-{{< fancybox path="path" file="file" caption="caption" gallery="gallery" >}}
-```
-
-**Positional**
-```
-{{< fancybox "path" "file" "caption" "gallery" >}}
-```
-
-Please refer to _layouts/shortcodes/fancybox.html_ for more details on the function.
-
-Credit: [pacollins]
-
----
 
 ### img-post
 Add an image which can be aligned center, left, or right. The commands are shown
