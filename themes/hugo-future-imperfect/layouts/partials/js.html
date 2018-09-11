@@ -2,7 +2,7 @@
 {{ $highVer := .Site.Params.highlightjsVersion }}
 {{ $highCDN := (.Site.Params.highlightjsCDN | default "//cdn.bootcss.com") }}
 <script src="{{ "js/highlight.min.js" | absURL}}"></script>
-<link rel="stylesheet" href="{{ "css/solarized-light.min.css" | absURL}}"></script>
+<link rel="stylesheet" href="{{ "css/solarized-light.min.css" | absURL}}">
 
 {{ range .Site.Params.highlightLanguages }}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/{{ $highVer }}/languages/{{ . }}.min.js"></script> 
