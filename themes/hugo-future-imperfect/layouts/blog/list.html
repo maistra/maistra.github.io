@@ -1,6 +1,7 @@
+ {{ partial "header" . }}
 <script>
     //getSummary returns the first 80 words of the provided article
-    function getSummary (article) {
+    function getSummary(article) {
         let summary = article.split(" ");
         summary = summary.slice(0, 80);
         summary = summary.join(" ");
@@ -10,26 +11,26 @@
 
     //getDate takes an RFC3339 date and returns a JavaScript date string from it
     function getDate(isoDate) {
-            return new Date(Date.parse(isoDate)).toDateString();
+        return new Date(Date.parse(isoDate)).toDateString();
     }
 </script>
 
 <script src="{{ "js/rss-parser.min.js" | absURL }}"></script>
 
 <script>
-//Note: to debug locally, CORS Proxy must be set and the FEED_URL must be set to a full URL
-//See: https://github.com/bobby-brennan/rss-parser
-const FEED_URL = '/blog/sources/rhdevel/category/service-mesh/feed/atom/'
+    //Note: to debug locally, CORS Proxy must be set and the FEED_URL must be set to a full URL
+    //See: https://github.com/bobby-brennan/rss-parser
+    const FEED_URL = '/blog/sources/rhdevel/category/service-mesh/feed/atom/'
 
-let parser = new RSSParser();
-parser.parseURL(FEED_URL, function(err, feed) {
-    if (!feed || feed.items.length == 0) {
-        return
-    }
-  feed.items.forEach(function(entry) {
-      let newChild = document.createElement('div');
-      let link = entry.title.split(' ').join(''); //trim spaces from title so we can include it in the URL
-      newChild.innerHTML="<article class=\"post\"> \
+    let parser = new RSSParser();
+    parser.parseURL(FEED_URL, function (err, feed) {
+        if (!feed || feed.items.length == 0) {
+            return
+        }
+        feed.items.forEach(function (entry) {
+            let newChild = document.createElement('div');
+            let link = entry.title.split(' ').join(''); //trim spaces from title so we can include it in the URL
+            newChild.innerHTML = "<article class=\"post\"> \
             <header> \
                             <div class=\"title\"> \
                                     <h1><a href=post/#" + link + ">" + entry.title + "</a></h1> \
@@ -38,26 +39,25 @@ parser.parseURL(FEED_URL, function(err, feed) {
                                     " + getDate(entry.isoDate) + " \
                                 <span class=\"author\"> " + entry.author + " </span> \
                             </div> \
-                        </header>" + 
-                        "<div id=\"article_{index}_part\" style=\"display: block\"> \
+                        </header>" +
+                "<div id=\"article_{index}_part\" style=\"display: block\"> \
                             " + getSummary(entry.content) + " \
                         </div>" +
-                        "<footer>" + 
-                          "<ul class=\"actions\"> \
+                "<footer>" +
+                "<ul class=\"actions\"> \
                             <li><a href=post/#" + link + " class=\"button big\">Continue Reading</a></li> \
                           </ul> \
                         </footer> </article>";
-        
-        
-        appendElement("#rss-feeds", newChild);
-  })
-})
+
+
+            appendElement("#rss-feeds", newChild);
+        })
+    })
 
 </script>
 
-    {{ partial "header" . }}
-        <!-- Main -->
-        <div id="main">
-                <div id="rss-feeds"></div>
-        </div>
-    {{ partial "footer" . }}
+<!-- Main -->
+<div id="main">
+    <div id="rss-feeds"></div>
+</div>
+{{ partial "footer" . }}
