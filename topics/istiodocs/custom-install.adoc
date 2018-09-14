@@ -1,8 +1,8 @@
 ---
-title: "Configuring Istio Operator"
+title: "Custom Installation"
 type: "document"
 category: "Getting started"
-description: "The Istio operator uses a custom resource to initialize your environment. This document describes the parameters and how to create a custom configuration for your environment"
+description: "Maistra uses a custom resource to initialize your environment. This document describes how to customize the installation to your specific environment."
 ---
 
 The istio-operator relies on a custom resource to set up Istio. This configuration gets passed to an ansible playbook which will then set up your environment.
@@ -42,6 +42,11 @@ spec:
     prefix: distributed-tracing-tech-preview/
     version: 1.6.0
     elasticsearch_memory: 1Gi
+  kiali:
+    username: username
+    password: password
+    prefix: kiali/
+    version: v0.7
   launcher:
     openshift:
       user: user
@@ -110,6 +115,33 @@ spec:
 |The amount of memory to allocate to the elastic search install
 |amount of memory to use (example: 1Gi, 512M)
 |1Gi
+
+|===
+
+## [[Kiali]] Kiali
+|===
+|Parameter |Description |Values |Default
+
+|username
+|username to use with Kiali
+|valid user
+|
+
+|password
+|password to use with Kiali
+|valid password
+|
+
+|prefix
+|a prefix to apply to Kiali image names used in docker pull.
+|valid image repo
+|kiali/
+
+
+|version
+|docker tag to use with Kiali images
+|valid Kiali tag
+|0.7
 
 |===
 

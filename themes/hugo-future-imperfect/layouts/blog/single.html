@@ -1,96 +1,94 @@
+{{ partial "header" . }}
 <style>
     pre {
-      background: rgba(160, 160, 160, 0.075);
-      border: solid rgba(160,160,160,0.3);
-      border-width: 2px;
+        background: rgba(160, 160, 160, 0.075);
+        border: solid rgba(160, 160, 160, 0.3);
+        border-width: 2px;
     }
-
 </style>
 
 <script src="{{ "js/rss-parser.min.js" | absURL }}"></script>
 <script>
-        let unavailableTitle = "Article Not found";
-        let unavailableMessage = "Unfortunately, this article is no longer available. You can view other articles by clicking <a href=\"/blog\">here</a>";
-        function initialParseHash() {
-          hash = window.location.hash;
-          if(hash) {
-             parseHash(hash)
-          } else {
-              setArticle(unavailableTitle, unavailableMessage);
-          }
+    let unavailableTitle = "Article Not found";
+    let unavailableMessage = "Unfortunately, this article is no longer available. You can view other articles by clicking <a href=\"/blog\">here</a>";
+    function initialParseHash() {
+        hash = window.location.hash;
+        if (hash) {
+            parseHash(hash)
+        } else {
+            setArticle(unavailableTitle, unavailableMessage, "");
         }
+    }
 
-          function parseHash(hash) {
-             let found = false;
-              hash = hash.substring(1); //trim # at beginning
-              if(articles) {
-                  articles.items.forEach(function(entry) {
-                      title = getTitle(entry.title)
-                      if (hash == title) {
-                         setArticle(entry.title, entry.content);
-                         found = true;
-                         return;
-                      }
-              })
-              }
-              if (!found) {
-                setArticle(unavailableTitle, unavailableMessage);
-              }
-          }
-          
-         
-          function setArticle(title,content) {
-              document.title = title;
-              setElement("#article-title", title);
-              setElement("#article-content", content)
-          }
+    function parseHash(hash) {
+        let found = false;
+        hash = hash.substring(1); //trim # at beginning
+        if (articles) {
+            articles.items.forEach(function (entry) {
+                title = getTitle(entry.title)
+                if (hash == title) {
+                    setArticle(entry.title, entry.content, entry.author);
+                    found = true;
+                    return;
+                }
+            })
+        }
+        if (!found) {
+            setArticle(unavailableTitle, unavailableMessage, "");
+        }
+    }
 
-          window.onhashchange = function() {
-              parseHash(window.location.hash)
-              }
-      </script>
+
+    function setArticle(title, content, author) {
+        document.title = title;
+        setElement("#article-title", title);
+        setElement("#article-content", content)
+        setElement("#article-author", author)
+    }
+
+    window.onhashchange = function () {
+        parseHash(window.location.hash)
+    }
+</script>
 <script>
 
-        function getTitle(str) {
-            return str.split(' ').join(''); //remove all spaces from the title
-        }
+    function getTitle(str) {
+        return str.split(' ').join(''); //remove all spaces from the title
+    }
 
-        var articles;
-        // Note: some RSS feeds can't be loaded in the browser due to CORS security.
-        // To get around this, you can use a proxy.
-        const CORS_PROXY = ""
+    var articles;
+    // Note: some RSS feeds can't be loaded in the browser due to CORS security.
+    // To get around this, you can use a proxy.
+    const FEED_URL = '/blog/sources/rhdevel/category/service-mesh/feed/atom/'
 
-        let parser = new RSSParser();
-        parser.parseURL(CORS_PROXY + '/blog/sources/rhdevel/category/service-mesh/feed/atom/', function(err, feed) {
-          articles = feed;
-          initialParseHash();
-        })
-        
-        </script>
-{{ partial "header" . }}
+
+    let parser = new RSSParser();
+    parser.parseURL( FEED_URL, function (err, feed) {
+        articles = feed;
+        initialParseHash();
+    })
+
+</script>
+
 <div class="row">
     <div class="col-12">
         <!-- Main -->
         <div id="main">
-
             <article class="post">
-                    <article class="post">
-                            <header>
-                                    <div class="title">
-                                        <h1 id="article-title"></h1>
-                                    </div>
-                                </header>
-                                
-                            <div id="article-content">
-                              {{ .Content }}
-                            </div>
-                          
-                            <footer>
-                              {{ .Render "footer-category" }}
-                            </footer>
-                          
-                          </article>
+                <header>
+                    <div class="title">
+                        <h1 id="article-title"></h1>
+                        <h5 id="article-author"></h5>
+                    </div>
+                </header>
+
+                <div id="article-content">
+                    {{ .Content }}
                 </div>
+
+                <footer>
+                    {{ .Render "footer-category" }}
+                </footer>
             </article>
         </div>
     </div>
