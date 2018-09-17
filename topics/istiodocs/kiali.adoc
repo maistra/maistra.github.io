@@ -12,7 +12,7 @@ update your link:{{< ref "custom-install.adoc" >}}[operator configuration]   to 
 What is Kiali
 -------------
 Kiali is a frontend for Maistra that will allow you to manage and monitor your mesh from a single UI. This UI will 
-allow you to edit configurations, monitor traffic flow and health, and analyze traces. 
+allow you to view configurations, monitor traffic flow and health, and analyze traces. 
 
 {empty} +
 
