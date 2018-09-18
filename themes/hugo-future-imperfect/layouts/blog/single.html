@@ -16,7 +16,7 @@
         if (hash) {
             parseHash(hash)
         } else {
-            setArticle(unavailableTitle, unavailableMessage);
+            setArticle(unavailableTitle, unavailableMessage, "");
         }
     }
 
@@ -27,22 +27,22 @@
             articles.items.forEach(function (entry) {
                 title = getTitle(entry.title)
                 if (hash == title) {
-                    setArticle(entry.title, entry.content);
+                    setArticle(entry.title, entry.content, entry.author);
                     found = true;
                     return;
                 }
             })
         }
         if (!found) {
-            setArticle(unavailableTitle, unavailableMessage);
+            setArticle(unavailableTitle, unavailableMessage, "");
         }
     }
 
-
-    function setArticle(title, content) {
+    function setArticle(title, content, author) {
         document.title = title;
         setElement("#article-title", title);
         setElement("#article-content", content)
+        setElement("#article-author", author)
     }
 
     window.onhashchange = function () {
@@ -77,6 +77,7 @@
                 <header>
                     <div class="title">
                         <h1 id="article-title"></h1>
+                        <h5 id="article-author"></h5>
                     </div>
                 </header>
 

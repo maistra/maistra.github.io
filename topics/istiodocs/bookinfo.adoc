@@ -1,5 +1,5 @@
 ---
-title: "Installing Bookinfo"
+title: "Bookinfo"
 type: "document"
 category: "Examples"
 description: "Bookinfo is an example application that shows you how to set up and monitor a service mesh using Istio."
