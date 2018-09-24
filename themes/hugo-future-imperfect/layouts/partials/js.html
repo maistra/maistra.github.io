@@ -52,25 +52,35 @@
     }
 
     /* appendElement appends the specified value to the element with name elementName*/
-    function appendElement(elementName, value) {
-        performOnElementAvailable(elementName, value, function (element, value) {
-//            console.log("Element: ", element.childNodes)
-            
+    function appendElement(elementName, value, date) {
+        performOnElementAvailable(elementName, value, function (element, value) {          
             if(element.childNodes && element.childNodes.length) {
-                element.childNodes.forEach(function (entry) {
-                    console.log("Element:", element)
+                for(let i=0; i < element.childNodes.length; i++) {
+                    let child = element.childNodes[i];
                     if (entry.firstChild) {
-                        console.log("First child", entry.firstChild)
                         let publishDate = entry.firstChild.getAttribute("data-date")
-                        console.log("Publish date_1:", publishDate)
-                        console.log("Class:", entry.firstChild.getAttribute("class"))
                         if(publishDate) {
-                            console.log("Publish date:", publishDate)
+                            console.log("Current date:", publishDate)
+                            if(!childNodes[i+1]) {
+                                console.log("No next node");
+                                element.append(value);
+                                return;
+                            } else {
+                                nextDate = childNodes[i+1].getAttribute("data-date")
+                                console.log("Next date:", nextDate)
+                                if(nextDate && date < nextDate) {
+                                    console.log("Found our position");
+                                    element.append(value);
+                                    return
+                                }
+                            }
+                            console.log("Next date", element.childNodes[i])
+
                         }
                     } else {
                         console.log("Firstchild does not exist")
                     }
-                });
+                }
             } else {
                 element.append(value);
             }
