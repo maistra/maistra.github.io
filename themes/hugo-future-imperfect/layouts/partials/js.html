@@ -60,8 +60,10 @@
                 element.childNodes.forEach(function (entry) {
                     console.log("Element:", element)
                     if (entry.firstChild) {
-                        console.log(entry.firstChild)
-                        publishDate = firstChild.getAttribute("data-date")
+                        console.log("First child", entry.firstChild)
+                        let publishDate = entry.firstChild.getAttribute("data-date")
+                        console.log("Publish date_1:", publishDate)
+                        console.log("Class:", entry.firstChild.getAttribute("class"))
                         if(publishDate) {
                             console.log("Publish date:", publishDate)
                         }
