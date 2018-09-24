@@ -60,7 +60,7 @@
                     let child = element.childNodes[i];
                     if (child.firstChild) {
                         let published = child.firstChild.getAttribute("data-date")
-                        let publishDate = new Date(publishDate);
+                        let publishDate = new Date(published);
                         if(publishDate) {
                             if(!element.childNodes[i+1]) {
                                 console.log(articleDate, " belongs at the end.");
