@@ -20,8 +20,15 @@
 <script>
     //Note: to debug locally, CORS Proxy must be set and the FEED_URL must be set to a full URL
     //See: https://github.com/bobby-brennan/rss-parser
-    function appendArticle(entry) {
-        let newChild = document.createElement('div');
+    function addFeed(FEED_URL) {
+        let parser = new RSSParser();
+        parser.parseURL(FEED_URL, function (err, feed) {
+            if (!feed || feed.items.length == 0) {
+                return
+            }
+            console.log(FEED_URL, ":", feed)
+            feed.items.forEach(function (entry) {
+                let newChild = document.createElement('div');
                 let link = entry.content?entry.title.split(' ').join(''):entry.link; //trim spaces from title so we can include it in the URL
                 let summary = entry.summary?entry.summary:getSummary(entry.content)
                 let date = getDate(entry.isoDate);
@@ -43,19 +50,7 @@
                             <li><a href=post/#" + link + " class=\"button big\">Continue Reading</a></li> \
                           </ul> \
                         </footer> </article>";
-                appendElement("#rss-feeds", newChild);
-    }
-
-    function addFeed(FEED_URL) {
-        let parser = new RSSParser();
-        parser.parseURL(FEED_URL, function (err, feed) {
-            if (!feed || feed.items.length == 0) {
-                return
-            }
-            console.log(FEED_URL, ":", feed)
-            feed.items.forEach(function (entry) {
-                /* Need date so we can sort by it... id? */
-                appendArticle(entry);
+                appendElement("#rss-feeds", newChild, date);
             })
         })
     }
