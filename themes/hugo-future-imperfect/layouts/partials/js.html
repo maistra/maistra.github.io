@@ -68,7 +68,7 @@
                                 return;
                             } else {
                                 let nextDate = new Date(element.childNodes[i+1].firstChild.getAttribute("data-date"))
-                                if(nextDate && articleDate < nextDate) {
+                                if(nextDate && articleDate > nextDate) {
                                     console.log(articleDate, " belongs between ", publishDate, " and ", nextDate, "gNext", articleDate < nextDate, "GPub", articleDate > publishDate);
                                     element.append(value);
                                     return
