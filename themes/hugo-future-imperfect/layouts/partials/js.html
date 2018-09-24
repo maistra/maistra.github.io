@@ -58,6 +58,7 @@
             
             if(element.childNodes && element.childNodes.length) {
                 element.childNodes.forEach(function (entry) {
+                    console.log("Element:", element)
                     if (entry.firstChild) {
                         console.log(entry.firstChild)
                         publishDate = firstChild.getAttribute("data-date")
