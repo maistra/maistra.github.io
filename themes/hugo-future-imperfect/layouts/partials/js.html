@@ -2,7 +2,7 @@
 {{ $highVer := .Site.Params.highlightjsVersion }}
 {{ $highCDN := (.Site.Params.highlightjsCDN | default "//cdn.bootcss.com") }}
 <script src="{{ "js/highlight.min.js" | absURL}}"></script>
-<link rel="stylesheet" href="{{ "css/solarized-light.min.css" | absURL}}"></script>
+<link rel="stylesheet" href="{{ "css/solarized-light.min.css" | absURL}}">
 
 {{ range .Site.Params.highlightLanguages }}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/{{ $highVer }}/languages/{{ . }}.min.js"></script> 
@@ -54,7 +54,23 @@
     /* appendElement appends the specified value to the element with name elementName*/
     function appendElement(elementName, value) {
         performOnElementAvailable(elementName, value, function (element, value) {
-            element.append(value);
+//            console.log("Element: ", element.childNodes)
+            
+            if(element.childNodes && element.childNodes.length) {
+                element.childNodes.forEach(function (entry) {
+                    if (entry.firstChild) {
+                        console.log(entry.firstChild)
+                        publishDate = firstChild.getAttribute("data-date")
+                        if(publishDate) {
+                            console.log("Publish date:", publishDate)
+                        }
+                    } else {
+                        console.log("Firstchild does not exist")
+                    }
+                });
+            } else {
+                element.append(value);
+            }
         })
     }
 </script>

@@ -35,4 +35,7 @@ from = "/blog/sources/rhdevel/*"
 to = "https://developers.redhat.com/blog/:splat"
 status =  200
 
-
+[[redirects]]
+from = "/blog/sources/openshift/*"
+to = "https://blog.openshift.com/:splat"
+status = 200
