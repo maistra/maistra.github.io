@@ -67,13 +67,11 @@
                             } else {
                                 nextDate = element.childNodes[i+1].firstChild.getAttribute("data-date")
                                 if(nextDate && date < nextDate) {
-                                    console.log(date, " belongs between ", publishDate, " and ", nextDate);
+                                    console.log(date, " belongs between ", publishDate, " and ", nextDate, "gNext", date < nextDate, "GPub", date > publishDate);
                                     element.append(value);
                                     return
                                 }
                             }
-                            console.log("Next date", element.childNodes[i])
-
                         }
                     } else {
                         console.log("Firstchild does not exist")
