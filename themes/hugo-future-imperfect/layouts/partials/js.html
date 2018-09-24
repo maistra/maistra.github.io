@@ -60,16 +60,14 @@
                     if (child.firstChild) {
                         let publishDate = child.firstChild.getAttribute("data-date")
                         if(publishDate) {
-                            console.log("Current date:", publishDate)
                             if(!element.childNodes[i+1]) {
-                                console.log("No next node");
+                                console.log(date, " belongs at the end.");
                                 element.append(value);
                                 return;
                             } else {
                                 nextDate = element.childNodes[i+1].firstChild.getAttribute("data-date")
-                                console.log("Next date:", nextDate)
                                 if(nextDate && date < nextDate) {
-                                    console.log("Found our position");
+                                    console.log(date, " belongs between ", publishDate, " and ", nextDate);
                                     element.append(value);
                                     return
                                 }
