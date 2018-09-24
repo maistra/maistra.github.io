@@ -53,21 +53,23 @@
 
     /* appendElement appends the specified value to the element with name elementName*/
     function appendElement(elementName, value, date) {
+        articleDate = new Date(date)
         performOnElementAvailable(elementName, value, function (element, value) {          
             if(element.childNodes && element.childNodes.length) {
                 for(let i=0; i < element.childNodes.length; i++) {
                     let child = element.childNodes[i];
                     if (child.firstChild) {
-                        let publishDate = child.firstChild.getAttribute("data-date")
+                        let published = child.firstChild.getAttribute("data-date")
+                        let publishDate = new Date(publishDate);
                         if(publishDate) {
                             if(!element.childNodes[i+1]) {
-                                console.log(date, " belongs at the end.");
+                                console.log(articleDate, " belongs at the end.");
                                 element.append(value);
                                 return;
                             } else {
-                                nextDate = element.childNodes[i+1].firstChild.getAttribute("data-date")
-                                if(nextDate && new Date(date) < new Date(nextDate)) {
-                                    console.log(date, " belongs between ", publishDate, " and ", nextDate, "gNext", date < nextDate, "GPub", date > publishDate);
+                                let nextDate = new Date(element.childNodes[i+1].firstChild.getAttribute("data-date"))
+                                if(nextDate && articleDate < nextDate) {
+                                    console.log(articleDate, " belongs between ", publishDate, " and ", nextDate, "gNext", articleDate < nextDate, "GPub", articleDate > publishDate);
                                     element.append(value);
                                     return
                                 }
