@@ -37,7 +37,7 @@ spec:
     authentication: true
     community: false
     prefix: openshift-istio-tech-preview/
-    version: 0.1.0
+    version: 0.2.0
   jaeger:
     prefix: distributed-tracing-tech-preview/
     version: 1.6.0
@@ -93,7 +93,7 @@ spec:
 |version
 |docker tag to use with Istio images
 |valid docker tag
-|0.1.0
+|0.2.0
 |===
 
 ## [[Jaeger]] Jaeger
@@ -123,13 +123,13 @@ spec:
 |Parameter |Description |Values |Default
 
 |username
-|username to use with Kiali
-|valid user
+|username to use with Kiali. Note that this is not related to any account on OpenShift
+|
 |
 
 |password
-|password to use with Kiali
-|valid password
+|password to use with Kiali. Note that this is not related to any account on OpenShift.
+|
 |
 
 |prefix
