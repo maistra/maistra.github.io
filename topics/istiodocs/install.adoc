@@ -1,0 +1,265 @@
+= Istio Installation Guide
+:toc:
+
+Guide for installing Istio into an exciting OpenShift Conatiner Platform (OCP) and instantiating an Istio-deployed OpenShift Origin cluster
+
+== Supported Configurations
+
+- OpenShift Container Platform (OCP) 3.10
+- istiooc (https://github.com/Maistra/origin/releases/tag/v3.10.0%2Bmaistra-0.1.0)
+(https://docs.openshift.com/container-platform/3.10/install/prerequisites.html)
+- NOTE: OpenShift Online and OpenShift Dedicated are not supported in the 0.1.0 Istio Tech Preview
+
+== Installation Custom Resource
+
+In order to deploy the Istio Control Plane we need to deploy a custom resource such as the following example which demonstrates the configuration options supported by the operator.  The custom resource *must* be deployed into the `istio-operator` namespace and *must* be called `istio-installation`.
+A complete example containing all of the supported parameters is below. This deploy the RHEL-based Tech Preview Istio images.
+
+```
+apiVersion: "istio.openshift.com/v1alpha1"
+kind: "Installation"
+metadata:
+  name: "istio-installation"
+spec:
+  deployment_type: openshift
+  istio:
+    authentication: true
+    community: false
+    prefix: openshift-istio-tech-preview/
+    version: 0.1.0
+  jaeger:
+    prefix: distributed-tracing-tech-preview/
+    version: 1.6.0
+    elasticsearch_memory: 1Gi
+  launcher:
+    openshift:
+      user: user
+      password: password
+    github:
+      username: username
+      token: token
+    catalog:
+      filter: filter
+      branch: branch
+      repo: repo
+```
+
+The minimal custom resource required to install an Istio Control Plane is as follows
+This will deploy the CENTOS-based community Istio images.
+
+```
+apiVersion: "istio.openshift.com/v1alpha1"
+kind: "Installation"
+metadata:
+  name: "istio-installation"
+```
+
+== Install Istio into Existing OCP Environment
+
+=== Preparing the OCP 3.10 Installation
+
+Before Istio can be installed into an OCP 3.10 installation it is necessary to make a number of changes to the master configuration and each of the schedulable nodes.  These changes will enable features required within Istio and also ensure Elasticsearch will function correctly.
+
+=== Updating the Master
+
+If manual sidecar injection (i.e. kube-inject) is used this section may be skipped.
+
+To enable the automatic injection of the Istio sidecar we first need to modify the master configuration on each master to include support for webhooks and signing of Certificate Signing Requests (CSRs).
+Then each individual Deployment requiring automatic injection needs to be modified.
+
+First, make the following changes on each master within your OCP 3.10 installation.
+
+- Change to the directory containing the master configuration file (e.g. /etc/origin/master/master-config.yaml)
+- Create a file named master-config.patch with the following contents (also in `master-config.patch`)
+
+```
+admissionConfig:
+  pluginConfig:
+    MutatingAdmissionWebhook:
+      configuration:
+        apiVersion: v1
+        disable: false
+        kind: DefaultAdmissionConfig
+    ValidatingAdmissionWebhook:
+      configuration:
+        apiVersion: v1
+        disable: false
+        kind: DefaultAdmissionConfig
+```
+
+- Within the same directory issue the following commands:
+
+```
+cp -p master-config.yaml master-config.yaml.prepatch
+oc ex config patch master-config.yaml.prepatch -p "$(cat master-config.patch)" > master-config.yaml
+master-restart api
+master-restart controllers
+```
+
+Second, each individual Deployment requiring automatic injection needs to contain sidecar.istio.io/inject: "true":
+
+```
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: ignored
+spec:
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "true"
+    spec:
+      containers:
+```
+
+=== Updating the Nodes
+
+In order to run the Elasticsearch application it is necessary to make a change to the kernel configuration on each node, this change will be handled through the `sysctl` service.
+
+Make the following changes on each node within your OCP 3.10 installation
+
+- Create a file named `/etc/sysctl.d/99-elasticsearch.conf` with the following contents:
+
+`vm.max_map_count = 262144`
+
+- Execute the following command:
+
+```
+sysctl vm.max_map_count=262144
+```
+
+=== Installing the Istio Operator
+
+The Maistra installation process introduces a Kubernetes operator to manage the installation of the Istio control plane within the istio-system namespace.  This operator defines and monitors a custom resource related to the deployment, update and deletion of the Istio control plane.
+
+The templates are available at: https://github.com/Maistra/openshift-ansible/tree/maistra-0.1.0-ocp-3.1.0-istio-1.0.0/istio
+
+The following steps will install the Maistra operator into an existing OCP 3.10 installation, these can be executed from any host with access to the cluster.  Please ensure you are logged in as a cluster admin before executing the following
+
+```
+oc new-project istio-operator
+oc new-app -f istio_product_operator_template.yaml --param=OPENSHIFT_ISTIO_MASTER_PUBLIC_URL=<master public url>
+```
+
+=== Verifying Installation
+
+The above instructions will create a new deployment within the istio-operator project, executing the operator responsible for managing the state of the Istio control plane through the custom resource.
+
+To verify the operator is installed correctly, locate the pod using the following command
+
+```
+oc -n istio-operator get pods
+```
+
+Access the logs from the pod with the following command, replacing `<pod name>` with the name of the pod discovered above
+
+```
+oc logs -n istio-operator <pod name>
+```
+
+and look for output similar to the following
+
+```
+time="2018-08-14T20:00:18Z" level=info msg="Go Version: go1.9.7"
+time="2018-08-14T20:00:18Z" level=info msg="Go OS/Arch: linux/amd64"
+time="2018-08-14T20:00:18Z" level=info msg="operator-sdk Version: 0.0.5+git"
+time="2018-08-14T20:00:18Z" level=info msg="Metrics service istio-operator created"
+time="2018-08-14T20:00:18Z" level=info msg="Watching resource istio.openshift.com/v1alpha1, kind Installation, namespace istio-operator, resyncPeriod 0"
+```
+
+=== Deploying the Istio Control plane
+
+```
+oc -n istio-operator create -f cr.yaml
+```
+
+=== Verifying the Istio Control Plane
+
+The operator will create the `istio-system` namespace and run the installer job, this job will set up the Istio control plane using Ansible playbooks.  The progress of the installation can be followed by either watching the pods or the log output from the `openshift-ansible-istio-installer-job` pod.
+
+To watch the progress of the pods execute the following command:
+
+```
+oc get pods -n istio-system -w
+```
+
+Once the `openshift-ansible-istio-installer-job` has completed run `oc get pods -n istio-system` and verify you have state similar to the following"
+
+```
+NAME                                          READY     STATUS      RESTARTS   AGE
+elasticsearch-0                               1/1       Running     0          2m
+grafana-6d5c5477-k7wrh                        1/1       Running     0          2m
+istio-citadel-6f9c778bb6-q9tg9                1/1       Running     0          3m
+istio-egressgateway-957857444-2g84h           1/1       Running     0          3m
+istio-galley-c47f5dffc-dm27s                  1/1       Running     0          3m
+istio-ingressgateway-7db86747b7-s2dv9         1/1       Running     0          3m
+istio-pilot-5646d7786b-rh54p                  2/2       Running     0          3m
+istio-policy-7d694596c6-pfdzt                 2/2       Running     0          3m
+istio-sidecar-injector-57466d9bb-4cjrs        1/1       Running     0          3m
+istio-statsd-prom-bridge-7f44bb5ddb-6vx7n     1/1       Running     0          3m
+istio-telemetry-7cf7b4b77c-p8m2k              2/2       Running     0          3m
+jaeger-agent-5mswn                            1/1       Running     0          2m
+jaeger-collector-9c9f8bc66-j7kjv              1/1       Running     0          2m
+jaeger-query-fdc6dcd74-99pnx                  1/1       Running     0          2m
+openshift-ansible-istio-installer-job-f8n9g   0/1       Completed   0          7m
+prometheus-84bd4b9796-2vcpc                   1/1       Running     0          3m
+```
+
+If you have also chosen to install the Fabric8 launcher you should monitor the containers within the devex project until the following state has been reached:
+
+```
+NAME                          READY     STATUS    RESTARTS   AGE
+configmapcontroller-1-8rr6w   1/1       Running   0          1m
+launcher-backend-2-2wg86      1/1       Running   0          1m
+launcher-frontend-2-jxjsd     1/1       Running   0          1m
+```
+
+=== Removing Istio
+
+The following step will remove Istio from an existing installation, it can be executed from any host with access to the cluster.
+
+```
+oc delete -n istio-operator installation istio-installation
+```
+
+=== Removing Operator
+
+In order to cleanly remove the operator execute the following:
+
+```
+oc process -f istio_product_operator_template.yaml | oc delete -f -
+```
+
+=== Upgrading from a Pre-Existing Installation
+
+If there is an existing, pre-0.1.0 Istio istallation then that installation must be removed prior to installing the 0.1.0 Tech Preview. Either of the following steps will remove the pre-existing installation.
+
+```
+oc process -f istio_removal_template.yaml | oc create -f -
+```
+
+or
+
+```
+oc delete project istio-system
+oc delete csr istio-sidecar-injector.istio-system
+oc get crd  | grep istio | awk '{print $1}' | xargs oc delete crd
+oc get mutatingwebhookconfigurations  | grep istio | awk '{print $1}' | xargs oc delete mutatingwebhookconfigurations
+oc get validatingwebhookconfiguration  | grep istio | awk '{print $1}' | xargs oc delete validatingwebhookconfiguration
+oc get clusterroles  | grep istio | awk '{print $1}' | xargs oc delete clusterroles
+oc get clusterrolebindings  | grep istio | awk '{print $1}' | xargs oc delete clusterrolebindings
+```
+
+== Instantiate Istio-Deployed Origin Cluster
+
+To create an Origin Kuberetes Distribution (OKD) cluster instance with deployed Istio following these steps. This will deploy the CENTOS-based Istio community images.
+
+- Download istiooc from:
+  https://github.com/Maistra/origin/releases. Then execute the following:
+- Create an Installation Custom Resource file cr.yaml as described above using the minimum configuration or deployment_type: origin and prefix: maistra
+- Execute the following:
+```
+istiooc cluster up --enable="*,istio"
+istiooc login -u system:admin
+istiooc -n istio-operator create -f cr.yaml
+```
