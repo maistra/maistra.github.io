@@ -13,7 +13,7 @@ The following steps describe deployment of Bookinfo application on Maistra runni
 Before you Begin
 ----------------
 
-Install Maistra by following the instructions here <<<add link>>>.
+Install Maistra by following the instructions link:../install[here].
 
 
 Update Security Context Constraints

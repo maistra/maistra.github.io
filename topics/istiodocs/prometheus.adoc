@@ -10,8 +10,8 @@ description: "Use Istio and Prometheus to collect and examine metrics in your se
 Before you Begin
 ----------------
 
-. Install Maistra by following the instructions here <<<add link>>>.
-. Deploy Bookinfo application by following these link:../bookinfo[instructions].  
+. Install Maistra by following the instructions here link:../install[here].
+. Deploy Bookinfo application by following these link:../bookinfo[instructions].
 
 
 Querying Metrics
@@ -55,4 +55,4 @@ Note that returned metric names need to be prepended with `istio_` when used in 
 Cleanup
 -------
 
-Follow link:../bookinfo/#cleanup[Bookinfo cleanup instructions] to remove the application. 
+Follow link:../bookinfo/#cleanup[Bookinfo cleanup instructions] to remove the application.
