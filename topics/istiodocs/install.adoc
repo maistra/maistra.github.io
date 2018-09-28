@@ -54,19 +54,6 @@ spec:
       branch: v62
       repo: https://github.com/fabric8-launcher/launcher-booster-catalog.git
 ```
-[NOTE]
-.Custom Resource Configuration Parameters
-=========================================
-The following keys must be configured using values appropriate to your installation
-```
-- kiali/username
-- kiali/password
-- launcher/openshift/user
-- launcher/openshift/password
-- launcher/github/username
-- launcher/github/token
-```
-=========================================
 
 The minimal custom resource required to install an Istio Control Plane is as follows,
 this will deploy a control plane using the CENTOS-based community Istio images.
@@ -146,7 +133,7 @@ sysctl vm.max_map_count=262144
 
 The Maistra installation process introduces a Kubernetes operator to manage the installation of the Istio control plane within the istio-system namespace.  This operator defines and monitors a custom resource related to the deployment, update and deletion of the Istio control plane.
 
-The templates are available at: https://github.com/Maistra/openshift-ansible/tree/maistra-0.1.0-ocp-3.1.0-istio-1.0.0/istio
+The templates are available at: https://github.com/Maistra/openshift-ansible/tree/maistra-0.2.0-ocp-3.1.0-istio-1.0.2/istio
 
 The following steps will install the Maistra operator into an existing OCP 3.10 installation, these can be executed from any host with access to the cluster.  Please ensure you are logged in as a cluster admin before executing the following
 
