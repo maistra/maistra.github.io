@@ -1,19 +1,25 @@
+---
+title: "Istio Installation Guide"
+type: "document"
+category: "Getting started"
+description: "This document describes how to install the Istio operator and how to create a custom resource to configure and install an Istio control plane into your OpenShift installation."
+---
 = Istio Installation Guide
 :toc:
 
-Guide for installing Istio into an exciting OpenShift Conatiner Platform (OCP) and instantiating an Istio-deployed OpenShift Origin cluster
+Guide for installing Istio into an existing OpenShift Container Platform (OCP) and instantiating an Istio-deployed OpenShift Origin cluster
 
 == Supported Configurations
 
 - OpenShift Container Platform (OCP) 3.10
-- istiooc (https://github.com/Maistra/origin/releases/tag/v3.10.0%2Bmaistra-0.1.0)
+- istiooc (https://github.com/Maistra/origin/releases/tag/v3.10.0%2Bmaistra-0.2.0)
 (https://docs.openshift.com/container-platform/3.10/install/prerequisites.html)
-- NOTE: OpenShift Online and OpenShift Dedicated are not supported in the 0.1.0 Istio Tech Preview
+- NOTE: OpenShift Online and OpenShift Dedicated are not supported in the 0.2.0 Istio Tech Preview
 
-== Installation Custom Resource
+== Installing the Custom Resource
 
-In order to deploy the Istio Control Plane we need to deploy a custom resource such as the following example which demonstrates the configuration options supported by the operator.  The custom resource *must* be deployed into the `istio-operator` namespace and *must* be called `istio-installation`.
-A complete example containing all of the supported parameters is below. This deploy the RHEL-based Tech Preview Istio images.
+In order to deploy the Istio Control Plane we need to create a custom resource such as the one in the following example which demonstrates the configuration options supported by the operator.  The custom resource *must* be deployed into the `istio-operator` namespace and *must* be called `istio-installation`. This will deploy the RHEL-based Tech Preview Istio images.
+
 
 ```
 apiVersion: "istio.openshift.com/v1alpha1"
@@ -26,11 +32,16 @@ spec:
     authentication: true
     community: false
     prefix: openshift-istio-tech-preview/
-    version: 0.1.0
+    version: 0.2.0
   jaeger:
     prefix: distributed-tracing-tech-preview/
-    version: 1.6.0
+    version: 1.7.0
     elasticsearch_memory: 1Gi
+  kiali:
+    prefix: openshift-istio-tech-preview/
+    version: 0.7.2
+    username: username
+    password: password
   launcher:
     openshift:
       user: user
@@ -39,19 +50,38 @@ spec:
       username: username
       token: token
     catalog:
-      filter: filter
-      branch: branch
-      repo: repo
+      filter: booster.mission.metadata.istio
+      branch: v62
+      repo: https://github.com/fabric8-launcher/launcher-booster-catalog.git
 ```
+[NOTE]
+.Custom Resource Configuration Parameters
+=========================================
+The following keys must be configured using values appropriate to your installation
+```
+- kiali/username
+- kiali/password
+- launcher/openshift/user
+- launcher/openshift/password
+- launcher/github/username
+- launcher/github/token
+```
+=========================================
 
-The minimal custom resource required to install an Istio Control Plane is as follows
-This will deploy the CENTOS-based community Istio images.
+The minimal custom resource required to install an Istio Control Plane is as follows,
+this will deploy a control plane using the CENTOS-based community Istio images.
 
 ```
 apiVersion: "istio.openshift.com/v1alpha1"
 kind: "Installation"
 metadata:
   name: "istio-installation"
+```
+
+Once you have modified the custom resource to suit your installation you can deploy the resource using the following command
+
+```
+oc create -n istio-operator -f <name of file>
 ```
 
 == Install Istio into Existing OCP Environment
@@ -70,7 +100,7 @@ Then each individual Deployment requiring automatic injection needs to be modifi
 First, make the following changes on each master within your OCP 3.10 installation.
 
 - Change to the directory containing the master configuration file (e.g. /etc/origin/master/master-config.yaml)
-- Create a file named master-config.patch with the following contents (also in `master-config.patch`)
+- Create a file named master-config.patch with the following contents
 
 ```
 admissionConfig:
@@ -94,22 +124,6 @@ cp -p master-config.yaml master-config.yaml.prepatch
 oc ex config patch master-config.yaml.prepatch -p "$(cat master-config.patch)" > master-config.yaml
 master-restart api
 master-restart controllers
-```
-
-Second, each individual Deployment requiring automatic injection needs to contain sidecar.istio.io/inject: "true":
-
-```
-apiVersion: extensions/v1beta1
-kind: Deployment
-metadata:
-  name: ignored
-spec:
-  template:
-    metadata:
-      annotations:
-        sidecar.istio.io/inject: "true"
-    spec:
-      containers:
 ```
 
 === Updating the Nodes
@@ -140,6 +154,11 @@ The following steps will install the Maistra operator into an existing OCP 3.10 
 oc new-project istio-operator
 oc new-app -f istio_product_operator_template.yaml --param=OPENSHIFT_ISTIO_MASTER_PUBLIC_URL=<master public url>
 ```
+[NOTE]
+.OpenShift Master Public URL
+=====================
+The OpenShift Master Public URL should be configured to match the public URL of your OpenShift Console, this parameter is required by the Fabric8 launcher.
+=====================
 
 === Verifying Installation
 
@@ -232,7 +251,7 @@ oc process -f istio_product_operator_template.yaml | oc delete -f -
 
 === Upgrading from a Pre-Existing Installation
 
-If there is an existing, pre-0.1.0 Istio istallation then that installation must be removed prior to installing the 0.1.0 Tech Preview. Either of the following steps will remove the pre-existing installation.
+If there is an existing, pre-0.2.0 Istio istallation then that installation must be removed prior to installing the 0.2.0 Tech Preview. Either of the following steps will remove the pre-existing installation.
 
 ```
 oc process -f istio_removal_template.yaml | oc create -f -
@@ -252,14 +271,15 @@ oc get clusterrolebindings  | grep istio | awk '{print $1}' | xargs oc delete cl
 
 == Instantiate Istio-Deployed Origin Cluster
 
-To create an Origin Kuberetes Distribution (OKD) cluster instance with deployed Istio following these steps. This will deploy the CENTOS-based Istio community images.
+To create an Origin Kubernetes Distribution (OKD) cluster instance with Istio following these steps. This will deploy the CENTOS-based Istio community images.
 
 - Download istiooc from:
   https://github.com/Maistra/origin/releases. Then execute the following:
-- Create an Installation Custom Resource file cr.yaml as described above using the minimum configuration or deployment_type: origin and prefix: maistra
+- Create a Minimum Installation Custom Resource file as described above
 - Execute the following:
 ```
-istiooc cluster up --enable="*,istio"
+istiooc cluster up
 istiooc login -u system:admin
 istiooc -n istio-operator create -f cr.yaml
 ```
+- Verify the installation was successful as described above
