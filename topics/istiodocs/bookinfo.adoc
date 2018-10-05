@@ -8,7 +8,7 @@ description: "Bookinfo is an example application that shows you how to set up an
 Bookinfo Application
 --------------------
 
-The following steps describe deployment of Bookinfo application on Maistra running on Openshift.
+The following steps describe the deployment of Bookinfo application on Maistra running on Openshift.
 
 Before you Begin
 ----------------
