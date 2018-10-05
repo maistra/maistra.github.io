@@ -11,66 +11,10 @@ Guide for installing Istio into an existing OpenShift Container Platform (OCP) o
 
 == Supported Configurations
 
-- OpenShift Container Platform (OCP) 3.10
+- OpenShift Container Platform (OCP) 3.10 (https://docs.openshift.com/container-platform/3.10/install/prerequisites.html)
 - Origin (OKD) 3.10
 - istiooc (https://github.com/Maistra/origin/releases/tag/v3.10.0%2Bmaistra-0.2.0)
-(https://docs.openshift.com/container-platform/3.10/install/prerequisites.html)
 - NOTE: OpenShift Online and OpenShift Dedicated are not supported in the 0.2.0 Istio Tech Preview
-
-== Installing the Custom Resource
-
-In order to deploy the Istio Control Plane we need to create a custom resource such as the one in the following example which demonstrates the configuration options supported by the operator.  The custom resource *must* be deployed into the `istio-operator` namespace and *must* be called `istio-installation`. For more information on the parameters and their configuration please see the link:../custom-install[Custom Installation Documentation].
-
-
-```
-apiVersion: "istio.openshift.com/v1alpha1"
-kind: "Installation"
-metadata:
-  name: "istio-installation"
-spec:
-  deployment_type: openshift
-  istio:
-    authentication: true
-    community: false
-    prefix: openshift-istio-tech-preview/
-    version: 0.2.0
-  jaeger:
-    prefix: distributed-tracing-tech-preview/
-    version: 1.7.0
-    elasticsearch_memory: 1Gi
-  kiali:
-    prefix: openshift-istio-tech-preview/
-    version: 0.7.2
-    username: username
-    password: password
-  launcher:
-    openshift:
-      user: user
-      password: password
-    github:
-      username: username
-      token: token
-    catalog:
-      filter: booster.mission.metadata.istio
-      branch: v62
-      repo: https://github.com/fabric8-launcher/launcher-booster-catalog.git
-```
-
-The minimal custom resource required to install an Istio Control Plane is as follows,
-this will deploy a control plane using the CENTOS-based community Istio images.
-
-```
-apiVersion: "istio.openshift.com/v1alpha1"
-kind: "Installation"
-metadata:
-  name: "istio-installation"
-```
-
-Once you have modified the custom resource to suit your installation you can deploy the resource using the following command
-
-```
-oc create -n istio-operator -f <name of file>
-```
 
 == Install Istio into Existing OCP or OKD Environment
 
@@ -180,10 +124,59 @@ and look for output similar to the following
 time="2018-08-14T20:00:18Z" level=info msg="Watching resource istio.openshift.com/v1alpha1, kind Installation, namespace istio-operator, resyncPeriod 0"
 ```
 
-=== Deploying the Istio Control plane
+=== Deploying the Istio Control Plane
+
+In order to deploy the Istio Control Plane we need to create a custom resource such as the one in the following example which demonstrates the configuration options supported by the operator.  The custom resource *must* be deployed into the `istio-operator` namespace and *must* be called `istio-installation`. For more information on the parameters and their configuration please see the link:../custom-install[Custom Installation Documentation].
+
 
 ```
-oc -n istio-operator create -f cr.yaml
+apiVersion: "istio.openshift.com/v1alpha1"
+kind: "Installation"
+metadata:
+  name: "istio-installation"
+spec:
+  deployment_type: openshift
+  istio:
+    authentication: true
+    community: false
+    prefix: openshift-istio-tech-preview/
+    version: 0.2.0
+  jaeger:
+    prefix: distributed-tracing-tech-preview/
+    version: 1.7.0
+    elasticsearch_memory: 1Gi
+  kiali:
+    prefix: openshift-istio-tech-preview/
+    version: 0.7.2
+    username: username
+    password: password
+  launcher:
+    openshift:
+      user: user
+      password: password
+    github:
+      username: username
+      token: token
+    catalog:
+      filter: booster.mission.metadata.istio
+      branch: v62
+      repo: https://github.com/fabric8-launcher/launcher-booster-catalog.git
+```
+
+The minimal custom resource required to install an Istio Control Plane is as follows,
+this will deploy a control plane using the CentOS-based community Istio images.
+
+```
+apiVersion: "istio.openshift.com/v1alpha1"
+kind: "Installation"
+metadata:
+  name: "istio-installation"
+```
+
+Once you have modified the custom resource to suit your installation you can deploy the resource using the following command
+
+```
+oc create -n istio-operator -f <name of file>
 ```
 
 === Verifying the Istio Control Plane
@@ -229,7 +222,7 @@ launcher-frontend-2-jxjsd     1/1       Running   0          1m
 
 === Removing Istio
 
-The following step will remove Istio from an existing installation, it can be executed from any host with access to the cluster.
+The following step will remove Istio from an existing installation. It can be executed from any host with access to the cluster.
 
 ```
 oc delete -n istio-operator installation istio-installation
@@ -279,7 +272,7 @@ oc get clusterrolebindings  | grep istio | awk '{print $1}' | xargs oc delete cl
 
 == Instantiating a Standalone, all-in-one Origin Cluster with Istio
 
-To create an Origin Kubernetes Distribution (OKD) cluster instance with Istio following these steps. This will deploy the CENTOS-based Istio community images.
+To create an Origin Kubernetes Distribution (OKD) cluster instance with Istio following these steps. This will deploy the CentOS-based Istio community images.
 
 - Download istiooc from:
   https://github.com/Maistra/origin/releases. Then execute the following:
