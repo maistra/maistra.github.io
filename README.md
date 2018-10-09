@@ -1,52 +1,36 @@
 
 # OpenShift Service Mesh
 
-This repository contains documentation for the MVP (developer preview) release of OpenShift Service Mesh, based on the upstream Istio project.  This README provides information about this documentation repository.
-
-Click here to read the [OpenShift Service Mesh MVP documentation](https://github.com/openshift-istio/istio-docs/blob/master/content/install-mvp.adoc) that was previously displayed at this location.  The linked document also includes information about associated sample applications (boosters) and tutorial scenarios(missions) released with the MVP.
+This repository contains documentation for the community release of OpenShift Service Mesh, based on the upstream Istio project.  This README provides information about this documentation repository. The site can be viewed at maistra.io.
 
 ## Getting Started
 
 The OpenShift Service mesh documentation is written in [Asciidoc](http://asciidoctor.org/docs/asciidoc-syntax-quick-reference/).  This structure of this repository has been designed to work with both the upstream and downstream toolsets.  To generate the documentation, you should install the following tools:
 
-* Upstream (community) - [Hugo](https://gohugo.io/)  
-* Downstream (product) - [ccutils](https://pantheon.cee.redhat.com/#/help/ccutil)
-* Both - [Asciidoctor](http://asciidoctor.org/docs/install-toolchain/) The downstream (product) documentation toolset requires asciidoc, and while the main content format for Hugo is markdown, Hugo also [supports asciidoc files](https://gohugo.io/content-management/formats/#additional-formats-through-external-helpers) by calling Asciidoctor.
+* [Hugo](https://gohugo.io/)
+* [Asciidoctor](http://asciidoctor.org/docs/install-toolchain/). The downstream (product) documentation toolset requires asciidoc, and while the main content format for Hugo is markdown, Hugo also [supports asciidoc files](https://gohugo.io/content-management/formats/#additional-formats-through-external-helpers) by calling Asciidoctor.
 * Text editor of your choice, for example the [Atom](https://atom.io/) text editor has several useful [packages](https://atom.io/packages) that make it easier to work with asciidoc and Hugo.
 
 ## Repository Structure
-Hugo assumes that the same structure that organizes your source content is used to organize the rendered site. 
+Hugo assumes that the same structure that organizes your source content is used to organize the rendered site.
 
 
 This repository uses the following directory structure:
 ```
-├── [archetypes] - Can be used to define content, for example you can set default tags or categories and define types such as a post, tutorial or product here.  
-├── [content] - Contains all the content files.
+├── [archetypes] - Can be used to define content, for example you can set default tags or categories and define types such as a post, tutorial or product here.
+├── [topics] - Contains all the content files.
+|   ├── Blog -- This directory is automatically generated from RSS feeds.
+|   ├── Docs -- This directory contains 
 │   │   ├── .adoc (AsciiDoc topic files)
-│   ├── Subfolders     
-│   │   ├── .adoc (AsciiDoc topic files)
-│   ├── DRAFTS - This directory is intended for topic stubs, topics that need to be written, and in-progress drafts. The Hugo config file is set to ignore this directory and its contents.  
+│   ├── DRAFTS - This directory is intended for topic stubs, topics that need to be written, and in-progress drafts. The Hugo config file is set to ignore this directory and its contents.
 │   │   ├── .adoc (AsciiDoc topic files)
 ├── [data] - Site data such a localization configurations go here.
-├── [docs] - Files to build the downstream product manuals, which reference the content directory. 
-│   ├── Doc-Installing-ServiceMesh
-│   │   ├── master.adoc
-│   │   ├── master-docinfo.xml
-│   │   ├── buildGuide.sh (script to build this guide)
-│   │   ├── topics -> ../topics/ (symlink to content directory)
-│   ├── Doc-ServiceMesh-Release-Notes
-│   │   ├── master.adoc
-│   │   ├── master-docinfo.xml
-│   │   ├── buildGuide.sh (script to build this guide)
-│   │   ├── topics -> ../topics/ (symlink to content directory)
 ├── [layouts] -  Layouts for the Go html/template library which Hugo utilizes.  Note that themes override layouts.
 ├── [public] -  Generated output. (NOTE: This directory doesn't exist until you generate output.)
-├── [scripts] - Contains scripts to automate the processes used to create and build documentation.
-    └── buildGuides.sh (Builds the top-level Guides that live in the docs/ folder)
 ├── [static] - Any static files here will be compiled into the final website.
 |   ├──  img - This directory contains all the images.  Hugo expects this directory name.
 │   │  ├── .png
-├── [themes] - This directory contains the theme for the site. (NOTE: Folder is EMPTY until you select a theme.)
+├── [themes] - This directory contains the theme for the site.
 ├── config.toml - Main Hugo configuration file, used to define the websites title, language, URLs etc.
 ├── README.md (This file)
 ```
@@ -68,33 +52,30 @@ or
 $ hugo new ./overviews/about.adoc
 ```
 
-You can also create new .adoc files using a text editor.  Be sure to include the following metadata for the tools at the beginning of your files:
+You can also create new .adoc files using a text editor. 
 
-Hugo metadata
+### Docs Header
+Content in the docs directory requires specific headers in orer to be listed. An example of this can be seen below. 
+
 ```
-title: "Title Goes Here"
-date: 2018-05-16T16:17:23-04:00
-draft: true  or false
+---
+title: "Bookinfo"
+type: "document"
+category: "Examples"
+description: "Bookinfo is an example application that shows you how to set up and monitor a service mesh using Istio."
+---
 ```
-Modular documentation metadata - Provide an anchor in the format [id='anchor-name'] for every topic so that it can be identified by Asciidoctor when reused or cross-referenced. Give the anchor the same or similar name as the module heading, separated by dashes:
-```
-[id='anchor-name']
-= Module Heading 
-```
-For example:
-```
-[id='product-overview']
-= {Productname} Product Overview
-```
+
+
 For more information about writing modular documentation, see the [Modular Documentation Reference Guide](https://redhat-documentation.github.io/modular-docs/).
 
 ### To Build the Upstream Docs Web Site
 
-The upstream docs use Hugo to generate the files for the web site.  
+The upstream docs use Hugo to generate the files for the web site.
 
 #### Starting the Hugo Server
 Hugo provides its own webserver which builds and serves the site.  By default Hugo will also watch your files for any changes you make and automatically rebuild the site. It will then live reload any open browser pages and push the latest content to them.
-	 	 	
+
 To start the Hugo server run the following command:
 ````
 $ hugo server
@@ -119,24 +100,6 @@ $ hugo
 To view the generated Hugo files, nagivate to the following directory:  `public/index.html`
 
 For more information about Hugo commands, see the [Hugo Web site](https://gohugo.io/getting-started/usage/).
-
-### To Build the Downstream Docs
-
-The downstream docs use `ccutil` to generate the docs as part of the Docs-to-Drupal toolchain.
-
-To build all of the books, open a terminal, navigate to the root directory of this repository, and type the following command (you may need to run it as `sudo`):
-```
-$ scripts/buildGuides.sh   
-```
-The script provides links to both asciidoctor and ccutil builds for each of the example books.
-
-You can also build a single guide. Navigate to the folder of the manual you want to build and type the following command (you may need to run it as `sudo`):
-```
-$ ./buildGuide.sh
-```
-
-To view the generated output, nagivate to the following directory for a particular manual:`<title>/build/tmp/en-US/html-single/index.html`
-
 
 ## Submitting a Pull Request
 
