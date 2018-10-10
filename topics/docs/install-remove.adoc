@@ -1,8 +1,0 @@
-[[install_removing]]
-= Removing {Productname}
-
-The following command will remove {Productname} from an existing installation.  You can execute this command from any host with access to the cluster.
-
-```
-oc new-app istio_removal_template.yaml
-```
