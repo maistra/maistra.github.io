@@ -35,7 +35,7 @@ spec:
     authentication: false
     community: false
     prefix: openshift-istio-tech-preview/
-    version: 0.3.0
+    version: 0.4.0
   jaeger:
     prefix: distributed-tracing-tech-preview/
     version: 1.7.0
@@ -44,7 +44,7 @@ spec:
     username: username
     password: password
     prefix: openshift-istio-tech-preview/
-    version: 0.8.1
+    version: 0.9.1
   launcher:
     openshift:
       user: user
@@ -54,7 +54,7 @@ spec:
       token: token
     catalog:
       filter: booster.mission.metadata.istio
-      branch: v62
+      branch: v71
       repo: https://github.com/fabric8-launcher/launcher-booster-catalog.git
 ----
 
@@ -91,7 +91,7 @@ spec:
 |version
 |docker tag to use with Istio images
 |valid docker tag
-|0.3.0
+|0.4.0
 |===
 
 ## [[Jaeger]] Jaeger
@@ -139,7 +139,7 @@ spec:
 |version
 |docker tag to use with Kiali images
 |valid Kiali tag
-|v0.8.1 if deployment_type is origin and 0.8.1 if deployment_type is openshift
+|v0.9.1 if deployment_type is origin and 0.9.1 if deployment_type is openshift
 
 |===
 
@@ -184,7 +184,7 @@ spec:
 
 |branch
 |Red Hat Booster catalog to use for Fabric8
-|v62
+|v71
 
 |repo
 |Repo to use for Fabric8

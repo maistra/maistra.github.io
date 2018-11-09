@@ -13,8 +13,8 @@ Guide for installing Istio into an existing OpenShift Container Platform (OCP) o
 
 - OpenShift Container Platform (OCP) 3.11 (https://docs.openshift.com/container-platform/3.11/install/prerequisites.html)
 - Origin (OKD) 3.11
-- istiooc (https://github.com/Maistra/origin/releases/tag/v3.11.0%2Bmaistra-0.3.0)
-- NOTE: OpenShift Online and OpenShift Dedicated are not supported in the 0.3.0 Istio Tech Preview
+- istiooc (https://github.com/Maistra/origin/releases/tag/v3.11.0%2Bmaistra-0.4.0)
+- NOTE: OpenShift Online and OpenShift Dedicated are not supported in the 0.4.0 Istio Tech Preview
 
 == Install Istio into Existing OCP or OKD Environment
 
@@ -134,14 +134,14 @@ spec:
     authentication: true
     community: false
     prefix: openshift-istio-tech-preview/
-    version: 0.3.0
+    version: 0.4.0
   jaeger:
     prefix: distributed-tracing-tech-preview/
     version: 1.7.0
     elasticsearch_memory: 1Gi
   kiali:
     prefix: openshift-istio-tech-preview/
-    version: 0.8.1
+    version: 0.9.1
     username: username
     password: password
   launcher:
@@ -153,7 +153,7 @@ spec:
       token: token
     catalog:
       filter: booster.mission.metadata.istio
-      branch: v62
+      branch: v71
       repo: https://github.com/fabric8-launcher/launcher-booster-catalog.git
 ```
 
