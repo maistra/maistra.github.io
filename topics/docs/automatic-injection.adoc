@@ -1,0 +1,57 @@
+---
+title: "Installing the sidecar within your Service Mesh Applications"
+type: "document"
+category: "Getting started"
+description: "Service mesh provides features to applications through the istio-proxy sidecar within your application's pod, created through automatic injection of the configuration."
+---
+
+Istio relies on the existence of a proxy sidecar within the application's pod to provide service mesh capabilities to the application. You can include the proxy sidecar through a manual process, prior to deployment, however we recommend automatic injection. This ensures that your application contains the appropriate configuration for your service mesh at the time of its deployment.
+
+Automatic Sidecar Injection
+---------------------------
+
+Automatic injection of the sidecar is supported through the use of an annotation within your application yaml file. The name of the annotation is `sidecar.istio.io/inject` and its value must be set to `true` for injection to occur.
+
+NOTE: This behavior differs from the upstream Istio community releases as they require a specific label on the namespace after which all pods within that namespace are injected with the sidecar. Our approach is to opt-in to injection using the annotation with no need to label namespaces. This method requires fewer privileges and does not conflict with other OpenShift capabilities such as builder pods.
+
+This example shows the annotation used within the sleep test application. The additional proxy related containers are included when you create the application in the OpenShift cluster.
+
+[source,yaml]
+----
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: sleep
+spec:
+  replicas: 1
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "true"
+      labels:
+        app: sleep
+    spec:
+      containers:
+      - name: sleep
+        image: tutum/curl
+        command: ["/bin/sleep","infinity"]
+        imagePullPolicy: IfNotPresent
+----
+
+Manual Sidecar Injection
+------------------------
+
+Manual injection of the sidecar is supported through the upstream `istioctl` command. To obtain the executable and deploy an application using manual injection you should:
+
+- Download the appropriate https://github.com/istio/istio/releases/tag/1.0.4[installation] for your OS
+- Unpack the installation into a directory and include the bin directory in your PATH
+
+Once installed you can inject the additional containers by executing the following command:
+
+----
+istioctl kube-inject -f app.yaml | oc create -f -
+----
+
+This command injects the containers into the application's yaml configuration and pipes the modified configuration to the oc command to create the deployments.
+
+NOTE: When you use manual sidecar injection, ensure that you have access to a running cluster so the correct configuration can be obtained from the istio-sidecar-injector configmap within the istio-system namespace.
