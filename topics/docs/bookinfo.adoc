@@ -53,10 +53,10 @@ Deploying Bookinfo Application
   $ oc apply -f bookinfo-gateway.yaml
 ```
 
-. Set GATEWAY_URL:
+. Set `GATEWAY_URL`:
 +
 ```
-$ export GATEWAY_URL=$(oc get route -n istio-system istio-ingressgateway -o jsonpath='{.spec.host}')
+  $ export GATEWAY_URL=$(oc get route -n istio-system istio-ingressgateway -o jsonpath='{.spec.host}')
 ```
 
 
@@ -79,17 +79,17 @@ Add default destination rules
   $ curl -o destination-rule-all.yaml https://raw.githubusercontent.com/istio/istio/release-1.0/samples/bookinfo/networking/destination-rule-all.yaml
   $ oc apply -f destination-rule-all.yaml
 ```
-. If you enabled mutual TLS:
+ . If you enabled mutual TLS:
 +
 ```
   $ curl -o destination-rule-all-mtls.yaml https://raw.githubusercontent.com/istio/istio/release-1.0/samples/bookinfo/networking/destination-rule-all-mtls.yaml
   $ oc apply -f destination-rule-all-mtls.yaml
 ```
- To list all available destination rules:
+ . To list all available destination rules:
++
 ```
-  $oc get destinationrules -o yaml
+  $ oc get destinationrules -o yaml
 ```
- [[cleanup]]
 
 Cleanup
 -------
