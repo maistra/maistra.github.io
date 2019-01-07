@@ -54,4 +54,4 @@ spec:
         imagePullPolicy: IfNotPresent
 ----
 
-NOTE: Unlike the upstream Istio Community releases it is *not* required to label a namespace to enable Istio's automatic sidecar injection, the webhook will check the configuration of pods deploying into all namespaces to see if they are opting in to injection using the appropriate annotation.
+NOTE: Unlike the upstream Istio Community releases it is *not* required to label a namespace to enable Istio's automatic sidecar injection. The webhook will check the configuration of pods deploying into all namespaces to see if they are opting in to injection using the appropriate annotation.
