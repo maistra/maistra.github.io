@@ -18,6 +18,7 @@ To configure the correct permissions it is necessary to identify which Service A
 
 For each identified Service Account it is necessary to update the cluster configuration so they are granted access to the `anyuid` and `privileged` Security Context Constraints by executing the following commands from an account which has cluster admin privileges.  You should replace `<service account>` and `<namespace>` with the values specific to your application.
 
+[source,bash]
 ----
 oc adm policy add-scc-to-user anyuid -z <service account> -n <namespace>
 oc adm policy add-scc-to-user privileged -z <service account> -n <namespace>
