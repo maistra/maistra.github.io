@@ -43,7 +43,7 @@ Manual Sidecar Injection
 
 Manual injection of the sidecar is supported through the upstream `istioctl` command. To obtain the executable and deploy an application using manual injection you should:
 
-- Download the appropriate https://github.com/istio/istio/releases/tag/1.0.4[installation] for your OS
+- Download the appropriate https://github.com/istio/istio/releases/tag/1.0.5[installation] for your OS
 - Unpack the installation into a directory and include the bin directory in your PATH
 
 Once installed you can inject the additional containers by executing the following command:
