@@ -205,22 +205,23 @@ Once the `openshift-ansible-istio-installer-job` has completed run `oc get pods 
 
 ```
 NAME                                          READY     STATUS      RESTARTS   AGE
-3scale-istio-adapter-7df4db48cf-fftxg         1/1       Running     0          57s
-elasticsearch-0                               1/1       Running     0          1m
-grafana-c7f5cc6b6-n6bz8                       1/1       Running     0          1m
-istio-citadel-d6d6bb7bb-g99m4                 1/1       Running     0          2m
-istio-egressgateway-69448cf7dc-tlrqt          1/1       Running     0          2m
-istio-galley-f49696978-j2zvk                  1/1       Running     0          2m
-istio-ingressgateway-7759647fb6-wdk77         1/1       Running     0          2m
-istio-pilot-7595bfd696-5xfwm                  2/2       Running     0          2m
-istio-policy-779454b878-7vmsc                 2/2       Running     4          2m
-istio-sidecar-injector-6655b6ffdb-8mhbh       1/1       Running     0          2m
-istio-telemetry-dd9595888-9kpj5               2/2       Running     4          2m
-jaeger-agent-j6lm6                            1/1       Running     0          1m
-jaeger-collector-7f644df9f5-nkk2q             1/1       Running     1          1m
-jaeger-query-6f47bf4777-m2bdm                 1/1       Running     1          1m
-openshift-ansible-istio-installer-job-fg6tx   0/1       Completed   0          3m
-prometheus-5f9fd67f8-hp2ln                    1/1       Running     0          2m
+3scale-istio-adapter-7df4db48cf-sc98s         1/1       Running     0          13s
+elasticsearch-0                               1/1       Running     0          29s
+grafana-c7f5cc6b6-vg6db                       1/1       Running     0          33s
+istio-citadel-d6d6bb7bb-jgfwt                 1/1       Running     0          1m
+istio-egressgateway-69448cf7dc-b2qj5          1/1       Running     0          1m
+istio-galley-f49696978-q949d                  1/1       Running     0          1m
+istio-ingressgateway-7759647fb6-pfpd5         1/1       Running     0          1m
+istio-pilot-7595bfd696-plffk                  2/2       Running     0          1m
+istio-policy-779454b878-xg7nq                 2/2       Running     2          1m
+istio-sidecar-injector-6655b6ffdb-rn69r       1/1       Running     0          1m
+istio-telemetry-dd9595888-8xjz2               2/2       Running     2          1m
+jaeger-agent-gmk72                            1/1       Running     0          25s
+jaeger-collector-7f644df9f5-dbzcv             1/1       Running     1          25s
+jaeger-query-6f47bf4777-h4wmh                 1/1       Running     1          25s
+kiali-7cc48b6cbb-74gcf                        1/1       Running     0          17s
+openshift-ansible-istio-installer-job-fbtfj   0/1       Completed   0          2m
+prometheus-5f9fd67f8-r6b86                    1/1       Running     0          1m
 ```
 
 If you have also chosen to install the Fabric8 launcher you should monitor the containers within the devex project until the following state has been reached:
