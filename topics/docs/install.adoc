@@ -13,8 +13,8 @@ Guide for installing Istio into an existing OpenShift Container Platform (OCP) o
 
 - OpenShift Container Platform (OCP) 3.11 (https://docs.openshift.com/container-platform/3.11/install/prerequisites.html)
 - Origin (OKD) 3.11
-- istiooc (https://github.com/Maistra/origin/releases/tag/v3.11.0%2Bmaistra-0.6.0)
-- NOTE: OpenShift Online and OpenShift Dedicated are not supported in the 0.6.0 Istio Tech Preview
+- istiooc (https://github.com/Maistra/origin/releases/tag/v3.11.0%2Bmaistra-0.7.0)
+- NOTE: OpenShift Online and OpenShift Dedicated are not supported in the 0.7.0 Istio Tech Preview
 
 == Install Istio into Existing OCP or OKD Environment
 
@@ -78,7 +78,7 @@ sysctl vm.max_map_count=262144
 
 The Maistra installation process introduces a Kubernetes operator to manage the installation of the Istio control plane within the istio-system namespace.  This operator defines and monitors a custom resource related to the deployment, update and deletion of the Istio control plane.
 
-The templates are available at: https://github.com/Maistra/openshift-ansible/tree/maistra-0.6/istio
+The templates are available at: https://github.com/Maistra/openshift-ansible/tree/maistra-0.7/istio
 
 The following steps will install the Maistra operator into an existing installation, these can be executed from any host with access to the cluster.  Please ensure you are logged in as a cluster admin before executing the following
 
@@ -92,14 +92,14 @@ For community images run
 
 ```
 oc new-project istio-operator
-oc new-app -f https://raw.githubusercontent.com/Maistra/openshift-ansible/maistra-0.6/istio/istio_community_operator_template.yaml --param=OPENSHIFT_ISTIO_MASTER_PUBLIC_URL=<master public url>
+oc new-app -f https://raw.githubusercontent.com/Maistra/openshift-ansible/maistra-0.7/istio/istio_community_operator_template.yaml --param=OPENSHIFT_ISTIO_MASTER_PUBLIC_URL=<master public url>
 ```
 
 For product images run
 
 ```
 oc new-project istio-operator
-oc new-app -f https://raw.githubusercontent.com/Maistra/openshift-ansible/maistra-0.6/istio/istio_product_operator_template.yaml --param=OPENSHIFT_ISTIO_MASTER_PUBLIC_URL=<master public url>
+oc new-app -f https://raw.githubusercontent.com/Maistra/openshift-ansible/maistra-0.7/istio/istio_product_operator_template.yaml --param=OPENSHIFT_ISTIO_MASTER_PUBLIC_URL=<master public url>
 ```
 
 === Verifying Installation
@@ -135,14 +135,14 @@ spec:
     authentication: true
     community: false
     prefix: openshift-istio-tech-preview/
-    version: 0.6.0
+    version: 0.7.0
   jaeger:
     prefix: distributed-tracing-tech-preview/
-    version: 1.8.1
+    version: 1.9.0
     elasticsearch_memory: 1Gi
   kiali:
     prefix: openshift-istio-tech-preview/
-    version: 0.11.0
+    version: 0.13.0
     username: username
     password: password
   launcher:
@@ -156,6 +156,22 @@ spec:
       filter: booster.mission.metadata.istio
       branch: v71
       repo: https://github.com/fabric8-launcher/launcher-booster-catalog.git
+  threeScale:
+    enabled: false
+    prefix: openshift-istio-tech-preview/
+    version: 0.2.0
+    adapter:
+      listenAddr: 3333
+      logLevel: info
+      logJSON: true
+      reportMetrics: true
+      metricsPort: 8080
+      cacheTTLSeconds: 300
+      cacheRefreshSeconds: 180
+      cacheEntriesMax: 1000
+      cacheRefreshRetries: 1
+      allowInsecureConn: false
+      clientTimeoutSeconds: 10
 ```
 
 The minimal custom resource required to install an Istio Control Plane is as follows,
@@ -189,22 +205,22 @@ Once the `openshift-ansible-istio-installer-job` has completed run `oc get pods 
 
 ```
 NAME                                          READY     STATUS      RESTARTS   AGE
-elasticsearch-0                               1/1       Running     0          2m
-grafana-6d5c5477-k7wrh                        1/1       Running     0          2m
-istio-citadel-6f9c778bb6-q9tg9                1/1       Running     0          3m
-istio-egressgateway-957857444-2g84h           1/1       Running     0          3m
-istio-galley-c47f5dffc-dm27s                  1/1       Running     0          3m
-istio-ingressgateway-7db86747b7-s2dv9         1/1       Running     0          3m
-istio-pilot-5646d7786b-rh54p                  2/2       Running     0          3m
-istio-policy-7d694596c6-pfdzt                 2/2       Running     0          3m
-istio-sidecar-injector-57466d9bb-4cjrs        1/1       Running     0          3m
-istio-statsd-prom-bridge-7f44bb5ddb-6vx7n     1/1       Running     0          3m
-istio-telemetry-7cf7b4b77c-p8m2k              2/2       Running     0          3m
-jaeger-agent-5mswn                            1/1       Running     0          2m
-jaeger-collector-9c9f8bc66-j7kjv              1/1       Running     0          2m
-jaeger-query-fdc6dcd74-99pnx                  1/1       Running     0          2m
-openshift-ansible-istio-installer-job-f8n9g   0/1       Completed   0          7m
-prometheus-84bd4b9796-2vcpc                   1/1       Running     0          3m
+3scale-istio-adapter-7df4db48cf-fftxg         1/1       Running     0          57s
+elasticsearch-0                               1/1       Running     0          1m
+grafana-c7f5cc6b6-n6bz8                       1/1       Running     0          1m
+istio-citadel-d6d6bb7bb-g99m4                 1/1       Running     0          2m
+istio-egressgateway-69448cf7dc-tlrqt          1/1       Running     0          2m
+istio-galley-f49696978-j2zvk                  1/1       Running     0          2m
+istio-ingressgateway-7759647fb6-wdk77         1/1       Running     0          2m
+istio-pilot-7595bfd696-5xfwm                  2/2       Running     0          2m
+istio-policy-779454b878-7vmsc                 2/2       Running     4          2m
+istio-sidecar-injector-6655b6ffdb-8mhbh       1/1       Running     0          2m
+istio-telemetry-dd9595888-9kpj5               2/2       Running     4          2m
+jaeger-agent-j6lm6                            1/1       Running     0          1m
+jaeger-collector-7f644df9f5-nkk2q             1/1       Running     1          1m
+jaeger-query-6f47bf4777-m2bdm                 1/1       Running     1          1m
+openshift-ansible-istio-installer-job-fg6tx   0/1       Completed   0          3m
+prometheus-5f9fd67f8-hp2ln                    1/1       Running     0          2m
 ```
 
 If you have also chosen to install the Fabric8 launcher you should monitor the containers within the devex project until the following state has been reached:
