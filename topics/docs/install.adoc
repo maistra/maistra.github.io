@@ -13,8 +13,8 @@ Guide for installing Istio into an existing OpenShift Container Platform (OCP) o
 
 - OpenShift Container Platform (OCP) 3.11 (https://docs.openshift.com/container-platform/3.11/install/prerequisites.html)
 - Origin (OKD) 3.11
-- istiooc (https://github.com/Maistra/origin/releases/tag/v3.11.0%2Bmaistra-0.7.0)
-- NOTE: OpenShift Online and OpenShift Dedicated are not supported in the 0.7.0 Istio Tech Preview
+- istiooc (https://github.com/Maistra/origin/releases/tag/v3.11.0%2Bmaistra-0.8.0)
+- NOTE: OpenShift Online and OpenShift Dedicated are not supported in the 0.8.0 Istio Tech Preview
 
 == Install Istio into Existing OCP or OKD Environment
 
@@ -78,7 +78,7 @@ sysctl vm.max_map_count=262144
 
 The Maistra installation process introduces a Kubernetes operator to manage the installation of the Istio control plane within the istio-system namespace.  This operator defines and monitors a custom resource related to the deployment, update and deletion of the Istio control plane.
 
-The templates are available at: https://github.com/Maistra/openshift-ansible/tree/maistra-0.7/istio
+The templates are available at: https://github.com/Maistra/openshift-ansible/tree/maistra-0.8/istio
 
 The following steps will install the Maistra operator into an existing installation, these can be executed from any host with access to the cluster.  Please ensure you are logged in as a cluster admin before executing the following
 
@@ -92,14 +92,14 @@ For community images run
 
 ```
 oc new-project istio-operator
-oc new-app -f https://raw.githubusercontent.com/Maistra/openshift-ansible/maistra-0.7/istio/istio_community_operator_template.yaml --param=OPENSHIFT_ISTIO_MASTER_PUBLIC_URL=<master public url>
+oc new-app -f https://raw.githubusercontent.com/Maistra/openshift-ansible/maistra-0.8/istio/istio_community_operator_template.yaml --param=OPENSHIFT_ISTIO_MASTER_PUBLIC_URL=<master public url>
 ```
 
 For product images run
 
 ```
 oc new-project istio-operator
-oc new-app -f https://raw.githubusercontent.com/Maistra/openshift-ansible/maistra-0.7/istio/istio_product_operator_template.yaml --param=OPENSHIFT_ISTIO_MASTER_PUBLIC_URL=<master public url>
+oc new-app -f https://raw.githubusercontent.com/Maistra/openshift-ansible/maistra-0.8/istio/istio_product_operator_template.yaml --param=OPENSHIFT_ISTIO_MASTER_PUBLIC_URL=<master public url>
 ```
 
 === Verifying Installation
@@ -135,14 +135,14 @@ spec:
     authentication: true
     community: false
     prefix: openshift-istio-tech-preview/
-    version: 0.7.0
+    version: 0.8.0
   jaeger:
     prefix: distributed-tracing-tech-preview/
     version: 1.9.0
     elasticsearch_memory: 1Gi
   kiali:
     prefix: openshift-istio-tech-preview/
-    version: 0.13.0
+    version: 0.14.0
     username: username
     password: password
   launcher:
@@ -159,7 +159,7 @@ spec:
   threeScale:
     enabled: false
     prefix: openshift-istio-tech-preview/
-    version: 0.2.0
+    version: 0.3.0
     adapter:
       listenAddr: 3333
       logLevel: info

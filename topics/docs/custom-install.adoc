@@ -37,7 +37,7 @@ spec:
     authentication: false
     community: false
     prefix: openshift-istio-tech-preview/
-    version: 0.7.0
+    version: 0.8.0
   jaeger:
     prefix: distributed-tracing-tech-preview/
     version: 1.9.0
@@ -46,7 +46,7 @@ spec:
     username: username
     password: password
     prefix: openshift-istio-tech-preview/
-    version: 0.13.0
+    version: 0.14.0
   launcher:
     openshift:
       user: user
@@ -61,7 +61,7 @@ spec:
   threeScale:
     enabled: false
     prefix: openshift-istio-tech-preview/
-    version: 0.2.0
+    version: 0.3.0
     adapter:
       listenAddr: 3333
       logLevel: info
@@ -109,7 +109,7 @@ spec:
 |version
 |docker tag to use with Istio images
 |valid docker tag
-|0.7.0
+|0.8.0
 |===
 
 ## [[Jaeger]] Jaeger
@@ -157,7 +157,7 @@ spec:
 |version
 |docker tag to use with Kiali images
 |valid Kiali tag
-|v0.13.0 if deployment_type is origin and 0.13.0 if deployment_type is openshift
+|v0.14.0 if deployment_type is origin and 0.14.0 if deployment_type is openshift
 
 |===
 
@@ -227,7 +227,7 @@ spec:
 |version
 |docker tag to use with the 3scale adapter image
 |valid docker tag
-|0.2.0
+|0.3.0
 
 |===
 
