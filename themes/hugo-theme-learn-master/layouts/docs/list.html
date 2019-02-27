@@ -1,0 +1,47 @@
+  
+ {{ partial "header" . }} 
+
+<div id="main">
+        {{/*{{ $url := replace .Permalink ( printf "%s" .Site.BaseURL) "" }} 
+    {{ $.Scratch.Add "path" .Site.BaseURL }}
+    <ol class="breadcrumbs">
+        <li><a href="/">home</a></li>
+        {{ range $index, $element := split $url "/" }} {{ $.Scratch.Add "path" $element }} {{ if ne $element "" }}
+        <li><a href='{{ $.Scratch.Get "path" }}'>{{ . }}</a></li>
+        {{ $.Scratch.Add "path" "/" }} {{ end }} {{ end }}
+    </ol> */}}
+
+    {{ $categories := (slice "Getting started" "Examples" "Monitoring & Tracing")}}
+    {{ $pages := .Paginate (where .Pages "Type" "document") }} 
+    {{ $categorized := $pages.Pages.GroupByParam "category" }} 
+    {{ range $element := $categories }} 
+    {{ range where $categorized "Key" $element }}
+    <article class="post">
+        <header style="margin:0%">
+            <h3 style="margin: 1%">{{ .Key }}</h3>
+        </header>
+        <div class="row">
+       
+                {{ range .Pages }}
+                <div class="col-sm" style="margin-top:1%">
+                <div class="card border mb-3">
+                        <h5 class="card-header">{{.Title}}</h5>
+                        <div class="card-body">
+                          <p class="card-text">{{.Description}}</p>
+                          <a href="{{ .RelPermalink }}" class="btn btn-primary">Continue Reading</a>                            </div>
+                      </div>
+                      </div>
+                {{ end }}           
+    </div>
+    </article>
+    {{ end }} 
+    {{ end }}
+
+</div>
+
+
+
+
+<!-- Main -->
+
+{{ partial "footer" . }}
