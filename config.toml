@@ -2,7 +2,7 @@ contentDir="topics"
 baseURL = "/"
 languageCode = "en"
 title = "Maistra.io"
-theme = "hugo-future-imperfect"
+theme = "hugo-theme-learn-master"
 enableRobotsTXT = true
 PygmentsCodeFences = true
 canonifyurls = false
@@ -50,6 +50,10 @@ copyright = "© This post is licensed under a Creative Commons Attribution-NonCo
     weight = 2
 
 [params]
+  themeVariant="blue"
+  editURL="https://github.com/Maistra/maistra.github.io/edit/master/topics/"
+  ordersectionsby="category"
+  
   accent = "#006264"
   backgroundColor = "#f5f5f5"
   highlightLanguages = ["r", "bash", "go", "yaml"]
@@ -146,3 +150,28 @@ copyright = "© This post is licensed under a Creative Commons Attribution-NonCo
     alt       = "Hugo Future Imperfect"
 
 
+[Languages]
+[Languages.en]
+title = "Documentation for Hugo Learn Theme"
+weight = 1
+languageName = "English"
+
+[[Languages.en.menu.shortcuts]]
+name = "<i class='fab fa-fw fa-github'></i> Github repo"
+identifier = "ds"
+url = "https://github.com/maistra/istio"
+weight = 10
+
+[[Languages.en.menu.shortcuts]]
+name = "<i class='fas fa-fw fa-bookmark'></i> Blog"
+identifier = "hugodoc"
+url = "/blog"
+weight = 20
+
+[[Languages.en.menu.shortcuts]]
+name = "<i class='fas fa-fw fa-bullhorn'></i> Contribute"
+url = "/contribute"
+weight = 30
+
+[outputs]
+home = [ "HTML", "RSS", "JSON"]
