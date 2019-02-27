@@ -19,14 +19,13 @@ This repository uses the following directory structure:
 ```
 ├── [archetypes] - Can be used to define content, for example you can set default tags or categories and define types such as a post, tutorial or product here.
 ├── [topics] - Contains all the content files.
-|   ├── Blog -- This directory is automatically generated from RSS feeds.
+|   ├── Blog -- This directory is used to render the Maistra blog, which is rendered on the fly from a collection of RSS feeds. 
 |   ├── Docs -- This directory contains 
 │   │   ├── .adoc (AsciiDoc topic files)
 │   ├── DRAFTS - This directory is intended for topic stubs, topics that need to be written, and in-progress drafts. The Hugo config file is set to ignore this directory and its contents.
 │   │   ├── .adoc (AsciiDoc topic files)
 ├── [data] - Site data such a localization configurations go here.
 ├── [layouts] -  Layouts for the Go html/template library which Hugo utilizes.  Note that themes override layouts.
-├── [public] -  Generated output. (NOTE: This directory doesn't exist until you generate output.)
 ├── [static] - Any static files here will be compiled into the final website.
 |   ├──  img - This directory contains all the images.  Hugo expects this directory name.
 │   │  ├── .png
@@ -55,7 +54,7 @@ $ hugo new ./overviews/about.adoc
 You can also create new .adoc files using a text editor. 
 
 ### Docs Header
-Content in the docs directory requires specific headers in orer to be listed. An example of this can be seen below. 
+Content in the docs directory require the following headers to be populated in order to be listed in the docs:
 
 ```
 ---
@@ -66,14 +65,9 @@ description: "Bookinfo is an example application that shows you how to set up an
 ---
 ```
 
-
 For more information about writing modular documentation, see the [Modular Documentation Reference Guide](https://redhat-documentation.github.io/modular-docs/).
 
-### To Build the Upstream Docs Web Site
-
-The upstream docs use Hugo to generate the files for the web site.
-
-#### Starting the Hugo Server
+### Previewing Changes Locally
 Hugo provides its own webserver which builds and serves the site.  By default Hugo will also watch your files for any changes you make and automatically rebuild the site. It will then live reload any open browser pages and push the latest content to them.
 
 To start the Hugo server run the following command:
@@ -96,8 +90,6 @@ To generate the site output files:
 ```
 $ hugo
 ```
-
-To view the generated Hugo files, nagivate to the following directory:  `public/index.html`
 
 For more information about Hugo commands, see the [Hugo Web site](https://gohugo.io/getting-started/usage/).
 

@@ -3,8 +3,9 @@ title: "Visualizing your Service Mesh"
 type: "document"
 category: "Getting started"
 description: "Kiali allows you to visualize the topology of your service mesh, view traces, see the flow of traffic in your network, and troubleshoot issues."
+weight: 4
 ---
-:imagesdir: ../images/kiali
+:imagesdir: ../../images/kiali
 
 NOTE: This document assumes that you installed Kiali as part of your Istio configuration. If not, please
 update your link:{{< ref "custom-install.adoc" >}}[operator configuration]   to include Kiali before continuing.
