@@ -1,0 +1,300 @@
+---
+title: "Istio Installation Guide"
+type: "document"
+category: "Getting started"
+description: "This document describes how to install the Istio operator and how to create a custom resource to configure and install an Istio control plane into your OpenShift installation."
+weight: 1
+---
+= Istio Installation Guide
+:toc:
+
+Guide for installing Istio into an existing OpenShift Container Platform (OCP) or Origin (OKD) cluster and for creating a standalone, all-in-one origin cluster with Istio
+
+== Supported Configurations
+
+- OpenShift Container Platform (OCP) 3.11 (https://docs.openshift.com/container-platform/3.11/install/prerequisites.html)
+- Origin (OKD) 3.11
+- istiooc (https://github.com/Maistra/origin/releases/tag/v3.11.0%2Bmaistra-0.8.0)
+- NOTE: OpenShift Online and OpenShift Dedicated are not supported in the 0.8.0 Istio Tech Preview
+
+== Install Istio into Existing OCP or OKD Environment
+
+=== Preparing the Installation
+
+Before Istio can be installed into an existing installation it is necessary to make a number of changes to the master configuration and each of the schedulable nodes.  These changes will enable features required within Istio and also ensure Elasticsearch will function correctly.
+
+=== Updating the Master
+
+If manual sidecar injection (i.e. kube-inject) is used this section may be skipped.
+
+To enable the automatic injection of the Istio sidecar we first need to modify the master configuration on each master to include support for webhooks and signing of Certificate Signing Requests (CSRs).
+Then each individual Deployment requiring automatic injection needs to be modified.
+
+First, make the following changes on each master within your installation.
+
+- Change to the directory containing the master configuration file (e.g. /etc/origin/master/master-config.yaml)
+- Create a file named master-config.patch with the following contents
+
+```
+admissionConfig:
+  pluginConfig:
+    MutatingAdmissionWebhook:
+      configuration:
+        apiVersion: apiserver.config.k8s.io/v1alpha1
+        kubeConfigFile: /dev/null
+        kind: WebhookAdmission
+    ValidatingAdmissionWebhook:
+      configuration:
+        apiVersion: apiserver.config.k8s.io/v1alpha1
+        kubeConfigFile: /dev/null
+        kind: WebhookAdmission
+```
+
+- Within the same directory issue the following commands:
+
+```
+cp -p master-config.yaml master-config.yaml.prepatch
+oc ex config patch master-config.yaml.prepatch -p "$(cat master-config.patch)" > master-config.yaml
+master-restart api
+master-restart controllers
+```
+
+=== Updating the Nodes
+
+In order to run the Elasticsearch application it is necessary to make a change to the kernel configuration on each node, this change will be handled through the `sysctl` service.
+
+Make the following changes on each node within your installation
+
+- Create a file named `/etc/sysctl.d/99-elasticsearch.conf` with the following contents:
+
+`vm.max_map_count = 262144`
+
+- Execute the following command:
+
+```
+sysctl vm.max_map_count=262144
+```
+
+=== Installing the Istio Operator
+
+The Maistra installation process introduces a Kubernetes operator to manage the installation of the Istio control plane within the istio-system namespace.  This operator defines and monitors a custom resource related to the deployment, update and deletion of the Istio control plane.
+
+The templates are available at: https://github.com/Maistra/openshift-ansible/tree/maistra-0.8/istio
+
+The following steps will install the Maistra operator into an existing installation, these can be executed from any host with access to the cluster.  Please ensure you are logged in as a cluster admin before executing the following
+
+[NOTE]
+.OpenShift Master Public URL
+=====================
+The OpenShift Master Public URL should be configured to match the public URL of your OpenShift Console, this parameter is required by the Fabric8 launcher.
+=====================
+
+For community images run
+
+```
+oc new-project istio-operator
+oc new-app -f https://raw.githubusercontent.com/Maistra/openshift-ansible/maistra-0.8/istio/istio_community_operator_template.yaml --param=OPENSHIFT_ISTIO_MASTER_PUBLIC_URL=<master public url>
+```
+
+For product images run
+
+```
+oc new-project istio-operator
+oc new-app -f https://raw.githubusercontent.com/Maistra/openshift-ansible/maistra-0.8/istio/istio_product_operator_template.yaml --param=OPENSHIFT_ISTIO_MASTER_PUBLIC_URL=<master public url>
+```
+
+=== Verifying Installation
+
+The above instructions will create a new deployment within the istio-operator project, executing the operator responsible for managing the state of the Istio control plane through the custom resource.
+
+To verify the operator is installed correctly, access the logs from the operator pod using the following command
+
+```
+oc logs -n istio-operator $(oc -n istio-operator get pods -l name=istio-operator --output=jsonpath={.items..metadata.name})
+```
+
+and look for output similar to the following
+
+```
+time="2018-08-14T20:00:18Z" level=info msg="Watching resource istio.openshift.com/v1alpha1, kind Installation, namespace istio-operator, resyncPeriod 0"
+```
+
+=== Deploying the Istio Control Plane
+
+In order to deploy the Istio Control Plane we need to create a custom resource such as the one in the following example which demonstrates the configuration options supported by the operator.  The custom resource *must* be deployed into the `istio-operator` namespace and *must* be called `istio-installation`. For more information on the parameters and their configuration please see the link:../custom-install[Custom Installation Documentation].
+
+
+```
+apiVersion: "istio.openshift.com/v1alpha1"
+kind: "Installation"
+metadata:
+  name: "istio-installation"
+  namespace: istio-operator
+spec:
+  deployment_type: openshift
+  istio:
+    authentication: true
+    community: false
+    prefix: openshift-istio-tech-preview/
+    version: 0.8.0
+  jaeger:
+    prefix: distributed-tracing-tech-preview/
+    version: 1.9.0
+    elasticsearch_memory: 1Gi
+  kiali:
+    prefix: openshift-istio-tech-preview/
+    version: 0.14.0
+    username: username
+    password: password
+  launcher:
+    openshift:
+      user: user
+      password: password
+    github:
+      username: username
+      token: token
+    catalog:
+      filter: booster.mission.metadata.istio
+      branch: v71
+      repo: https://github.com/fabric8-launcher/launcher-booster-catalog.git
+  threeScale:
+    enabled: false
+    prefix: openshift-istio-tech-preview/
+    version: 0.3.0
+    adapter:
+      listenAddr: 3333
+      logLevel: info
+      logJSON: true
+      reportMetrics: true
+      metricsPort: 8080
+      cacheTTLSeconds: 300
+      cacheRefreshSeconds: 180
+      cacheEntriesMax: 1000
+      cacheRefreshRetries: 1
+      allowInsecureConn: false
+      clientTimeoutSeconds: 10
+```
+
+The minimal custom resource required to install an Istio Control Plane is as follows,
+this will deploy a control plane using the CentOS-based community Istio images.
+
+```
+apiVersion: "istio.openshift.com/v1alpha1"
+kind: "Installation"
+metadata:
+  name: "istio-installation"
+  namespace: istio-operator
+```
+
+Once you have modified the custom resource to suit your installation you can deploy the resource using the following command
+
+```
+oc create -n istio-operator -f <name of file>
+```
+
+=== Verifying the Istio Control Plane
+
+The operator will create the `istio-system` namespace and run the installer job, this job will set up the Istio control plane using Ansible playbooks.  The progress of the installation can be followed by either watching the pods or the log output from the `openshift-ansible-istio-installer-job` pod.
+
+To watch the progress of the pods execute the following command:
+
+```
+oc get pods -n istio-system -w
+```
+
+Once the `openshift-ansible-istio-installer-job` has completed run `oc get pods -n istio-system` and verify you have state similar to the following"
+
+```
+NAME                                          READY     STATUS      RESTARTS   AGE
+3scale-istio-adapter-7df4db48cf-sc98s         1/1       Running     0          13s
+elasticsearch-0                               1/1       Running     0          29s
+grafana-c7f5cc6b6-vg6db                       1/1       Running     0          33s
+istio-citadel-d6d6bb7bb-jgfwt                 1/1       Running     0          1m
+istio-egressgateway-69448cf7dc-b2qj5          1/1       Running     0          1m
+istio-galley-f49696978-q949d                  1/1       Running     0          1m
+istio-ingressgateway-7759647fb6-pfpd5         1/1       Running     0          1m
+istio-pilot-7595bfd696-plffk                  2/2       Running     0          1m
+istio-policy-779454b878-xg7nq                 2/2       Running     2          1m
+istio-sidecar-injector-6655b6ffdb-rn69r       1/1       Running     0          1m
+istio-telemetry-dd9595888-8xjz2               2/2       Running     2          1m
+jaeger-agent-gmk72                            1/1       Running     0          25s
+jaeger-collector-7f644df9f5-dbzcv             1/1       Running     1          25s
+jaeger-query-6f47bf4777-h4wmh                 1/1       Running     1          25s
+kiali-7cc48b6cbb-74gcf                        1/1       Running     0          17s
+openshift-ansible-istio-installer-job-fbtfj   0/1       Completed   0          2m
+prometheus-5f9fd67f8-r6b86                    1/1       Running     0          1m
+```
+
+If you have also chosen to install the Fabric8 launcher you should monitor the containers within the devex project until the following state has been reached:
+
+```
+NAME                          READY     STATUS    RESTARTS   AGE
+configmapcontroller-1-8rr6w   1/1       Running   0          1m
+launcher-backend-2-2wg86      1/1       Running   0          1m
+launcher-frontend-2-jxjsd     1/1       Running   0          1m
+```
+
+=== Removing Istio
+
+The following step will remove Istio from an existing installation. It can be executed from any host with access to the cluster.
+
+```
+oc delete -n istio-operator installation istio-installation
+```
+
+=== Removing Operator
+
+In order to cleanly remove the operator execute the following:
+
+For community images run
+
+```
+oc process -f istio_community_operator_template.yaml | oc delete -f -
+```
+
+For product images run
+
+```
+oc process -f istio_product_operator_template.yaml | oc delete -f -
+```
+
+=== Upgrading from a Pre-Existing Installation
+
+If there is an existing, pre-0.3.0 Istio istallation then the Istio Control Plane must be removed by the associated operator prior to installing the 0.3.0 Tech Preview.  If this was not possible the installation can be removed with either of the following steps.
+
+[NOTE]
+.Removal Template
+=====================
+The removal template associated with the installed release must be used to remove the Istio Control Plane if it is no longer possible to remove the installation using the operator.
+=====================
+
+```
+oc process -f istio_removal_template.yaml | oc create -f -
+```
+
+or
+
+```
+oc delete project istio-system
+oc delete csr istio-sidecar-injector.istio-system
+oc get crd  | grep istio | awk '{print $1}' | xargs oc delete crd
+oc get mutatingwebhookconfigurations  | grep istio | awk '{print $1}' | xargs oc delete mutatingwebhookconfigurations
+oc get validatingwebhookconfiguration  | grep istio | awk '{print $1}' | xargs oc delete validatingwebhookconfiguration
+oc get clusterroles  | grep istio | awk '{print $1}' | xargs oc delete clusterroles
+oc get clusterrolebindings  | grep istio | awk '{print $1}' | xargs oc delete clusterrolebindings
+```
+
+== Instantiating a Standalone, all-in-one Origin Cluster with Istio
+
+To create an Origin Kubernetes Distribution (OKD) cluster instance with Istio following these steps. This will deploy the CentOS-based Istio community images.
+
+- Download istiooc from:
+  https://github.com/Maistra/origin/releases. Then execute the following:
+- Create a Minimum Installation Custom Resource file as described above
+- Execute the following:
+```
+istiooc cluster up
+istiooc login -u system:admin
+istiooc -n istio-operator create -f cr.yaml
+```
+- Verify the installation was successful as described above

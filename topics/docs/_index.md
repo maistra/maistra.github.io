@@ -1,4 +1,4 @@
 +++
 type = "docs"
-title = "Maistra.io Documentation"
+title = "Documentation"
 +++
