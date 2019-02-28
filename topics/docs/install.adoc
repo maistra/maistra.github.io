@@ -4,25 +4,25 @@ type: "document"
 category: "Getting started"
 description: "This document describes how to install the Istio operator and how to create a custom resource to configure and install an Istio control plane into your OpenShift installation."
 ---
-= Istio Installation Guide
+== Istio Installation Guide
 :toc:
 
 Guide for installing Istio into an existing OpenShift Container Platform (OCP) or Origin (OKD) cluster and for creating a standalone, all-in-one origin cluster with Istio
 
-== Supported Configurations
+=== Supported Configurations
 
 - OpenShift Container Platform (OCP) 3.11 (https://docs.openshift.com/container-platform/3.11/install/prerequisites.html)
 - Origin (OKD) 3.11
 - istiooc (https://github.com/Maistra/origin/releases/tag/v3.11.0%2Bmaistra-0.8.0)
 - NOTE: OpenShift Online and OpenShift Dedicated are not supported in the 0.8.0 Istio Tech Preview
 
-== Install Istio into Existing OCP or OKD Environment
+=== Install Istio into Existing OCP or OKD Environment
 
-=== Preparing the Installation
+==== Preparing the Installation
 
 Before Istio can be installed into an existing installation it is necessary to make a number of changes to the master configuration and each of the schedulable nodes.  These changes will enable features required within Istio and also ensure Elasticsearch will function correctly.
 
-=== Updating the Master
+==== Updating the Master
 
 If manual sidecar injection (i.e. kube-inject) is used this section may be skipped.
 
@@ -34,7 +34,8 @@ First, make the following changes on each master within your installation.
 - Change to the directory containing the master configuration file (e.g. /etc/origin/master/master-config.yaml)
 - Create a file named master-config.patch with the following contents
 
-```
+[source,yaml]
+----
 admissionConfig:
   pluginConfig:
     MutatingAdmissionWebhook:
@@ -47,7 +48,7 @@ admissionConfig:
         apiVersion: apiserver.config.k8s.io/v1alpha1
         kubeConfigFile: /dev/null
         kind: WebhookAdmission
-```
+----
 
 - Within the same directory issue the following commands:
 
@@ -58,7 +59,7 @@ master-restart api
 master-restart controllers
 ```
 
-=== Updating the Nodes
+==== Updating the Nodes
 
 In order to run the Elasticsearch application it is necessary to make a change to the kernel configuration on each node, this change will be handled through the `sysctl` service.
 
@@ -123,7 +124,8 @@ time="2018-08-14T20:00:18Z" level=info msg="Watching resource istio.openshift.co
 In order to deploy the Istio Control Plane we need to create a custom resource such as the one in the following example which demonstrates the configuration options supported by the operator.  The custom resource *must* be deployed into the `istio-operator` namespace and *must* be called `istio-installation`. For more information on the parameters and their configuration please see the link:../custom-install[Custom Installation Documentation].
 
 
-```
+[source,yaml]
+----
 apiVersion: "istio.openshift.com/v1alpha1"
 kind: "Installation"
 metadata:
@@ -172,7 +174,7 @@ spec:
       cacheRefreshRetries: 1
       allowInsecureConn: false
       clientTimeoutSeconds: 10
-```
+----
 
 The minimal custom resource required to install an Istio Control Plane is as follows,
 this will deploy a control plane using the CentOS-based community Istio images.
@@ -283,7 +285,7 @@ oc get clusterroles  | grep istio | awk '{print $1}' | xargs oc delete clusterro
 oc get clusterrolebindings  | grep istio | awk '{print $1}' | xargs oc delete clusterrolebindings
 ```
 
-== Instantiating a Standalone, all-in-one Origin Cluster with Istio
+=== Instantiating a Standalone, all-in-one Origin Cluster with Istio
 
 To create an Origin Kubernetes Distribution (OKD) cluster instance with Istio following these steps. This will deploy the CentOS-based Istio community images.
 
