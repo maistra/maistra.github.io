@@ -1,0 +1,40 @@
+
+=== Verifying the Istio Control Plane
+
+The operator will create the istio-system namespace and run the installer job. This job will set up the Istio control plane using Ansible playbooks.  The progress of the installation can be followed by either watching the pods or the log output from the openshift-ansible-istio-installer-job pod.To watch the progress of the pods execute the following command:
+
+```
+oc get pods -n istio-system -w
+```
+
+Once the openshift-ansible-istio-installer-job has completed run oc get pods -n istio-system and verify you have state similar to the following"
+
+```
+NAME                                          READY     STATUS      RESTARTS   AGE
+3scale-istio-adapter-7df4db48cf-sc98s         1/1       Running     0          13s
+elasticsearch-0                               1/1       Running     0          29s
+grafana-c7f5cc6b6-vg6db                       1/1       Running     0          33s
+istio-citadel-d6d6bb7bb-jgfwt                 1/1       Running     0          1m
+istio-egressgateway-69448cf7dc-b2qj5          1/1       Running     0          1m
+istio-galley-f49696978-q949d                  1/1       Running     0          1m
+istio-ingressgateway-7759647fb6-pfpd5         1/1       Running     0          1m
+istio-pilot-7595bfd696-plffk                  2/2       Running     0          1m
+istio-policy-779454b878-xg7nq                 2/2       Running     2          1m
+istio-sidecar-injector-6655b6ffdb-rn69r       1/1       Running     0          1m
+istio-telemetry-dd9595888-8xjz2               2/2       Running     2          1m
+jaeger-agent-gmk72                            1/1       Running     0          25s
+jaeger-collector-7f644df9f5-dbzcv             1/1       Running     1          25s
+jaeger-query-6f47bf4777-h4wmh                 1/1       Running     1          25s
+kiali-7cc48b6cbb-74gcf                        1/1       Running     0          17s
+openshift-ansible-istio-installer-job-fbtfj   0/1       Completed   0          2m
+prometheus-5f9fd67f8-r6b86                    1/1       Running     0          1m
+```
+
+If you have also chosen to install the Fabric8 launcher you should monitor the containers within the devex project until the following state has been reached:
+
+```
+NAME                          READY     STATUS    RESTARTS   AGE
+configmapcontroller-1-8rr6w   1/1       Running   0          1m
+launcher-backend-2-2wg86      1/1       Running   0          1m
+launcher-frontend-2-jxjsd     1/1       Running   0          1m
+```
