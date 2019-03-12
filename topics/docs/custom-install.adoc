@@ -11,14 +11,7 @@ Minimal Example
 ---------------
 At a minimum, the following arguments are required.
 
-[source,yaml]
-----
-apiVersion: "istio.openshift.com/v1alpha1"
-kind: "Installation"
-metadata:
-  name: "istio-installation"
-  namespace: istio-operator
-----
+{{< snippet_markdown name="cr_minimal" >}}
 
 Complete Example
 ----------------
