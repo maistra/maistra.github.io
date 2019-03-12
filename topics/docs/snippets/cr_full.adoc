@@ -1,4 +1,5 @@
-```
+[source,yaml]
+----
 apiVersion: "istio.openshift.com/v1alpha1"
 kind: "Installation"
 metadata:
@@ -47,4 +48,4 @@ spec:
       cacheRefreshRetries: 1
       allowInsecureConn: false
       clientTimeoutSeconds: 10
-```
+----
