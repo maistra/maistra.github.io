@@ -11,13 +11,13 @@ Minimal Example
 ---------------
 At a minimum, the following arguments are required.
 
-{{< snippet_markdown name="cr_minimal" >}}
+{{< snippet_markdown name="istio_installation_minimal" >}}
 
 Complete Example
 ----------------
 Below, you can an example with all supported arguments populated.
 
-{{< snippet_markdown name="cr_full" >}}
+{{< snippet_markdown name="istio_installation_full" >}}
 
 ## [[General]] General
 

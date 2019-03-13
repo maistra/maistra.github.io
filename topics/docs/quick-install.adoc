@@ -10,15 +10,15 @@ To create a standalone, all-in-one origin cluster with Maistra, follow these ins
 
 - Download istiooc from:
   https://github.com/Maistra/origin/releases. Then execute the following:
-- Create an link:../custom-install[installation custom resource] and name it cr.yaml. The default example is below:
-{{< snippet_markdown name="cr_minimal" >}}
+- Create an link:../custom-install[installation custom resource] and name it istio-installation.yaml. The default example is below:
+{{< snippet_markdown name="istio_installation_minimal" >}}
 
 - Execute the following:
 
 ```
 istiooc cluster up
 istiooc login -u system:admin
-istiooc -n istio-operator create -f cr.yaml
+istiooc -n istio-operator create -f istio-installation.yaml
 ```
 
 {{< snippet_markdown name="verify_install" >}}

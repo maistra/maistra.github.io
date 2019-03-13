@@ -123,12 +123,12 @@ time="2018-08-14T20:00:18Z" level=info msg="Watching resource istio.openshift.co
 
 In order to deploy the Istio Control Plane we need to create a custom resource such as the one in the following example which demonstrates the configuration options supported by the operator.  The custom resource *must* be deployed into the `istio-operator` namespace and *must* be called `istio-installation`. For more information on the parameters and their configuration please see the link:../custom-install[Custom Installation Documentation].
 
-{{< snippet_markdown name="cr_full" >}}
+{{< snippet_markdown name="istio_installation_full" >}}
 
 The minimal custom resource required to install an Istio Control Plane is as follows.
 This will deploy a control plane using the CentOS-based community Istio images.
 
-{{< snippet_markdown name="cr_minimal" >}}
+{{< snippet_markdown name="istio_installation_minimal" >}}
 
 Once you have modified the custom resource to suit your installation you can deploy the resource using the following command
 
