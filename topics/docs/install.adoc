@@ -4,12 +4,12 @@ type: "document"
 category: "Getting started"
 description: "This document describes how to install the Istio operator and how to create a custom resource to configure and install an Istio control plane into your OpenShift installation."
 ---
-= Istio Installation Guide
+== Istio Installation Guide
 :toc:
 
 This guide provides instructions for installing Maistra into an existing OpenShift Container Platform (OCP) or Origin (OKD) cluster and for creating a standalone, all-in-one origin cluster with Istio
 
-== Supported Configurations
+=== Supported Configurations
 
 - OpenShift Container Platform (OCP) 3.11 (https://docs.openshift.com/container-platform/3.11/install/prerequisites.html)
 - OpenShift Container Platform (OCP) 4.0
@@ -35,7 +35,8 @@ First, make the following changes on each master within your installation.
 - Change to the directory containing the master configuration file (e.g. /etc/origin/master/master-config.yaml)
 - Create a file named master-config.patch with the following contents
 
-```
+[source,yaml]
+----
 admissionConfig:
   pluginConfig:
     MutatingAdmissionWebhook:
@@ -48,7 +49,7 @@ admissionConfig:
         apiVersion: apiserver.config.k8s.io/v1alpha1
         kubeConfigFile: /dev/null
         kind: WebhookAdmission
-```
+----
 
 - Within the same directory issue the following commands:
 
@@ -59,7 +60,7 @@ master-restart api
 master-restart controllers
 ```
 
-=== Updating the Nodes
+==== Updating the Nodes
 
 In order to run the Elasticsearch application it is necessary to make a change to the kernel configuration on each node, this change will be handled through the `sysctl` service.
 
@@ -188,4 +189,3 @@ oc get validatingwebhookconfiguration  | grep istio | awk '{print $1}' | xargs o
 oc get clusterroles  | grep istio | awk '{print $1}' | xargs oc delete clusterroles
 oc get clusterrolebindings  | grep istio | awk '{print $1}' | xargs oc delete clusterrolebindings
 ```
-
