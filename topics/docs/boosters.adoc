@@ -5,11 +5,11 @@ category: "Examples"
 description: "The RHOAR team has developed several tutorials to allow you to explore specific Istio features."
 ---
 
-## RHOAR Boosters
+== RHOAR Boosters
 The RHOAR team has developed several tutorials to allow you to explore specific Istio features.
 
 
-### Springboot
+=== Springboot
 
 https://github.com/snowdrop/spring-boot-istio-circuit-breaker-booster/blob/master/README.adoc[Circuit Breaker]
 
@@ -19,7 +19,7 @@ https://github.com/snowdrop/spring-boot-istio-security-booster/blob/master/READM
 
 https://github.com/snowdrop/spring-boot-istio-routing-booster/blob/master/README.adoc[Routing]
 
-### Thorntail
+=== Thorntail
 
 https://github.com/wildfly-swarm-openshiftio-boosters/wfswarm-istio-circuit-breaker[Circuit Breaker]
 
@@ -30,7 +30,7 @@ https://github.com/wildfly-swarm-openshiftio-boosters/wfswarm-istio-security[Sec
 https://github.com/wildfly-swarm-openshiftio-boosters/wfswarm-istio-routing[Routing]
 
 
-### Vert.x
+=== Vert.x
 
 https://github.com/openshiftio-vertx-boosters/vertx-istio-circuit-breaker-booster[Circuit Breaker]
 
@@ -40,7 +40,7 @@ https://github.com/openshiftio-vertx-boosters/vertx-istio-security-booster[Secur
 
 https://github.com/openshiftio-vertx-boosters/vertx-istio-routing-booster[Routing]
 
-### Node.js
+=== Node.js
 
 https://github.com/bucharest-gold/nodejs-istio-circuit-breaker[Circuit Breaker]
 
@@ -49,5 +49,3 @@ https://github.com/bucharest-gold/nodejs-istio-tracing[Distributed Tracing]
 https://github.com/bucharest-gold/nodejs-istio-security[Security]
 
 https://github.com/bucharest-gold/nodejs-istio-routing[Routing]
-
-

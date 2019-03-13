@@ -4,18 +4,18 @@ type: "document"
 category: "Getting started"
 description: "This document describes the differences between the upstream Istio community releases and Maistra releases."
 ---
-= Comparing Maistra and upstream Istio community installations
+== Comparing Maistra and upstream Istio community installations
 :toc:
 
 An installation of Maistra differs from upstream Istio community installations in multiple ways. The modifications to Maistra are sometimes necessary to resolve issues, provide additional features, or to handle differences when deploying on OpenShift or OKD.
 
 The current release of Maistra differs from the current upstream Istio community release in the following ways:
 
-== Automatic Injection
+=== Automatic Injection
 
 Enabling automatic injection for your deployments differs between the upstream Istio releases and the Maistra releases.  The upstream sidecar injector will inject all deployments within specifically labelled namespaces whereas the Maistra version relies on opting in and the presence of the `sidecar.istio.io/inject` annotation.  For more information please refer to the link:{{< relref "automatic-injection.adoc" >}}[the automatic injection section].
 
-== Role Based Access Control features
+=== Role Based Access Control features
 
 Role Based Access Control (RBAC) provides a mechanism to control access to a service. You can identify subjects by username or by specifying a set of properties and apply access controls accordingly.
 

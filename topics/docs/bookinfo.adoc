@@ -5,20 +5,15 @@ category: "Examples"
 description: "Bookinfo is an example application that shows you how to set up and monitor a service mesh using Istio."
 ---
 
-Bookinfo Application
---------------------
+== Bookinfo Application
 
 The following steps describe the deployment of Bookinfo application on Maistra running on Openshift.
 
-Before you Begin
-----------------
-
+=== Before you Begin
 Install Maistra by following the instructions link:../install[here].
 
 
-Update Security Context Constraints
------------------------------------
-
+=== Update Security Context Constraints
 To add the service account used by Bookinfo application to anyuid and privileged SCCs in "myproject" namespace:
 
 ```
@@ -26,22 +21,21 @@ To add the service account used by Bookinfo application to anyuid and privileged
   $ oc adm policy add-scc-to-user privileged -z default -n myproject
 ```
 
-Deploying Bookinfo Application
-------------------------------
+=== Deploying Bookinfo Application
 
-. Download bookinfo.yaml into your local directory:
+. Download `bookinfo.yaml` into your local directory:
 +
 ```
   $ curl -o bookinfo.yaml https://raw.githubusercontent.com/Maistra/bookinfo/master/bookinfo.yaml
 ```
 
-. Deploy Bookinfo application in "myproject" namespace:
+. Deploy the Bookinfo application in the "myproject" namespace:
 +
 ```
   $ oc apply -n myproject -f bookinfo.yaml
 ```
 
-. Download bookinfo-gateway.yaml into your local directory:
+. Download `bookinfo-gateway.yaml` into your local directory:
 +
 ```
   $ curl -o bookinfo-gateway.yaml https://raw.githubusercontent.com/Maistra/bookinfo/master/bookinfo-gateway.yaml
@@ -60,10 +54,9 @@ Deploying Bookinfo Application
 ```
 
 
-Confirm Bookinfo is running
----------------------------
+== Confirm Bookinfo is running
 
-To confirm that the application has been successfully deployed:
+To confirm that Bookinfo has been successfully deployed:
 
 ```
   $ curl -o /dev/null -s -w "%{http_code}\n" http://$GATEWAY_URL/productpage
@@ -71,8 +64,7 @@ To confirm that the application has been successfully deployed:
 
 Alternatively, you can open `http://$GATEWAY_URL/productpage` in your browser.
 
-Add default destination rules
------------------------------
+=== Add default destination rules
  . If you did not enable mutual TLS:
 +
 ```
@@ -91,16 +83,14 @@ Add default destination rules
   $ oc get destinationrules -o yaml
 ```
 
-Cleanup
--------
-
+=== Cleanup
 . Download cleanup script:
 +
 ```
   $ curl -o cleanup.sh https://raw.githubusercontent.com/Maistra/bookinfo/master/cleanup.sh && chmod +x ./cleanup.sh
 ```
 
-. Delete bookinfo virtualservice, gateway, and terminate the pods:
+. Delete the bookinfo virtualservice, gateway, and terminate the pods:
 +
 ```
   $ ./cleanup.sh
