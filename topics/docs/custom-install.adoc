@@ -7,14 +7,12 @@ description: "Maistra uses a custom resource to initialize your environment. Thi
 
 The istio-operator relies on a custom resource to set up Istio. This configuration gets passed to an ansible playbook which will then set up your environment.
 
-Minimal Example
----------------
+== Minimal Example
 At a minimum, the following arguments are required.
 
 {{< snippet_markdown name="istio_installation_minimal" >}}
 
-Complete Example
-----------------
+== Complete Example
 Below, you can an example with all supported arguments populated.
 
 {{< snippet_markdown name="istio_installation_full" >}}

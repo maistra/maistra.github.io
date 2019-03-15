@@ -4,28 +4,28 @@ type: "document"
 category: "Getting started"
 description: "Kiali allows you to visualize the topology of your service mesh, view traces, see the flow of traffic in your network, and troubleshoot issues."
 ---
-:imagesdir: ../images/kiali
+:imagesdir: ../images
 
-NOTE: This document assumes that you installed Kiali as part of your Istio configuration. If not, please
-update your link:{{< ref "custom-install.adoc" >}}[operator configuration]   to include Kiali before continuing.
+[NOTE]
+====
+This document assumes that you installed Kiali as part of your Istio configuration. If not, please
+update your link:{{< ref "custom-install.adoc" >}}[operator configuration] to include Kiali before continuing.
+====
 
-What is Kiali
--------------
+== What is Kiali
+
 Kiali is a frontend for Maistra that will allow you to manage and monitor your mesh from a single UI. This UI will
 allow you to view configurations, monitor traffic flow and health, and analyze traces.
 
 {empty} +
 
-Accessing Kiali
----------------
+== Accessing Kiali
 To access Kiali, first find the exposed route.
 
-[source,bash]
-----
+```
 $ oc get route -n istio-system kiali -o jsonpath='{.spec.host}'
 kiali-istio-system.127.0.0.1.nip.io
-----
-
+```
 
 After you have your route, using your web browser navigate to this address using https.This will bring you to a login screen. Enter the username and password you configured when installing Istio and click Log In.
 
@@ -34,6 +34,5 @@ image::kiali_login.png[]
 {empty} +
 
 
-Further information
--------------------
+== Further information
 To learn more about Kiali, please see the Kiali documentation at: link:[https://www.kiali.io/documentation/]
