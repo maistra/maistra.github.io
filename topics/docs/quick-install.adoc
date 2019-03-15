@@ -20,5 +20,4 @@ istiooc cluster up
 istiooc login -u system:admin
 istiooc -n istio-operator create -f istio-installation.yaml
 ```
-
 {{< snippet_markdown name="verify_install" >}}
