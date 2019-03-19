@@ -142,11 +142,13 @@ oc create -n istio-operator -f <name of file>
 == Uninstalling Maistra
 === Removing the Control Plane
 
-The following step will remove Istio from an existing installation. It can be executed from any host with access to the cluster.
+The following step will remove Istio from an existing installation. It can be executed by any user with access to delete the CustomResource.
 
 ```
 oc delete -n istio-operator installation istio-installation
 ```
+
+The removal of the CustomResource (Installation) will tell the Istio operator to begin uninstalling everything it installed. This will create a job in the `istio-system` project called `openshift-ansible-istio-removal-job`. Once this job completes, the operator will delete the `istio-system` project. At that point you can continue to the next step.
 
 === Removing the Operator
 
@@ -162,6 +164,12 @@ For product images run
 
 ```
 oc process -f istio_product_operator_template.yaml | oc delete -f -
+```
+
+The `istio-opertor` project can now be removed.
+
+```
+oc delete project istio-operator
 ```
 
 == Upgrading from a Pre-Existing Installation
