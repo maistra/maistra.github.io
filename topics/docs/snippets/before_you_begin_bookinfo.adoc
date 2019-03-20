@@ -1,0 +1,4 @@
+== Before you Begin
+
+. Install Maistra by following the instructions here link:/docs/getting_started/install[here].
+. Deploy Bookinfo application by following these link:/docs/examples/bookinfo[instructions].
