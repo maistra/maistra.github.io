@@ -5,17 +5,15 @@ category: "Monitoring & Tracing"
 description: "See how Istio allows you to monitor the health of your Service Mesh using Grafana"
 ---
 
-:imagesdir: ../
+:imagesdir: ../../images
 
-Before you Begin
-----------------
+== Before you Begin
 
 . Install Maistra by following the instructions here link:install[here].
 . Deploy Bookinfo application by following these link:../bookinfo[instructions].
 
 
-Accessing Grafana UI
---------------------
+== Accessing Grafana UI
 
 A route to access Grafana UI should already exist. Query openshift for details of the route:
 
@@ -32,8 +30,7 @@ image::grafana-home-screen.png[]
 
 
 
-Istio Mesh Metrics
-------------------
+== Istio Mesh Metrics
 
 Select "Istio Mesh Dashboard" from the drop-down list in the top left corner to see Istio mesh metrics:
 
@@ -50,8 +47,7 @@ The dashboard should reflect the traffic through the mesh, similarly to this:
 image::grafana-mesh-with-traffic.png[]
 
 
-Istio Service Metrics
----------------------
+== Istio Service Metrics
 
 To see detailed metrics for a service click on a service name in the "Service" column. The service dashboard will look similar to this:
 
@@ -62,8 +58,7 @@ Note that "Tcp Bandwidth" metrics are empty, as Bookinfo uses http-based service
 You can switch to a different service or filter metrics by client- and service-worloads by using drop-down lists at the top of the dashboard.
 
 
-Istio Workload Metrics
-----------------------
+== Istio Workload Metrics
 
 To switch to workloads dashboard, select "Istio Workload Dashboard" from the drop-down list in the top left corner of the screen. You should see a screen similar to this:
 
@@ -72,7 +67,6 @@ image::grafana-workloads.png[]
 This dashboard shows workload's metrics, and metrics for client- (inbound) and service (outbound) workloads. You can switch to a different workload, ot filter metrics by inbound or outbound workloads by using drop-down lists at the top of the dashboard.
 
 
-Cleanup
--------
+== Cleanup
 
 Follow link:../bookinfo/#cleanup[Bookinfo cleanup instructions] to remove the application.

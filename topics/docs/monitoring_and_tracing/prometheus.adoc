@@ -5,17 +5,15 @@ category: "Monitoring & Tracing"
 description: "Use Istio and Prometheus to collect and examine metrics in your service mesh"
 ---
 
-:imagesdir: ../
+:imagesdir: ../../images
 
-Before you Begin
-----------------
+== Before you Begin
 
 . Install Maistra by following the instructions here link:../install[here].
 . Deploy Bookinfo application by following these link:../bookinfo[instructions].
 
 
-Querying Metrics
-----------------
+== Querying Metrics
 
 . Generate network traffic by accessing the Bookinfo application:
 +
@@ -52,7 +50,6 @@ image::prometheus-metrics.png[]
 ```
 Note that returned metric names need to be prepended with `istio_` when used in queries, e.g. `requests_total` will become `istio_requests_total`.
 
-Cleanup
--------
+== Cleanup
 
 Follow link:../bookinfo/#cleanup[Bookinfo cleanup instructions] to remove the application.

@@ -9,74 +9,15 @@ hidden: true
 
 The istio-operator relies on a custom resource to set up Istio. This configuration gets passed to an ansible playbook which will then set up your environment.
 
-Minimal Example
----------------
+== Minimal Example
 At a minimum, the following arguments are required.
 
-[source,yaml]
-----
-apiVersion: "istio.openshift.com/v1alpha1"
-kind: "Installation"
-metadata:
-  name: "istio-installation"
-  namespace: istio-operator
-----
+{{< snippet_markdown name="istio_installation_minimal" >}}
 
-Complete Example
-----------------
+== Complete Example
 Below, you can an example with all supported arguments populated.
 
-[source,yaml]
-----
-apiVersion: "istio.openshift.com/v1alpha1"
-kind: "Installation"
-metadata:
-  name: "istio-installation"
-  namespace: istio-operator
-spec:
-  deployment_type: openshift
-  istio:
-    authentication: false
-    community: false
-    prefix: openshift-istio-tech-preview/
-    version: 0.8.0
-  jaeger:
-    prefix: distributed-tracing-tech-preview/
-    version: 1.9.0
-    elasticsearch_memory: 1Gi
-  kiali:
-    username: username
-    password: password
-    prefix: openshift-istio-tech-preview/
-    version: 0.14.0
-  launcher:
-    openshift:
-      user: user
-      password: password
-    github:
-      username: username
-      token: token
-    catalog:
-      filter: booster.mission.metadata.istio
-      branch: v71
-      repo: https://github.com/fabric8-launcher/launcher-booster-catalog.git
-  threeScale:
-    enabled: false
-    prefix: openshift-istio-tech-preview/
-    version: 0.3.0
-    adapter:
-      listenAddr: 3333
-      logLevel: info
-      logJSON: true
-      reportMetrics: true
-      metricsPort: 8080
-      cacheTTLSeconds: 300
-      cacheRefreshSeconds: 180
-      cacheEntriesMax: 1000
-      cacheRefreshRetries: 1
-      allowInsecureConn: false
-      clientTimeoutSeconds: 10
-----
+{{< snippet_markdown name="istio_installation_full" >}}
 
 ## [[General]] General
 
@@ -111,7 +52,7 @@ spec:
 |version
 |docker tag to use with Istio images
 |valid docker tag
-|0.8.0
+|0.9.0
 |===
 
 ## [[Jaeger]] Jaeger
@@ -127,7 +68,7 @@ spec:
 |version
 |docker tag to use with Jaeger images
 |valid docker tag
-|1.9 if deployment_type is origin and 1.9.0 if deployment_type is openshift
+|1.11 if deployment_type is origin and 1.11.0 if deployment_type is openshift
 
 |elasticsearch_memory
 |The amount of memory to allocate to the elastic search install
@@ -159,7 +100,7 @@ spec:
 |version
 |docker tag to use with Kiali images
 |valid Kiali tag
-|v0.14.0 if deployment_type is origin and 0.14.0 if deployment_type is openshift
+|v0.15.0 if deployment_type is origin and 0.15.0 if deployment_type is openshift
 
 |===
 
@@ -204,7 +145,7 @@ spec:
 
 |branch
 |Red Hat Booster catalog to use for Fabric8
-|v71
+|v85
 
 |repo
 |Repo to use for Fabric8
@@ -229,7 +170,7 @@ spec:
 |version
 |docker tag to use with the 3scale adapter image
 |valid docker tag
-|0.3.0
+|0.4.1
 
 |===
 

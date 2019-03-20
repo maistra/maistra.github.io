@@ -2,34 +2,34 @@
 title: "Requirements for Deploying Service Mesh Applications"
 type: "document"
 category: "Getting started"
-description: "Understanding the Requirements for Deploying Service Mesh Applications into your OpenShift Service Mesh"
+description: "Understanding the Requirements for Deploying Service Mesh Applications into Maistra"
 ---
 
-When deploying an application into the OpenShift Service Mesh there are a number of differences between the behavior of the upstream Istio Community and the behavior within a Maistra installation.
+When you deploy an application into Service Mesh, there are many differences between the behavior of an upstream Istio Community installation and a Maistra installation.
 
-Configuring the Security Constraints for the Application's Service Accounts
----------------------------------------------------------------------------
+== Configuring the Security Constraints for Application Service Accounts
 
-When deploying an application into a Service Mesh running within an OpenShift environment it is currently necessary to relax the security constraints placed on the application through its Service Account to ensure the application can function correctly.  Each Service Account must be granted permissions through the `anyuid` and `privileged` Security Context Constraints to allow the sidecars to run correctly.
+[NOTE]
+====
+Relaxing security constraints is only necessary during the OpenShift Service Mesh Technology Preview phase.
+====
 
-The `privileged` Security Context Constraint is required to ensure changes to the pod's networking configuration can be updated successfully via the `istio-init` initialisation container and the `anyuid` Security Context Constraint is required to allow the sidecar container to run using its required user id of `1337`.
+When you deploy an application into a Service Mesh running in an OpenShift environment, it is currently necessary to relax the security constraints placed on the application by its service account to ensure that the application can function correctly. Each service account must be granted permissions by using the `anyuid` and `privileged` Security Context Constraints (SCC) to enable the sidecars to run correctly.
 
-To configure the correct permissions it is necessary to identify which Service Accounts are being used by your application's pods.  For most applications this will be the `default` Service Account however your Deployment/DeploymentConfig may override this by specifying the `serviceAccountName` within the pod specification.
+The `privileged` SCC is required to ensure changes to the pod's networking configuration can be updated successfully with the `istio-init` initialization container and the `anyuid` SCC is required to enable the sidecar container to run by using its required user id of `1337`.
 
-For each identified Service Account it is necessary to update the cluster configuration so they are granted access to the `anyuid` and `privileged` Security Context Constraints by executing the following commands from an account which has cluster admin privileges.  You should replace `<service account>` and `<namespace>` with the values specific to your application.
+To configure the correct permissions, it is necessary to identify the service accounts that are being used by your application's pods. For most applications this is the `default` service account however your Deployment/DeploymentConfig may override this by providing the `serviceAccountName` within the pod specification.
 
-[source,bash]
-----
+For each identified service account you must update the cluster configuration so that they are granted access to the `anyuid` and `privileged` SCCs by executing the following commands from an account with cluster admin privileges. Replace `<service account>` and `<namespace>` with values specific to your application.
+
+```
 oc adm policy add-scc-to-user anyuid -z <service account> -n <namespace>
 oc adm policy add-scc-to-user privileged -z <service account> -n <namespace>
-----
+```
 
-NOTE: The relaxing of security constraints is only necessary while the Service Mesh is within our Tech Preview phase, we are working on alternatives to ensure this will no longer be required once we reach GA.
+== Configuring an Application to Utilize Automatic Sidecar Injection
 
-Configuring an Application to Utilize Automatic Sidecar Injection
------------------------------------------------------------------
-
-When deploying an application into the OpenShift Service Mesh you must opt in to injection by specifying the `sidecar.istio.io/inject` annotation with a value of `true`.  The decision to opt in is required to ensure the sidecar injection does not interfere with other OpenShift features such as builder pods used by numerous frameworks within the OpenShift ecosystem.
+When deploying an application into the Service Mesh you must opt in to injection by specifying the `sidecar.istio.io/inject` annotation with a value of `true`. The decision to opt in is required to ensure the sidecar injection does not interfere with other OpenShift features such as builder pods used by numerous frameworks within the OpenShift ecosystem.
 
 The following example shows the annotation used within the sleep test application. The additional sidecar containers are included when this configuration is deployed within an OpenShift Service Mesh installation.
 
@@ -55,4 +55,7 @@ spec:
         imagePullPolicy: IfNotPresent
 ----
 
-NOTE: Unlike the upstream Istio Community releases it is *not* required to label a namespace to enable Istio's automatic sidecar injection. The webhook will check the configuration of pods deploying into all namespaces to see if they are opting in to injection using the appropriate annotation.
+[NOTE]
+====
+You are *not* required to label a namespace to enable automatic sidecar injection unlike in upstream Istio Community releases. The webhook checks the configuration of pods deploying into all namespaces to see if they are opting in to injection by using the appropriate annotation.
+====
