@@ -7,11 +7,10 @@ weight: 4
 ---
 :imagesdir: ../../images
 
-[NOTE]
-====
+{{% notice info %}}
 This document assumes that you installed Kiali as part of your Istio configuration. If not, please
 update your link:{{< ref "custom-install.adoc" >}}[operator configuration] to include Kiali before continuing.
-====
+{{% /notice %}}
 
 == What is Kiali
 

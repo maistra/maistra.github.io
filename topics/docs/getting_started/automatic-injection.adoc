@@ -10,12 +10,9 @@ Upstream Istio community installations rely on the existence of a proxy sidecar 
 == Automatic Sidecar Injection
 Automatic injection of the sidecar is supported by using the `sidecar.istio.io/inject` annotation within your application yaml file. Set the annotation's value to `true` for injection to occur.
 
-[NOTE]
-====
-Upstream Istio community installations require a specific label on the namespace after which all pods in that namespace are injected with the sidecar.
-
-The OpenShift Service Mesh approach requires you to opt in to injection using an annotation with no need to label namspaces. This method requires fewer privileges and does not conflict with other OpenShift capabilities such as builder pods.
-====
+{{% notice info %}}
+Upstream Istio community installations require a specific label on the namespace after which all pods in that namespace are injected with the sidecar. The OpenShift Service Mesh approach requires you to opt in to injection using an annotation with no need to label namspaces. This method requires fewer privileges and does not conflict with other OpenShift capabilities such as builder pods.
+{{% /notice %}}
 
 This example shows the annotation used within the sleep test application. The additional proxy related containers are included when you create the application in the OpenShift cluster.
 

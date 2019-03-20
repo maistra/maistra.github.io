@@ -9,10 +9,9 @@ When you deploy an application into Service Mesh, there are many differences bet
 
 == Configuring the Security Constraints for Application Service Accounts
 
-[NOTE]
-====
+{{% notice info %}}
 Relaxing security constraints is only necessary during the OpenShift Service Mesh Technology Preview phase.
-====
+{{% /notice %}}
 
 When you deploy an application into a Service Mesh running in an OpenShift environment, it is currently necessary to relax the security constraints placed on the application by its service account to ensure that the application can function correctly. Each service account must be granted permissions by using the `anyuid` and `privileged` Security Context Constraints (SCC) to enable the sidecars to run correctly.
 
@@ -55,7 +54,6 @@ spec:
         imagePullPolicy: IfNotPresent
 ----
 
-[NOTE]
-====
+{{% notice info %}}
 You are *not* required to label a namespace to enable automatic sidecar injection unlike in upstream Istio Community releases. The webhook checks the configuration of pods deploying into all namespaces to see if they are opting in to injection by using the appropriate annotation.
-====
+{{% /notice %}}

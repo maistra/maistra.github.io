@@ -22,7 +22,9 @@ This guide provides instructions for installing Maistra into an existing OpenShi
 
 Before Istio can be installed into an existing installation it is necessary to make a number of changes to the master configuration and each of the schedulable nodes.  These changes will enable features required within Istio and also ensure Elasticsearch will function correctly.
 
-NOTE: The master/node updates discussed below are no longer necessary in OCP/OKD 4.0
+{{% notice info %}}
+The master/node updates discussed below are no longer necessary in OCP/OKD 4.0
+{{% /notice %}}
 
 === Updating the Master
 
@@ -85,11 +87,9 @@ The templates are available at: https://github.com/Maistra/openshift-ansible/tre
 
 The following steps will install the Maistra operator into an existing installation, these can be executed from any host with access to the cluster.  Please ensure you are logged in as a cluster admin before executing the following
 
-[NOTE]
-.OpenShift Master Public URL
-=====================
+{{% notice info %}}
 The OpenShift Master Public URL should be configured to match the public URL of your OpenShift Console, this parameter is required by the Fabric8 launcher.
-=====================
+{{% /notice %}}
 
 For community images run
 
@@ -177,11 +177,9 @@ oc delete project istio-operator
 
 If there is an existing, pre-0.3.0 Istio istallation then the Istio Control Plane must be removed by the associated operator prior to installing the 0.3.0 Tech Preview.  If this was not possible the installation can be removed with either of the following steps.
 
-[NOTE]
-.Removal Template
-=====================
+{{% notice info %}}
 The removal template associated with the installed release must be used to remove the Istio Control Plane if it is no longer possible to remove the installation using the operator.
-=====================
+{{% /notice %}}
 
 ```
 oc process -f istio_removal_template.yaml | oc create -f -

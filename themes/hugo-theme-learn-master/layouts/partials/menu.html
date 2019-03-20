@@ -13,13 +13,13 @@
 
   <div class="highlightable">
     <ul class="topics">
-
+      {{ $sections := where .Site.Home.Sections "Section" "docs" }}
       {{if eq .Site.Params.ordersectionsby "title"}}
-      {{range .Site.Home.Sections.ByTitle}}
+      {{range $sections.ByTitle}}
       {{ template "section-tree-nav" dict "sect" . "currentnode" $currentNode "showvisitedlinks" $showvisitedlinks}}
       {{end}}
       {{else}}
-      {{range .Site.Home.Sections.ByWeight}}
+      {{range $sections.ByWeight}}
       {{ template "section-tree-nav" dict "sect" . "currentnode" $currentNode "showvisitedlinks" $showvisitedlinks}}
       {{end}}
       {{end}}
