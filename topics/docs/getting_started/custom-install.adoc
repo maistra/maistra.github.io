@@ -3,6 +3,8 @@ title: "Custom Installation"
 type: "document"
 category: "Getting started"
 description: "Maistra uses a custom resource to initialize your environment. This document describes how to customize the installation to your specific environment."
+weight: 2
+hidden: true
 ---
 
 The istio-operator relies on a custom resource to set up Istio. This configuration gets passed to an ansible playbook which will then set up your environment.

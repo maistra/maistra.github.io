@@ -3,6 +3,7 @@ title: "Installing on OKD/OCP"
 type: "document"
 category: "Getting started"
 description: "This document describes how to install the Istio operator and how to create a custom resource to configure and install an Istio control plane into your OpenShift installation."
+weight: 1
 ---
 == Istio Installation Guide
 :toc:

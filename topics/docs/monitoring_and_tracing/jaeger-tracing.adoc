@@ -5,7 +5,7 @@ category: "Monitoring & Tracing"
 description: "See how to use Istio to collect traces and send them to Jaeger to easily trace issues in configured services."
 ---
 
-:imagesdir: ../images
+:imagesdir: ../../images
 
 == Before you Begin
 
