@@ -7,11 +7,7 @@ description: "See how Istio allows you to monitor the health of your Service Mes
 
 :imagesdir: ../../images
 
-== Before you Begin
-
-. Install Maistra by following the instructions here link:install[here].
-. Deploy Bookinfo application by following these link:../bookinfo[instructions].
-
+{{< snippet_markdown name="before_you_begin_bookinfo" >}}
 
 == Accessing Grafana UI
 
@@ -69,4 +65,4 @@ This dashboard shows workload's metrics, and metrics for client- (inbound) and s
 
 == Cleanup
 
-Follow link:../bookinfo/#cleanup[Bookinfo cleanup instructions] to remove the application.
+Follow link:/docs/examples/bookinfo/#cleanup[Bookinfo cleanup instructions] to remove the application.

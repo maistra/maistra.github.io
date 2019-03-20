@@ -7,10 +7,7 @@ description: "See how to use Istio to collect traces and send them to Jaeger to 
 
 :imagesdir: ../../images
 
-== Before you Begin
-
-. Install Maistra by following the instructions here link:../install[here].
-. Deploy Bookinfo application by following these link:../bookinfo[instructions].
+{{< snippet_markdown name="before_you_begin_bookinfo" >}}
 
 
 == Generate Traces
