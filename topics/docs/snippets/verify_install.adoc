@@ -8,7 +8,7 @@ The operator will create the istio-system namespace and run the installer job. T
 oc get pods -n istio-system -w
 ```
 
-Once the openshift-ansible-istio-installer-job has completed run oc get pods -n istio-system and verify you have state similar to the following"
+Once the openshift-ansible-istio-installer-job has completed run `oc get pods -n istio-system` and verify you have state similar to the following:
 
 ```
 NAME                                          READY     STATUS      RESTARTS   AGE

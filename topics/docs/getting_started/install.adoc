@@ -103,20 +103,18 @@ oc apply -n istio-operator -f https://raw.githubusercontent.com/Maistra/istio-op
 
 == Verifying Installation
 
-== BAVERY_TODO: Can we get rid of this? 
 The above instructions will create a new deployment within the istio-operator project, executing the operator responsible for managing the state of the Istio control plane through the custom resource.
 
-To verify the operator is installed correctly, access the logs from the operator pod using the following command
+To verify the operator is installed correctly, wait for the operator to reach the running state
 
 ```
-oc logs -n istio-operator $(oc -n istio-operator get pods -l name=istio-operator --output=jsonpath={.items..metadata.name})
+oc get pods -n istio-operator -l name=istio-operator
+
+NAME                              READY     STATUS    RESTARTS   AGE
+istio-operator-5cd6bcf645-fvb57   1/1       Running   0          1h
 ```
 
-and look for output similar to the following
 
-```
-time="2018-08-14T20:00:18Z" level=info msg="Watching resource istio.openshift.com/v1alpha1, kind Installation, namespace istio-operator, resyncPeriod 0"
-```
 
 === Deploying the Istio Control Plane
 
@@ -137,6 +135,9 @@ oc create -n istio-system -f <name of file>
 {{< snippet_markdown name="verify_install" >}}
 
 == Uninstalling Maistra
+
+[[remove_control_plane]]
+
 === Removing the Control Plane
 
 The following steps will remove Istio from an existing installation. It can be executed by any user with access to delete the CustomResource.
@@ -152,6 +153,8 @@ oc delete -n istio-system -f <name_of_cr>
 ```
 
 The removal of the CustomResource will tell the Istio operator to begin uninstalling everything it installed.
+
+[[remove_operator]] 
 
 === Removing the Operator
 
@@ -174,18 +177,11 @@ oc delete project istio-operator
 
 == Upgrading from a Pre-Existing Installation
 
-If there is an existing, pre-0.3.0 Istio istallation then the Istio Control Plane must be removed by the associated operator prior to installing the 0.3.0 Tech Preview.  If this was not possible the installation can be removed with either of the following steps.
+To upgrade Istio, please <<remove_control_plane, remove the custom resource>>  and then create a new custom resource. The operator will upgrade appropriately. 
 
-{{% notice info %}}
-The removal template associated with the installed release must be used to remove the Istio Control Plane if it is no longer possible to remove the installation using the operator.
-{{% /notice %}}
+To upgrade the operator, please first <<remove_operator, remote the operator>> and then reinstall it. Note that Istio must be removed before the operator.
 
-```
-oc process -f istio_removal_template.yaml | oc create -f -
-```
-
-or
-
+{{%expand "If the operator was removed before the custom resource, you can uninstall the control plane manually." %}}
 ```
 oc delete project istio-system
 oc delete csr istio-sidecar-injector.istio-system
@@ -195,3 +191,4 @@ oc get validatingwebhookconfiguration  | grep istio | awk '{print $1}' | xargs o
 oc get clusterroles  | grep istio | awk '{print $1}' | xargs oc delete clusterroles
 oc get clusterrolebindings  | grep istio | awk '{print $1}' | xargs oc delete clusterrolebindings
 ```
+{{% /expand %}}

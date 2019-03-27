@@ -7,17 +7,22 @@ weight: 2
 hidden: true
 ---
 
-The istio-operator relies on a custom resource to set up Istio. This configuration gets passed to an ansible playbook which will then set up your environment.
+== Example Configurations
+The istio-operator relies on a custom resource to set up Istio. A couple of example configurations are presented below.
 
-== Minimal Example
-At a minimum, the following arguments are required.
-
+{{%expand "A basic install" %}}
 {{< snippet_markdown name="istio_installation_minimal" >}}
+{{% /expand %}}
 
-== Complete Example
-Below, you can an example with all supported arguments populated.
+{{%expand "A secure install" %}}
+{{< snippet_markdown name="istio_installation_secure" >}}
+{{% /expand %}}
 
-{{< snippet_markdown name="istio_installation_full" >}}
+== Customizing the Installation
+If you wish to customize your installation further, an explanation of different parameters is below. 
+
+
+
 
 ## [[General]] General
 
