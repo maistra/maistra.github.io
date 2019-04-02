@@ -136,13 +136,10 @@ This must be false for 3 Scale to work.
 ----
  mixer:
       policy:
-        # disable autoscaling for use in smaller environments
         autoscaleEnabled: false
 
       telemetry:
-        # disable autoscaling for use in smaller environments
         autoscaleEnabled: false
-        # constrain resources for use in smaller environments
         resources:
           requests:
             cpu: 100m
