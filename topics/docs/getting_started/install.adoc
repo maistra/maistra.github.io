@@ -15,8 +15,8 @@ This guide provides instructions for installing Maistra into an existing OpenShi
 - OpenShift Container Platform (OCP) 3.11 (https://docs.openshift.com/container-platform/3.11/install/prerequisites.html)
 - OpenShift Container Platform (OCP) 4.0
 - Origin (OKD) 3.11
-- istiooc (https://github.com/Maistra/origin/releases/tag/v3.11.0%2Bmaistra-0.9.0)
-- NOTE: OpenShift Online and OpenShift Dedicated are not supported in the 0.9.0 Istio Tech Preview
+- istiooc (https://github.com/Maistra/origin/releases/tag/v3.11.0%2Bmaistra-0.10.0)
+- NOTE: OpenShift Online and OpenShift Dedicated are not supported in the 0.10.0 Istio Tech Preview
 
 == Preparing the Installation
 
