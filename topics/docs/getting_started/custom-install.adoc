@@ -39,13 +39,63 @@ If you wish to customize your installation further, an explanation of different 
 ## [[Gateways]] istio->gateways
 [source,yaml]
 ----
+ gateways:
+      istio-egressgateway:
+        # disable autoscaling for use in smaller environments
+        autoscaleEnabled: false
+      istio-ingressgateway:
+        # disable autoscaling for use in smaller environments
+        autoscaleEnabled: false
+
 ----
 
 ## [[Mixer]] istio->mixer
 [source,yaml]
 ----
+ mixer:
+      policy:
+        # disable autoscaling for use in smaller environments
+        autoscaleEnabled: false
+
+      telemetry:
+        # disable autoscaling for use in smaller environments
+        autoscaleEnabled: false
+        # constrain resources for use in smaller environments
+        resources:
+          requests:
+            cpu: 100m
+            memory: 1G
+          limits:
+            cpu: 500m
+            memory: 4G
 ----
 
+
+## [[Pilot]] istio->pilot
+[source,yaml]
+----
+   pilot:
+      # disable autoscaling for use in smaller environments
+      autoscaleEnabled: false
+      # increase random sampling rate for development/testing
+      traceSampling: 100.0
+----
+
+## [[Kiali]] istio->kiali
+[source,yaml]
+----
+   kiali:
+      enabled: true
+      # create a secret for accessing kiali dashboard with the following credentials
+      dashboard:
+        user: admin
+        passphrase: admin
+----
+
+
+============================================================================================
+========================= Old Content. Ignore  =============================================
+============================================================================================
 |===
 |Parameter |Description |Values | Default
 
