@@ -39,12 +39,12 @@ If you wish to customize your installation further, an explanation of different 
 ## [[Gateways]] istio->gateways
 [source,yaml]
 ----
----
+----
 
 ## [[Mixer]] istio->mixer
 [source,yaml]
 ----
----
+----
 
 |===
 |Parameter |Description |Values | Default
