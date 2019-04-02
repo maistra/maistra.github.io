@@ -34,7 +34,7 @@ If you wish to customize your installation further, an explanation of different 
             cpu: 500m
             memory: 128Mi
 
----
+----
 
 ## [[Gateways]] istio->gateways
 [source,yaml]
