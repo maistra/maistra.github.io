@@ -181,7 +181,10 @@ To upgrade Istio, please <<remove_control_plane, remove the custom resource>>  a
 
 To upgrade the operator, please first <<remove_operator, remote the operator>> and then reinstall it. Note that Istio must be removed before the operator.
 
-{{%expand "If the operator was removed before the custom resource, you can uninstall the control plane manually." %}}
+{{% notice note %}}
+If the operator was removed before the custom resource, you can uninstall the control plane manually. Using the instructions below
+{{% /notice %}}
+
 ```
 oc delete project istio-system
 oc delete csr istio-sidecar-injector.istio-system
@@ -191,4 +194,3 @@ oc get validatingwebhookconfiguration  | grep istio | awk '{print $1}' | xargs o
 oc get clusterroles  | grep istio | awk '{print $1}' | xargs oc delete clusterroles
 oc get clusterrolebindings  | grep istio | awk '{print $1}' | xargs oc delete clusterrolebindings
 ```
-{{% /expand %}}
