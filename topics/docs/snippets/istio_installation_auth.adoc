@@ -54,9 +54,10 @@ spec:
       dashboard:
         user: admin
         passphrase: admin
-    #BAVERY: TOP_LEVEL? Confirm
     tracing:
       enabled: true
-    threescale:
-      enabled: false
+  threescale:
+    enabled: false
+  launcher:
+    enabled: false
 ----
