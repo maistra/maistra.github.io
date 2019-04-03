@@ -52,10 +52,9 @@ spec:
 
     kiali:
       enabled: true
-      # create a secret for accessing kiali dashboard with the following credentials
-      dashboard:
-        user: admin
-        passphrase: admin
+      #dashboard:
+        #user: admin
+        #passphrase: admin
     tracing:
       enabled: true
   threescale:

@@ -225,6 +225,9 @@ These are the resources requested and may vary depending on your environment.
       enabled: true
       hub: kiali
       tag: v0.16.2
+      #dashboard:
+        #user: admin
+        #passphrase: admin
 ----
 
 ### enabled 

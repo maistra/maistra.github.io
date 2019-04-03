@@ -54,7 +54,7 @@ spec:
       traceSampling: 100.0
 
     kiali:
-      dashboard:
-        user: admin
-        passphrase: admin
+     #dashboard:
+        #user: admin
+        #passphrase: admin
 ----
