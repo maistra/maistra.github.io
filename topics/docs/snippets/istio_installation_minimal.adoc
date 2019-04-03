@@ -33,6 +33,7 @@ spec:
         autoscaleEnabled: false
       istio-ingressgateway:
         autoscaleEnabled: false
+        ior_enabled: false
 
     mixer:
       policy:

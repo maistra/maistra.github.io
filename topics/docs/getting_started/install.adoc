@@ -5,10 +5,15 @@ category: "Getting started"
 description: "This document describes how to install the Istio operator and how to create a custom resource to configure and install an Istio control plane into your OpenShift installation."
 weight: 1
 ---
+
 == Istio Installation Guide
 :toc:
 
 This guide provides instructions for installing Maistra into an existing OpenShift Container Platform (OCP) or Origin (OKD) cluster and for creating a standalone, all-in-one origin cluster with Istio
+
+{{% notice note %}}
+The installation instructions for Maistra have changed significantly since Maistra 0.9. The instructions for Maistra 0.9 are link:https://maistra-0-9-0.maistra.io/docs/getting_started/install/[here].
+{{% /notice %}}
 
 === Supported Configurations
 

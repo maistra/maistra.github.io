@@ -107,6 +107,7 @@ This must be false for 3 Scale to work.
         autoscaleEnabled: false
         autoscaleMin: 1
         autoscaleMax: 5
+        ior_enabled: false
 
 ----
 
@@ -129,6 +130,10 @@ This must be false for 3 Scale to work.
 * autoscaleMax
 ** Description: This parameter controls the minimum pods to deploy based on the autoscaleEnabled setting.
 ** Default: 5
+
+* ior_enabled
+** Description: This parameter controls whether Istio routes should automatically be configured in OpenShift
+** Default: false
     
 ## [[Mixer]] istio->mixer
 
@@ -220,9 +225,6 @@ These are the resources requested and may vary depending on your environment.
       enabled: true
       hub: kiali
       tag: v0.16.2
-      dashboard:
-        user: admin
-        passphrase: admin
 ----
 
 ### enabled 
@@ -241,7 +243,11 @@ These are the resources requested and may vary depending on your environment.
 ** Description: The tag to use to pull the Istio images. 
 ** Default: 0.16.2
 
+
 ### dashboard
+{{% notice info %}}
+Kiali supports two authentication modes. OAuth and dashboard users. By default, Kiali uses OpenShift OAuth, but you can enable a dashboard user by adding a dashboard user and passphrase.
+{{% /notice %}}
 
 * user
 ** Description: This is the username used to access the Kiali console. Note that this is not related to any account on OpenShift
