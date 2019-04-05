@@ -2,12 +2,6 @@
 === Verifying the Istio Control Plane
 {{< snippet_markdown name="install_notices" >}}
 
-The operator will create the istio-system namespace and run the installer job. This job will set up the Istio control plane using Ansible playbooks.  The progress of the installation can be followed by either watching the pods or the log output from the openshift-ansible-istio-installer-job pod.To watch the progress of the pods execute the following command:
-
-```
-oc get pods -n istio-system -w
-```
-
 Execute the following command to see the status of the installation:
 
 ```
