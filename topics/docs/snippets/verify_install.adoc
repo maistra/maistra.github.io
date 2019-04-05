@@ -9,16 +9,20 @@ oc get pods -n istio-system -w
 ```
 
 Execute the following command to see the status of the installation:
+
 ```
 oc get controlplane/basic-install -n istio-system --template='{{range .status.conditions}}{{printf "%s=%s, reason=%s, message=%s\n\n" .type .status .reason .message}}{{end}}'
 ```
 
 When installation is complete, the otuput should be similar to the following:
+
 ```
 Installed=True, reason=InstallSuccessful, message=%!s(<nil>)
 ```
 
 Executing `oc get pods -n istio-system` should yield output similar to the following:
+
+```
 NAME                                          READY     STATUS      RESTARTS   AGE
 3scale-istio-adapter-7df4db48cf-sc98s         1/1       Running     0          13s
 elasticsearch-0                               1/1       Running     0          29s
