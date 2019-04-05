@@ -92,10 +92,6 @@ The templates are available at: https://github.com/Maistra/istio-operator/tree/m
 
 The following steps will install the Maistra operator into an existing installation, these can be executed from any host with access to the cluster.  Please ensure you are logged in as a cluster admin before executing the following
 
-{{% notice info %}}
-The OpenShift Master Public URL should be configured to match the public URL of your OpenShift Console, this parameter is required by the Fabric8 launcher.
-{{% /notice %}}
-
 ```
 oc new-project istio-operator
 oc new-project istio-system
