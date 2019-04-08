@@ -180,7 +180,7 @@ oc delete project istio-operator
 
 To upgrade Istio, please <<remove_control_plane, remove the custom resource>>  and then create a new custom resource. The operator will upgrade appropriately. 
 
-To upgrade the operator, please first <<remove_operator, remote the operator>> and then reinstall it. Note that Istio must be removed before the operator.
+To upgrade the operator, please first <<remove_operator, remove the operator>> and then reinstall it. Note that Istio must be removed before the operator.
 
 {{% notice note %}}
 If the operator was removed before the custom resource, you can uninstall the control plane manually. Using the instructions below

@@ -8,7 +8,7 @@ Execute the following command to see the status of the installation:
 oc get controlplane/basic-install -n istio-system --template='{{range .status.conditions}}{{printf "%s=%s, reason=%s, message=%s\n\n" .type .status .reason .message}}{{end}}'
 ```
 
-When installation is complete, the otuput should be similar to the following:
+When installation is complete, the output should be similar to the following:
 
 ```
 Installed=True, reason=InstallSuccessful, message=%!s(<nil>)
