@@ -5,18 +5,6 @@ kind: ControlPlane
 metadata:
   name: basic-install
 spec:
-  launcher:
-    enabled: false
-    # specify the url to master, e.g. https://master.some.domain.com:443
-    LAUNCHER_MISSIONCONTROL_OPENSHIFT_CONSOLE_URL: 
-    # Your GitHub username
-    LAUNCHER_MISSIONCONTROL_GITHUB_USERNAME:
-    # Your GitHub Mission Control access token
-    LAUNCHER_MISSIONCONTROL_GITHUB_TOKEN:
-
-  threeScale:
-    enabled: false
-
   istio:
     global:
       proxy:
@@ -54,7 +42,7 @@ spec:
       traceSampling: 100.0
 
     kiali:
-     #dashboard:
-        #user: admin
-        #passphrase: admin
+     dashboard:
+        user: admin
+        passphrase: admin
 ----

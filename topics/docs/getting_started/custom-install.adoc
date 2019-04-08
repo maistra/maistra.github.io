@@ -7,7 +7,11 @@ weight: 2
 hidden: true
 ---
 
+
+:toc:
+
 == Customizing the Installation
+
 Maistra uses the istio-operator, a custom install built around Istio's helm charts. Many of the parameters supported by the installer are shown below.
 
 {{< snippet_markdown name="istio_installation_auth" >}}
