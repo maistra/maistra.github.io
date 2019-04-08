@@ -7,13 +7,10 @@ weight: 2
 hidden: true
 ---
 
-== Example Configuration
-Maistra uses the istio-operator, a custom install built around Istio's helm charts. Many of the parameters supported by the installer are shown below. For further options, see the link: https://istio.io/docs/reference/config/installation-options/[helm docs].
+== Customizing the Installation
+Maistra uses the istio-operator, a custom install built around Istio's helm charts. Many of the parameters supported by the installer are shown below.
 
 {{< snippet_markdown name="istio_installation_auth" >}}
-
-== Customizing the Installation
-If you wish to customize your installation further, an explanation of different parameters is below. 
 
 ## [[istio_globals]] Istio Globals
 
@@ -306,3 +303,5 @@ Leaving this empty will disable tracking. This must be set to the proper tokens 
 |LAUNCHER_BACKEND_CATALOG_REINDEX_TOKEN|A token that must be passed to the catalog reindex service to trigger the catalog reindexing.|Empty
 |LAUNCHER_BACKEND_ENVIRONMENT|The environment where this backend is running.|Empty. Leaving this empty will set the value to 'development' if the 'Catalog Git Reference' is set to 'master', in any other case the value will default to 'production'.
 |=======
+
+ For further options, see the link: https://istio.io/docs/reference/config/installation-options/[helm docs].
