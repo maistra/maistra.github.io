@@ -1,8 +1,10 @@
 ---
 title: "Comparing Maistra and upstream Istio"
 type: "document"
-category: "Getting started"
+category: "Comparing Maistra and upstream Istio"
 description: "This document describes the differences between the upstream Istio community releases and Maistra releases."
+weight: 1
+
 ---
 == Comparing Maistra and upstream Istio community installations
 :toc:
