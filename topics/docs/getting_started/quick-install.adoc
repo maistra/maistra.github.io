@@ -9,11 +9,13 @@ description: "This guide will allow you to get up and running quickly for local 
 To create a standalone, all-in-one origin cluster with Maistra, follow these instructions. This will allow you to deploy a local install for local development or to try out Maistra.
 
 - Download istiooc from:
-  https://github.com/Maistra/origin/releases. 
-- Create an link:../custom-install[installation custom resource] and name it istio-installation.yaml. 
+  https://github.com/Maistra/origin/releases.
+- Create an link:../custom-install[installation custom resource] and name it istio-installation.yaml.
+
 {{% notice info %}}
-The installation yaml has changed significantly in Maistra 0.10. See link:https://github.com/Maistra/openshift-ansible/tree/maistra-0.10/istio[here] for older examples.
+The installation yaml has changed significantly in Maistra 0.10. Also, the installation CRD now needs to be created in the istio-system namespace. See link:https://github.com/Maistra/openshift-ansible/tree/maistra-0.10/istio[here] for older examples.
 {{% /notice %}}
+
 {{< snippet_markdown name="istio_installation_minimal" >}}
 
 - Execute the following:
