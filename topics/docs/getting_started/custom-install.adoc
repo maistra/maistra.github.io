@@ -23,7 +23,9 @@ Maistra uses the istio-operator, a custom install built around Istio's helm char
   istio:
     global:
       hub: my-private-registry.com/custom-namespace
-      tag: 0.10.0 
+      tag: 0.10.0
+      mtls:
+        enabled: true
       proxy:
         resources:
           requests:
@@ -61,10 +63,10 @@ disablePolicyChecks must be false for 3scale to work.
 |enabled | This parameter controls whether to enable mTLS between services by default. | false
 |=======
 
-### proxy 
+### proxy
 
 #### resources->requests
-These are the resources requested and may vary depending on your environment. The example above allows Maistra to run in a smaller environment. 
+These are the resources requested and may vary depending on your environment. The example above allows Maistra to run in a smaller environment.
 
 [options="header"]
 |=======
@@ -74,7 +76,7 @@ These are the resources requested and may vary depending on your environment. Th
 |=======
 
 #### resources -> limits
-These are the resources requested and may vary depending on your environment. The example above allows Maistra to run in a smaller environment. 
+These are the resources requested and may vary depending on your environment. The example above allows Maistra to run in a smaller environment.
 
 [options="header"]
 |=======
@@ -121,7 +123,7 @@ These are the resources requested and may vary depending on your environment. Th
 |autoscaleMax| This parameter controls the minimum pods to deploy based on the autoscaleEnabled setting.| 5
 |ior_enabled| This parameter controls whether Istio routes should automatically be configured in OpenShift. | false
 |=======
-    
+
 ## [[Mixer]] istio->mixer
 
 [source,yaml]
@@ -151,7 +153,7 @@ These are the resources requested and may vary depending on your environment. Th
 
 ### telemetry
 #### resources->requests
-These are the resources requested and may vary depending on your environment. The example above allows Maistra to run in a smaller environment. 
+These are the resources requested and may vary depending on your environment. The example above allows Maistra to run in a smaller environment.
 
 [options="header"]
 |=======
@@ -161,7 +163,7 @@ These are the resources requested and may vary depending on your environment. Th
 |=======
 
 #### resources -> limits
-These are the resources requested and may vary depending on your environment. The example above allows Maistra to run in a smaller environment. 
+These are the resources requested and may vary depending on your environment. The example above allows Maistra to run in a smaller environment.
 
 [options="header"]
 |=======
@@ -180,7 +182,7 @@ These are the resources requested and may vary depending on your environment. Th
 ----
 
 ### resources->requests
-These are the resources requested and may vary depending on your environment. 
+These are the resources requested and may vary depending on your environment.
 
 [options="header"]
 |=======
@@ -300,7 +302,7 @@ disablePolicyChecks must be false for 3 Scale to work.
 |LAUNCHER_KEYCLOAK_REALM|The keycloak realm to be used.|Empty. Leave empty if you've explicitly specified GitHub/OpenShift authentication
 |LAUNCHER_TRACKER_SEGMENT_TOKEN|The token to use for Segment tracking. {{% notice info %}}
 Leaving this empty will disable tracking. This must be set to the proper tokens for staging and production!
-{{% /notice %}}|None 
+{{% /notice %}}|None
 |LAUNCHER_BOOSTER_CATALOG_REPOSITORY|The GitHub repository containing the booster catalog.|https://github.com/fabric8-launcher/launcher-booster-catalog.git
 |LAUNCHER_BOOSTER_CATALOG_REF|The GitHub branch containing the booster catalog.|v85
 |LAUNCHER_BACKEND_CATALOG_FILTER|The Red Hat booster catalog filter.|booster.mission.metadata.istio
