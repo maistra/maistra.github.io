@@ -2,7 +2,7 @@
 === Verifying the Istio Control Plane
 {{< snippet_markdown name="install_notices" >}}
 
-Execute the following command to see the status of the installation:
+Execute the following command to see the status of the installation. In the example below, we assume that the controlplane is named basic-install. If the name is different, replace basic-install with the proper value.
 
 ```
 oc get controlplane/basic-install -n istio-system --template='{{range .status.conditions}}{{printf "%s=%s, reason=%s, message=%s\n\n" .type .status .reason .message}}{{end}}'
