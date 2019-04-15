@@ -23,6 +23,7 @@ The installation yaml has changed significantly in Maistra 0.10. Also, the insta
 ```
 istiooc cluster up
 istiooc login -u system:admin
+oc new-project istio-system
 istiooc -n istio-system create -f istio-installation.yaml
 ```
 {{< snippet_markdown name="verify_install" >}}
