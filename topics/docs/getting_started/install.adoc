@@ -117,7 +117,7 @@ istio-operator-5cd6bcf645-fvb57   1/1       Running   0          1h
 === Deploying the Istio Control Plane
 
 {{% notice info %}}
-The installation yaml has changed significantly in Maistra 0.10. Also, the installation CRD now needs to be created in the istio-system namespace. See link:https://github.com/Maistra/openshift-ansible/tree/maistra-0.10/istio[here] for older examples.
+The installation yaml has changed significantly in Maistra 0.10. See link:https://github.com/Maistra/openshift-ansible/tree/maistra-0.10/istio[here] for older examples.
 {{% /notice %}}
 
 In order to deploy the Istio Control Plane we need to create a custom resource such as the one in the following example which demonstrates the configuration options supported by the operator.  The custom resource *must* be deployed into the `istio-operator` namespace. For more information on the parameters and their configuration please see the link:../custom-install[Custom Installation Documentation].
