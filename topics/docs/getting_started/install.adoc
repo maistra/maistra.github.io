@@ -96,11 +96,7 @@ The following steps will install the Maistra operator into an existing installat
 ```
 oc new-project istio-operator
 oc new-project istio-system
-oc apply -n istio-operator -f https://raw.githubusercontent.com/Maistra/istio-operator/maistra-0.10/deploy/istio_v1alpha1_installation_crd.yaml
-oc apply -n istio-operator -f https://raw.githubusercontent.com/Maistra/istio-operator/maistra-0.10/deploy/istio_v1alpha3_controlplane_crd.yaml
 oc apply -n istio-operator -f https://raw.githubusercontent.com/Maistra/istio-operator/maistra-0.10/deploy/operator.yaml
-oc apply -n istio-operator -f https://raw.githubusercontent.com/Maistra/istio-operator/maistra-0.10/deploy/rbac.yaml
-oc apply -n istio-operator -f https://raw.githubusercontent.com/Maistra/istio-operator/maistra-0.10/deploy/service_account.yaml
 ```
 
 == Verifying Installation
@@ -124,14 +120,14 @@ istio-operator-5cd6bcf645-fvb57   1/1       Running   0          1h
 The installation yaml has changed significantly in Maistra 0.10. Also, the installation CRD now needs to be created in the istio-system namespace. See link:https://github.com/Maistra/openshift-ansible/tree/maistra-0.10/istio[here] for older examples.
 {{% /notice %}}
 
-In order to deploy the Istio Control Plane we need to create a custom resource such as the one in the following example which demonstrates the configuration options supported by the operator.  The custom resource *must* be deployed into the `istio-system` namespace. For more information on the parameters and their configuration please see the link:../custom-install[Custom Installation Documentation].
+In order to deploy the Istio Control Plane we need to create a custom resource such as the one in the following example which demonstrates the configuration options supported by the operator.  The custom resource *must* be deployed into the `istio-operator` namespace. For more information on the parameters and their configuration please see the link:../custom-install[Custom Installation Documentation].
 
 {{< snippet_markdown name="istio_installation_minimal" >}}
 
 Once you have modified the custom resource to suit your installation you can deploy the resource using the following command
 
 ```
-oc create -n istio-system -f <name of file>
+oc create -n istio-operator -f <name of file>
 ```
 
 {{< snippet_markdown name="verify_install" >}}
@@ -146,12 +142,12 @@ The following steps will remove Istio from an existing installation. It can be e
 
 To get the name of the installed custom resource, do:
 ```
-oc get controlplanes -n istio-system
+oc get controlplanes -n istio-operator
 ```
 
 This resource can now be deleted as follows:
 ```
-oc delete -n istio-system -f <name_of_cr>
+oc delete -n istio-operator -f <name_of_cr>
 ```
 
 The removal of the CustomResource will tell the Istio operator to begin uninstalling everything it installed.
