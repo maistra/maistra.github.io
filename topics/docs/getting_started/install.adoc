@@ -96,7 +96,7 @@ The following steps will install the Maistra operator into an existing installat
 ```
 oc new-project istio-operator
 oc new-project istio-system
-oc apply -n istio-operator -f https://raw.githubusercontent.com/Maistra/istio-operator/maistra-0.10/deploy/operator.yaml
+oc apply -n istio-operator -f https://raw.githubusercontent.com/Maistra/istio-operator/maistra-0.10/deploy/maistra-operator.yaml
 ```
 
 == Verifying Installation
@@ -159,7 +159,7 @@ The removal of the CustomResource will tell the Istio operator to begin uninstal
 In order to cleanly remove the operator execute the following:
 
 ```
-oc delete -n istio-operator -f https://raw.githubusercontent.com/Maistra/istio-operator/maistra-0.10/deploy/operator.yaml
+oc delete -n istio-operator -f https://raw.githubusercontent.com/Maistra/istio-operator/maistra-0.10/deploy/maistra-operator.yaml
 ```
 
 The `istio-operator` and `istio-system` projects can now be removed.
