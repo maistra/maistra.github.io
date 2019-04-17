@@ -8,6 +8,7 @@ spec:
   istio:
     global:
       proxy:
+        # constrain resources for use in smaller environments
         resources:
           requests:
             cpu: 100m
@@ -18,17 +19,23 @@ spec:
 
     gateways:
       istio-egressgateway:
+        # disable autoscaling for use in smaller environments
         autoscaleEnabled: false
       istio-ingressgateway:
+        # disable autoscaling for use in smaller environments
         autoscaleEnabled: false
+        # set to true to enable IOR
         ior_enabled: false
 
     mixer:
       policy:
+        # disable autoscaling for use in smaller environments
         autoscaleEnabled: false
 
       telemetry:
+        # disable autoscaling for use in smaller environments
         autoscaleEnabled: false
+        # constrain resources for use in smaller environments
         resources:
           requests:
             cpu: 100m
@@ -38,11 +45,20 @@ spec:
             memory: 4G
 
     pilot:
+      # disable autoscaling for use in smaller environments
       autoscaleEnabled: false
+      # increase random sampling rate for development/testing
       traceSampling: 100.0
 
     kiali:
-     dashboard:
+      enabled: true
+      dashboard:
         user: admin
         passphrase: admin
+    tracing:
+      enabled: true
+  threescale:
+    enabled: false
+  launcher:
+    enabled: false
 ----

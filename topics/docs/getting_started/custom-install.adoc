@@ -7,219 +7,307 @@ weight: 2
 hidden: true
 ---
 
-The istio-operator relies on a custom resource to set up Istio. This configuration gets passed to an ansible playbook which will then set up your environment.
 
-== Minimal Example
-At a minimum, the following arguments are required.
+:toc:
 
-{{< snippet_markdown name="istio_installation_minimal" >}}
+== Customizing the Installation
 
-== Complete Example
-Below, you can an example with all supported arguments populated.
+Maistra uses the istio-operator, a custom install built around Istio's helm charts. Many of the parameters supported by the installer are shown below.
 
-{{< snippet_markdown name="istio_installation_full" >}}
+{{< snippet_markdown name="istio_installation_auth" >}}
 
-## [[General]] General
+## [[istio_globals]] Istio Globals
 
-|===
-|Parameter |Description |Values | Default
-
-|deployment_type
-|Selects whether to use OpenShift or Origin default values for unset fields
-|origin, openshift
-|origin
-|===
-
-## [[Istio]] Istio
-|===
-|Parameter |Description |Values | Default
-
-|authentication
-|Whether to enable mutual authentication
-|true/false
-|false
-
-|community
-|Whether to modify image names to match community images.
-|true/false
-|false
-
-|prefix
-|a prefix to apply to Istio image names used in docker pull.
-|valid image repo
-|maistra/ if deployment_type is origin and openshift-istio-tech-preview/ if deployment_type is openshift
-
-|version
-|docker tag to use with Istio images
-|valid docker tag
-|0.9.0
-|===
-
-## [[Jaeger]] Jaeger
-|===
-|Parameter |Description |Values |Default
-
-|prefix
-|a prefix to apply to Jaeger image names used in docker pull.
-|valid image repo
-|jaegertracing/ if deployment_type is origin and distributed-tracing-tech-preview/ if deployment_type is openshift
+[source,yaml]
+----
+  istio:
+    global:
+      hub: my-private-registry.com/custom-namespace
+      tag: 0.10.0
+      mtls:
+        enabled: true
+      proxy:
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 500m
+            memory: 128Mi
+      disablePolicyChecks: true
+      policyCheckFailOpen: false
+      imagePullSecrets:
+        - MyPullSecret
 
 
-|version
-|docker tag to use with Jaeger images
-|valid docker tag
-|1.11 if deployment_type is origin and 1.11.0 if deployment_type is openshift
-
-|elasticsearch_memory
-|The amount of memory to allocate to the elastic search install
-|amount of memory to use (example: 1Gi, 512M)
-|1Gi
-
-|===
-
-## [[Kiali]] Kiali
-|===
-|Parameter |Description |Values |Default
-
-|username
-|username used to access the Kiali console. Note that this is not related to any account on OpenShift
-|
-|
-
-|password
-|password used to access the Kiali console. Note that this is not related to any account on OpenShift.
-|
-|
-
-|prefix
-|a prefix to apply to Kiali image names used in docker pull.
-|valid image repo
-|kiali/ if deployment_type is origin and openshift-istio-tech-preview/ if deployment_type is openshift
+----
 
 
-|version
-|docker tag to use with Kiali images
-|valid Kiali tag
-|v0.15.0 if deployment_type is origin and 0.15.0 if deployment_type is openshift
-
-|===
-
-## [[Launcher]] Launcher
-
-### [[Launcher_OpenShift]] Openshift
-
-|===
+[options="header"]
+|=======
 |Parameter |Description |Default
+|disablePolicyChecks | This is a boolean indicating whether to enable policy checks. {{% notice info %}}
+disablePolicyChecks must be false for 3scale to work.
+{{% /notice %}} | true
+|policyCheckFailOpen | This is a boolean indicating wehther to traffic should be allowed through hwen the mixer policy service cannot be reached.  | false
+|hub| The hub to use to pull the Istio images.|maistra/ if deployment_type is origin and openshift-istio-tech-preview/ if deployment_type is openshift
+|tag| The tag to use to pull the Istio images.| 0.10.0
+|=======
 
-|user
-|OpenShift user to use in Fabric8
-|developer
 
-|password
-|OpenShift user password to use in Fabric8
-|developer
+### mtls
 
-|===
-
-### [[Launcher_Github]] Github
-|===
+[options="header"]
+|=======
 |Parameter |Description |Default
+|enabled | This parameter controls whether to enable mTLS between services by default. | false
+|=======
 
-|username
-|GitHub user to use in Fabric8
-|
+### proxy
 
-|token
-|GitHub token to use in Fabric8
-|
+#### resources->requests
+These are the resources requested and may vary depending on your environment. The example above allows Maistra to run in a smaller environment.
 
-|===
-
-### [[Launcher_Catalog]] Catalog
-|===
+[options="header"]
+|=======
 |Parameter |Description |Default
+|cpu | This is the number of CPUs that are requested in the environment.  | 100m
+|memory |This is the ammount of memory that is requested in the environment.  |128Mi
+|=======
 
-|filter
-|Red Hat booster catalog filter
-|booster.mission.metadata.istio
+#### resources -> limits
+These are the resources requested and may vary depending on your environment. The example above allows Maistra to run in a smaller environment.
 
-|branch
-|Red Hat Booster catalog to use for Fabric8
-|v85
-
-|repo
-|Repo to use for Fabric8
-|https://github.com/fabric8-launcher/launcher-booster-catalog.git
-
-|===
-
-## [[ThreeScale]] ThreeScale
-|===
-|Parameter |Description |Values | Default
-
-|enabled
-|Whether to install the 3scale adapter
-|true/false
-|false
-
-|prefix
-|a prefix to apply to the 3scale adapter image name used in docker pull.
-|valid image repo
-|quay.io/3scale/ if deployment_type is origin and openshift-istio-tech-preview/ if deployment_type is openshift
-
-|version
-|docker tag to use with the 3scale adapter image
-|valid docker tag
-|0.4.1
-
-|===
-
-### [[ThreeScale_Adapter]] Adapter
-|===
+[options="header"]
+|=======
 |Parameter |Description |Default
+|cpu | This is the maximum number of CPUs that proxy is allowed to use.  | 2000m
+|memory |This is the ammount of memory that is requested in the environment.  |128Mi
+|imagePullSecret|If access to the registry providing the Istio images is secure, then an link:https://kubernetes.io/docs/concepts/containers/images/#specifying-imagepullsecrets-on-a-pod[imagePullSecret] can be listed here.|none
+|=======
 
-|listenAddr
-|Sets the listen address for the gRPC server
-|3333
+## [[Gateways]] istio->gateways
 
-|logLevel
-|Sets the minimum log output level. Accepted values are one of debug,info,warn,error,none
-|info
+[source,yaml]
+----
+ gateways:
+      istio-egressgateway:
+        autoscaleEnabled: false
+        autoscaleMin: 1
+        autoscaleMax: 5
+      istio-ingressgateway:
+        autoscaleEnabled: false
+        autoscaleMin: 1
+        autoscaleMax: 5
+        ior_enabled: false
 
-|logJSON
-|Controls whether the log is formatted as JSON
-|true
+----
 
-|reportMetrics
-|Controls whether 3scale system and backend metrics are collected and reported to Prometheus
-|true
+### istio-egressgateway
 
-|metricsPort
-|Sets the port which 3scale /metrics endpoint can be scrapped from
-|8080
+[options="header"]
+|=======
+|Parameter |Description |Default
+|autoscaleEnabled | This parameter controls whether autoscaling is enabled. The example above disables it to allow running Maistra in a smaller environment. | true
+|autoscaleMin| This parameter controls the minimum pods to deploy based on the autoscaleEnabled setting. | 1
+|autoscaleMax| This parameter controls the minimum pods to deploy based on the autoscaleEnabled setting.| 5
+|=======
 
-|cacheTTLSeconds
-|Time period, in seconds, to wait before purging expired items from the cache
-|300
+### istio-ingressgateway
 
-|cacheRefreshSeconds
-|Time period before expiry, when cache elements are attempted to be refreshed
-|180
+[options="header"]
+|=======
+|Parameter |Description |Default
+|autoscaleEnabled | This parameter controls whether autoscaling is enabled. The example above disables it to allow running Maistra in a smaller environment. | true
+|autoscaleMin| This parameter controls the minimum pods to deploy based on the autoscaleEnabled setting. | 1
+|autoscaleMax| This parameter controls the minimum pods to deploy based on the autoscaleEnabled setting.| 5
+|ior_enabled| This parameter controls whether Istio routes should automatically be configured in OpenShift. | false
+|=======
 
-|cacheEntriesMax
-|Max number of items that can be stored in the cache at any time. Set to 0 to disable caching
-|1000
+## [[Mixer]] istio->mixer
 
-|cacheRefreshRetries
-|Sets the number of times unreachable hosts will be retried during a cache update loop
-|1
+[source,yaml]
+----
+ mixer:
+      enabled: true
+      policy:
+        autoscaleEnabled: false
 
-|allowInsecureConn
-|Allow to skip certificate verification when calling 3scale API's. Enabling is not recommended
-|false
+      telemetry:
+        autoscaleEnabled: false
+        resources:
+          requests:
+            cpu: 100m
+            memory: 1G
+          limits:
+            cpu: 500m
+            memory: 4G
+----
 
-|clientTimeoutSeconds
-|Sets the number of seconds to wait before terminating requests to 3scale System and Backend
-|10
+[options="header"]
+|=======
+|Parameter |Description |Default
+|enabled| This parameter controls whether to enable Mixer.| true
+|autoscaleEnabled| This parameter controls whether autoscaling is enabled. The example above disables it to allow running Maistra in a smaller environment. | false
+|=======
 
-|===
+### telemetry
+#### resources->requests
+These are the resources requested and may vary depending on your environment. The example above allows Maistra to run in a smaller environment.
+
+[options="header"]
+|=======
+|Parameter |Description |Default
+|cpu|This is the number of CPUs that are requested in the environment.  | 1000m
+|memory| This is the ammount of memory that is requested in the environment. | 1G
+|=======
+
+#### resources -> limits
+These are the resources requested and may vary depending on your environment. The example above allows Maistra to run in a smaller environment.
+
+[options="header"]
+|=======
+|Parameter |Description |Default
+|cpu|This is the maximum number of CPUs that telemetry is allowed to use.  | 4800m
+|memory| This is the maximum ammount of memory that telemetry is allowed to use. | 4G
+|=======
+
+## [[Pilot]] istio->pilot
+
+[source,yaml]
+----
+   pilot:
+      autoscaleEnabled: false
+      traceSampling: 100.0
+----
+
+### resources->requests
+These are the resources requested and may vary depending on your environment.
+
+[options="header"]
+|=======
+|Parameter |Description |Default
+|cpu|This is the number of CPUs that are requested in the environment. | 500m
+|memory|This is the ammount of memory that is requested in the environment. | 2048Mi
+|traceSampling|This value controls how often random sampling should occur. Increase for development/testing.|1.0
+|=======
+
+## [[Kiali]] istio->kiali
+
+[source,yaml]
+----
+   kiali:
+      enabled: true
+      hub: kiali
+      tag: v0.16.2
+      dashboard:
+        user: admin
+        passphrase: admin
+----
+
+[options="header"]
+|=======
+|Parameter |Description |Default
+|enabled|This enables or disables Kiali in the environment. | true
+|hub|The hub to use to pull the Kiali images.|kiali/ if deployment_type is origin and openshift-istio-tech-preview/ if deployment_type is openshift
+|tag| The tag to use to pull the Kiali images | 0.16.2
+|=======
+
+### dashboard
+
+[options="header"]
+|=======
+|Parameter |Description |Default
+|user|This is the username used to access the Kiali console. Note that this is not related to any account on OpenShift. | true
+|passphrase|This is the username used to access the Kiali console. Note that this is not related to any account on OpenShift| none
+|=======
+
+## [[Tracing]] istio->tracing
+
+[options="header"]
+|=======
+|Parameter |Description |Default
+|enabled|This enables or disables tracing in the environment. | true
+|=======
+
+## 3scale
+{{% notice info %}}
+disablePolicyChecks must be false for 3 Scale to work.
+{{% /notice %}}
+
+[source,yaml]
+----
+    threescale:
+        enabled: false
+        PARAM_THREESCALE_LISTEN_ADDR: 3333
+        PARAM_THREESCALE_LOG_JSON: true
+        PARAM_THREESCALE_LOG_JSON: true
+        PARAM_THREESCALE_REPORT_METRICS: true
+        PARAM_THREESCALE_METRICS_PORT: 8080
+        PARAM_THREESCALE_CACHE_TTL_SECONDS: 300
+        PARAM_THREESCALE_CACHE_REFRESH_SECONDS: 180
+        PARAM_THREESCALE_CACHE_ENTRIES_MAX: 1000
+        PARAM_THREESCALE_CACHE_REFRESH_RETRIES: 1
+        PARAM_THREESCALE_ALLOW_INSECURE_CONN: false
+        PARAM_THREESCALE_CLIENT_TIMEOUT_SECONDS: 10
+----
+
+[options="header"]
+|=======
+|Parameter |Description |Default
+|enabled|This controls whether to enable 3scale. | false
+|PARAM_THREESCALE_LISTEN_ADDR|This sets the listen address for the gRPC server.|3333
+|PARAM_THREESCALE_LOG_LEVEL|This sets the minimum log output level. Accepted values are one of debug,info,warn,error,none|info
+|PARAM_THREESCALE_LOG_JSON|This controls whether the log is formatted as JSON|true
+|PARAM_THREESCALE_REPORT_METRICS|This controls whether the 3scale system and backend metrics are collected and reported to Prometheus.|true
+|PARAM_THREESCALE_METRICS_PORT|This sets the port which 3scale /metrics endpoint can be scraped from.|8080
+|PARAM_THREESCALE_CACHE_TTL_SECONDS|This is the time period, in seconds, to wait before purging expired items from the cache.|300
+|PARAM_THREESCALE_CACHE_REFRESH_SECONDS|This is the time period before expiry, when cache elements are attempted to be refreshed.|180
+|PARAM_THREESCALE_CACHE_ENTRIES_MAX|This is the ax number of items that can be stored in the cache at any time. Set to 0 to disable caching.|1000
+|PARAM_THREESCALE_CACHE_REFRESH_RETRIES|This sets the number of times unreachable hosts will be retried during a cache update loop.|1
+|PARAM_THREESCALE_ALLOW_INSECURE_CONN|This controls whether to allow certificate verification when calling 3scale APIs. Enabling is not recommended.| false
+|PARAM_THREESCALE_CLIENT_TIMEOUT_SECONDS|This sets the number of seconds to wait before terminating requests to 3scale System and the backend|10
+|=======
+
+## Launcher
+
+[source,yaml]
+----
+    launcher:
+        enabled: false
+        LAUNCHER_MISSIONCONTROL_GITHUB_USERNAME: username
+        LAUNCHER_MISSIONCONTROL_GITHUB_TOKEN: token
+        LAUNCHER_MISSIONCONTROL_OPENSHIFT_API_URL: https://kubernetes.default.svc.cluster.local
+        LAUNCHER_MISSIONCONTROL_OPENSHIFT_CONSOLE_URL: ''
+        LAUNCHER_KEYCLOAK_URL: ''
+        LAUNCHER_KEYCLOAK_REALM: ''
+        LAUNCHER_TRACKER_SEGMENT_TOKEN: token
+        LAUNCHER_BOOSTER_CATALOG_REPOSITORY: https://github.com/fabric8-launcher/launcher-booster-catalog.git
+        LAUNCHER_BOOSTER_CATALOG_REF: v85
+        LAUNCHER_BACKEND_CATALOG_FILTER: booster.mission.metadata.istio
+        LAUNCHER_BACKEND_CATALOG_REINDEX_TOKEN: token
+        LAUNCHER_BACKEND_ENVIRONMENT: environment
+
+----
+
+[options="header"]
+|=======
+|Parameter |Description |Default
+|enabled|This controls whether to enable launcher. | false
+|LAUNCHER_MISSIONCONTROL_GITHUB_USERNAME|The GitHub user to use in Fabric8.|none
+|LAUNCHER_MISSIONCONTROL_GITHUB_TOKEN|The GitHub token to use in Fabric8.|none
+|LAUNCHER_MISSIONCONTROL_OPENSHIFT_API_URL|The base URL of the OpenShift API where the launched boosters should be created (ie. https://hostname[:port] or https://ipaddress[:port]).|https://kubernetes.default.svc.cluster.local. This does not need to be set when targing the same OpenShift instance that you are running this on.
+|LAUNCHER_MISSIONCONTROL_OPENSHIFT_CONSOLE_URL|The base URL of the OpenShift Console where the launched boosters should be created (ie. https://hostname[:port] or https://ipaddress[:port]).|Empty. This does not need to be set when targing the same OpenShift instance that you are running this on.
+|LAUNCHER_KEYCLOAK_URL|The URL (with the /auth part) of a Keycloak installation to perform SSO authentication.| Empty. Leave empty if you've explicitly specified GitHub/OpenShift authentication.
+|LAUNCHER_KEYCLOAK_REALM|The keycloak realm to be used.|Empty. Leave empty if you've explicitly specified GitHub/OpenShift authentication
+|LAUNCHER_TRACKER_SEGMENT_TOKEN|The token to use for Segment tracking. {{% notice info %}}
+Leaving this empty will disable tracking. This must be set to the proper tokens for staging and production!
+{{% /notice %}}|None
+|LAUNCHER_BOOSTER_CATALOG_REPOSITORY|The GitHub repository containing the booster catalog.|https://github.com/fabric8-launcher/launcher-booster-catalog.git
+|LAUNCHER_BOOSTER_CATALOG_REF|The GitHub branch containing the booster catalog.|v85
+|LAUNCHER_BACKEND_CATALOG_FILTER|The Red Hat booster catalog filter.|booster.mission.metadata.istio
+|LAUNCHER_BACKEND_CATALOG_REINDEX_TOKEN|A token that must be passed to the catalog reindex service to trigger the catalog reindexing.|Empty
+|LAUNCHER_BACKEND_ENVIRONMENT|The environment where this backend is running.|Empty. Leaving this empty will set the value to 'development' if the 'Catalog Git Reference' is set to 'master', in any other case the value will default to 'production'.
+|=======
+
+ For further options, see the link: https://istio.io/docs/reference/config/installation-options/[helm docs].

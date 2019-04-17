@@ -1,1 +1,4 @@
-NOTE: The update and release of Maistra 0.9 introduced a significant change in behaviour related to policy enforcement via Mixer.  In older versions of the product, Mixer's policy enforcement was enabled by default. However, from release 0.9 onward, the policy enforcement is now disabled. Instructions to enable it are link:../troubleshooting_policy[here]
+//Hugo requires ascii content required before {{
+{{% notice info %}}
+The update and release of Maistra 0.9 introduced a significant change in behaviour related to policy enforcement via Mixer.  In older versions of the product, Mixer's policy enforcement was enabled by default. However, from release 0.9 onward, the policy enforcement is now disabled. Instructions to enable it are link:../../troubleshooting/troubleshooting_policy[here]
+{{% /notice %}}

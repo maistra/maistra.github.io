@@ -2,13 +2,19 @@
 === Verifying the Istio Control Plane
 {{< snippet_markdown name="install_notices" >}}
 
-The operator will create the istio-system namespace and run the installer job. This job will set up the Istio control plane using Ansible playbooks.  The progress of the installation can be followed by either watching the pods or the log output from the openshift-ansible-istio-installer-job pod.To watch the progress of the pods execute the following command:
+Execute the following command to see the status of the installation. In the example below, we assume that the controlplane is named basic-install. If the name is different, replace basic-install with the proper value.
 
 ```
-oc get pods -n istio-system -w
+oc get controlplane/basic-install -n istio-system --template='{{range .status.conditions}}{{printf "%s=%s, reason=%s, message=%s\n\n" .type .status .reason .message}}{{end}}'
 ```
 
-Once the openshift-ansible-istio-installer-job has completed run oc get pods -n istio-system and verify you have state similar to the following"
+When installation is complete, the output should be similar to the following:
+
+```
+Installed=True, reason=InstallSuccessful, message=%!s(<nil>)
+```
+
+Executing `oc get pods -n istio-system` should yield output similar to the following:
 
 ```
 NAME                                          READY     STATUS      RESTARTS   AGE
@@ -27,7 +33,6 @@ jaeger-agent-gmk72                            1/1       Running     0          2
 jaeger-collector-7f644df9f5-dbzcv             1/1       Running     1          25s
 jaeger-query-6f47bf4777-h4wmh                 1/1       Running     1          25s
 kiali-7cc48b6cbb-74gcf                        1/1       Running     0          17s
-openshift-ansible-istio-installer-job-fbtfj   0/1       Completed   0          2m
 prometheus-5f9fd67f8-r6b86                    1/1       Running     0          1m
 ```
 

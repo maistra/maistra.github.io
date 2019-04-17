@@ -5,18 +5,24 @@ category: "Getting started"
 description: "This document describes how to install the Istio operator and how to create a custom resource to configure and install an Istio control plane into your OpenShift installation."
 weight: 1
 ---
-== Istio Installation Guide
+
 :toc:
 
+== Istio Installation Guide
+
 This guide provides instructions for installing Maistra into an existing OpenShift Container Platform (OCP) or Origin (OKD) cluster and for creating a standalone, all-in-one origin cluster with Istio
+
+{{% notice note %}}
+The installation instructions for Maistra have changed significantly since Maistra 0.9. The instructions for Maistra 0.9 are link:https://maistra-0-9-0.maistra.io/docs/getting_started/install/[here].
+{{% /notice %}}
 
 === Supported Configurations
 
 - OpenShift Container Platform (OCP) 3.11 (https://docs.openshift.com/container-platform/3.11/install/prerequisites.html)
 - OpenShift Container Platform (OCP) 4.0
 - Origin (OKD) 3.11
-- istiooc (https://github.com/Maistra/origin/releases/tag/v3.11.0%2Bmaistra-0.9.0)
-- NOTE: OpenShift Online and OpenShift Dedicated are not supported in the 0.9.0 Istio Tech Preview
+- istiooc (https://github.com/Maistra/origin/releases/tag/v3.11.0%2Bmaistra-0.10.0)
+- NOTE: OpenShift Online and OpenShift Dedicated are not supported in the 0.10.0 Istio Tech Preview
 
 == Preparing the Installation
 
@@ -83,109 +89,95 @@ sysctl vm.max_map_count=262144
 
 The Maistra installation process introduces a Kubernetes operator to manage the installation of the Istio control plane within the istio-system namespace.  This operator defines and monitors a custom resource related to the deployment, update and deletion of the Istio control plane.
 
-The templates are available at: https://github.com/Maistra/openshift-ansible/tree/maistra-0.9/istio
+The templates are available at: https://github.com/Maistra/istio-operator/tree/maistra-0.10/deploy/examples
 
 The following steps will install the Maistra operator into an existing installation, these can be executed from any host with access to the cluster.  Please ensure you are logged in as a cluster admin before executing the following
 
-{{% notice info %}}
-The OpenShift Master Public URL should be configured to match the public URL of your OpenShift Console, this parameter is required by the Fabric8 launcher.
-{{% /notice %}}
-
-For community images run
-
 ```
 oc new-project istio-operator
-oc new-app -f https://raw.githubusercontent.com/Maistra/openshift-ansible/maistra-0.9/istio/istio_community_operator_template.yaml --param=OPENSHIFT_ISTIO_MASTER_PUBLIC_URL=<master public url>
-```
-
-For product images run
-
-```
-oc new-project istio-operator
-oc new-app -f https://raw.githubusercontent.com/Maistra/openshift-ansible/maistra-0.9/istio/istio_product_operator_template.yaml --param=OPENSHIFT_ISTIO_MASTER_PUBLIC_URL=<master public url>
+oc new-project istio-system
+oc apply -n istio-operator -f https://raw.githubusercontent.com/Maistra/istio-operator/maistra-0.10/deploy/maistra-operator.yaml
 ```
 
 == Verifying Installation
 
 The above instructions will create a new deployment within the istio-operator project, executing the operator responsible for managing the state of the Istio control plane through the custom resource.
 
-To verify the operator is installed correctly, access the logs from the operator pod using the following command
+To verify the operator is installed correctly, wait for the operator to reach the running state
 
 ```
-oc logs -n istio-operator $(oc -n istio-operator get pods -l name=istio-operator --output=jsonpath={.items..metadata.name})
+oc get pods -n istio-operator -l name=istio-operator
+
+NAME                              READY     STATUS    RESTARTS   AGE
+istio-operator-5cd6bcf645-fvb57   1/1       Running   0          1h
 ```
 
-and look for output similar to the following
 
-```
-time="2018-08-14T20:00:18Z" level=info msg="Watching resource istio.openshift.com/v1alpha1, kind Installation, namespace istio-operator, resyncPeriod 0"
-```
 
 === Deploying the Istio Control Plane
 
-In order to deploy the Istio Control Plane we need to create a custom resource such as the one in the following example which demonstrates the configuration options supported by the operator.  The custom resource *must* be deployed into the `istio-operator` namespace and *must* be called `istio-installation`. For more information on the parameters and their configuration please see the link:../custom-install[Custom Installation Documentation].
+{{% notice info %}}
+The installation yaml has changed significantly in Maistra 0.10. See link:https://github.com/Maistra/openshift-ansible/tree/maistra-0.10/istio[here] for older examples.
+{{% /notice %}}
 
-{{< snippet_markdown name="istio_installation_full" >}}
-
-The minimal custom resource required to install an Istio Control Plane is as follows.
-This will deploy a control plane using the CentOS-based community Istio images.
+In order to deploy the Istio Control Plane we need to create a custom resource such as the one in the following example which demonstrates the configuration options supported by the operator.  The custom resource *must* be created in the `istio-system` namespace. For more information on the parameters and their configuration please see the link:../custom-install[Custom Installation Documentation].
 
 {{< snippet_markdown name="istio_installation_minimal" >}}
 
 Once you have modified the custom resource to suit your installation you can deploy the resource using the following command
 
 ```
-oc create -n istio-operator -f <name of file>
+oc create -n istio-system -f <name of file>
 ```
 
 {{< snippet_markdown name="verify_install" >}}
 
 == Uninstalling Maistra
+
+[[remove_control_plane]]
+
 === Removing the Control Plane
 
-The following step will remove Istio from an existing installation. It can be executed by any user with access to delete the CustomResource.
+The following steps will remove Istio from an existing installation. It can be executed by any user with access to delete the CustomResource.
 
+To get the name of the installed custom resource, do:
 ```
-oc delete -n istio-operator installation istio-installation
+oc get controlplanes -n istio-system
 ```
 
-The removal of the CustomResource (Installation) will tell the Istio operator to begin uninstalling everything it installed. This will create a job in the `istio-system` project called `openshift-ansible-istio-removal-job`. Once this job completes, the operator will delete the `istio-system` project. At that point you can continue to the next step.
+This resource can now be deleted as follows:
+```
+oc delete -n istio-system -f <name_of_cr>
+```
+
+The removal of the CustomResource will tell the Istio operator to begin uninstalling everything it installed.
+
+[[remove_operator]]
 
 === Removing the Operator
 
 In order to cleanly remove the operator execute the following:
 
-For community images run
-
 ```
-oc process -f istio_community_operator_template.yaml | oc delete -f -
+oc delete -n istio-operator -f https://raw.githubusercontent.com/Maistra/istio-operator/maistra-0.10/deploy/maistra-operator.yaml
 ```
 
-For product images run
+The `istio-operator` and `istio-system` projects can now be removed.
 
 ```
-oc process -f istio_product_operator_template.yaml | oc delete -f -
-```
-
-The `istio-opertor` project can now be removed.
-
-```
+oc delete project istio-system
 oc delete project istio-operator
 ```
 
 == Upgrading from a Pre-Existing Installation
 
-If there is an existing, pre-0.3.0 Istio istallation then the Istio Control Plane must be removed by the associated operator prior to installing the 0.3.0 Tech Preview.  If this was not possible the installation can be removed with either of the following steps.
+To upgrade Istio, please <<remove_control_plane, remove the custom resource>>  and then create a new custom resource. The operator will upgrade appropriately.
 
-{{% notice info %}}
-The removal template associated with the installed release must be used to remove the Istio Control Plane if it is no longer possible to remove the installation using the operator.
+To upgrade the operator, please first <<remove_operator, remove the operator>> and then reinstall it. Note that Istio must be removed before the operator.
+
+{{% notice note %}}
+If the operator was removed before the custom resource, you can uninstall the control plane manually. Using the instructions below
 {{% /notice %}}
-
-```
-oc process -f istio_removal_template.yaml | oc create -f -
-```
-
-or
 
 ```
 oc delete project istio-system
