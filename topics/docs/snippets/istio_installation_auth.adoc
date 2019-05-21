@@ -1,12 +1,25 @@
 [source,yaml]
 ----
-apiVersion: istio.openshift.com/v1alpha3
-kind: ControlPlane
+apiVersion: maistra.io/v1
+kind: ServiceMeshControlPlane
 metadata:
-  name: basic-install
+  name: auth-install
 spec:
+  # NOTE, if you remove all children from an element, you should remove the
+  # element too.  An empty element is interpreted as null and will override all
+  # default values (i.e. no values will be specified for that element, not even
+  # the defaults baked into the chart values.yaml).
   istio:
     global:
+      defaultResources:
+        limits:
+          memory: 1Gi
+
+      # the following lines enable tls across the control and data planes
+      controlPlaneSecurityEnabled: true
+      mtls:
+        enabled: true
+
       proxy:
         # constrain resources for use in smaller environments
         resources:
@@ -51,14 +64,18 @@ spec:
       traceSampling: 100.0
 
     kiali:
+      # change to false to disable kiali
       enabled: true
+    
+      # to use oauth, remove the following 'dashboard' section
+      # create a secret for accessing kiali dashboard with the following credentials
       dashboard:
         user: admin
         passphrase: admin
+
     tracing:
+      # change to false to disable tracing (i.e. jaeger)
       enabled: true
   threescale:
-    enabled: false
-  launcher:
     enabled: false
 ----

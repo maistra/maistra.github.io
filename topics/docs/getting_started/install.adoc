@@ -142,7 +142,7 @@ The following steps will remove Istio from an existing installation. It can be e
 
 To get the name of the installed custom resource, do:
 ```
-oc get controlplanes -n istio-system
+oc get servicemeshcontrolplanes -n istio-system
 ```
 
 This resource can now be deleted as follows:

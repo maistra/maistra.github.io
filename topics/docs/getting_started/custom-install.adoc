@@ -12,7 +12,7 @@ hidden: true
 
 == Customizing the Installation
 
-Maistra uses the istio-operator, a custom install built around Istio's helm charts. Many of the parameters supported by the installer are shown below.
+Maistra uses the istio-operator, a custom installer built around Istio's helm charts. Many of the parameters supported by the installer are shown below.
 
 {{< snippet_markdown name="istio_installation_auth" >}}
 
@@ -269,45 +269,5 @@ disablePolicyChecks must be false for 3 Scale to work.
 |PARAM_THREESCALE_CLIENT_TIMEOUT_SECONDS|This sets the number of seconds to wait before terminating requests to 3scale System and the backend|10
 |=======
 
-## Launcher
-
-[source,yaml]
-----
-    launcher:
-        enabled: false
-        LAUNCHER_MISSIONCONTROL_GITHUB_USERNAME: username
-        LAUNCHER_MISSIONCONTROL_GITHUB_TOKEN: token
-        LAUNCHER_MISSIONCONTROL_OPENSHIFT_API_URL: https://kubernetes.default.svc.cluster.local
-        LAUNCHER_MISSIONCONTROL_OPENSHIFT_CONSOLE_URL: ''
-        LAUNCHER_KEYCLOAK_URL: ''
-        LAUNCHER_KEYCLOAK_REALM: ''
-        LAUNCHER_TRACKER_SEGMENT_TOKEN: token
-        LAUNCHER_BOOSTER_CATALOG_REPOSITORY: https://github.com/fabric8-launcher/launcher-booster-catalog.git
-        LAUNCHER_BOOSTER_CATALOG_REF: v85
-        LAUNCHER_BACKEND_CATALOG_FILTER: booster.mission.metadata.istio
-        LAUNCHER_BACKEND_CATALOG_REINDEX_TOKEN: token
-        LAUNCHER_BACKEND_ENVIRONMENT: environment
-
-----
-
-[options="header"]
-|=======
-|Parameter |Description |Default
-|enabled|This controls whether to enable launcher. | false
-|LAUNCHER_MISSIONCONTROL_GITHUB_USERNAME|The GitHub user to use in Fabric8.|none
-|LAUNCHER_MISSIONCONTROL_GITHUB_TOKEN|The GitHub token to use in Fabric8.|none
-|LAUNCHER_MISSIONCONTROL_OPENSHIFT_API_URL|The base URL of the OpenShift API where the launched boosters should be created (ie. https://hostname[:port] or https://ipaddress[:port]).|https://kubernetes.default.svc.cluster.local. This does not need to be set when targing the same OpenShift instance that you are running this on.
-|LAUNCHER_MISSIONCONTROL_OPENSHIFT_CONSOLE_URL|The base URL of the OpenShift Console where the launched boosters should be created (ie. https://hostname[:port] or https://ipaddress[:port]).|Empty. This does not need to be set when targing the same OpenShift instance that you are running this on.
-|LAUNCHER_KEYCLOAK_URL|The URL (with the /auth part) of a Keycloak installation to perform SSO authentication.| Empty. Leave empty if you've explicitly specified GitHub/OpenShift authentication.
-|LAUNCHER_KEYCLOAK_REALM|The keycloak realm to be used.|Empty. Leave empty if you've explicitly specified GitHub/OpenShift authentication
-|LAUNCHER_TRACKER_SEGMENT_TOKEN|The token to use for Segment tracking. {{% notice info %}}
-Leaving this empty will disable tracking. This must be set to the proper tokens for staging and production!
-{{% /notice %}}|None
-|LAUNCHER_BOOSTER_CATALOG_REPOSITORY|The GitHub repository containing the booster catalog.|https://github.com/fabric8-launcher/launcher-booster-catalog.git
-|LAUNCHER_BOOSTER_CATALOG_REF|The GitHub branch containing the booster catalog.|v85
-|LAUNCHER_BACKEND_CATALOG_FILTER|The Red Hat booster catalog filter.|booster.mission.metadata.istio
-|LAUNCHER_BACKEND_CATALOG_REINDEX_TOKEN|A token that must be passed to the catalog reindex service to trigger the catalog reindexing.|Empty
-|LAUNCHER_BACKEND_ENVIRONMENT|The environment where this backend is running.|Empty. Leaving this empty will set the value to 'development' if the 'Catalog Git Reference' is set to 'master', in any other case the value will default to 'production'.
-|=======
 
  For further options, see the link: https://istio.io/docs/reference/config/installation-options/[helm docs].
