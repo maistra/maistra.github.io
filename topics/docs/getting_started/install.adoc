@@ -147,7 +147,7 @@ oc get controlplanes -n istio-system
 
 This resource can now be deleted as follows:
 ```
-oc delete -n istio-system -f <name_of_cr>
+oc delete -n istio-system cr <name_of_cr>
 ```
 
 The removal of the CustomResource will tell the Istio operator to begin uninstalling everything it installed.
