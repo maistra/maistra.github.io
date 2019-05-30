@@ -22,8 +22,9 @@ Maistra uses the istio-operator, a custom installer built around Istio's helm ch
 ----
   istio:
     global:
+      multitenant: false
       hub: my-private-registry.com/custom-namespace
-      tag: 0.10.0
+      tag: 0.11.0
       mtls:
         enabled: true
       proxy:
@@ -46,12 +47,13 @@ Maistra uses the istio-operator, a custom installer built around Istio's helm ch
 [options="header"]
 |=======
 |Parameter |Description |Default
+|multitenant | This is a boolean indicating whether to enable multitenancy
 |disablePolicyChecks | This is a boolean indicating whether to enable policy checks. {{% notice info %}}
 disablePolicyChecks must be false for 3scale to work.
 {{% /notice %}} | true
 |policyCheckFailOpen | This is a boolean indicating wehther to traffic should be allowed through hwen the mixer policy service cannot be reached.  | false
 |hub| The hub to use to pull the Istio images.|maistra/ if deployment_type is origin and openshift-istio-tech-preview/ if deployment_type is openshift
-|tag| The tag to use to pull the Istio images.| 0.10.0
+|tag| The tag to use to pull the Istio images.| 0.11.0
 |=======
 
 

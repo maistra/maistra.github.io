@@ -11,6 +11,7 @@ spec:
   # the defaults baked into the chart values.yaml).
   istio:
     global:
+      multitenant: false
       defaultResources:
         limits:
           memory: 1Gi

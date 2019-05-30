@@ -3,7 +3,7 @@ title: "Automatic route creation"
 type: "document"
 category: "Comparing Maistra and upstream Istio"
 description: "Automatic routes creation"
-weight: 2
+weight: 3
 ---
 == Automatic route creation
 https://docs.okd.io/latest/dev_guide/routes.html[OpenShift routes] for Istio Gateways are automatically managed within Maistra. This means that every time an Istio Gateway is created, updated or deleted inside the Mesh, an OpenShift route will be created, updated or deleted accordingly. This aims to make things easier when using Maistra, since handling routes is usually redundant, given all information for hostnames are already present in Istio Gateways anyway.

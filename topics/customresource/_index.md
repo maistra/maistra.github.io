@@ -1,0 +1,4 @@
++++
+type = "customresource"
+title = "customresource"
++++
