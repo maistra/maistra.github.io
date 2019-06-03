@@ -20,6 +20,7 @@ This guide provides instructions for installing Maistra into an existing OpenShi
 - istiooc (https://github.com/Maistra/origin/releases/tag/v3.11.0%2Bmaistra-0.11.0)
 - NOTE: OpenShift Online and OpenShift Dedicated are not supported in the 0.11.0 Istio Tech Preview
 
+
 == Preparing the Installation
 
 Before Istio can be installed into an existing installation it is necessary to make a number of changes to the master configuration and each of the schedulable nodes.  These changes will enable features required within Istio and also ensure Elasticsearch will function correctly.
@@ -119,13 +120,17 @@ Multi-tenant control plane installations cannot be used in conjunction with a cl
 {{% /notice %}}
 
 
+{{% notice warning %}}
+The proxy-init image must be changed to maistra/proxy-init-centos7 if running on a RHEL 7 host.  More details can be found in the link:../custom-install[custom installation documentation]
+{{% /notice %}}
+
 {{% notice tip %}}
 Maistra supports a shorthand of *smcp* for *ServiceMeshControlPlane* and *smmr* for *ServiceMeshMemberRoll*.
 {{% /notice %}}
 
 ==== Single-Tenant Installation
 
-In order to deploy the Istio Control Plane, we need to create a custom resource such as the one in the following example. This custom resource *must* be created in the *istio-system* namespace. For more information on the parameters and their configuration please see the link:../custom-install[Custom Installation Documentation].
+In order to deploy the Istio Control Plane, we need to create a custom resource such as the one in the following example. This custom resource *must* be created in the *istio-system* namespace. For more information on the parameters and their configuration please see the link:../custom-install[custom installation documentation].
 
 {{< snippet_markdown name="istio_installation_minimal" >}}
 

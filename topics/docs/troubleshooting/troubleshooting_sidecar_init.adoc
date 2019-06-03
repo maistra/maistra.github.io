@@ -1,0 +1,23 @@
+---
+title: "Sidecar Init Issues"
+type: "document"
+category: "Troubleshooting"
+description: "This document describes common issues experienced with regards to sidecar init."
+---
+
+=== iptables v1.6.0: can't initialize iptables table `nat': Table does not exist (do you need to insmod?)
+With the release of RHEL 8, the firewall has been migrated from iptables to nftables. 
+The current default Maistra images are designed to on top of RHEL 8 and are no longer
+compatible with iptables based systems. If the host operating system is based on 
+iptables instead of nftables, the proxy-init image must be set to the centos 7 version instead. 
+
+To fix this issue, add the following change to your cr.yaml and redeploy your pod.
+
+[source,yaml]
+----
+  istio:
+    global:
+      proxy:
+        proxy_init:
+          image: maistra/proxy-init-centos7
+----
