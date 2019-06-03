@@ -12,9 +12,6 @@ spec:
   istio:
     global:
       multitenant: false
-      defaultResources:
-        limits:
-          memory: 1Gi
       proxy:
         # constrain resources for use in smaller environments
         resources:

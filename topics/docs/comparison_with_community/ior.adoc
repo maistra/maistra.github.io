@@ -47,11 +47,11 @@ Catch-all domains ("\*") are not supported. If one is found in the Gateway defin
 Subdomains (e.g.: "*.domain.com") are supported. However this ability doesn't come enabled by default in OpenShift. This means that Maistra _will_ create the route with the subdomain, but it will only be in effect if OpenShift is configured to enable it. Cluster administrators can refer to the https://docs.okd.io/latest/install_config/router/default_haproxy_router.html#using-wildcard-routes[OpenShift documentation] for instructions on how to enable this feature.
 
 === TLS
-TLS is supported as well. This means that, if the Gateway contains a `tls` section, the OpenShift Route will be configured to support TLS.
+TLS is supported as well. This means that, if the Gateway contains a *tls* section, the OpenShift Route will be configured to support TLS.
 
 {{% notice note %}}
-All OpenShift Routes created by Maistra are in the `istio-system` namespace.
+All OpenShift Routes created by Maistra are in the *istio-system* namespace.
 {{% /notice %}}
 
 === Under the covers
-This Gateway ↔ Route sincronization is done by a Maistra control plane component called `IOR`. It is deployed as part of the control plane by the Maistra installation process. For more information on `IOR`, refer to its https://github.com/Maistra/ior[project page at GitHub].
+This Gateway Route synchronization is done by a Maistra control plane component called *IOR*. It is deployed as part of the control plane by the Maistra installation process. For more information on *IOR*, refer to its https://github.com/Maistra/ior[project page at GitHub].

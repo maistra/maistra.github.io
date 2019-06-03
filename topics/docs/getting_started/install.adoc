@@ -67,13 +67,11 @@ master-restart controllers
 
 ==== Updating the Nodes
 
-In order to run the Elasticsearch application it is necessary to make a change to the kernel configuration on each node, this change will be handled through the `sysctl` service.
+In order to run the Elasticsearch application it is necessary to make a change to the kernel configuration on each node, this change will be handled through the *sysctl* service.
 
 Make the following changes on each node within your installation
 
-- Create a file named `/etc/sysctl.d/99-elasticsearch.conf` with the following contents:
-
-`vm.max_map_count = 262144`
+- Create a file named */etc/sysctl.d/99-elasticsearch.conf* with the following contents: `vm.max_map_count = 262144`
 
 - Execute the following command:
 
@@ -114,7 +112,7 @@ istio-operator-5cd6bcf645-fvb57   1/1       Running   0          1h
 Maistra supports both multi-tenant installations and single-tenant installations.
 In a single-tenant installation, a single control plane is used for the entire cluster. 
 In a multi-tenant installation, multiple control planes can be deployed in a cluster,
-with each control plane allowing access to only namespaces listed in a ServiceMeshMemberRoll resource belonging to that controlplane. 
+with each control plane allowing access to only namespaces listed in a *ServiceMeshMemberRoll* resource belonging to that controlplane. 
 
 {{% notice warning %}}
 Multi-tenant control plane installations cannot be used in conjunction with a cluster-wide control plane installation, i.e. all installations must be mult-tenant or a single, cluster-wide installation must be used.
@@ -122,12 +120,12 @@ Multi-tenant control plane installations cannot be used in conjunction with a cl
 
 
 {{% notice tip %}}
-Maistra supports a shorthand of smcp for servicemeshcontrolplane and smmr for servicemeshmemberroll.
+Maistra supports a shorthand of *smcp* for *ServiceMeshControlPlane* and *smmr* for *ServiceMeshMemberRoll*.
 {{% /notice %}}
 
 ==== Single-Tenant Installation
 
-In order to deploy the Istio Control Plane, we need to create a custom resource such as the one in the following example. This custom resource *must* be created in the `istio-system` namespace. For more information on the parameters and their configuration please see the link:../custom-install[Custom Installation Documentation].
+In order to deploy the Istio Control Plane, we need to create a custom resource such as the one in the following example. This custom resource *must* be created in the *istio-system* namespace. For more information on the parameters and their configuration please see the link:../custom-install[Custom Installation Documentation].
 
 {{< snippet_markdown name="istio_installation_minimal" >}}
 
@@ -139,21 +137,21 @@ oc create -n istio-system -f <name of file>
 ```
 
 ==== Multi-Tenant Installation
-To enable multitenancy, set the multitenant: false field in the control plane example
+To enable multitenancy, set the *multitenant: false* field in the control plane example
 to true, create a namespace to contain the control plane, and create the custom resource in that namespace.
 
 ===== ServiceMeshMemberRoll
-The ServiceMeshMemberRoll resource configures which namespaces belong to a control plane. 
-Only namespaces listed in the ServiceMeshMemberRoll will be affected by the control plane.
+The *ServiceMeshMemberRoll* resource configures which namespaces belong to a control plane. 
+Only namespaces listed in the *ServiceMeshMemberRoll* will be affected by the control plane.
 Any number of namespaces can be added, but a namespace may not exist in more than one control plane.
-This resource must be created in the same namespace as the ServicemeshControlPlane resource 
+This resource must be created in the same namespace as the *ServicemeshControlPlane* resource 
 and must be named default. An example resource can be seen below:
 
 {{< snippet_markdown name="istio_installation_smmr" >}}
 
 {{% notice note %}}
-The control plane processes the ServiceMeshMemberRoll when: the ServiceMeshMemberRoll is created, updated, or deleted, 
-the ServicemeshControlPlane in the same namespace is created or updated, or a namespace in the ServiceMeshMemberRoll is created or deleted.
+The control plane processes the *ServiceMeshMemberRoll* when: the *ServiceMeshMemberRoll* is created, updated, or deleted, 
+the *ServicemeshControlPlane* in the same namespace is created or updated, or a namespace in the *ServiceMeshMemberRoll* is created or deleted.
 {{% /notice %}}
 
 == Uninstalling Maistra
@@ -191,7 +189,7 @@ In order to cleanly remove the operator execute the following:
 oc delete -n istio-operator -f https://raw.githubusercontent.com/Maistra/istio-operator/maistra-0.11/deploy/maistra-operator.yaml
 ```
 
-The `istio-operator` project can now be removed.
+The *istio-operator* project can now be removed.
 
 ```
 oc delete project istio-operator

@@ -12,9 +12,6 @@ spec:
   istio:
     global:
       multitenant: false
-      defaultResources:
-        limits:
-          memory: 1Gi
 
       # the following lines enable tls across the control and data planes
       controlPlaneSecurityEnabled: true

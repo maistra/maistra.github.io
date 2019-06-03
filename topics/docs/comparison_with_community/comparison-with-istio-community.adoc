@@ -38,7 +38,7 @@ spec:
       request.headers[<header>]: "value"
 ----
 
-The Maistra distribution extends the ability to match request headers by supporting the use of a regular expression. To use this functionality, specify a property key of `request.regex.headers` with a regular expression as the value.
+The Maistra distribution extends the ability to match request headers by supporting the use of a regular expression. To use this functionality, specify a property key of *request.regex.headers* with a regular expression as the value.
 
 The following example demonstrates how Maistra matches request headers by using regular expressions
 [source,yaml]
