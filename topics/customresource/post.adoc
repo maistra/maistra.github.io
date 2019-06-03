@@ -1,0 +1,9 @@
+---
+type: "blog"
+hidden: true
+---
+
+////
+ This page exists solely to be a place holder that gets rendered by blog/single.html from the templates.
+Content on this page will be generated dynamically from pages contained in the Red Hat Developer Blog RSS feed.
+////

@@ -1,0 +1,31 @@
+---
+title: "Multitenancy"
+type: "document"
+category: "Comparing Maistra and upstream Istio"
+description: "Maistra supports multiple control planes"
+weight: 4
+---
+
+Maistra supports multitenancy, which allows multiple control planes to exist within a 
+single cluster. Each of these control planes have a ServiceMeshMemberRoll, which contains
+a list of namespaces that belong to that control plane. Namespaces not in this list are not
+part of that control plane. 
+
+The main difference that multi-tenancy provides from single-tenancy is the scope of privileges used
+by the control plane components (Galley, Pilot, Mixer, Citadel, etc). The components in a mult-tenant
+installation no longer use cluster scoped RBAC, i.e. ClusterRoleBinding, and instead rely on namespace
+scoped RBAC, i.e. RoleBinding. As a result of this: 
+
+* Every namespace in the members list will have a RoleBinding for each service account associating it with the control plane. 
+* Each control plane will only watch the namespaces listed in the ServiceMeshMemberRoll
+* Every namespace in a control plane will have a maistra.io/member-of label added to it, whose value will be the namespace containing the control plane installation.
+
+== Known Issues
+The following are known issues in Maistra 0.11:
+
+* *MeshPolicy* is still a cluster scoped resource and will apply to all control planes installed in OpenShift.  This may prevent the installation of multiple control planes or cause unknown behavior should one of the control planes be deleted.
+* The Jaeger agent runs as a DaemonSet, which effectively means tracing may only be enabled for a single *ServiceMeshControlPlane* instance.
+* The *IOR* component has not yet been updated to work with Multi-Tenancy so should be disabled within the *ServiceMeshControlPlane* instance.
+* Deleting the project containing the control plane before deleting the *ServiceMeshControlPlane* resource will cause some parts of the install to be left in place
+* Service accounts added to SecurityContextConstraints may not be removed
+* OAuthClient resource associated with Kiali may not be removed or its list of redirectURIs may not be accurate

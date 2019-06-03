@@ -12,8 +12,8 @@ To create a standalone, all-in-one origin cluster with Maistra, follow these ins
   https://github.com/Maistra/origin/releases.
 - Create an link:../custom-install[installation custom resource] and name it istio-installation.yaml.
 
-{{% notice info %}}
-The installation yaml has changed significantly in Maistra 0.10. Also, the installation CRD now needs to be created in the istio-system namespace. See link:https://github.com/Maistra/openshift-ansible/tree/maistra-0.10/istio[here] for older examples.
+{{% notice warning %}}
+The proxy-init image must be changed to _maistra/proxy-init-centos7_ if running on a RHEL 7 or other iptables based host.  More details can be found in the link:../custom-install[custom installation documentation]
 {{% /notice %}}
 
 {{< snippet_markdown name="istio_installation_minimal" >}}
