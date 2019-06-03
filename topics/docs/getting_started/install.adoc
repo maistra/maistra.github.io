@@ -178,7 +178,7 @@ oc get servicemeshcontrolplanes -n istio-system
 
 This resource can now be deleted as follows:
 ```
-oc delete -n istio-system -f <name_of_cr>
+oc delete -n istio-system <name_of_cr>
 oc delete project istio-system
 ```
 
