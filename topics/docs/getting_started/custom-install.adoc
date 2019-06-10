@@ -23,13 +23,13 @@ Maistra uses the istio-operator, a custom installer built around Istio's helm ch
   istio:
     global:
       multitenant: false
+      proxy_init:
+          image: maistra/proxy-init-ubi8
       hub: my-private-registry.com/custom-namespace
       tag: 0.11.0
       mtls:
         enabled: true
       proxy:
-        proxy_init:
-          image: maistra/proxy-init-ubi8
         resources:
           requests:
             cpu: 100m
@@ -48,6 +48,11 @@ Maistra uses the istio-operator, a custom installer built around Istio's helm ch
 |=======
 |Parameter |Description |Default
 |multitenant | This is a boolean indicating whether to enable multitenancy |
+|image | This parameter controls the image to use for proxy-init. 
+{{% notice info %}}
+This must be changed to maistra/proxy-init-centos7 if running on a RHEL7 host. 
+{{% /notice %}}
+ | maistra/proxy-init-ubi8
 |disablePolicyChecks | This is a boolean indicating whether to enable policy checks. {{% notice info %}}
 disablePolicyChecks must be false for 3scale to work.
 {{% /notice %}} | true
@@ -66,17 +71,6 @@ disablePolicyChecks must be false for 3scale to work.
 |=======
 
 ### proxy
-
-#### proxy_init
-[options="header"]
-|=======
-|Parameter |Description |Default
-|image | This parameter controls the image to use for proxy-init. 
-{{% notice info %}}
-This must be changed to maistra/proxy-init-centos7 if running on a RHEL7 host. 
-{{% /notice %}}
- | maistra/proxy-init-ubi8
-|=======
 
 #### resources->requests
 These are the resources requested and may vary depending on your environment. The example above allows Maistra to run in a smaller environment.
