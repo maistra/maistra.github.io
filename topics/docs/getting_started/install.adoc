@@ -20,13 +20,16 @@ This guide provides instructions for installing Maistra into an existing OpenShi
 - istiooc (https://github.com/Maistra/origin/releases/tag/v3.11.0%2Bmaistra-0.11.0)
 - NOTE: OpenShift Online and OpenShift Dedicated are not supported in the 0.11.0 Istio Tech Preview
 
+{{% notice info %}}
+To use this on an OCP 3.11 cluster, the Red Hat registry must be link:../add-redhat-registry[configured].
+{{% /notice %}}
 
 == Preparing the Installation
 
 Before Istio can be installed into an existing installation it is necessary to make a number of changes to the master configuration and each of the schedulable nodes.  These changes will enable features required within Istio and also ensure Elasticsearch will function correctly.
 
 {{% notice info %}}
-The master/node updates discussed below are no longer necessary in OCP/OKD 4.0
+The master/node updates discussed below are no longer necessary in OCP/OKD 4.1
 {{% /notice %}}
 
 === Updating the Master
@@ -111,9 +114,9 @@ istio-operator-5cd6bcf645-fvb57   1/1       Running   0          1h
 === Deploying the Istio Control Plane
 
 Maistra supports both multi-tenant installations and single-tenant installations.
-In a single-tenant installation, a single control plane is used for the entire cluster. 
+In a single-tenant installation, a single control plane is used for the entire cluster.
 In a multi-tenant installation, multiple control planes can be deployed in a cluster,
-with each control plane allowing access to only namespaces listed in a *ServiceMeshMemberRoll* resource belonging to that controlplane. 
+with each control plane allowing access to only namespaces listed in a *ServiceMeshMemberRoll* resource belonging to that controlplane.
 
 {{% notice warning %}}
 Multi-tenant control plane installations cannot be used in conjunction with a cluster-wide control plane installation, i.e. all installations must be mult-tenant or a single, cluster-wide installation must be used.
@@ -146,16 +149,16 @@ To enable multitenancy, set the *multitenant: false* field in the control plane 
 to true, create a namespace to contain the control plane, and create the custom resource in that namespace.
 
 ===== ServiceMeshMemberRoll
-The *ServiceMeshMemberRoll* resource configures which namespaces belong to a control plane. 
+The *ServiceMeshMemberRoll* resource configures which namespaces belong to a control plane.
 Only namespaces listed in the *ServiceMeshMemberRoll* will be affected by the control plane.
 Any number of namespaces can be added, but a namespace may not exist in more than one control plane.
-This resource must be created in the same namespace as the *ServicemeshControlPlane* resource 
+This resource must be created in the same namespace as the *ServicemeshControlPlane* resource
 and must be named default. An example resource can be seen below:
 
 {{< snippet_markdown name="istio_installation_smmr" >}}
 
 {{% notice note %}}
-The control plane processes the *ServiceMeshMemberRoll* when: the *ServiceMeshMemberRoll* is created, updated, or deleted, 
+The control plane processes the *ServiceMeshMemberRoll* when: the *ServiceMeshMemberRoll* is created, updated, or deleted,
 the *ServicemeshControlPlane* in the same namespace is created or updated, or a namespace in the *ServiceMeshMemberRoll* is created or deleted.
 {{% /notice %}}
 

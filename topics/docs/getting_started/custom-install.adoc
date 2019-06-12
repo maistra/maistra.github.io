@@ -29,7 +29,7 @@ Maistra uses the istio-operator, a custom installer built around Istio's helm ch
         enabled: true
       proxy:
         proxy_init:
-          image: maistra/proxy-init-ubi8
+          image: maistra/proxy-init-ubi8:0.11.0
         resources:
           requests:
             cpu: 100m
@@ -71,9 +71,9 @@ disablePolicyChecks must be false for 3scale to work.
 [options="header"]
 |=======
 |Parameter |Description |Default
-|image | This parameter controls the image to use for proxy-init. 
+|image | This parameter controls the image to use for proxy-init.
 {{% notice info %}}
-This must be changed to maistra/proxy-init-centos7 if running on a RHEL7 host. 
+This must be changed to maistra/proxy-init-centos7 if running on a RHEL7 host.
 {{% /notice %}}
  | maistra/proxy-init-ubi8
 |=======
