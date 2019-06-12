@@ -48,17 +48,24 @@ Maistra uses the istio-operator, a custom installer built around Istio's helm ch
 |=======
 |Parameter |Description |Default
 |multitenant | This is a boolean indicating whether to enable multitenancy |
-|image | This parameter controls the image to use for proxy-init. 
-{{% notice info %}}
-This must be changed to maistra/proxy-init-centos7 if running on a RHEL7 host. 
-{{% /notice %}}
- | maistra/proxy-init-ubi8
 |disablePolicyChecks | This is a boolean indicating whether to enable policy checks. {{% notice info %}}
 disablePolicyChecks must be false for 3scale to work.
 {{% /notice %}} | true
 |policyCheckFailOpen | This is a boolean indicating wehther to traffic should be allowed through hwen the mixer policy service cannot be reached.  | false
 |hub| The hub to use to pull the Istio images.|maistra/ if deployment_type is origin and openshift-istio-tech-preview/ if deployment_type is openshift
 |tag| The tag to use to pull the Istio images.| 0.11.0
+|=======
+
+### proxy_init
+
+[options="header"]
+|=======
+|Parameter |Description |Default
+|image | This parameter controls the image to use for proxy-init.
+{{% notice info %}}
+This must be changed to maistra/proxy-init-centos7:0.11.0 if running on a RHEL7 host.
+{{% /notice %}}
+ | maistra/proxy-init-ubi8
 |=======
 
 
@@ -71,7 +78,6 @@ disablePolicyChecks must be false for 3scale to work.
 |=======
 
 ### proxy
-
 #### resources->requests
 These are the resources requested and may vary depending on your environment. The example above allows Maistra to run in a smaller environment.
 
