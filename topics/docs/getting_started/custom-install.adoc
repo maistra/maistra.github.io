@@ -51,8 +51,8 @@ Maistra uses the istio-operator, a custom installer built around Istio's helm ch
 |disablePolicyChecks | This is a boolean indicating whether to enable policy checks. {{% notice info %}}
 disablePolicyChecks must be false for 3scale to work.
 {{% /notice %}} | true
-|policyCheckFailOpen | This is a boolean indicating wehther to traffic should be allowed through hwen the mixer policy service cannot be reached.  | false
-|hub| The hub to use to pull the Istio images.|maistra/ if deployment_type is origin and openshift-istio-tech-preview/ if deployment_type is openshift
+|policyCheckFailOpen | This is a boolean indicating wehther to traffic should be allowed through when the mixer policy service cannot be reached.  | false
+|hub| The hub to use to pull the Istio images.|maistra/ if deployment_type is origin and  registry.redhat.io/openshift-istio-tech-preview if deployment_type is openshift
 |tag| The tag to use to pull the Istio images.| 0.11.0
 |=======
 
