@@ -21,7 +21,7 @@ This guide provides instructions for installing Maistra into an existing OpenShi
 - NOTE: OpenShift Online and OpenShift Dedicated are not supported in the 0.11.0 Istio Tech Preview
 
 {{% notice info %}}
-To use this on an OCP 3.11 cluster, the Red Hat registry must be link:../add-redhat-registry[configured].
+To use this on an OCP 3.11 cluster, the Red Hat registry must be link:../add-redhat-registry[configured]. The hub must also be set to registry.redhat.io/openshift-istio-tech-preview.
 {{% /notice %}}
 
 == Preparing the Installation
