@@ -54,6 +54,7 @@ disablePolicyChecks must be false for 3scale to work.
 |policyCheckFailOpen | This is a boolean indicating wehther to traffic should be allowed through hwen the mixer policy service cannot be reached.  | false
 |hub| The hub to use to pull the Istio images.|maistra/ if deployment_type is origin and openshift-istio-tech-preview/ if deployment_type is openshift
 |tag| The tag to use to pull the Istio images.| 0.11.0
+|imagePullSecrets|If access to the registry providing the Istio images is secure, then an link:https://kubernetes.io/docs/concepts/containers/images/#specifying-imagepullsecrets-on-a-pod[imagePullSecret] can be listed here.|none
 |=======
 
 ### proxy_init
@@ -96,7 +97,6 @@ These are the resources requested and may vary depending on your environment. Th
 |Parameter |Description |Default
 |cpu | This is the maximum number of CPUs that proxy is allowed to use.  | 2000m
 |memory |This is the ammount of memory that is requested in the environment.  |128Mi
-|imagePullSecret|If access to the registry providing the Istio images is secure, then an link:https://kubernetes.io/docs/concepts/containers/images/#specifying-imagepullsecrets-on-a-pod[imagePullSecret] can be listed here.|none
 |=======
 
 ## [[Gateways]] istio->gateways
