@@ -245,7 +245,7 @@ These are the resources requested and may vary depending on your environment.
 
 ## 3scale
 {{% notice info %}}
-disablePolicyChecks must be false for 3 Scale to work.
+disablePolicyChecks must be false for 3scale to work.
 {{% /notice %}}
 
 [source,yaml]
