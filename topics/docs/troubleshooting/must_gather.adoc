@@ -1,0 +1,26 @@
+---
+title: "Gathering debugging information"
+type: "document"
+category: "Troubleshooting"
+description: "This document describes how to use must-gather tool to get debug information about the cluster"
+---
+
+If you need to inspect your *OpenShift 4* cluster in order to debug an issue, you can make use of the `must-gather` tool. It is part of the `oc` CLI tool that comes with OpenShift, so you are not required to install anything else in order to use it. Basic usage is:
+
+[source,bash]
+----
+oc adm must-gather
+----
+
+The command above creates a directory and dumps all cluster information on it. Run `oc adm must-gather -h` to see all available options.
+
+However, it does not get Service Mesh data. In order to dump those as well, you need to run `oc adm must-gather` a second time, supplying an additional command line flag as exemplified below. If you are only interested in Service Mesh data, you can skip the command above and just run the folowing command:
+
+[source,bash]
+----
+oc adm must-gather --image=docker.io/maistra/istio-must-gather:0.12.0
+----
+
+By using the Maistra image as specified above, you will get all the Service Mesh data (deployments, config maps, virtual services, gateways, etc) dumped so that you can investigate any issue in your cluster.
+
+For more information about the output directory structure, or how `must-gather` works and what are its command line options, you can visit their link:https://github.com/openshift/must-gather/blob/master/README.md[docs].
