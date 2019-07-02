@@ -64,7 +64,7 @@ disablePolicyChecks must be false for 3scale to work.
 |Parameter |Description |Default
 |image | This parameter controls the image to use for proxy-init.
 {{% notice info %}}
-This must be changed to proxy-init-centos7:0.11.0 if running on a RHEL7 host.
+This must be changed to proxy-init-centos7 if running on a RHEL7 host.
 {{% /notice %}}
  | proxy-init-ubi8
 |=======
