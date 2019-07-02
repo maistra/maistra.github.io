@@ -18,6 +18,5 @@ To fix this issue, add the following change to your cr.yaml and redeploy your po
   istio:
     global:
       proxy:
-        proxy_init:
-          image: maistra/proxy-init-centos7
+        proxy_init: proxy-init-centos7
 ----
