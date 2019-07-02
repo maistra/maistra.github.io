@@ -24,7 +24,7 @@ Maistra uses the istio-operator, a custom installer built around Istio's helm ch
     global:
       multitenant: false
       proxy_init:
-          image: maistra/proxy-init-ubi8
+          image: proxy-init-ubi8
       hub: my-private-registry.com/custom-namespace
       tag: 0.11.0
       mtls:
@@ -64,9 +64,9 @@ disablePolicyChecks must be false for 3scale to work.
 |Parameter |Description |Default
 |image | This parameter controls the image to use for proxy-init.
 {{% notice info %}}
-This must be changed to maistra/proxy-init-centos7:0.11.0 if running on a RHEL7 host.
+This must be changed to proxy-init-centos7:0.11.0 if running on a RHEL7 host.
 {{% /notice %}}
- | maistra/proxy-init-ubi8
+ | proxy-init-ubi8
 |=======
 
 
