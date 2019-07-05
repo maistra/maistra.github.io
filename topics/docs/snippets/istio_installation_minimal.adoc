@@ -68,7 +68,7 @@ spec:
     tracing:
       # change to false to disable tracing (i.e. jaeger)
       enabled: true
-  threescale:
+  threeScale:
     enabled: false
 
 ----
