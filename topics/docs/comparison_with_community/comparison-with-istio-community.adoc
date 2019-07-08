@@ -54,3 +54,7 @@ spec:
     properties:
       request.regex.headers[<header>]: "<regular expression>"
 ----
+
+=== Istio CNI 
+
+The CNI plugin is an alternative way to configure application pod networking. When enabled, it replaces init-container based network configuration and eliminates the need for a NET_ADMIN privileged container during application container setup.   
