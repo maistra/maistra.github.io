@@ -83,6 +83,14 @@ Make the following changes on each node within your installation
 sysctl vm.max_map_count=262144
 ```
 == Installing Maistra
+=== Installing the Kiali Operator
+
+{{< snippet_markdown name="install_kiali" >}}
+
+=== Installing the Jaeger operator
+
+{{< snippet_markdown name="install_jaeger" >}}
+
 === Installing the Istio Operator
 
 The Maistra installation process introduces a Kubernetes operator to manage the installation of the Istio control plane within the istio-system namespace.  This operator defines and monitors a custom resource related to the deployment, update and deletion of the Istio control plane.
@@ -191,6 +199,15 @@ The removal of the CustomResource will tell the Istio operator to begin uninstal
 
 === Removing the Operator
 
+=== Removing the Kiali Operator
+
+{{< snippet_markdown name="remove_kiali" >}}
+
+=== Removing the Jaeger operator
+
+{{< snippet_markdown name="remove_jaeger" >}}
+
+==== Removing the Maistra Operator
 In order to cleanly remove the operator execute the following:
 
 ```

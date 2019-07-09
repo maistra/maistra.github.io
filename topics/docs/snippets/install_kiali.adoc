@@ -1,0 +1,15 @@
+As of the Maistra 0.12 release, Kiali now relies on the presence of the Kiali operator being installed before Maistra. To install the operator, execute the following as a privileged user:
+
+[source, bash]
+----
+bash <(curl -L https://git.io/getLatestKialiOperator) --operator-image-version v1.0.0 --operator-watch-namespace '**' --accessible-namespaces '**' --operator-install-kiali false
+----
+
+When the Kiali operator is running, the output should look similar to the following:
+
+[source, bash]
+----
+$ oc get pods -n kiali-operator
+NAME                             READY   STATUS    RESTARTS   AGE
+kiali-operator-6575d54c6-9ptfv   2/2     Running   0          4m3s
+----
