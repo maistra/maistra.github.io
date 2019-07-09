@@ -1,0 +1,12 @@
+[source,yaml]
+----
+apiVersion: maistra.io/v1
+kind: ServiceMeshControlPlane
+metadata:
+  name: basic-install
+spec:
+
+  istio_cni:
+   enabled: true
+  
+----

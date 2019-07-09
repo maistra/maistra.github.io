@@ -99,6 +99,22 @@ These are the resources requested and may vary depending on your environment. Th
 |memory |This is the ammount of memory that is requested in the environment.  |128Mi
 |=======
 
+## [[Cni]] istio->cni
+
+[source,yaml]
+----
+ istio_cni:
+   enabled: true
+----
+
+### istio-cni
+
+[options="header"]
+|=======
+|Parameter |Description |Default
+|enabled | The parameter controls whether Istio CNI should be used for side-proxy network configuration. Only has effect when multitenancy has been enabled. | false   
+|=======
+
 ## [[Gateways]] istio->gateways
 
 [source,yaml]
