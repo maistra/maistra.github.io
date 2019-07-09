@@ -166,8 +166,9 @@ the *ServicemeshControlPlane* in the same namespace is created or updated, or a 
 ===== Istio CNI plugin
 
 Istio CNI plugin is disabled by default. To switch application pod network setup from istio-init Init Container to Istio CNI plugin, set the *enabled* field in the *istio_cni* section to true.
-
 {{< snippet_markdown name="istio_installation_cni" >}}
+
+For more information on CNI, please refer to the Container Network Interface Specification (https://github.com/containernetworking/cni/blob/master/SPEC.md#container-network-interface-specification).
 
 
 == Uninstalling Maistra
