@@ -31,13 +31,13 @@ To add the service account used by Bookinfo application to anyuid and privileged
 . Deploy the Bookinfo application in the bookinfo project:
 +
 ```
-  $ oc -n bookinfo apply -f https://raw.githubusercontent.com/Maistra/bookinfo/master/bookinfo.yaml
+  $ oc -n bookinfo apply -f https://raw.githubusercontent.com/Maistra/bookinfo/maistra-0.12/bookinfo.yaml
 ```
 
 . Create the ingress gateway for Bookinfo:
 +
 ```
-  $ oc -n bookinfo apply -f https://raw.githubusercontent.com/Maistra/bookinfo/master/bookinfo-gateway.yaml
+  $ oc -n bookinfo apply -f https://raw.githubusercontent.com/Maistra/bookinfo/maistra-0.12/bookinfo-gateway.yaml
 ```
 
 . Set `GATEWAY_URL`:
