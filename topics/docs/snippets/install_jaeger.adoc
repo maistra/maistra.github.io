@@ -13,11 +13,12 @@ $ oc create -n observability -f https://raw.githubusercontent.com/jaegertracing/
 $ oc create -n observability -f https://raw.githubusercontent.com/jaegertracing/jaeger-operator/v1.12.1/deploy/role_binding.yaml
 $ oc create -n observability -f https://raw.githubusercontent.com/jaegertracing/jaeger-operator/v1.12.1/deploy/operator.yaml
 ----
- 
-When the Jaeger operator is running, the output should look similar to the following: 
+
+When the Jaeger operator is running, the output should look similar to the following:
 
 [source, bash]
 ----
 $ oc get pods -n observability
 NAME                               READY   STATUS    RESTARTS   AGE
 jaeger-operator-5bcd7ff5df-59msz   1/1     Running   0          4m9s
+----
