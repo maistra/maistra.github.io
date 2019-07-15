@@ -83,6 +83,10 @@ sysctl vm.max_map_count=262144
 ```
 == Installing Maistra
 
+{{% notice warning %}}
+Maistra 0.12 supports plaintext and strict mutual TLS only. Permissive mode does not yet work.
+{{% /notice %}}
+
 {{% notice notice %}}
 Kiali does not currently support the Jaeger operator.
 {{% /notice %}}
