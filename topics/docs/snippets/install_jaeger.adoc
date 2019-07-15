@@ -1,0 +1,24 @@
+
+As of the Maistra 0.12 release, Jaeger now relies on the presence of the Jaeger
+operator being installed before Maistra. To install the operator, execute the
+following as an privileged user.
+
+
+[source, bash]
+----
+$ oc new-project observability # create the project for the jaeger operator
+$ oc create -n observability -f https://raw.githubusercontent.com/jaegertracing/jaeger-operator/v1.13.1/deploy/crds/jaegertracing_v1_jaeger_crd.yaml
+$ oc create -n observability -f https://raw.githubusercontent.com/jaegertracing/jaeger-operator/v1.13.1/deploy/service_account.yaml
+$ oc create -n observability -f https://raw.githubusercontent.com/jaegertracing/jaeger-operator/v1.13.1/deploy/role.yaml
+$ oc create -n observability -f https://raw.githubusercontent.com/jaegertracing/jaeger-operator/v1.13.1/deploy/role_binding.yaml
+$ oc create -n observability -f https://raw.githubusercontent.com/jaegertracing/jaeger-operator/v1.13.1/deploy/operator.yaml
+----
+
+When the Jaeger operator is running, the output should look similar to the following:
+
+[source, bash]
+----
+$ oc get pods -n observability
+NAME                               READY   STATUS    RESTARTS   AGE
+jaeger-operator-5bcd7ff5df-59msz   1/1     Running   0          4m9s
+----
