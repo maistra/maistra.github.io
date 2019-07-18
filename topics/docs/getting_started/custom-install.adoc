@@ -26,10 +26,12 @@ Maistra uses the istio-operator, a custom installer built around Istio's helm ch
       proxy_init:
           image: proxy-init-ubi8
       hub: my-private-registry.com/custom-namespace
-      tag: 0.11.0
+      tag: 0.12.0
       mtls:
         enabled: true
       proxy:
+        proxy_init:
+          image: maistra/proxy-init-ubi8
         resources:
           requests:
             cpu: 100m
@@ -53,8 +55,9 @@ disablePolicyChecks must be false for 3scale to work.
 {{% /notice %}} | true
 |policyCheckFailOpen | This is a boolean indicating wehther to traffic should be allowed through hwen the mixer policy service cannot be reached.  | false
 |hub| The hub to use to pull the Istio images.|maistra/ if deployment_type is origin and openshift-istio-tech-preview/ if deployment_type is openshift
-|tag| The tag to use to pull the Istio images.| 0.11.0
+|tag| The tag to use to pull the Istio images.| 0.12.0
 |imagePullSecrets|If access to the registry providing the Istio images is secure, then an link:https://kubernetes.io/docs/concepts/containers/images/#specifying-imagepullsecrets-on-a-pod[imagePullSecret] can be listed here.|none
+|dnsRefreshRate| The number of seconds to wait to refresn the DNS cache in an Envoy instance. | 300s
 |=======
 
 ### proxy_init
@@ -65,8 +68,7 @@ disablePolicyChecks must be false for 3scale to work.
 |image | This parameter controls the image to use for proxy-init.
 {{% notice info %}}
 This must be changed to proxy-init-centos7 if running on a RHEL7 host.
-{{% /notice %}}
- | proxy-init-ubi8
+{{% /notice %}} 1.0.0 | proxy-init-ubi8
 |=======
 
 
@@ -112,7 +114,7 @@ These are the resources requested and may vary depending on your environment. Th
 [options="header"]
 |=======
 |Parameter |Description |Default
-|enabled | The parameter controls whether Istio CNI should be used for side-proxy network configuration. Only has effect when multitenancy has been enabled. | false   
+|enabled | The parameter controls whether Istio CNI should be used for side-proxy network configuration. Only has effect when multitenancy has been enabled. | false
 |=======
 
 ## [[Gateways]] istio->gateways
@@ -228,7 +230,7 @@ These are the resources requested and may vary depending on your environment.
    kiali:
       enabled: true
       hub: kiali
-      tag: v0.16.2
+      tag: v1.0.0
       dashboard:
         user: admin
         passphrase: admin
@@ -239,7 +241,7 @@ These are the resources requested and may vary depending on your environment.
 |Parameter |Description |Default
 |enabled|This enables or disables Kiali in the environment. | true
 |hub|The hub to use to pull the Kiali images.|kiali/ if deployment_type is origin and openshift-istio-tech-preview/ if deployment_type is openshift
-|tag| The tag to use to pull the Kiali images | 0.16.2
+|tag| The tag to use to pull the Kiali images | 1.0.0
 |=======
 
 ### dashboard
@@ -253,12 +255,39 @@ These are the resources requested and may vary depending on your environment.
 
 ## [[Tracing]] istio->tracing
 
+[source,yaml]
+----
+   tracing:
+      enabled: true
+      jaeger:
+        hub: jaegertracing
+        tag: v0.13.1
+        template: all-in-one
+----
+
 [options="header"]
 |=======
 |Parameter |Description |Default
 |enabled|This enables or disables tracing in the environment. | true
 |=======
 
+### [[Jaeger]] istio->tracing->jaeger
+
+[options="header"]
+|======
+|Parameter |Description |Default
+|hub
+|The hub that the Operator uses to pull Jaeger images
+|A valid image repo
+|`jaegertracing/` or `registry.redhat.io/openshift-istio-tech-preview/`
+|`tag`
+|The tag that the Operator uses to pull the Jaeger images
+|A valid container image tag.
+|`1.13.1`
+|`template`
+|The deployment template to use for Jaeger
+|`all-in-one`/`production-elasticsearch`
+|======
 ## 3scale
 {{% notice info %}}
 disablePolicyChecks must be false for 3scale to work.
