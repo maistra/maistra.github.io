@@ -12,7 +12,7 @@ weight: 1
 
 This guide provides instructions for installing Maistra into an existing OpenShift Container Platform (OCP) or Origin (OKD) cluster and for creating a standalone, all-in-one origin cluster with Istio
 
-=== Supported Configurations
+=== Tested Configurations
 
 - OpenShift Container Platform (OCP) 3.11 (https://docs.openshift.com/container-platform/3.11/install/prerequisites.html)
 - OpenShift Container Platform (OCP) 4.1
