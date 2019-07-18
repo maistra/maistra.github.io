@@ -10,7 +10,7 @@ When you deploy an application into Service Mesh, there are many differences bet
 == Configuring the Security Constraints for Application Service Accounts
 
 {{% notice info %}}
-Relaxing security constraints is only necessary during the OpenShift Service Mesh Technology Preview phase.
+Privileged and anyuid changes are only required when using proxy-init. These can be skipped when using CNI.
 {{% /notice %}}
 
 When you deploy an application into a Service Mesh running in an OpenShift environment, it is currently necessary to relax the security constraints placed on the application by its service account to ensure that the application can function correctly. Each service account must be granted permissions by using the *anyuid* and *privileged* Security Context Constraints (SCC) to enable the sidecars to run correctly.

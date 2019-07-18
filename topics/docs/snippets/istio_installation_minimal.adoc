@@ -3,15 +3,10 @@
 apiVersion: maistra.io/v1
 kind: ServiceMeshControlPlane
 metadata:
-  name: basic-install
+  name: minimal-install
 spec:
-  # NOTE, if you remove all children from an element, you should remove the
-  # element too.  An empty element is interpreted as null and will override all
-  # default values (i.e. no values will be specified for that element, not even
-  # the defaults baked into the chart values.yaml).
   istio:
     global:
-      multitenant: false
       proxy:
         # constrain resources for use in smaller environments
         resources:
@@ -29,8 +24,6 @@ spec:
       istio-ingressgateway:
         # disable autoscaling for use in smaller environments
         autoscaleEnabled: false
-        # set to true to enable IOR
-        ior_enabled: false
 
     mixer:
       policy:
@@ -56,19 +49,26 @@ spec:
       traceSampling: 100.0
 
     kiali:
-      # change to false to disable kiali
-      enabled: true
-    
-      # to use oauth, remove the following 'dashboard' section
+      # to disable kiali
+      enabled: false
+
       # create a secret for accessing kiali dashboard with the following credentials
-      dashboard:
-        user: admin
-        passphrase: admin
+      # dashboard:
+      #   user: admin
+      #   passphrase: admin
 
+    # disable grafana
+    grafana:
+      enabled: false
+
+    # to disable tracing (i.e. jaeger)
     tracing:
-      # change to false to disable tracing (i.e. jaeger)
-      enabled: true
-  threeScale:
-    enabled: false
-
+      enabled: false
+      jaeger:
+        # simple, all-in-one strategy
+        template: all-in-one
+        # production strategy, utilizing elasticsearch
+        #template: production-elasticsearch
+        # if required. only one instance may use agentStrategy=DaemonSet
+        #agentStrategy: DaemonSet
 ----

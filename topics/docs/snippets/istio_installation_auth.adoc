@@ -11,8 +11,6 @@ spec:
   # the defaults baked into the chart values.yaml).
   istio:
     global:
-      multitenant: false
-
       # the following lines enable tls across the control and data planes
       controlPlaneSecurityEnabled: true
       mtls:
@@ -65,15 +63,19 @@ spec:
       # change to false to disable kiali
       enabled: true
     
-      # to use oauth, remove the following 'dashboard' section
       # create a secret for accessing kiali dashboard with the following credentials
-      dashboard:
-        user: admin
-        passphrase: admin
+      # dashboard:
+      #   user: admin
+      #   passphrase: admin
 
     tracing:
       # change to false to disable tracing (i.e. jaeger)
       enabled: true
-  threeScale:
-    enabled: false
+      jaeger:
+        # simple, all-in-one strategy
+        template: all-in-one
+        # production strategy, utilizing elasticsearch
+        #template: production-elasticsearch
+        # if required. only one instance may use agentStrategy=DaemonSet
+        #agentStrategy: DaemonSet
 ----
