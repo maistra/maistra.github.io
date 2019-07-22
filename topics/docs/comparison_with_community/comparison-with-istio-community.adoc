@@ -57,4 +57,6 @@ spec:
 
 === Istio CNI 
 
-The CNI plugin is an alternative way to configure application pod networking. When enabled, it replaces init-container based network configuration and eliminates the need for a NET_ADMIN privileged container during application container setup.   
+The CNI plugin is an improved way to configure application pod networking. When enabled, it replaces init-container based network configuration and eliminates the need for a NET_ADMIN privileged container during application container setup.
+
+In Maistra, it is enabled by default on platforms that are known to support it, like OpenShift 4. For other platforms, the old behavior, based on the init-container is still used. This is done automatically by the Istio Operator, without any need of manually tweaking this setting.
