@@ -183,13 +183,6 @@ The control plane processes the *ServiceMeshMemberRoll* when: the *ServiceMeshMe
 the *ServicemeshControlPlane* in the same namespace is created or updated, or a namespace in the *ServiceMeshMemberRoll* is created or deleted.
 {{% /notice %}}
 
-===== Istio CNI plugin
-
-The Istio CNI plugin allows a pod to join the service mesh without requiring additional privileges to be granted for each pod. To enable the plugin, set the *enabled* field in *istio_cni* section to true.
-{{< snippet_markdown name="istio_installation_cni" >}}
-
-For more information on CNI, please refer to the Container Network Interface Specification (https://github.com/containernetworking/cni/blob/master/SPEC.md#container-network-interface-specification).
-
 == Uninstalling Maistra
 
 [[remove_control_plane]]
