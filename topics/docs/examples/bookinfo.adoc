@@ -19,7 +19,7 @@ Install Maistra by following the instructions link:/docs/getting_started/install
 ```
 
 === Update Security Context Constraints
-To add the service account used by Bookinfo application to anyuid and privileged SCCs in "bookinfo" namespace:
+To add the service account used by Bookinfo application to anyuid and privileged SCCs in "bookinfo" project:
 
 ```
   $ oc adm policy add-scc-to-user anyuid -z default -n bookinfo

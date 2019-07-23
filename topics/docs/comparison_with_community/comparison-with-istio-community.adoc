@@ -15,7 +15,7 @@ The current release of Maistra differs from the current upstream Istio community
 
 === Automatic Injection
 
-Enabling automatic injection for your deployments differs between the upstream Istio releases and the Maistra releases.  The upstream sidecar injector will inject all deployments within specifically labelled namespaces whereas the Maistra version relies on opting in and the presence of the `sidecar.istio.io/inject` annotation.  For more information please refer to the link:{{< relref "automatic-injection.adoc" >}}[the automatic injection section].
+Enabling automatic injection for your deployments differs between the upstream Istio releases and the Maistra releases.  The upstream sidecar injector will inject all deployments within specifically labeled namespaces whereas the Maistra version relies on opting in and the presence of the `sidecar.istio.io/inject` annotation.  For more information please refer to the link:{{< relref "automatic-injection.adoc" >}}[the automatic injection section].
 
 === Role Based Access Control features
 
@@ -55,6 +55,6 @@ spec:
       request.regex.headers[<header>]: "<regular expression>"
 ----
 
-=== Istio CNI 
+=== Istio CNI
 
-The CNI plugin is an alternative way to configure application pod networking. When enabled, it replaces init-container based network configuration and eliminates the need for a NET_ADMIN privileged container during application container setup.   
+The CNI plugin is an alternative way to configure application pod networking. When enabled, it replaces init-container based network configuration and eliminates the need for a NET_ADMIN privileged container during application container setup.
