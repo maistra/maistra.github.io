@@ -8,17 +8,17 @@ weight: 4
 
 Maistra supports multitenancy, which allows multiple control planes to exist within a
 single cluster. Each of these control planes have a ServiceMeshMemberRoll, which contains
-a list of namespaces that belong to that control plane. Namespaces not in this list are not
+a list of projects that belong to that control plane. Projects not in this list are not
 part of that control plane.
 
 The main difference that multi-tenancy provides from single-tenancy is the scope of privileges used
 by the control plane components (Galley, Pilot, Mixer, Citadel, etc). The components in a mult-tenant
-installation no longer use cluster scoped RBAC, i.e. ClusterRoleBinding, and instead rely on namespace
+installation no longer use cluster scoped RBAC, i.e. ClusterRoleBinding, and instead rely on project
 scoped RBAC, i.e. RoleBinding. As a result of this:
 
-* Every namespace in the members list will have a RoleBinding for each service account associating it with the control plane.
-* Each control plane will only watch the namespaces listed in the ServiceMeshMemberRoll
-* Every namespace in a control plane will have a maistra.io/member-of label added to it, whose value will be the namespace containing the control plane installation.
+* Every project in the members list will have a RoleBinding for each service account associating it with the control plane.
+* Each control plane will only watch the project listed in the ServiceMeshMemberRoll
+* Every project in a control plane will have a maistra.io/member-of label added to it, whose value will be the project containing the control plane installation.
 
 == Known Issues
 The following are known issues in Maistra 0.12:

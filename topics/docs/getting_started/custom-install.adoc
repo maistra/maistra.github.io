@@ -2,7 +2,7 @@
 title: "Custom Installation"
 type: "document"
 category: "Getting started"
-description: "Maistra uses a custom resource to initialize your environment. This document describes how to customize the installation to your specific environment."
+description: "Maistra uses a ServiceMeshControlPlane to install and configure your environment. This document describes how to customize the installation to your specific environment."
 weight: 2
 hidden: true
 ---
@@ -22,7 +22,7 @@ Maistra uses the istio-operator, a custom installer built around Istio's helm ch
 ----
   istio:
     global:
-      multitenant: false
+      multitenant: true
       proxy_init:
           image: proxy-init-ubi8
       hub: my-private-registry.com/custom-namespace
@@ -49,7 +49,7 @@ Maistra uses the istio-operator, a custom installer built around Istio's helm ch
 [options="header"]
 |=======
 |Parameter |Description |Default
-|multitenant | This is a boolean indicating whether to enable multitenancy |
+|multitenant | This is a boolean indicating whether to enable multitenancy | true
 |disablePolicyChecks | This is a boolean indicating whether to enable policy checks. {{% notice info %}}
 disablePolicyChecks must be false for 3scale to work.
 {{% /notice %}} | true

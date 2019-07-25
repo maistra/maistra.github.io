@@ -6,7 +6,7 @@ metadata:
   name: default
 spec:
   members:
-  # a list of namespaces that should be joined into the service mesh
-  # for example, to add the bookinfo namespace
+  # a list of projects that should be joined into the service mesh
+  # for example, to add the bookinfo project
   - bookinfo
 ----

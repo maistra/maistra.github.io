@@ -2,7 +2,7 @@
 title: "Installing on OKD/OCP"
 type: "document"
 category: "Getting started"
-description: "This document describes how to install the Istio operator and how to create a custom resource to configure and install an Istio control plane into your OpenShift installation."
+description: "This document describes how to install the Istio operator and how to configure and install Maistra into your OpenShift installation."
 weight: 1
 ---
 
@@ -92,7 +92,7 @@ sysctl vm.max_map_count=262144
 
 === Installing the Istio Operator
 
-The Maistra installation process introduces a Kubernetes operator to manage the installation of the Istio control plane within the istio-system namespace.  This operator defines and monitors a custom resource related to the deployment, update and deletion of the Istio control plane.
+The Maistra installation process introduces a Kubernetes operator to manage the installation, update, and removal of the Istio control plane within the istio-system project.
 
 The templates are available at: https://github.com/Maistra/istio-operator/tree/maistra-0.12/deploy/examples
 
@@ -105,7 +105,7 @@ oc apply -n istio-operator -f https://raw.githubusercontent.com/Maistra/istio-op
 
 == Verifying Installation
 
-The above instructions will create a new deployment within the istio-operator project, executing the operator responsible for managing the state of the Istio control plane through the custom resource.
+The above instructions will create a new deployment within the istio-operator project, executing the operator responsible for managing the state of the Istio control plane through the *ServiceMeshControlPlane*.
 
 To verify the operator is installed correctly, wait for the operator to reach the running state
 
@@ -128,7 +128,7 @@ Single-tenant mode is deprecated and will be removed in a future release. Runnin
 Maistra supports both multi-tenant installations and single-tenant installations.
 In a single-tenant installation, a single control plane is used for the entire cluster.
 In a multi-tenant installation, multiple control planes can be deployed in a cluster,
-with each control plane allowing access to only namespaces listed in a *ServiceMeshMemberRoll* resource belonging to that controlplane.
+with each control plane allowing access to only projects listed in a *ServiceMeshMemberRoll* resource belonging to that controlplane.
 
 {{% notice warning %}}
 Multi-tenant control plane installations cannot be used in conjunction with a cluster-wide control plane installation, i.e. all installations must be mult-tenant or a single, cluster-wide installation must be used.
@@ -145,11 +145,11 @@ Maistra supports a shorthand of *smcp* for *ServiceMeshControlPlane* and *smmr* 
 ==== Single-Tenant Installation
 
 
-In order to deploy the Istio Control Plane, we need to create a custom resource such as the one in the following example. This custom resource *must* be created in the *istio-system* namespace. For more information on the parameters and their configuration please see the link:../custom-install[custom installation documentation].
+Single tenant mode is disabled by default in TP12. To enable it, set multitenant to false in your *ServiceMeshControlPlane*. In order to deploy the Istio Control Plane, we need to create a *ServiceMeshControlPlane* such as the one in the following example. In our examples, we use the istio-system project. For more information on the parameters and their configuration please see the link:../custom-install[custom installation documentation].
 
 {{< snippet_markdown name="istio_installation_minimal" >}}
 
-Once you have modified the custom resource to suit your installation you can deploy the resource using the following command, substituting istio-system if appropriate.
+Once you have modified the *ServiceMeshControlPlane* to suit your installation you can deploy the resource using the following command, substituting istio-system if appropriate.
 
 ```
 oc new-project istio-system
@@ -157,21 +157,20 @@ oc create -n istio-system -f <name of file>
 ```
 
 ==== Multi-Tenant Installation
-To enable multitenancy, set the *multitenant: false* field in the control plane example
-to true, create a namespace to contain the control plane, and create the custom resource in that namespace.
+Multitenancy is enabled by default in TP12. To use it, create a project to contain the control plane, and create the *ServiceMeshControlPlane* in that project.
 
 ===== ServiceMeshMemberRoll
-The *ServiceMeshMemberRoll* resource configures which namespaces belong to a control plane.
-Only namespaces listed in the *ServiceMeshMemberRoll* will be affected by the control plane.
-Any number of namespaces can be added, but a namespace may not exist in more than one control plane.
-This resource must be created in the same namespace as the *ServicemeshControlPlane* resource
+The *ServiceMeshMemberRoll* resource configures which projects belong to a control plane.
+Only projects listed in the *ServiceMeshMemberRoll* will be affected by the control plane.
+Any number of projects can be added, but a project may not exist in more than one control plane.
+This resource must be created in the same project as the *ServicemeshControlPlane* resource
 and must be named default. An example resource can be seen below:
 
 {{< snippet_markdown name="istio_installation_smmr" >}}
 
 {{% notice note %}}
 The control plane processes the *ServiceMeshMemberRoll* when: the *ServiceMeshMemberRoll* is created, updated, or deleted,
-the *ServicemeshControlPlane* in the same namespace is created or updated, or a namespace in the *ServiceMeshMemberRoll* is created or deleted.
+the *ServicemeshControlPlane* in the same project is created or updated, or a project in the *ServiceMeshMemberRoll* is created or deleted.
 {{% /notice %}}
 
 == Uninstalling Maistra
@@ -181,12 +180,12 @@ the *ServicemeshControlPlane* in the same namespace is created or updated, or a 
 === Removing the Control Plane
 
 {{% notice note %}}
-Subsitute the proper namespace below if the controlplane was created in a namespace other than istio-system.
+Subsitute the proper project below if the controlplane was created in a project other than istio-system.
 {{% /notice %}}
 
 The following steps will remove Istio from an existing installation. It can be executed by any user with access to delete the CustomResource.
 
-To get the name of the installed custom resource, type:
+To get the name of the installed *ServiceMeshControlPlane*, type:
 ```
 oc get servicemeshcontrolplanes -n istio-system
 ```
@@ -226,12 +225,12 @@ oc delete project istio-operator
 
 == Upgrading from a Pre-Existing Installation
 
-To upgrade Istio, please <<remove_control_plane, remove the custom resource>>  and then create a new custom resource. The operator will upgrade appropriately.
+To upgrade Istio, please <<remove_control_plane, remove *ServiceMeshControlPlane*>>  and then create a one. The operator will upgrade appropriately.
 
 To upgrade the operator, please first <<remove_operator, remove the operator>> and then reinstall it. Note that Istio must be removed before the operator.
 
 {{% notice note %}}
-If the operator was removed before the custom resource, you can uninstall the control plane manually. Using the instructions below
+If the operator was removed before the *ServiceMeshControlPlane*, you can uninstall the control plane manually. Using the instructions below
 {{% /notice %}}
 
 ```
