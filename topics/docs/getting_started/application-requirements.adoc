@@ -19,11 +19,11 @@ The *privileged* SCC is required to ensure changes to the pod's networking confi
 
 To configure the correct permissions, it is necessary to identify the service accounts that are being used by your application's pods. For most applications this is the *default* service account however your Deployment/DeploymentConfig may override this by providing the *serviceAccountName* within the pod specification.
 
-For each identified service account you must update the cluster configuration so that they are granted access to the *anyuid* and *privileged* SCCs by executing the following commands from an account with cluster admin privileges. Replace *<service account>* and *<namespace>* with values specific to your application.
+For each identified service account you must update the cluster configuration so that they are granted access to the *anyuid* and *privileged* SCCs by executing the following commands from an account with cluster admin privileges. Replace *<service account>* and *<project>* with values specific to your application.
 
 ```
-oc adm policy add-scc-to-user anyuid -z <service account> -n <namespace>
-oc adm policy add-scc-to-user privileged -z <service account> -n <namespace>
+oc adm policy add-scc-to-user anyuid -z <service account> -n <project>
+oc adm policy add-scc-to-user privileged -z <service account> -n <project>
 ```
 
 == Configuring an Application to Utilize Automatic Sidecar Injection
@@ -55,5 +55,5 @@ spec:
 ----
 
 {{% notice info %}}
-You are *not* required to label a namespace to enable automatic sidecar injection unlike in upstream Istio Community releases. The webhook checks the configuration of pods deploying into all namespaces to see if they are opting in to injection by using the appropriate annotation.
+You are *not* required to label a project to enable automatic sidecar injection unlike in upstream Istio releases. The webhook checks the configuration of pods deploying into all projects in a mesh to see if they are opting in to injection by using the appropriate annotation.
 {{% /notice %}}
