@@ -65,6 +65,7 @@ spec:
     tracing:
       enabled: false
       jaeger:
+        tag: 1.13.1
         # simple, all-in-one strategy
         template: all-in-one
         # production strategy, utilizing elasticsearch

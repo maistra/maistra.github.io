@@ -38,5 +38,3 @@ spec:
         imagePullPolicy: IfNotPresent
 ----
 
-== Manual Sidecar Injection
-This release, based on the upstream Istio community release-1.1 branch, does not support manual injection. Currently, there is no compatible *istioctl* command available through the upstream project.
