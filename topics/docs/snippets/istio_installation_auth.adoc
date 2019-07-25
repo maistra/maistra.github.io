@@ -62,7 +62,7 @@ spec:
     kiali:
       # change to false to disable kiali
       enabled: true
-    
+
       # create a secret for accessing kiali dashboard with the following credentials
       # dashboard:
       #   user: admin
@@ -72,6 +72,7 @@ spec:
       # change to false to disable tracing (i.e. jaeger)
       enabled: true
       jaeger:
+        tag: 1.13.1
         # simple, all-in-one strategy
         template: all-in-one
         # production strategy, utilizing elasticsearch
