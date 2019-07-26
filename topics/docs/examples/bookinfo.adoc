@@ -17,8 +17,12 @@ Install Maistra by following the instructions link:/docs/getting_started/install
 ```
   $ oc new-project bookinfo
 ```
-
 === Update Security Context Constraints
+
+{{% notice info %}}
+These changes are not required if you are using CNI.
+{{% /notice %}}
+
 To add the service account used by Bookinfo application to anyuid and privileged SCCs in "bookinfo" project:
 
 ```
@@ -31,13 +35,13 @@ To add the service account used by Bookinfo application to anyuid and privileged
 . Deploy the Bookinfo application in the bookinfo project:
 +
 ```
-  $ oc -n bookinfo apply -f https://raw.githubusercontent.com/Maistra/bookinfo/maistra-0.12/bookinfo.yaml
+  $ oc -n bookinfo apply -f https://raw.githubusercontent.com/Maistra/bookinfo/maistra-1.0/bookinfo.yaml
 ```
 
 . Create the ingress gateway for Bookinfo:
 +
 ```
-  $ oc -n bookinfo apply -f https://raw.githubusercontent.com/Maistra/bookinfo/maistra-0.12/bookinfo-gateway.yaml
+  $ oc -n bookinfo apply -f https://raw.githubusercontent.com/Maistra/bookinfo/maistra-1.0/bookinfo-gateway.yaml
 ```
 
 . Set `GATEWAY_URL`:

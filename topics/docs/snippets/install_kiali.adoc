@@ -1,4 +1,4 @@
-As of the Maistra 0.12 release, Kiali now relies on the presence of the Kiali operator being installed before Maistra. To install the operator, execute the following as a privileged user:
+Kiali relies on the presence of the Kiali operator being installed before Maistra. To install the operator, execute the following as a privileged user:
 
 [source, bash]
 ----
