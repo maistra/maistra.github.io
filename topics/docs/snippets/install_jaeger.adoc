@@ -26,7 +26,9 @@ Error from server (Forbidden): project.project.openshift.io "openshift-logging" 
 
 === Installing the Jaeger Operator
 
-To install the Jaeger operator, execute the following commands:
+If available, the Jaeger operator (version 1.13.1) should be installed from the OperatorHub.
+
+Alternatively, to install the Jaeger operator manually, execute the following commands:
 
 [source, bash]
 ----
