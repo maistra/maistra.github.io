@@ -21,7 +21,7 @@ scoped RBAC, i.e. RoleBinding. As a result of this:
 * Every project in a control plane will have a maistra.io/member-of label added to it, whose value will be the project containing the control plane installation.
 
 == Known Issues
-The following are known issues in Maistra 0.12:
+The following are known issues:
 
 * *MeshPolicy* is still a cluster scoped resource and will apply to all control planes installed in OpenShift.  This may prevent the installation of multiple control planes or cause unknown behavior should one of the control planes be deleted.
 * The Jaeger agent runs as a DaemonSet, which effectively means tracing may only be enabled for a single *ServiceMeshControlPlane* instance.
