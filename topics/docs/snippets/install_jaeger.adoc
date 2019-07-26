@@ -2,7 +2,7 @@
 Jaeger relies on the presence of the Jaeger operator being installed before Maistra, and the Jaeger operator depends upon the
 Elasticsearch operator. To install these operators, execute the following as an privileged user.
 
-== Installing the Elasticsearch Operator
+=== Installing the Elasticsearch Operator
 
 If available, the Elasticsearch operator (version 4.1) should be installed from the OperatorHub.
 
@@ -24,7 +24,7 @@ NOTE: It is necessary to use `kubectl` for the creation of the openshift-logging
 Error from server (Forbidden): project.project.openshift.io "openshift-logging" is forbidden: cannot request a project starting with "openshift-"
 ...................................
 
-== Installing the Jaeger Operator
+=== Installing the Jaeger Operator
 
 If available, the Jaeger operator (version 1.13.1) should be installed from the OperatorHub.
 
