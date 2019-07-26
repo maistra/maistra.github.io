@@ -1,5 +1,6 @@
 
-=== Verifying the Istio Control Plane
+= Verifying the Istio Control Plane
+
 {{< snippet_markdown name="install_notices" >}}
 
 Execute the following command to see the status of the installation. In the example below, we assume that the servicemeshcontrolplane is named basic-install. If the name is different, replace basic-install with the proper value.
