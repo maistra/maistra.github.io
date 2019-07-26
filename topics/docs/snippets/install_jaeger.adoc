@@ -1,5 +1,5 @@
 
-As of the Maistra 0.12 release, Jaeger now relies on the presence of the Jaeger
+Jaeger relies on the presence of the Jaeger
 operator being installed before Maistra. To install the operator, execute the
 following as an privileged user.
 

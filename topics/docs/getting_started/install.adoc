@@ -17,7 +17,7 @@ This guide provides instructions for installing Maistra into an existing OpenShi
 - OpenShift Container Platform (OCP) 3.11 (https://docs.openshift.com/container-platform/3.11/install/prerequisites.html)
 - OpenShift Container Platform (OCP) 4.1
 - Origin (OKD) 3.11
-- NOTE: OpenShift Online and OpenShift Dedicated are not supported in the 0.12.0 Istio Tech Preview
+- NOTE: OpenShift Online and OpenShift Dedicated are not supported
 
 {{% notice info %}}
 To use this on an OCP 3.11 cluster, the Red Hat registry must be link:../add-redhat-registry[configured].
@@ -94,13 +94,13 @@ sysctl vm.max_map_count=262144
 
 The Maistra installation process introduces a Kubernetes operator to manage the installation, update, and removal of the Istio control plane within the istio-system project.
 
-The templates are available at: https://github.com/Maistra/istio-operator/tree/maistra-0.12/deploy/examples
+The templates are available at: https://github.com/Maistra/istio-operator/tree/maistra-1.0/deploy/examples
 
 The following steps will install the Maistra operator into an existing installation, these can be executed from any host with access to the cluster.  Please ensure you are logged in as a cluster admin before executing the following
 
 ```
 oc new-project istio-operator
-oc apply -n istio-operator -f https://raw.githubusercontent.com/Maistra/istio-operator/maistra-0.12/deploy/maistra-operator.yaml
+oc apply -n istio-operator -f https://raw.githubusercontent.com/Maistra/istio-operator/maistra-1.0/deploy/maistra-operator.yaml
 ```
 
 == Verifying Installation
@@ -145,7 +145,7 @@ Maistra supports a shorthand of *smcp* for *ServiceMeshControlPlane* and *smmr* 
 ==== Single-Tenant Installation
 
 
-Single tenant mode is disabled by default in TP12. To enable it, set multitenant to false in your *ServiceMeshControlPlane*. In order to deploy the Istio Control Plane, we need to create a *ServiceMeshControlPlane* such as the one in the following example. In our examples, we use the istio-system project. For more information on the parameters and their configuration please see the link:../custom-install[custom installation documentation].
+Single tenant mode is disabled by default. To enable it, set multitenant to false in your *ServiceMeshControlPlane*. In order to deploy the Istio Control Plane, we need to create a *ServiceMeshControlPlane* such as the one in the following example. In our examples, we use the istio-system project. For more information on the parameters and their configuration please see the link:../custom-install[custom installation documentation].
 
 {{< snippet_markdown name="istio_installation_minimal" >}}
 
@@ -157,7 +157,7 @@ oc create -n istio-system -f <name of file>
 ```
 
 ==== Multi-Tenant Installation
-Multitenancy is enabled by default in TP12. To use it, create a project to contain the control plane, and create the *ServiceMeshControlPlane* in that project.
+Multitenancy is enabled by default. To use it, create a project to contain the control plane, and create the *ServiceMeshControlPlane* in that project.
 
 ===== ServiceMeshMemberRoll
 The *ServiceMeshMemberRoll* resource configures which projects belong to a control plane.
@@ -214,7 +214,7 @@ The removal of the CustomResource will tell the Istio operator to begin uninstal
 In order to cleanly remove the operator execute the following:
 
 ```
-oc delete -n istio-operator -f https://raw.githubusercontent.com/Maistra/istio-operator/maistra-0.12/deploy/maistra-operator.yaml
+oc delete -n istio-operator -f https://raw.githubusercontent.com/Maistra/istio-operator/maistra-1.0/deploy/maistra-operator.yaml
 ```
 
 The *istio-operator* project can now be removed.
