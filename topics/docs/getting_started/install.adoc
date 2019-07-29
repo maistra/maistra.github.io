@@ -96,6 +96,14 @@ Kiali does not currently support the Jaeger operator.
 
 :leveloffset: -1
 
+=== Installing the Elasticsearch operator
+
+:leveloffset: +1
+
+{{< snippet_markdown name="install_elasticsearch" >}}
+
+:leveloffset: -1
+
 === Installing the Jaeger operator
 
 :leveloffset: +1
@@ -229,6 +237,14 @@ The removal of the CustomResource will tell the Istio operator to begin uninstal
 :leveloffset: +1
 
 {{< snippet_markdown name="remove_jaeger" >}}
+
+:leveloffset: -1
+
+=== Removing the Elasticsearch operator
+
+:leveloffset: +1
+
+{{< snippet_markdown name="remove_elasticsearch" >}}
 
 :leveloffset: -1
 
