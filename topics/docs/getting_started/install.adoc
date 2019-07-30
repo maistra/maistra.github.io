@@ -17,7 +17,7 @@ This guide provides instructions for installing Maistra into an existing OpenShi
 - OpenShift Container Platform (OCP) 3.11 (https://docs.openshift.com/container-platform/3.11/install/prerequisites.html)
 - OpenShift Container Platform (OCP) 4.1
 - Origin (OKD) 3.11
-- NOTE: OpenShift Online and OpenShift Dedicated are not supported
+- NOTE: Oc cluster up, OpenShift Online and OpenShift Dedicated do not work
 
 {{% notice info %}}
 To use this on an OCP 3.11 cluster, the Red Hat registry must be link:../add-redhat-registry[configured].
@@ -133,8 +133,6 @@ NAME                              READY     STATUS    RESTARTS   AGE
 istio-operator-5cd6bcf645-fvb57   1/1       Running   0          1h
 ```
 
-
-
 === Deploying the Istio Control Plane
 
 
@@ -189,6 +187,13 @@ and must be named default. An example resource can be seen below:
 The control plane processes the *ServiceMeshMemberRoll* when: the *ServiceMeshMemberRoll* is created, updated, or deleted,
 the *ServicemeshControlPlane* in the same project is created or updated, or a project in the *ServiceMeshMemberRoll* is created or deleted.
 {{% /notice %}}
+
+
+:leveloffset: +2
+
+{{< snippet_markdown name="verify_install" >}}
+
+:leveloffset: -2
 
 == Uninstalling Maistra
 
