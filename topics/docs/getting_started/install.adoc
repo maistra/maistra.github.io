@@ -240,6 +240,7 @@ In order to cleanly remove the operator execute the following:
 
 ```
 oc delete -n istio-operator -f https://raw.githubusercontent.com/Maistra/istio-operator/maistra-1.0/deploy/maistra-operator.yaml
+oc delete validatingwebhookconfiguration/istio-operator.servicemesh-resources.maistra.io
 ```
 
 The *istio-operator* project can now be removed.
