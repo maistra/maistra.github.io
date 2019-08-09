@@ -187,6 +187,76 @@ The control plane processes the *ServiceMeshMemberRoll* when: the *ServiceMeshMe
 the *ServicemeshControlPlane* in the same project is created or updated, or a project in the *ServiceMeshMemberRoll* is created or deleted.
 {{% /notice %}}
 
+
+:leveloffset: +2
+
+{{< snippet_markdown name="verify_install" >}}
+
+:leveloffset: -2
+
+== Control Plane Templates
+Templates follow the same syntax as a *ServiceMeshControlPlane* and allow users to inherit settings in a hierarchical fashion. The operator
+comes with a built-in `default` template containing the default settings for OpenShift Service Mesh or Maistra depending on the operator.
+To add custom templates, create a ConfigMap called `smcp-templates` in the `openshift-operators` project. This ConfigMap will contain a collection
+of templates to use. This ConfigMap must then be mounted in the operator at `/usr/local/share/istio-operator/templates/`.
+
+=== Creating the ConfigMap
+To create the ConfigMap, execute the following as a cluster administrator, substituting _templates-directory_ for a directory containing a 
+collection of *ServiceMeshControlPlane* files to use as templates. The name of the template will match the name of the file. Templates will
+inherit from other templates until a template is reached which has an empty template field. Using a name of _default_ will override the 
+default template when no template is specified in a controlplane. 
+
+
+For example, create a ServiceMeshControlPlane and instead of using `oc apply` to create it in the cluster, save it in a
+directory called _templates-directory_. Follow the instructions below to create and configure a ConfigMap using this new
+template. Additional templates can be created the same way.
+
+```
+ oc create configmap --from-file=templates-directory smcp-templates -n openshift-operators
+```
+Next, find and edit the operator deloyment in the operator cluster service version to 
+instruct the operator to use the smcp-templates ConfigMap. 
+
+```
+oc get clusterserviceversion -n openshift-operators | grep 'Service Mesh'
+maistra.v1.0.0            Red Hat OpenShift Service Mesh   1.0.0                Succeeded
+
+oc edit clusterserviceversion -n openshift-operators maistra.v1.0.0
+```
+
+In the editor, add a volume mount and volume as shown below.
+
+```
+ deployments:
+        - name: istio-operator
+          spec:
+          ...
+                    volumeMounts:
+                      - mountPath: /home/istio-operator/.kube/cache/discovery
+                        name: discovery-cache
+                      - name: smcp-templates
+                        mountPath: /usr/local/share/istio-operator/templates/
+          ...
+                volumes:
+                  - emptyDir:
+                      medium: Memory
+                    name: discovery-cache
+                  - name: smcp-templates
+                    configMap:
+                      name: smcp-templates
+```
+
+Templates can now be referenced by adding a *template* parameter to the *ServiceMeshControlPlane*.
+```
+apiVersion: maistra.io/v1
+kind: ServiceMeshControlPlane
+metadata:
+  name: minimal-install
+spec:
+  template: default
+```
+
+
 == Uninstalling Maistra
 
 [[remove_control_plane]]

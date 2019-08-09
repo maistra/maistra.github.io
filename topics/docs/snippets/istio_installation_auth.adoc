@@ -5,6 +5,7 @@ kind: ServiceMeshControlPlane
 metadata:
   name: auth-install
 spec:
+  template: default
   # NOTE, if you remove all children from an element, you should remove the
   # element too.  An empty element is interpreted as null and will override all
   # default values (i.e. no values will be specified for that element, not even
