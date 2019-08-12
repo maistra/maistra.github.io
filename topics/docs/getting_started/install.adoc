@@ -14,73 +14,11 @@ This guide provides instructions for installing Maistra into an existing OpenShi
 
 === Tested Configurations
 
-- OpenShift Container Platform (OCP) 3.11 (https://docs.openshift.com/container-platform/3.11/install/prerequisites.html)
+- link:https://docs.openshift.com/container-platform/3.11/install/prerequisites.html[OpenShift Container Platform (OCP) 3.11]/Origin (OKD) 3.11. The link:../add-redhat-registry[Red Hat registry] and link:../311-nodes[nodes] must be configured before installing.
 - OpenShift Container Platform (OCP) 4.1
-- Origin (OKD) 3.11
-- NOTE: Oc cluster up, OpenShift Online and OpenShift Dedicated do not work
+- NOTE: We no longer maintain a version of `oc cluster up` for use with Service Mesh and we do not yet run within an OpenShift Online or OpenShift Dedicated environment.
 
-{{% notice info %}}
-To use this on an OCP 3.11 cluster, the Red Hat registry must be link:../add-redhat-registry[configured].
-{{% /notice %}}
 
-== Preparing the Installation
-
-Before Istio can be installed into an existing installation it is necessary to make a number of changes to the master configuration and each of the schedulable nodes.  These changes will enable features required within Istio and also ensure Elasticsearch will function correctly.
-
-{{% notice info %}}
-The master/node updates discussed below are no longer necessary in OCP/OKD 4.1
-{{% /notice %}}
-
-=== Updating the Master
-
-If manual sidecar injection (i.e. kube-inject) is used this section may be skipped.
-
-To enable the automatic injection of the Istio sidecar we first need to modify the master configuration on each master to include support for webhooks and signing of Certificate Signing Requests (CSRs).
-Then each individual Deployment requiring automatic injection needs to be modified.
-
-First, make the following changes on each master within your installation.
-
-- Change to the directory containing the master configuration file (e.g. /etc/origin/master/master-config.yaml)
-- Create a file named master-config.patch with the following contents
-
-[source,yaml]
-----
-admissionConfig:
-  pluginConfig:
-    MutatingAdmissionWebhook:
-      configuration:
-        apiVersion: apiserver.config.k8s.io/v1alpha1
-        kubeConfigFile: /dev/null
-        kind: WebhookAdmission
-    ValidatingAdmissionWebhook:
-      configuration:
-        apiVersion: apiserver.config.k8s.io/v1alpha1
-        kubeConfigFile: /dev/null
-        kind: WebhookAdmission
-----
-
-- Within the same directory issue the following commands:
-
-```
-cp -p master-config.yaml master-config.yaml.prepatch
-oc ex config patch master-config.yaml.prepatch -p "$(cat master-config.patch)" > master-config.yaml
-master-restart api
-master-restart controllers
-```
-
-==== Updating the Nodes
-
-In order to run the Elasticsearch application it is necessary to make a change to the kernel configuration on each node, this change will be handled through the *sysctl* service.
-
-Make the following changes on each node within your installation
-
-- Create a file named */etc/sysctl.d/99-elasticsearch.conf* with the following contents: `vm.max_map_count = 262144`
-
-- Execute the following command:
-
-```
-sysctl vm.max_map_count=262144
-```
 
 == Installing Maistra
 === Installing the Kiali Operator
