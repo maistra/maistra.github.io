@@ -1,8 +1,9 @@
 
-Jaeger relies on the presence of the Jaeger
-operator being installed before Maistra. To install the operator, execute the
-following as an privileged user.
+Jaeger relies on the presence of the Jaeger operator being installed before Maistra.
 
+If available, the Jaeger operator (version 1.13.1) should be installed from the OperatorHub.
+
+Alternatively, to install the Jaeger operator manually, execute the following commands as a privileged user:
 
 [source, bash]
 ----

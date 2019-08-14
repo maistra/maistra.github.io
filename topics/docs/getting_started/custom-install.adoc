@@ -61,7 +61,7 @@ Maistra uses the istio-operator, a custom installer built around Istio's helm ch
 disablePolicyChecks must be false for 3scale to work.
 {{% /notice %}} | true
 |policyCheckFailOpen | This is a boolean indicating wehther to traffic should be allowed through hwen the mixer policy service cannot be reached.  | false
-|hub| The hub to use to pull the Istio images.|maistra/ if deployment_type is origin and openshift-istio-tech-preview/ if deployment_type is openshift
+|hub| The hub to use to pull the Istio images.|maistra/ if deployment_type is origin and openshift-service-mesh/ if deployment_type is openshift
 |tag| The tag to use to pull the Istio images.| 1.0.0
 |imagePullSecrets|If access to the registry providing the Istio images is secure, then an link:https://kubernetes.io/docs/concepts/containers/images/#specifying-imagepullsecrets-on-a-pod[imagePullSecret] can be listed here.|none
 |dnsRefreshRate| The number of seconds to wait to refresn the DNS cache in an Envoy instance. | 300s
@@ -269,8 +269,7 @@ These are the resources requested and may vary depending on your environment.
 |Parameter |Description |Default
 |hub
 |The hub that the Operator uses to pull Jaeger images
-|A valid image repo
-|`jaegertracing/` or `registry.redhat.io/openshift-istio-tech-preview/`
+|`jaegertracing/` or `registry.redhat.io/openshift-service-mesh/`
 |`tag`
 |The tag that the Operator uses to pull the Jaeger images
 |A valid container image tag.
@@ -301,6 +300,8 @@ disablePolicyChecks must be false for 3scale to work.
         PARAM_THREESCALE_ALLOW_INSECURE_CONN: false
         PARAM_THREESCALE_CLIENT_TIMEOUT_SECONDS: 10
         PARAM_THREESCALE_GRPC_CONN_MAX_SECONDS: 60
+        tag: v1.0.0
+        hub: quay.io/3scale
 ----
 
 [options="header"]
@@ -320,6 +321,7 @@ disablePolicyChecks must be false for 3scale to work.
 |PARAM_THREESCALE_ALLOW_INSECURE_CONN|This controls whether to allow certificate verification when calling 3scale APIs. Enabling is not recommended.| false
 |PARAM_THREESCALE_CLIENT_TIMEOUT_SECONDS|This sets the number of seconds to wait before terminating requests to 3scale System and the backend|10
 |PARAM_THREESCALE_GRPC_CONN_MAX_SECONDS|This sets the maximum amount of seconds (+/-10% jitter) a connection may exist before it will be closed|60
+|hub| The repository to use to pull 3Scale images. | `quay.io/3scale` or `registry.redhat.io/openshift-service-mesh`
 |=======
 
 
