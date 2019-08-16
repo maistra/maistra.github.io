@@ -1,14 +1,13 @@
 {{ partial "header" . }}
 
-<divS>
-    {{ $categories := (slice "Getting started" "Comparing Maistra and upstream Istio" "Examples" "Monitoring & Tracing" "Troubleshooting")}}
-    {{ $pages := .Paginate (where .Pages "Type" "document") }}
-    {{ $categorized := $pages.Pages.GroupByParam "category" }}
-    {{ range $element := $categories }}
-    {{ range where $categorized "Key" $element }}
-
+{{ if .Content }}
+<div style="text-align: left">
+    {{ .Content }}
+</div>
+{{ else }}
+<div>
     <header style="margin:0%">
-        <h3 style="margin: 1%">{{ .Key }}</h3>
+        <h3 style="margin: 1%">{{ .Title }}</h3>
     </header>
     <div class="row">
 
@@ -24,14 +23,11 @@
         {{ end }}
         {{ end }}
     </div>
-    {{ end }}
-    {{ end }}
-
-    </div>
+</div>
+{{ end }}
 
 
 
+<!-- Main -->
 
-    <!-- Main -->
-
-    {{ partial "footer" . }}
+{{ partial "footer" . }}

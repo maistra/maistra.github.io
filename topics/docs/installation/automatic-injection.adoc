@@ -3,6 +3,7 @@ title: "Installing the sidecar within your Service Mesh Applications"
 type: "document"
 category: "Getting started"
 description: "Service mesh provides features to applications through the istio-proxy sidecar within your application's pod, created through automatic injection of the configuration."
+weight: 3
 ---
 
 Upstream Istio community installations rely on the existence of a proxy sidecar within the application's pod to provide service mesh capabilities to the application. You can include the proxy sidecar by using a manual process before deployment. However, automatic injection ensures that your application contains the appropriate configuration for your service mesh at the time of its deployment.

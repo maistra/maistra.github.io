@@ -1,0 +1,41 @@
++++
+title = "Comparison with Istio"
+chapter = false
+weight = 2
++++
+
+
+== Comparing Maistra and Istio installations
+
+An installation of Maistra differs from an installation of Istio in multiple ways. The modifications to Maistra are sometimes necessary to resolve issues, provide additional features, or to handle differences when deploying on OpenShift or OKD.
+
+=== Automatic Injection
+
+Enabling automatic injection for your deployments differs between the upstream Istio releases and the Maistra releases.  The upstream sidecar injector will inject all deployments within specifically labelled namespaces whereas the Maistra version relies on opting in and the presence of the `sidecar.istio.io/inject` annotation.  For more information please refer to the link:{{< relref "automatic-injection.adoc" >}}[the automatic injection section].
+
+=== Istio CNI
+
+The CNI plugin is an alternative way to configure application pod networking. When enabled, it replaces init-container based network configuration and eliminates the need for a *NET_ADMIN* privileged container during application container setup.
+
+=== Multitenancy
+
+Whereas upstream Istio takes a single tenant approach, Maistra supports multiple independent control planes within the cluster. This is discussed in more detail during link:../installation/[installation]
+
+=== Installation
+
+Maistra uses an operator to handle control plane installation and lifecycle management. This operator is configured using a *ServiceMeshControlPlane* and a *ServiceMeshMemberRoll* resource.
+
+=== Cluster Scoped Resources
+
+Upstream Istio has two cluster scoped resources that it relies on. The MeshPolicy and the ClusterRbacConfig. These are not compatible with a multitenant cluster and have been replaced as described below.
+
+* ServiceMeshPolicy replaces MeshPolicy for configuration of control-plane-wide authentication policies. This must be created in the same namespace as the control plane.
+* ClusterRbacConfig replaces ServicemeshRbacConfig for configuration of control-plane-wide role based access control. This must be created in the same namespace as the control plane.
+
+=== Component Modifications
+
+* Godebug has been removed from all templates
+* A *maistra-version* label has been added to all resources.
+* The *istio-multi* ServiceAccount and ClusterRoleBinding have been removed, as well as the *istio-reader* ClusterRole.
+* All Ingress resources have been converted to OpenShift Route resources.
+* Grafana, Tracing, and Kiali are enabled by default and exposed via OpenShift routes.

@@ -9,7 +9,7 @@ weight: 4
 
 {{% notice info %}}
 This document assumes that you installed Kiali as part of your Istio configuration. If not, please
-update your link:{{< ref "custom-install.adoc" >}}[operator configuration] to include Kiali before continuing.
+update your link:{{< ref "installation-options.adoc" >}}[operator configuration] to include Kiali before continuing.
 {{% /notice %}}
 
 == What is Kiali

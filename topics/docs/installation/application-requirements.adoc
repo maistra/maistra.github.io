@@ -3,6 +3,8 @@ title: "Requirements for Deploying Service Mesh Applications"
 type: "document"
 category: "Getting started"
 description: "Understanding the Requirements for Deploying Service Mesh Applications into Maistra"
+weight: 4
+hidden: true
 ---
 
 When you deploy an application into Service Mesh, there are many differences between the behavior of an upstream Istio Community installation and a Maistra installation.
@@ -25,35 +27,3 @@ For each identified service account you must update the cluster configuration so
 oc adm policy add-scc-to-user anyuid -z <service account> -n <project>
 oc adm policy add-scc-to-user privileged -z <service account> -n <project>
 ```
-
-== Configuring an Application to Utilize Automatic Sidecar Injection
-
-When deploying an application into the Service Mesh you must opt in to injection by specifying the *sidecar.istio.io/inject* annotation with a value of *true*. The decision to opt in is required to ensure the sidecar injection does not interfere with other OpenShift features such as builder pods used by numerous frameworks within the OpenShift ecosystem.
-
-The following example shows the annotation used within the sleep test application. The additional sidecar containers are included when this configuration is deployed within an OpenShift Service Mesh installation.
-
-[source,yaml]
-----
-apiVersion: extensions/v1beta1
-kind: Deployment
-metadata:
-  name: sleep
-spec:
-  replicas: 1
-  template:
-    metadata:
-      annotations:
-        sidecar.istio.io/inject: "true"
-      labels:
-        app: sleep
-    spec:
-      containers:
-      - name: sleep
-        image: tutum/curl
-        command: ["/bin/sleep","infinity"]
-        imagePullPolicy: IfNotPresent
-----
-
-{{% notice info %}}
-You are *not* required to label a project to enable automatic sidecar injection unlike in upstream Istio releases. The webhook checks the configuration of pods deploying into all projects in a mesh to see if they are opting in to injection by using the appropriate annotation.
-{{% /notice %}}
