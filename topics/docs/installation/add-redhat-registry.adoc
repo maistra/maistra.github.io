@@ -4,6 +4,7 @@ title: "Configuring the Red Hat Registry"
 type: "document"
 category: "Getting started"
 description: "This document describes how to configure your OCP cluster to work with the Red Hat registry."
+weight: 5
 ---
 
 

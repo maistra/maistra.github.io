@@ -3,6 +3,7 @@ title: "Requirements for Deploying Service Mesh Applications"
 type: "document"
 category: "Getting started"
 description: "Understanding the Requirements for Deploying Service Mesh Applications into Maistra"
+weight: 4
 ---
 
 When you deploy an application into Service Mesh, there are many differences between the behavior of an upstream Istio Community installation and a Maistra installation.
