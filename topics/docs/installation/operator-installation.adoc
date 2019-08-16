@@ -1,0 +1,63 @@
+---
+title: "Installing the Operators"
+type: "document"
+category: "Getting started"
+description: "Follow these instructions to install the Jaeger, Kiali, and Maistra operators required for an Istio installation."
+weight: 1
+---
+
+Maistra requires the ElasticSearch, Jaeger, and Kiali operators to be installed before Maistra operator itself can be installed. Please reference link:https://docs.openshift.com/container-platform/4.1/applications/operators/olm-adding-operators-to-cluster.html[documentation on adding operators to a cluster] for detailed instructions on how to install operators using OLM.
+
+== Installing the Maistra Operator
+:leveloffset: +1
+
+Open the OpenShift web console in a Web browser and navigate to *Catalog* -> *OperatorHub*. Select the community Maistra Operator to display information about the Operator. Click *Install*. On the *Create Operator Subscription* page, select *All namespaces on the cluster (default)*. This installs the Operator in the default `openshift-operators` project and is made available to all projects in the cluster. Select either *Automatic* or *Manual* approval strategy. Click *Subscribe*.
+
+:leveloffset: -1
+
+=== Verifying Installation
+
+The above instructions will create a new deployment within the istio-operator project, executing the operator responsible for managing the state of the Istio control plane through the *ServiceMeshControlPlane*.
+
+To verify the operator is installed correctly, wait for the operator to reach the running state
+
+```
+oc get pods -n openshift-operators -l name=istio-operator
+
+NAME                              READY     STATUS    RESTARTS   AGE
+istio-operator-5cd6bcf645-fvb57   1/1       Running   0          1h
+```
+
+=== Removing the Operator
+
+==== Removing the Maistra Operator
+
+:leveloffset: +1
+
+Open the OpenShift web console in a Web browser and navigate to *Catalog* -> *Operator Management*. Select the *openshift-operators* project from the Projects drop-down. Locate the *Maistra* Operator and click *View Subscription*. Click the *More Operations* menu and select *Remove Subscription*. 
+
+:leveloffset: -1
+
+==== Removing the Kiali Operator
+
+:leveloffset: +1
+
+Open the OpenShift web console in a Web browser and navigate to *Catalog* -> *Operator Management*. Select the *openshift-operators* project from the Projects drop-down. Locate the *Kiali* Operator and click *View Subscription*. Click the *More Operations* menu and select *Remove Subscription*.      
+
+:leveloffset: -1
+
+==== Removing the Jaeger Operator
+
+:leveloffset: +1
+
+Open the OpenShift web console in a Web browser and navigate to *Catalog* -> *Operator Management*. Select the *openshift-operators* project from the Projects drop-down. Locate the *Jaeger* Operator and click *View Subscription*. Click the *More Operations* menu and select *Remove Subscription*.      
+
+:leveloffset: -1
+
+==== Removing the Elasticsearch Operator
+
+:leveloffset: +1
+
+Open the OpenShift web console in a Web browser and navigate to *Catalog* -> *Operator Management*. Select the *openshift-operators* project from the Projects drop-down. Locate the *Elasticsearch* Operator and click *View Subscription*. Click the *More Operations* menu and select *Remove Subscription*.      
+
+:leveloffset: -1
