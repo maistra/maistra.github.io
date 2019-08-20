@@ -76,55 +76,18 @@ NAME                              READY     STATUS    RESTARTS   AGE
 istio-operator-5cd6bcf645-fvb57   1/1       Running   0          1h
 ```
 
-=== Deploying the Istio Control Plane
+== Deploying the Istio Control Plane
+Maistra supports the deployment of multiple Istio control planes using *ServiceMeshMemberRoll*
+and *ServiceMeshControlPlane* resources. The *ServiceMeshMemberRoll* lists the projects belonging
+to the control plane while the *ServiceMeshControlPlane* lists the configuration to use during installation.
+*ServiceMeshControlPlane* can be shortened to `smcp` and *ServiceMeshMemberRoll* can be shortened to `smmr`.
 
-
-{{% notice warning %}}
-Single-tenant mode is deprecated and will be removed in a future release. Running in single tenant mode may cause issues with OpenShift upgrades and restarts.
-{{% /notice %}}
-
-Maistra supports both multi-tenant installations and single-tenant installations.
-In a single-tenant installation, a single control plane is used for the entire cluster.
-In a multi-tenant installation, multiple control planes can be deployed in a cluster,
-with each control plane allowing access to only projects listed in a *ServiceMeshMemberRoll* resource belonging to that controlplane.
-
-{{% notice warning %}}
-Multi-tenant control plane installations cannot be used in conjunction with a cluster-wide control plane installation, i.e. all installations must be mult-tenant or a single, cluster-wide installation must be used.
-{{% /notice %}}
-
-{{% notice warning %}}
-The proxy-init image must be changed to maistra/proxy-init-centos7 if running on a RHEL 7 host.  More details can be found in the link:../custom-install[custom installation documentation]
-{{% /notice %}}
-
-{{% notice tip %}}
-Maistra supports a shorthand of *smcp* for *ServiceMeshControlPlane* and *smmr* for *ServiceMeshMemberRoll*.
-{{% /notice %}}
-
-==== Single-Tenant Installation
-
-
-Single tenant mode is disabled by default. To enable it, set multitenant to false in your *ServiceMeshControlPlane*. In order to deploy the Istio Control Plane, we need to create a *ServiceMeshControlPlane* such as the one in the following example. In our examples, we use the istio-system project. For more information on the parameters and their configuration please see the link:../custom-install[custom installation documentation].
-
-{{< snippet_markdown name="istio_installation_minimal" >}}
-
-Once you have modified the *ServiceMeshControlPlane* to suit your installation you can deploy the resource using the following command, substituting istio-system if appropriate.
-
-```
-oc new-project istio-system
-oc create -n istio-system -f <name of file>
-```
-
-==== Multi-Tenant Installation
-Multitenancy is enabled by default. To use it, create a project to contain the control plane, and create the *ServiceMeshControlPlane* in that project.
-
-===== ServiceMeshMemberRoll
+=== ServiceMeshMemberRoll
 The *ServiceMeshMemberRoll* resource configures which projects belong to a control plane.
 Only projects listed in the *ServiceMeshMemberRoll* will be affected by the control plane.
 Any number of projects can be added, but a project may not exist in more than one control plane.
 This resource must be created in the same project as the *ServicemeshControlPlane* resource
 and must be named default. An example resource can be seen below:
-
-{{< snippet_markdown name="istio_installation_smmr" >}}
 
 {{% notice note %}}
 The control plane processes the *ServiceMeshMemberRoll* when: the *ServiceMeshMemberRoll* is created, updated, or deleted,
@@ -132,6 +95,24 @@ the *ServicemeshControlPlane* in the same project is created or updated, or a pr
 {{% /notice %}}
 
 
+{{< snippet_markdown name="istio_installation_smmr" >}}
+
+=== ServiceMeshControlPlane
+In order to deploy the Istio Control Plane, create a *ServiceMeshControlPlane* such as the one in the following example.
+The example below uses `istio-system` as the control plane project. For more information on the parameters and their
+configuration please see the link:../custom-install[custom installation documentation].
+
+{{< snippet_markdown name="istio_installation_minimal" >}}
+
+Once you have modified the *ServiceMeshControlPlane* to suit your installation you can deploy the resource using the following command,
+substituting istio-system if appropriate.
+
+```
+oc new-project istio-system
+oc create -n istio-system -f <name of file>
+```
+
+=== Verifying Installation
 :leveloffset: +2
 
 {{< snippet_markdown name="verify_install" >}}
@@ -145,10 +126,10 @@ To add custom templates, create a ConfigMap called `smcp-templates` in the `open
 of templates to use. This ConfigMap must then be mounted in the operator at `/usr/local/share/istio-operator/templates/`.
 
 === Creating the ConfigMap
-To create the ConfigMap, execute the following as a cluster administrator, substituting _templates-directory_ for a directory containing a 
+To create the ConfigMap, execute the following as a cluster administrator, substituting _templates-directory_ for a directory containing a
 collection of *ServiceMeshControlPlane* files to use as templates. The name of the template will match the name of the file. Templates will
-inherit from other templates until a template is reached which has an empty template field. Using a name of _default_ will override the 
-default template when no template is specified in a controlplane. 
+inherit from other templates until a template is reached which has an empty template field. Using a name of _default_ will override the
+default template when no template is specified in a controlplane.
 
 
 For example, create a ServiceMeshControlPlane and instead of using `oc apply` to create it in the cluster, save it in a
@@ -158,8 +139,8 @@ template. Additional templates can be created the same way.
 ```
  oc create configmap --from-file=templates-directory smcp-templates -n openshift-operators
 ```
-Next, find and edit the operator deloyment in the operator cluster service version to 
-instruct the operator to use the smcp-templates ConfigMap. 
+Next, find and edit the operator deloyment in the operator cluster service version to
+instruct the operator to use the smcp-templates ConfigMap.
 
 ```
 oc get clusterserviceversion -n openshift-operators | grep 'Service Mesh'
