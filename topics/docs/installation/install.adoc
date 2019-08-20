@@ -9,58 +9,24 @@ weight: 1
 :toc:
 
 == Istio Installation Guide
-
 This guide provides instructions for installing Maistra into an existing OpenShift Container Platform (OCP) or Origin (OKD) cluster and for creating a standalone, all-in-one origin cluster with Istio
 
 === Tested Configurations
-
 - link:https://docs.openshift.com/container-platform/3.11/install/prerequisites.html[OpenShift Container Platform (OCP) 3.11]/Origin (OKD) 3.11. The link:../add-redhat-registry[Red Hat registry] and link:../311-nodes[nodes] must be configured before installing.
 - OpenShift Container Platform (OCP) 4.1
 - NOTE: We no longer maintain a version of `oc cluster up` for use with Service Mesh and we do not yet run within an OpenShift Online or OpenShift Dedicated environment.
 
-
-
 == Installing Maistra
+Maistra requires the ElasticSearch, Jaeger, and Kiali operators to be installed before Maistra operator itself can be installed. Please reference link:https://docs.openshift.com/container-platform/4.1/applications/operators/olm-adding-operators-to-cluster.html[documentation on adding operators to a cluster] for detailed instructions on how to install operators using OLM.
 
-=== Installing the Kiali Operator
-
+=== Installing the Maistra Operator
 :leveloffset: +1
 
-{{< snippet_markdown name="install_kiali" >}}
+Open the OpenShift web console in a Web browser and navigate to *Catalog* -> *OperatorHub*. Select the community Maistra Operator to display information about the Operator. Click *Install*. On the *Create Operator Subscription* page, select *All namespaces on the cluster (default)*. This installs the Operator in the default `openshift-operators` project and is made available to all projects in the cluster. Select either *Automatic* or *Manual* approval strategy. Click *Subscribe*.
 
 :leveloffset: -1
 
-=== Installing the Elasticsearch operator
-
-:leveloffset: +1
-
-{{< snippet_markdown name="install_elasticsearch" >}}
-
-:leveloffset: -1
-
-=== Installing the Jaeger operator
-
-:leveloffset: +1
-
-{{< snippet_markdown name="install_jaeger" >}}
-
-:leveloffset: -1
-
-=== Installing the Istio Operator
-
-The Maistra installation process introduces a Kubernetes operator to manage the installation, update, and removal of the Istio control plane within the istio-system project.
-
-The templates are available at: https://github.com/Maistra/istio-operator/tree/maistra-1.0/deploy/examples
-
-The following steps will install the Maistra operator into an existing installation, these can be executed from any host with access to the cluster.  Please ensure you are logged in as a cluster admin before executing the following
-
-```
-oc new-project istio-operator
-oc apply -n istio-operator -f https://raw.githubusercontent.com/Maistra/istio-operator/maistra-1.0/deploy/maistra-operator.yaml
-```
-
-=== Verifying Installation
-
+== Verifying Installation
 The above instructions will create a new deployment within the istio-operator project, executing the operator responsible for managing the state of the Istio control plane through the *ServiceMeshControlPlane*.
 
 To verify the operator is installed correctly, wait for the operator to reach the running state
@@ -107,6 +73,18 @@ substituting istio-system if appropriate.
 oc new-project istio-system
 oc create -n istio-system -f <name of file>
 ```
+
+== Deploying the Istio Control Plane using Catalog Web UI
+:leveloffset: +1
+Openshift web console can be used to create control plane and member roll custom resources. Please reference link:https://docs.openshift.com/container-platform/4.1/applications/operators/olm-creating-apps-from-installed-operators.html[documentation on creating applications from installed operators] for more details.
+
+Open the OpenShift web console in a Web browser. Create a new project. This example uses a project called `istio-system`. Navigate to *Catalogs* -> *Installed Operators*. Click *Copied* and click the Maistra Operator to view more actions. Under *Provided APIs* you will see that the Operator creates two resource types:
+* An Istio Service Mesh Control Plane
+* An Istio Service Mesh Member Roll
+
+In the *Istio Service Mesh Control Plane* box click *Create New*. This screen allows you to modify the minimal template of a `ServiceMeshControlPlane` object, such as the cluster size. Click *Create* to finalize. Create a `ServiceMeshMemberRoll` by choosing the *Istio Service Mesh Member Roll* box and repeating these actions. 
+
+:leveloffset: -1
 
 === Verifying Installation
 :leveloffset: +2
@@ -177,7 +155,6 @@ spec:
   template: default
 ```
 
-
 == Uninstalling Maistra
 
 [[remove_control_plane]]
@@ -203,47 +180,50 @@ oc delete project istio-system
 
 The removal of the CustomResource will tell the Istio operator to begin uninstalling everything it installed.
 
+=== Removing the Control Plane using Catalog Web UI
+
+:leveloffset: +1
+
+Open the OpenShift web console in a Web browser and navigate to *Catalog* -> *Installed Operators*. Choose the `istio-system` from the Project menu. Click the menu on the `ServiceMeshMemberRoll` row. Click *Details* -> *Delete Service Mesh Member Roll*. Click the menu on the `ServiceMeshControlPlane` row. Click *Details* -> *Delete Service Mesh Control Plane*.
+
+:leveloffset: -1
+
+
 [[remove_operator]]
 
 === Removing the Operator
+
+=== Removing the Maistra Operator
+
+:leveloffset: +1
+
+Open the OpenShift web console in a Web browser and navigate to *Catalog* -> *Operator Management*. Select the *openshift-operators* project from the Projects drop-down. Locate the *Maistra* Operator and click *View Subscription*. Click the *More Operations* menu and select *Remove Subscription*. 
+
+:leveloffset: -1
 
 === Removing the Kiali Operator
 
 :leveloffset: +1
 
-{{< snippet_markdown name="remove_kiali" >}}
+Open the OpenShift web console in a Web browser and navigate to *Catalog* -> *Operator Management*. Select the *openshift-operators* project from the Projects drop-down. Locate the *Kiali* Operator and click *View Subscription*. Click the *More Operations* menu and select *Remove Subscription*.      
 
 :leveloffset: -1
 
-=== Removing the Jaeger operator
+=== Removing the Jaeger Operator
 
 :leveloffset: +1
 
-{{< snippet_markdown name="remove_jaeger" >}}
+Open the OpenShift web console in a Web browser and navigate to *Catalog* -> *Operator Management*. Select the *openshift-operators* project from the Projects drop-down. Locate the *Jaeger* Operator and click *View Subscription*. Click the *More Operations* menu and select *Remove Subscription*.      
 
 :leveloffset: -1
 
-=== Removing the Elasticsearch operator
+=== Removing the Elasticsearch Operator
 
 :leveloffset: +1
 
-{{< snippet_markdown name="remove_elasticsearch" >}}
+Open the OpenShift web console in a Web browser and navigate to *Catalog* -> *Operator Management*. Select the *openshift-operators* project from the Projects drop-down. Locate the *Elasticsearch* Operator and click *View Subscription*. Click the *More Operations* menu and select *Remove Subscription*.      
 
 :leveloffset: -1
-
-==== Removing the Maistra Operator
-In order to cleanly remove the operator execute the following:
-
-```
-oc delete -n istio-operator -f https://raw.githubusercontent.com/Maistra/istio-operator/maistra-1.0/deploy/maistra-operator.yaml
-oc delete validatingwebhookconfiguration/istio-operator.servicemesh-resources.maistra.io
-```
-
-The *istio-operator* project can now be removed.
-
-```
-oc delete project istio-operator
-```
 
 == Upgrading from a Pre-Existing Installation
 
