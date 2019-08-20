@@ -12,42 +12,55 @@ The following steps describe the deployment of Bookinfo application on Maistra r
 === Before you Begin
 Install Maistra by following the instructions link:/docs/installation/install[here].
 
+=== Create the Bookinfo project
+Maistra takes a Multi-Tenancy approach, meaning that you can have more than one Istio control plane in your OpenShift cluster. These instructions assume the control plane is installed in the `istio-system` project and this example uses `bookinfo` as the default project. However, either of these can be customized as appropriate below:
 
-=== Create Bookinfo project
+
+```sh
+  $ export CONTROL_PLANE_NS=istio-system
+  $ export BOOKINFO_NS=bookinfo
+  $ oc new-project ${BOOKINFO_NS}
 ```
-  $ oc new-project bookinfo
-```
-=== Update Security Context Constraints
 
 {{% notice info %}}
-These changes are not required if you are using CNI.
+In OpenShift 3, Security Context Constraints (SCC) must be configured for the Bookinfo application. Additional information can be found link:../../getting_started/application-requirements/[here].
 {{% /notice %}}
 
-To add the service account used by Bookinfo application to anyuid and privileged SCCs in "bookinfo" project:
+=== Add Bookinfo project to the Service Mesh
+To add the bookinfo project to the control plane SMMR:
 
+```sh
+  $ oc -n ${CONTROL_PLANE_NS} patch --type='json' smmr default -p '[{"op": "add", "path": "/spec/members", "value":["'"${BOOKINFO_NS}"'"]}]'
 ```
-  $ oc adm policy add-scc-to-user anyuid -z default -n bookinfo
-  $ oc adm policy add-scc-to-user privileged -z default -n bookinfo
+
+The command above adds the Bookinfo project to the control plane's `ServiceMeshMemberRoll (SMMR)` object as an one-line shell command. If you prefer, you can edit it interactively with the help of a text editor by running the command below and adding the Bookinfo project into the `spec.members` list:
+
+```sh
+  $ oc -n ${CONTROL_PLANE_NS} edit smmr default
 ```
+
+{{% notice tip %}}
+At this point Bookinfo project is part of the Service Mesh, meaning that when pods (link:../../getting_started/automatic-injection/[with the proper annotation], which is the case of our Bookinfo deployment below) are deployed in Bookinfo project they will get the sidecar attached and thus will become part of the mesh.
+{{% /notice %}}
 
 === Deploy Bookinfo Application
 
 . Deploy the Bookinfo application in the bookinfo project:
 +
-```
-  $ oc -n bookinfo apply -f https://raw.githubusercontent.com/Maistra/bookinfo/maistra-1.0/bookinfo.yaml
+```sh
+  $ oc -n ${BOOKINFO_NS} apply -f https://raw.githubusercontent.com/Maistra/bookinfo/maistra-1.0/bookinfo.yaml
 ```
 
 . Create the ingress gateway for Bookinfo:
 +
-```
-  $ oc -n bookinfo apply -f https://raw.githubusercontent.com/Maistra/bookinfo/maistra-1.0/bookinfo-gateway.yaml
+```sh
+  $ oc -n ${BOOKINFO_NS} apply -f https://raw.githubusercontent.com/Maistra/bookinfo/maistra-1.0/bookinfo-gateway.yaml
 ```
 
 . Set `GATEWAY_URL`:
 +
-```
-  $ export GATEWAY_URL=$(oc -n istio-system get route istio-ingressgateway -o jsonpath='{.spec.host}')
+```sh
+  $ export GATEWAY_URL=$(oc -n ${CONTROL_PLANE_NS} get route istio-ingressgateway -o jsonpath='{.spec.host}')
 ```
 
 
@@ -55,34 +68,39 @@ To add the service account used by Bookinfo application to anyuid and privileged
 
 To confirm that Bookinfo has been successfully deployed:
 
-```
+```sh
   $ curl -o /dev/null -s -w "%{http_code}\n" http://${GATEWAY_URL}/productpage
 ```
 
 You should get `200` as a response. Alternatively, you can open it in your browser:
-```
+```sh
 xdg-open http://${GATEWAY_URL}/productpage
 ```
 
 === Add default destination rules
  . If you did *not* enable mutual TLS:
 +
-```
-  $ oc -n bookinfo apply -f https://raw.githubusercontent.com/istio/istio/release-1.1/samples/bookinfo/networking/destination-rule-all.yaml
+```sh
+  $ oc -n ${BOOKINFO_NS} apply -f https://raw.githubusercontent.com/istio/istio/release-1.1/samples/bookinfo/networking/destination-rule-all.yaml
 ```
  . If you *did* enable mutual TLS:
 +
-```
-  $ oc -n bookinfo apply -f https://raw.githubusercontent.com/istio/istio/release-1.1/samples/bookinfo/networking/destination-rule-all-mtls.yaml
+```sh
+  $ oc -n ${BOOKINFO_NS} apply -f https://raw.githubusercontent.com/istio/istio/release-1.1/samples/bookinfo/networking/destination-rule-all-mtls.yaml
 ```
  . To list all available destination rules:
 +
-```
-  $ oc -n bookinfo get destinationrules -o yaml
+```sh
+  $ oc -n ${BOOKINFO_NS} get destinationrules -o yaml
 ```
 
 === Cleanup
 Delete the bookinfo project - this will wipe everything we created above:
+```sh
+  $ oc delete project ${BOOKINFO_NS}
 ```
-  $ oc delete project bookinfo
+
+Remove the bookinfo project from the control plane's `SMMR` object. Run the following command and remove the bookinfo entry from the `spec.members` list.
+```sh
+  $ oc -n ${CONTROL_PLANE_NS} edit smmr default
 ```
