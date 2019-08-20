@@ -220,28 +220,35 @@ These are the resources requested and may vary depending on your environment.
 ----
    kiali:
       enabled: true
-      hub: kiali
-      tag: v1.0.0
+      hub: docker.io/kiali
+      image: kiali
+      tag: v1.0.5
       dashboard:
-        user: admin
-        passphrase: admin
+        viewOnlyMode: true
 ----
 
 [options="header"]
 |=======
 |Parameter |Description |Default
 |enabled|This enables or disables Kiali in the environment. | true
-|hub|The hub to use to pull the Kiali images.|kiali/ if deployment_type is origin and openshift-service-mesh/ if deployment_type is openshift
-|tag| The tag to use to pull the Kiali images | 1.0.0
+|hub|The hub to use to pull the Kiali images.| Delegates to Kiali operator
+|image|The name of the Kiali image| Delegates to Kiali operator
+|tag| The tag to use to pull the Kiali images | Delegates to Kiali operator
 |=======
 
-### dashboard
+{{% notice tip %}}
+If you intend to use a custom image, you must override all three values of hub, image and tag above.
+{{% /notice %}}
+
+### istio->kiali->dashboard
 
 [options="header"]
 |=======
 |Parameter |Description |Default
-|user|This is the username used to access the Kiali console. Note that this is not related to any account on OpenShift. | true
-|passphrase|This is the username used to access the Kiali console. Note that this is not related to any account on OpenShift| none
+|secretName|Name of the secret containing the credentials to access the Kiali dashboard. If not provided, the OpenShift authentication strategy will be used | none
+|viewOnlyMode|Whether the Kiali dashboard should be in a view-only mode, not allowing any changes to the Service Mesh to be made | false
+|grafanaURL|Sets the URL for Grafana | none
+|jaegerURL|Sets the URL for Jaeger | none
 |=======
 
 ## [[Tracing]] istio->tracing
