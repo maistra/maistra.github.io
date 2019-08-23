@@ -245,7 +245,6 @@ If you intend to use a custom image, you must override all three values of hub, 
 [options="header"]
 |=======
 |Parameter |Description |Default
-|secretName|Name of the secret containing the credentials to access the Kiali dashboard. If not provided, the OpenShift authentication strategy will be used | none
 |viewOnlyMode|Whether the Kiali dashboard should be in a view-only mode, not allowing any changes to the Service Mesh to be made | false
 |grafanaURL|Sets the URL for Grafana | none
 |jaegerURL|Sets the URL for Jaeger | none
