@@ -1,11 +1,11 @@
 {{ $name := .Get "name" }}
 
 {{ $pattern := printf "%s*" $name }}
-{{ $path := path.Join "docs/snippets/" $name }}
+{{ $path := path.Join "/snippets/" $name }}
 {{ $page := $.Page.Site.GetPage "page" $path }}
 
 {{if $page }}
-	{{ $page.Content | safeHTML }}
+{{ $page.Content | safeHTML }}
 {{ else }}
-	{{ errorf "Could not find %s" $pattern }}
+{{ errorf "Could not find %s" $pattern }}
 {{ end }}

@@ -10,7 +10,7 @@ description: "Bookinfo is an example application that shows you how to set up an
 The following steps describe the deployment of Bookinfo application on Maistra running on Openshift.
 
 === Before you Begin
-Install Maistra by following the instructions link:/docs/getting_started/install[here].
+Install Maistra by following the instructions link:/docs/installation/install[here].
 
 
 === Create Bookinfo project

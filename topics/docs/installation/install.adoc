@@ -22,10 +22,6 @@ This guide provides instructions for installing Maistra into an existing OpenShi
 
 == Installing Maistra
 
-{{% notice tip %}}
-Kiali does not currently support the Jaeger operator.
-{{% /notice %}}
-
 === Installing the Kiali Operator
 
 :leveloffset: +1
@@ -63,7 +59,7 @@ oc new-project istio-operator
 oc apply -n istio-operator -f https://raw.githubusercontent.com/Maistra/istio-operator/maistra-1.0/deploy/maistra-operator.yaml
 ```
 
-== Verifying Installation
+=== Verifying Installation
 
 The above instructions will create a new deployment within the istio-operator project, executing the operator responsible for managing the state of the Istio control plane through the *ServiceMeshControlPlane*.
 

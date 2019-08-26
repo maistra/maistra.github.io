@@ -13,14 +13,17 @@
 
   <div class="highlightable">
     <ul class="topics">
-      {{ $sections := where .Site.Home.Sections "Section" "docs" }}
+      {{/* Get the pages below /docs for the navigation instead of starting at the root */}}
+      {{ $docsPage := .Site.GetPage "/docs" }}
+      {{ $sections := $docsPage.Sections }}
+
       {{if eq .Site.Params.ordersectionsby "title"}}
-      {{range $sections.ByTitle}}
-      {{ template "section-tree-nav" dict "sect" . "currentnode" $currentNode "showvisitedlinks" $showvisitedlinks}}
+      {{range $section := $sections.ByTitle}}
+      {{ template "section-tree-nav" dict "sect" $section "currentnode" $currentNode "showvisitedlinks" $showvisitedlinks}}
       {{end}}
       {{else}}
-      {{range $sections.ByWeight}}
-      {{ template "section-tree-nav" dict "sect" . "currentnode" $currentNode "showvisitedlinks" $showvisitedlinks}}
+      {{range $section := $sections.ByWeight}}
+      {{ template "section-tree-nav" dict "sect" $section "currentnode" $currentNode "showvisitedlinks" $showvisitedlinks}}
       {{end}}
       {{end}}
     </ul>
@@ -100,7 +103,7 @@
 {{with .sect}}
 {{if .IsSection}}
 {{safeHTML .Params.head}}
-<li data-nav-id="{{.URL}}" title="{{.Title}}" class="dd-item 
+<li data-nav-id="{{.URL}}" title="{{.Title}}" class="dd-item
         {{if .IsAncestor $currentNode }}parent{{end}}
         {{if eq .UniqueID $currentNode.UniqueID}}active{{end}}
         {{if .Params.alwaysopen}}parent{{end}}
