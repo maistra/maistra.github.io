@@ -1,7 +1,7 @@
 ---
 title: "Visualizing your Service Mesh"
 type: "document"
-category: "Getting started"
+category: "Monitoring & Tracing"
 description: "Kiali allows you to visualize the topology of your service mesh, view traces, see the flow of traffic in your network, and troubleshoot issues."
 weight: 4
 ---

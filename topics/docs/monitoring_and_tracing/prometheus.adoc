@@ -48,4 +48,4 @@ Note that returned metric names need to be prepended with `istio_` when used in 
 
 == Cleanup
 
-Follow link:../bookinfo/#cleanup[Bookinfo cleanup instructions] to remove the application.
+Follow link:../examples/bookinfo/#cleanup[Bookinfo cleanup instructions] to remove the application.
