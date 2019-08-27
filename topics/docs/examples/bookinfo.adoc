@@ -10,7 +10,7 @@ description: "Bookinfo is an example application that shows you how to set up an
 The following steps describe the deployment of Bookinfo application on Maistra running on Openshift.
 
 === Before you Begin
-Install Maistra by following the instructions link:/docs/getting_started/install[here].
+Install Maistra by following the instructions link:/docs/installation/install[here].
 
 === Create the Bookinfo project
 Maistra takes a Multi-Tenancy approach, meaning that you can have more than one Istio control plane in your OpenShift cluster. These instructions assume the control plane is installed in the `istio-system` project and this example uses `bookinfo` as the default project. However, either of these can be customized as appropriate below:
