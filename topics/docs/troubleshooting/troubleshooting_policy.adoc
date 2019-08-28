@@ -12,17 +12,17 @@ The update and release of Maistra 0.9 introduced a significant change in behavio
 
 [source,bash]
 ----
-oc get cm -n istio-system istio -o jsonpath='{.data.mesh}' | grep disablePolicyChecks
+$ oc get cm -n istio-system istio -o jsonpath='{.data.mesh}' | grep disablePolicyChecks
 ----
 
 * If you see `disablePolicyChecks: true`, policy checks have been disabled.
 
 ==== Enabling Policy Checks
-* Edit the Istio ConfigMap 
+* Edit the Istio ConfigMap
 
 [source,bash]
 ----
-oc edit cm -n istio-system istio
+$ oc edit cm -n istio-system istio
 ----
 
 * Locate `disablePolicyChecks: true` within the ConfigMap and change the value to `false`
@@ -31,5 +31,5 @@ oc edit cm -n istio-system istio
 
 [source,bash]
 ----
-oc get cm -n istio-system istio -o jsonpath='{.data.mesh}' | grep disablePolicyChecks
+$ oc get cm -n istio-system istio -o jsonpath='{.data.mesh}' | grep disablePolicyChecks
 ----

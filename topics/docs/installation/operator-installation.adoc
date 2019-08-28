@@ -22,7 +22,7 @@ The above instructions will create a new deployment within the istio-operator pr
 To verify the operator is installed correctly, wait for the operator to reach the running state
 
 ```
-oc get pods -n openshift-operators -l name=istio-operator
+$ oc get pods -n openshift-operators -l name=istio-operator
 
 NAME                              READY     STATUS    RESTARTS   AGE
 istio-operator-5cd6bcf645-fvb57   1/1       Running   0          1h
@@ -34,7 +34,7 @@ istio-operator-5cd6bcf645-fvb57   1/1       Running   0          1h
 
 :leveloffset: +1
 
-Open the OpenShift web console in a Web browser and navigate to *Catalog* -> *Operator Management*. Select the *openshift-operators* project from the Projects drop-down. Locate the *Maistra* Operator and click *View Subscription*. Click the *More Operations* menu and select *Remove Subscription*. 
+Open the OpenShift web console in a Web browser and navigate to *Catalog* -> *Operator Management*. Select the *openshift-operators* project from the Projects drop-down. Locate the *Maistra* Operator and click *View Subscription*. Click the *More Operations* menu and select *Remove Subscription*.
 
 :leveloffset: -1
 
@@ -42,7 +42,7 @@ Open the OpenShift web console in a Web browser and navigate to *Catalog* -> *Op
 
 :leveloffset: +1
 
-Open the OpenShift web console in a Web browser and navigate to *Catalog* -> *Operator Management*. Select the *openshift-operators* project from the Projects drop-down. Locate the *Kiali* Operator and click *View Subscription*. Click the *More Operations* menu and select *Remove Subscription*.      
+Open the OpenShift web console in a Web browser and navigate to *Catalog* -> *Operator Management*. Select the *openshift-operators* project from the Projects drop-down. Locate the *Kiali* Operator and click *View Subscription*. Click the *More Operations* menu and select *Remove Subscription*.
 
 :leveloffset: -1
 
@@ -50,7 +50,7 @@ Open the OpenShift web console in a Web browser and navigate to *Catalog* -> *Op
 
 :leveloffset: +1
 
-Open the OpenShift web console in a Web browser and navigate to *Catalog* -> *Operator Management*. Select the *openshift-operators* project from the Projects drop-down. Locate the *Jaeger* Operator and click *View Subscription*. Click the *More Operations* menu and select *Remove Subscription*.      
+Open the OpenShift web console in a Web browser and navigate to *Catalog* -> *Operator Management*. Select the *openshift-operators* project from the Projects drop-down. Locate the *Jaeger* Operator and click *View Subscription*. Click the *More Operations* menu and select *Remove Subscription*.
 
 :leveloffset: -1
 
@@ -58,6 +58,6 @@ Open the OpenShift web console in a Web browser and navigate to *Catalog* -> *Op
 
 :leveloffset: +1
 
-Open the OpenShift web console in a Web browser and navigate to *Catalog* -> *Operator Management*. Select the *openshift-operators* project from the Projects drop-down. Locate the *Elasticsearch* Operator and click *View Subscription*. Click the *More Operations* menu and select *Remove Subscription*.      
+Open the OpenShift web console in a Web browser and navigate to *Catalog* -> *Operator Management*. Select the *openshift-operators* project from the Projects drop-down. Locate the *Elasticsearch* Operator and click *View Subscription*. Click the *More Operations* menu and select *Remove Subscription*.
 
 :leveloffset: -1

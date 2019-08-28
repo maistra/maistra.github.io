@@ -14,15 +14,15 @@ description: "Use Istio and Prometheus to collect and examine metrics in your se
 . Generate network traffic by accessing the Bookinfo application:
 +
 ```
-  curl -o /dev/null http://$GATEWAY_URL/productpage
+$ curl -o /dev/null http://$GATEWAY_URL/productpage
 ```
 
 . A route to access the Prometheus UI should already exist. Query OpenShift for details of the route:
 +
 ```
-  $ oc get routes prometheus -n istio-system
-  NAME         HOST/PORT                                  PATH      SERVICES     PORT              TERMINATION   WILDCARD
-  prometheus   prometheus-istio-system.127.0.0.1.nip.io             prometheus   http-prometheus                 None
+$ oc get routes prometheus -n istio-system
+NAME         HOST/PORT                                  PATH      SERVICES     PORT              TERMINATION   WILDCARD
+prometheus   prometheus-istio-system.127.0.0.1.nip.io             prometheus   http-prometheus                 None
 ```
 
 . Open http://prometheus-istio-system.127.0.0.1.nip.io in a browser, you should see Prometheus' home screen, similar to this:
@@ -41,8 +41,8 @@ image::prometheus-metrics.png[]
 . To list all available Prometheus metrics:
 +
 ```
-  $ oc get prometheus -n istio-system -o jsonpath='{.items[*].spec.metrics[*].name}'
-  requests_total request_duration_seconds request_bytes response_bytes tcp_sent_bytes_total tcp_received_bytes_total
+$ oc get prometheus -n istio-system -o jsonpath='{.items[*].spec.metrics[*].name}'
+requests_total request_duration_seconds request_bytes response_bytes tcp_sent_bytes_total tcp_received_bytes_total
 ```
 Note that returned metric names need to be prepended with `istio_` when used in queries, e.g. `requests_total` will become `istio_requests_total`.
 

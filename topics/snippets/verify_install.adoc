@@ -6,7 +6,7 @@
 Execute the following command to see the status of the installation. In the example below, we assume that the servicemeshcontrolplane is named basic-install. If the name is different, replace basic-install with the proper value.
 
 ```
-oc get servicemeshcontrolplane/basic-install -n istio-system --template='{{range .status.conditions}}{{printf "%s=%s, reason=%s, message=%s\n\n" .type .status .reason .message}}{{end}}'
+$ oc get servicemeshcontrolplane/basic-install -n istio-system --template='{{range .status.conditions}}{{printf "%s=%s, reason=%s, message=%s\n\n" .type .status .reason .message}}{{end}}'
 ```
 
 When installation is complete, the output should be similar to the following:
