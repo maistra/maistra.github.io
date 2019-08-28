@@ -1,0 +1,424 @@
+---
+title: "Routing"
+type: "document"
+category: "tutorials"
+description: "Routing within the Service Mesh"
+weight: 1
+---
+:imagesdir: ../images
+
+== Routing within the Service Mesh
+
+One of the advantages of using a Service Mesh is the ability to modify the
+behaviour of your application's traffic without requiring code changes. This
+change in behaviour is handled declaratively through the use of the Service
+Mesh custom resources.
+
+=== Before we begin
+
+Before starting this module you should ensure you have access to the Kiali
+Console and have selected the Graph tab as discussed previously, this
+visualisation will be used to highlight the change in behaviour as we work
+through this module.
+
+We also need to check the current Service Mesh configuration is as expected.
+To check the configuration run the following command
+
+[source,bash,role="copypaste"]
+----
+oc get istio-io -n istio-tutorial
+----
+
+and check for output similar to the following:
+
+----
+NAME      AGE
+default   35h
+
+NAME       GATEWAYS             HOSTS     AGE
+customer   [customer-gateway]   [*]       35h
+
+NAME               AGE
+customer-gateway   35h
+----
+
+=== How does traffic management work within the Service Mesh?
+
+Every pod deployed as part of the Service Mesh contains a proxy container
+responsible for intercepting the application traffic coming into and going
+out of the pod. When the application invokes a service the client side proxy
+will intercept the invocation and determine which server side endpoint will
+be invoked based on the declarative rules in force at the time of the
+invocation. The default behaviour is to distribute requests to each endpoint
+of a service using a _Round Robin_ load balancer. In our Recommendation
+service requests will be distributed across the v1, v2 and v3 endpoints.
+
+When configuring traffic management rules there are two resources which need
+to be configured, these are:
+
+* The _Virtual Service_ specifying the routing rules to apply when the host is addressed.  These routing rules can include
+** Routing to specific destinations
+** Matching on a transport type
+** Matching on specific transport attributes such as headers or path
+* The _Destination Rule_ specifying policies to be applied to the destination such as
+** Load balancing
+** Outlier detection
+** Transport Encryption (TLS)
+** Connection Pools
+
+We will cover some of these details as we work through this module.
+
+=== Generating load
+
+Before we work through some of the routing scenarios we need to first
+generate load on the services. From within a terminal enter the following
+command
+
+[source,bash,role="copypaste"]
+----
+export INGRESS_GATEWAY=$(oc get route -n istio-system istio-ingressgateway -o 'jsonpath={.spec.host}')
+while : ; do curl http://${INGRESS_GATEWAY}/ ; sleep 1 ; done
+----
+
+We will leave this running for the remainder of this module. Switch over to
+the Kiali Console and make sure you are seeing traffic split roughly _33%_ to
+each of the recommendation endpoints, if you do not see any change then press
+the _refresh_ button in the top right of the Kiali Console.
+
+image:routing-graph-1.png[Kiali showing traffic distributed across three endpoints]
+
+== Weighted Routing with the Service Mesh
+
+In this example we will modify the default behaviour for distributing
+requests between the endpoints however before we can do this we need to
+define our _Destination Rule_ and specify the endpoint subsets we would like
+to use. For our demonstration we will use the version labels on each endpoint
+and name the subsets version-v1, version-v2 and version-v3.
+
+NOTE: We will be using this DestinationRule for the remainder of the examples
+within this module
+
+[source,yaml]
+----
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: recommendation
+spec:
+  host: recommendation
+  subsets:
+  - labels:
+      version: v1
+    name: version-v1
+  - labels:
+      version: v2
+    name: version-v2
+  - labels:
+      version: v3
+    name: version-v3
+----
+
+With the subsets now defined we can take a look at the _Virtual Service_ and
+how to specify different weighting across the subsets. This feature will
+allow you to better control the distribution of all requests across the
+endpoints, for example when deploying a new version of a service where you
+may only wish to send a small percentage of the requests to that service to
+see how it reacts to live traffic.
+
+In this example we will start by specifying _80%_ of traffic to the v1
+endpoint and _20%_ of traffic to the v2 endpoint.
+
+[source,yaml]
+----
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: recommendation
+spec:
+  hosts:
+  - recommendation
+  http:
+  - route:
+    - destination:
+        host: recommendation
+        subset: version-v1
+      weight: 80
+    - destination:
+        host: recommendation
+        subset: version-v2
+      weight: 20
+----
+
+=== Deploying the Weighted Routing configuration
+
+To deploy this configuration into the Service Mesh, open a new terminal and
+execute the following command:
+
+[source,bash,role="copypaste"]
+----
+
+oc login -u kubeadmin -p {{ KUBEADMIN_PASSWORD }} {{ API_URL }}
+oc create -n istio-tutorial -f https://raw.githubusercontent.com/thoraxe/istio-lab-summit-2019/master/src/istiofiles/routing-weighted.yaml
+----
+
+Switch over to the Kiali console to watch the traffic shifting from the
+original distribution to roughly _80%_ v1 and _20%_ v2.
+
+image:routing-graph-2.png[Kiali showing traffic distributed 80/20 across v1 and v2 endpoints]
+
+=== Modifying the Weighted Routing configuration
+
+The weighting can be modified dynamically to further shift traffic. For
+example now we know v2 is working we have decided to shift more traffic to
+that service
+
+Switch to the terminal and execute the following command:
+
+[NOTE]
+====
+This will open the default system editor which is likely Vi/M. If you prefer
+to use a different editor, make sure you do something like:
+
+[source,bash,role="copypaste"]
+----
+export EDITOR=nano
+----
+
+Or substitute whatever installed editor you like.
+====
+
+//TODO change to oc patch or similar
+[source,bash,role="copypaste"]
+----
+oc edit VirtualService recommendation -n istio-tutorial
+----
+
+Within the editor update the weight of the version-v1 destination to _20_ and
+the weight of the version-v2 destination to _80_.
+
+Switch back to the kiali console and watch the traffic shift towards to v2
+service.
+
+=== Cleaning up
+
+Switch to the terminal and execute the following command
+
+[source,bash,role="copypaste"]
+----
+oc delete -n istio-tutorial -f https://raw.githubusercontent.com/thoraxe/istio-lab-summit-2019/master/src/istiofiles/routing-weighted.yaml
+----
+
+The traffic should now return to the default distribution with roughly 33%
+going to each endpoint.
+
+== Canary Releases with the Service Mesh
+
+In the previous example we modified the default behaviour for distributing
+requests between the endpoints so we could send traffic to particular
+endpoints based on weighting. In this example we will modify the behaviour to
+be more selective, using characteristics of the individual request to
+determine which endpoint should receive the request and thereby support
+release strategies such as Canary Releases.
+
+As with the last example we need to define two resources, the _Destination
+Rule_ and the _Virtual Service_. We will use the same Destination Rule as in
+the previous example to define the individual subsets and will create a new
+Virtual Service to identify those requests destined for version v2.
+
+For the purpose of this example we will assume our application includes a
+header identifying the location of the caller. We will use this header to
+send everyone from the _Boston_ office to endpoint v2 while sending the
+remaining requests to endpoint v1.
+
+The _Virtual Service_ for this configuration is as follows
+
+[source,yaml]
+----
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: recommendation
+spec:
+  hosts:
+  - recommendation
+  http:
+  - match:
+    - headers:
+        user-location:
+          exact: Boston
+    route:
+    - destination:
+        host: recommendation
+        subset: version-v2
+  - route:
+    - destination:
+        host: recommendation
+        subset: version-v1
+----
+
+=== Deploying the Canary Release configuration
+
+To deploy this configuration into the Service Mesh switch to a terminal and
+execute the following command:
+
+[source,bash,role="copypaste"]
+----
+oc create -n istio-tutorial -f https://raw.githubusercontent.com/thoraxe/istio-lab-summit-2019/master/src/istiofiles/routing-canary.yaml
+----
+
+Switch back to the terminal running the load script and you will notice the
+responses are only coming from the v1 endpoint and we are no longer seeing
+replies from the v2 nor v3 endpoints. This is the behaviour for all requests
+which are not marked as coming from the Boston office.
+
+=== Verifying the Canary Release configuration
+
+To see the effect of the Canary Release routing we need to craft a request
+with the appropriate header indicating the request is coming from the Boston
+office.
+
+Switch to a terminal and execute the following commands:
+
+[source,bash,role="copypaste"]
+----
+export INGRESS_GATEWAY=$(oc get route -n istio-system istio-ingressgateway -o 'jsonpath={.spec.host}')
+curl -H "user-location: Boston" http://${INGRESS_GATEWAY}/
+----
+
+Note the response from the above command is returned from the v2 endpoint.
+Now try different values for the header and note the responses all come from
+the v1 endpoint.
+
+=== Cleaning up
+
+Switch to the terminal and execute the following command:
+
+[source,bash,role="copypaste"]
+----
+oc delete -n istio-tutorial -f https://raw.githubusercontent.com/thoraxe/istio-lab-summit-2019/master/src/istiofiles/routing-canary.yaml
+----
+
+The traffic should now return to the default distribution with roughly 33%
+going to each endpoint.
+
+== Mirroring Traffic with the Service Mesh
+
+In this example we will modify the default behaviour for distributing
+requests between the endpoints to send all traffic to the v2 endpoint and
+then use the Service Mesh's routing capabilities to mirror the traffic to the
+v3 endpoint.
+
+Traffic mirroring is useful when you wish to test a new version of a service
+with live traffic while isolating the service client from the responses
+returned by the new endpoint.
+
+Traffic mirroring works by sending the request to the original endpoint, in
+our example v2, while also sending a copy of the request to another endpoint,
+in our example v3. The responses returned to the client will come from the
+original endpoint (v2) whereas responses from the mirror endpoint (v3) will
+be ignored.
+
+As with the last example we need to define two resources, the _Destination
+Rule_ and the _Virtual Service_. We will use the same Destination Rule as in
+the previous examples to define the individual subsets and will create a new
+Virtual Service to set the v2 endpoint as default and mirror traffic to the
+v3 endpoint.
+
+The _Virtual Service_ for this configuration is as follows:
+
+[source,yaml]
+----
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: recommendation
+spec:
+  hosts:
+  - recommendation
+  http:
+  - route:
+    - destination:
+        host: recommendation
+        subset: version-v2
+    mirror:
+      host: recommendation
+      subset: version-v3
+----
+
+=== Before we start
+
+Before deploying this configuration switch back to the terminal running the
+load script and notice the responses are coming from all three endpoints for
+the recommendation service. Now switch to another terminal and execute the
+following command to watch the console of the v3 endpoint:
+
+[source,bash,role="copypaste"]
+----
+
+oc login -u kubeadmin -p {{ KUBEADMIN_PASSWORD }} {{ API_URL }}
+oc logs -n istio-tutorial -c recommendation -f $(oc get pod -n istio-tutorial -l 'app=recommendation,version=v3' -o jsonpath='{..metadata.name}')
+----
+
+Notice the v3 endpoint is responding to a request every three seconds, this
+corresponds to the request from the load script seeing the v3 responses. Keep
+both scripts running while we walk through this example.
+
+=== Deploying the Mirroring Traffic configuration
+
+To deploy this configuration into the Service Mesh switch to a terminal and
+execute the following command:
+
+[source,bash,role="copypaste"]
+----
+oc create -n istio-tutorial -f https://raw.githubusercontent.com/thoraxe/istio-lab-summit-2019/master/src/istiofiles/routing-mirroring.yaml
+----
+
+Switch back to the terminal running the load script and you will notice the
+responses are only coming from the v2 endpoint with no responses coming from
+the v1 nor v3 endpoints.
+
+Now switch to the terminal watching the v3 console and notice the v3 endpoint
+is receiving a request every second, this request is a mirror of the traffic
+being sent to v2.
+
+Finally switch to the Kiali console and notice all the traffic in the _Graph_
+tab has shifted across to the v2 endpoint. Kiali shows only the normal
+traffic flow for the application and not the mirrored traffic.
+
+image:routing-graph-3.png[Kiali showing traffic to the v2 endpoint with no mirrored traffic visible]
+
+=== Cleaning up
+
+Switch back to the terminal monitoring the v3 console and press the ctrl+c
+keys to terminate the script.
+
+From within the same terminal execute the following command:
+
+[source,bash,role="copypaste"]
+----
+oc delete -n istio-tutorial -f https://raw.githubusercontent.com/thoraxe/istio-lab-summit-2019/master/src/istiofiles/routing-mirroring.yaml
+----
+
+The traffic should now return to the default distribution with roughly 33%
+going to each endpoint.
+
+Switch back to the terminal with the script we used to generate load and
+press the ctrl+c keys to terminate the script.
+
+== What we learned in this module
+
+In this module we learned how to manage the traffic in our application
+through the declaration of routing rules deployed as Service Mesh
+_Destination Rule_ and _Virtual Service_ resources. This change in routing
+behaviour was managed without any modifications to the application's code and
+without the application being aware these changes were occurring.
+
+We learned:
+
+* how to distribute requests across a number of services using weighting
+* how to distribute requests based on specific characteristics of the incoming request
+* how to mirror traffic from one endpoint to another.
+
+The Service Mesh traffic management capabilities support the declaration of
+more complex routing behaviour. This module is designed to provide only a
+small taste of what is possible.

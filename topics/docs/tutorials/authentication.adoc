@@ -1,0 +1,367 @@
+---
+title: "Authentication"
+type: "document"
+category: "tutorials"
+description: "Authentication (JWT and RBAC)"
+weight: 3
+---
+:imagesdir: ../images
+
+In this module, we are going to see how to enable authenticating end user with Service Mesh.
+We will also see how to use the Service Mesh authorization feature to provide access control for services in the mesh.
+
+
+[IMPORTANT]
+.Before Start
+====
+You should have only the following virtualservices and destinationrules in
+the `istio-tutorial` namespace:
+
+[source,bash]
+----
+oc -n istio-tutorial get destinationrule
+oc -n istio-tutorial get virtualservice
+----
+
+And you should see something like the following:
+
+----
+No resources found.
+
+NAME       GATEWAYS             HOSTS   AGE
+customer   [customer-gateway]   [*]     18h
+----
+====
+
+[#enablingauthentication]
+== Enabling User-End Authentication
+
+Now it is time to enable end-user authentication.
+
+The first thing you need to do is validate that it is possible to communicate
+between all services without authentication.
+
+[source,bash]
+----
+bash <(curl -s https://raw.githubusercontent.com/thoraxe/istio-lab-summit-2019/master/scripts/curl_customer.sh)
+----
+
+With output like the following:
+
+----
+
+customer => preference => recommendation v1 from '7f8755bb79-vjwq2': 26
+customer => preference => recommendation v2 from '74f48f4cbc-j7rfm': 27
+customer => preference => recommendation v3 from '588747fd55-m8mj9': 27
+customer => preference => recommendation v1 from '7f8755bb79-vjwq2': 27
+customer => preference => recommendation v2 from '74f48f4cbc-j7rfm': 28
+customer => preference => recommendation v3 from '588747fd55-m8mj9': 28
+customer => preference => recommendation v1 from '7f8755bb79-vjwq2': 28
+----
+
+You can create the end-user authentication policy. To see how this is done,
+take a look at
+link:http://github.com/thoraxe/istio-lab-summit-2019/blob/master/src/istiofiles/policy-jwt.yaml[policy-jwt.yaml]
+
+[source,yaml,subs="+macros,+attributes"]
+----
+apiVersion: "authentication.istio.io/v1alpha1"
+kind: "Policy"
+metadata:
+  name: "jwt-example"
+spec:
+  targets:
+  - name: customer
+  origins:
+  - jwt:
+      issuer: "testing@secure.istio.io"
+      jwksUri: "https://raw.githubusercontent.com/istio/istio/release-1.1/security/tools/jwt/samples/jwks.json"
+  principalBinding: USE_ORIGIN
+---
+----
+
+And then run the following to deploy the policy:
+
+[source,bash]
+----
+oc -n istio-tutorial create -f https://raw.githubusercontent.com/thoraxe/istio-lab-summit-2019/master/src/istiofiles/policy-jwt.yaml
+----
+
+You will see something like:
+
+----
+policy.authentication.istio.io/jwt-example created
+----
+
+Then let's run the curl again:
+
+[source,bash]
+----
+bash <(curl -s https://raw.githubusercontent.com/thoraxe/istio-lab-summit-2019/master/scripts/curl_customer.sh)
+----
+
+And you will see something like:
+
+----
+Origin authentication failed.
+----
+
+=== Kiali's Graph
+
+Within the Kiali UI select the *Graph* option from the left hand navigation
+and then choose
+
+* Namespace: istio-tutorial
+* Versioned app graph
+* Requests percentage
+* Last 1m
+* Every 10s
+
+[#img-auth-fail]
+.Kiali Graph Authentication Failures
+image::auth-fail.png[]
+
+Note the 100% failure rate from the end-user to customer
+
+Now the communication is not possible because the user has not been
+identified (provides a valid JWT token).
+
+To get a correct token, we need to pass the token in the http request. To see
+how this is done, take a look at
+link:http://github.com/thoraxe/istio-lab-summit-2019/blob/master/scripts/curl_customer_token.sh[curl_customer_token.sh]
+
+[source,bash]
+----
+export INGRESS_GATEWAY=$(oc get route -n istio-system istio-ingressgateway -o 'jsonpath={.spec.host}')
+TOKEN=$(curl https://raw.githubusercontent.com/istio/istio/release-1.1/security/tools/jwt/samples/demo.jwt -s)
+while :; do curl --header "Authorization: Bearer $TOKEN" $INGRESS_GATEWAY -s ; done
+----
+
+Then let's run the curl again, this time with the token.
+
+[source,bash]
+----
+bash <(curl -s https://raw.githubusercontent.com/thoraxe/istio-lab-summit-2019/master/scripts/curl_customer_token.sh)
+----
+
+And you will see something like:
+
+----
+customer => preference => recommendation v3 from '588747fd55-m8mj9': 27103
+customer => preference => recommendation v1 from '7f8755bb79-vjwq2': 27140
+customer => preference => recommendation v2 from '74f48f4cbc-snwfm': 18439
+customer => preference => recommendation v3 from '588747fd55-m8mj9': 27104
+customer => preference => recommendation v1 from '7f8755bb79-vjwq2': 27141
+customer => preference => recommendation v2 from '74f48f4cbc-snwfm': 18440
+customer => preference => recommendation v3 from '588747fd55-m8mj9': 27105
+customer => preference => recommendation v1 from '7f8755bb79-vjwq2': 27142
+----
+
+=== Kiali's Graph
+
+Within the Kiali UI select the *Graph* option from the left hand navigation
+and then choose
+
+* Namespace: istio-tutorial
+* Versioned app graph
+* Requests percentage
+* Last 1m
+* Every 10s
+
+[#img-auth-success]
+.Kiali Graph Authenticated End-User
+image::auth-success.png[]
+
+Note the 100% failure rate from the authenticated end-user to customer
+
+=== Clean Up
+
+[source,bash]
+----
+oc -n istio-tutorial delete -f https://raw.githubusercontent.com/thoraxe/istio-lab-summit-2019/master/src/istiofiles/policy-jwt.yaml
+----
+
+You will see something like:
+
+----
+policy.authentication.istio.io "jwt-example" deleted
+----
+
+== Service Mesh Role Based Access Control (RBAC)
+
+[#enabling-rbac]
+=== Enabling RBAC
+
+The first thing to do is enable Istio Authorization by using `RbacConfig`
+object. To see how this is done, take a look at
+link:http://github.com/thoraxe/istio-lab-summit-2019/blob/master/src/istiofiles/authorization-enable-rbac.yml[authorization-enable-rbac.yml]
+
+[source,yaml,subs="+macros,+attributes"]
+----
+apiVersion: "rbac.istio.io/v1alpha1"
+kind: RbacConfig
+metadata:
+  name: default
+spec:
+  mode: 'ON_WITH_INCLUSION'
+  inclusion:
+    namespaces: ["istio-tutorial"]
+----
+
+Run this command to deploy the RBAC:
+
+[source, bash]
+----
+oc -n istio-tutorial create -f https://raw.githubusercontent.com/thoraxe/istio-lab-summit-2019/master/src/istiofiles/authorization-enable-rbac.yml
+----
+
+You will see something like:
+
+----
+rbacconfig.rbac.istio.io/default created
+----
+
+Now RBAC is enabled on your mesh.
+
+Then let's run the curl to test the RBAC:
+
+[source, bash]
+----
+bash <(curl -s https://raw.githubusercontent.com/thoraxe/istio-lab-summit-2019/master/scripts/curl_customer.sh)
+----
+
+You will see something like:
+
+----
+RBAC: access denied
+----
+
+==== Kiali's Graph
+
+Within the Kiali UI select the *Graph* option from the left hand navigation
+and then choose
+
+* Namespace: istio-tutorial
+* Versioned app graph
+* Requests percentage
+* Last 1m
+* Every 10s
+
+[#img-rbac-fail]
+.Kiali Graph Denied RBAC
+image::rbac-fail.png[]
+
+Note the 100% failure rate due to denied RBAC
+
+By default, Istio uses a _deny by default_ strategy, meaning that nothing is
+permitted until you explicitly define access control policy to grant access
+to any service.
+
+[#grant-access]
+== Granting Access
+
+Let's grant access to any user to any service of our mesh (`customer`,
+`preference`, `recommendation`) only and only if the communication goes
+through `GET` method.
+
+To see how this is done, take a look at
+link:http://github.com/thoraxe/istio-lab-summit-2019/blob/master/src/istiofiles/namespace-rbac-policy.yml[namespace-rbac-policy.yml]
+
+[source,yaml,subs="+macros,+attributes"]
+----
+apiVersion: "rbac.istio.io/v1alpha1"
+kind: ServiceRole
+metadata:
+  name: service-viewer
+spec:
+  rules:
+  - services: ["*"]
+    methods: ["GET"]
+    constraints:
+    - key: "destination.labels[app]"
+      values: ["customer", "recommendation", "preference"]
+---
+apiVersion: "rbac.istio.io/v1alpha1"
+kind: ServiceRoleBinding
+metadata:
+  name: bind-service-viewer
+  namespace: istio-tutorial
+spec:
+  subjects:
+  - user: "*"
+  roleRef:
+    kind: ServiceRole
+    name: "service-viewer"
+----
+
+Note the ServiceRole `service-viewer` is bound to the `istio-tutorial`
+namespace for all users (*) and limits access to the GET method for the three
+services.
+
+Run this command to deploy the role and role binding:
+
+[source, bash]
+----
+oc -n istio-tutorial create -f https://raw.githubusercontent.com/thoraxe/istio-lab-summit-2019/master/src/istiofiles/namespace-rbac-policy.yml
+----
+
+You will see something like:
+
+----
+servicerole.rbac.istio.io/service-viewer created
+servicerolebinding.rbac.istio.io/bind-service-viewer created
+----
+
+Let's send a request now:
+
+[source,bash]
+----
+bash <(curl -s https://raw.githubusercontent.com/thoraxe/istio-lab-summit-2019/master/scripts/curl_customer.sh)
+----
+
+You will see something like:
+
+----
+customer => preference => recommendation v1 from '7f8755bb79-vjwq2': 27224
+customer => preference => recommendation v2 from '74f48f4cbc-snwfm': 18522
+customer => preference => recommendation v3 from '588747fd55-m8mj9': 27187
+customer => preference => recommendation v1 from '7f8755bb79-vjwq2': 27225
+customer => preference => recommendation v2 from '74f48f4cbc-snwfm': 18523
+customer => preference => recommendation v3 from '588747fd55-m8mj9': 27188
+customer => preference => recommendation v1 from '7f8755bb79-vjwq2': 27226
+----
+
+The communication now is possible.
+
+=== Kiali's Graph
+
+Within the Kiali UI select the *Graph* option from the left hand navigation
+and then choose:
+
+* Namespace: istio-tutorial
+* Versioned app graph
+* Requests percentage
+* Last 1m
+* Every 10s
+
+[#img-rbac-success]
+.Kiali Graph Allowed RBAC
+image::rbac-success.png[]
+
+Note the 100% success rate due to allowed RBAC.
+
+== Clean Up
+
+[source,bash]
+----
+oc -n istio-tutorial delete -f https://raw.githubusercontent.com/thoraxe/istio-lab-summit-2019/master/src/istiofiles/namespace-rbac-policy.yml
+oc -n istio-tutorial delete -f https://raw.githubusercontent.com/thoraxe/istio-lab-summit-2019/master/src/istiofiles/authorization-enable-rbac.yml
+----
+
+You will see something like:
+
+----
+servicerole.rbac.istio.io "service-viewer" deleted
+servicerolebinding.rbac.istio.io "bind-service-viewer" deleted
+rbacconfig.rbac.istio.io "default" deleted
+----

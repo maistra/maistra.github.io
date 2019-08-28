@@ -1,0 +1,198 @@
+---
+title: "Access Control Lists"
+type: "document"
+category: "tutorials"
+description: "Whitelisting/Blacklisting with Istio."
+weight: 4
+---
+:imagesdir: ../images
+
+= Access Control Lists
+
+Access control lists set whitelists/blacklists to restrict communication. 
+
+:toc:
+
+This module will provide instruction on how to configure whitelists and blacklists,
+which control what services a service is able to access. 
+
+[IMPORTANT]
+.Before Start
+====
+You should have only the following virtualservices and destinationrules in
+the `istio-tutorial` namespace:
+
+[source,bash]
+----
+oc -n istio-tutorial get destinationrule
+oc -n istio-tutorial get virtualservice
+----
+
+And you should see something like the following:
+
+----
+No resources found.
+
+NAME       GATEWAYS             HOSTS   AGE
+customer   [customer-gateway]   [*]     18h
+----
+====
+
+[IMPORTANT]
+====
+The access control rules take some time to be applied and reflected. Be patient here!
+====
+
+[#whitelist]
+== Whitelist
+We’ll create a whitelist on the preference service to only allow requests to
+the recommendation service if the version is v1 or v3. Requests to the v2
+version of the recommendation service will return a 404 Not Found HTTP error
+code.
+
+First, start generating traffic. 
+
+[source,bash]
+----
+bash <(curl -s https://raw.githubusercontent.com/thoraxe/istio-lab-summit-2019/master/scripts/curl_customer.sh)
+----
+
+You will see something like:
+
+----
+customer => preference => recommendation v1 from '765d4bc49d-ddgg7': 2949
+customer => preference => recommendation v2 from '7679d466f8-2hwcd': 2950
+----
+
+Now create the whitelist. 
+
+[source,bash,role="copypaste"]
+----
+oc create -f https://raw.githubusercontent.com/thoraxe/istio-lab-summit-2019/master/src/istiofiles/acl-whitelist.yml
+----
+
+To see how this is done, take a look at:
+http://github.com/thoraxe/istio-lab-summit-2019/blob/master/src/istiofiles/acl-whitelist.yml
+
+[source, yaml]
+----
+apiVersion: "config.istio.io/v1alpha2"
+kind: listchecker
+metadata:
+  name: preferencewhitelist
+  namespace: istio-tutorial
+spec:
+  overrides: ["v1", "v3"]
+  blacklist: false
+---
+apiVersion: "config.istio.io/v1alpha2"
+kind: listentry
+metadata:
+  name: preferencesource
+  namespace: istio-tutorial
+spec:
+  value: destination.labels["version"]
+---
+apiVersion: "config.istio.io/v1alpha2"
+kind: rule
+metadata:
+  name: checktorecommendation
+  namespace: istio-tutorial
+spec:
+  match: destination.labels["app"] == "recommendation"
+  actions:
+  - handler: preferencewhitelist.listchecker
+    instances:
+    - preferencesource.listentry
+----
+
+If you look at Kiali, you will notice that traffic is now making it to the v1
+and v3 versions of the service, but not v2.
+
+image::whitelist_v2_fail.png[]
+
+
+[#whitelist-cleanup]
+== Cleanup
+
+[source,bash,role="copypaste"]
+----
+oc delete -f https://raw.githubusercontent.com/thoraxe/istio-lab-summit-2019/master/src/istiofiles/acl-whitelist.yml
+----
+
+[#blacklist]
+== Blacklist
+Whereas whitelists allow communication only to the listed hosts, blacklists
+deny traffic to the listed hosts. We'll demonstrate this using a blacklist on
+version 3 of the recomemendation service. Any requests to v3 will a 403
+Forbidden HTTP error code.
+
+First, start generating traffic. 
+
+[source,bash]
+----
+bash <(curl -s https://raw.githubusercontent.com/thoraxe/istio-lab-summit-2019/master/scripts/curl_customer.sh)
+----
+
+You will see something like:
+
+----
+customer => preference => recommendation v1 from '765d4bc49d-ddgg7': 2953
+customer => preference => recommendation v3 from '6d4bf9cff8-5nvw2': 834
+customer => preference => recommendation v2 from '7679d466f8-2hwcd': 2954
+customer => preference => recommendation v1 from '765d4bc49d-ddgg7': 2954
+----
+
+Now, create the blacklist.
+
+[source,bash,role="copypaste"]
+----
+oc create -f https://raw.githubusercontent.com/thoraxe/istio-lab-summit-2019/master/src/istiofiles/acl-blacklist.yml
+----
+
+To see how this is done, take a look at:
+http://github.com/thoraxe/istio-lab-summit-2019/blob/master/src/istiofiles/acl-blacklist.yml
+
+[source, yaml]
+----
+apiVersion: "config.istio.io/v1alpha2"
+kind: denier
+metadata:
+  name: denycustomerhandler
+  namespace: istio-tutorial
+spec:
+  status:
+    code: 7
+    message: Not allowed
+---
+apiVersion: "config.istio.io/v1alpha2"
+kind: checknothing
+metadata:
+  name: denycustomerrequests
+  namespace: istio-tutorial
+spec:
+---
+apiVersion: "config.istio.io/v1alpha2"
+kind: rule
+metadata:
+  name: denycustomer
+  namespace: istio-tutorial
+spec:
+  match: source.labels["app"]=="preference" && destination.labels["app"] == "recommendation"  && destination.labels["version"] == "v3"
+  actions:
+  - handler: denycustomerhandler.denier
+    instances: [ denycustomerrequests.checknothing ]
+----
+
+If we look at Kiali, we can now see that requests to the v3 version of the
+service are failing.
+
+image::blacklist_v3_blocked.png[]
+
+[#blacklist-cleanup]
+== Cleanup
+
+[source,bash,role="copypaste"]
+----
+oc delete -f https://raw.githubusercontent.com/thoraxe/istio-lab-summit-2019/master/src/istiofiles/acl-blacklist.yml
+----
