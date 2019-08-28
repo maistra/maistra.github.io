@@ -1,0 +1,224 @@
+---
+title: "Rate Limiting"
+type: "document"
+category: "tutorials"
+description: "Rate Limiting/Policy"
+weight: 6
+---
+:imagesdir: ../images
+
+Apply request rate limits to a service
+
+:toc:
+
+
+[IMPORTANT]
+.Before Start
+====
+You should have only the following virtualservices and destinationrules in
+the `istio-tutorial` namespace:
+
+[source,bash]
+----
+oc -n istio-tutorial get destinationrule
+oc -n istio-tutorial get virtualservice
+----
+
+And you should see something like the following:
+
+----
+No resources found.
+
+NAME       GATEWAYS             HOSTS   AGE
+customer   [customer-gateway]   [*]     18h
+----
+====
+
+[#ratelimiting]
+== Rate Limiting
+
+IMPORTANT: The Rate Limiting rules take some time to be applied and reflected. Be patient here!
+
+Here we will limit the number of concurrent requests into recommendation v2
+
+Now apply the rate limiting. To see how this is done,
+take a look at link:http://github.com/thoraxe/istio-lab-summit-2019/blob/master/src/istiofiles/recommendation_rate_limit.yml[recommendation_rate_limit.yml]
+
+[source,yaml,subs="+macros,+attributes"]
+----
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: recommendation
+  namespace: istio-tutorial
+spec:
+  host: recommendation
+  subsets:
+  - labels:
+      version: v1
+    name: v1
+  - labels:
+      version: v2
+    name: v2
+  - labels:
+      version: v3
+    name: v3
+---
+apiVersion: config.istio.io/v1alpha2
+kind: memquota
+metadata:
+  name: handler
+  namespace: istio-system
+spec:
+  quotas:
+  - name: requestcount.quota.istio-system
+    maxAmount: 500
+    validDuration: 1s
+    # The first matching override is applied.
+    # A requestcount instance is checked against override dimensions.
+    overrides:
+    # The following override applies to 'reviews' regardless
+    # of the source.
+    - dimensions:
+        destination: recommendation
+      maxAmount: 4
+      validDuration: 5s
+---
+apiVersion: config.istio.io/v1alpha2
+kind: quota
+metadata:
+  name: requestcount
+  namespace: istio-system
+spec:
+  dimensions:
+    source: request.headers["x-forwarded-for"] | "unknown"
+    destination: destination.labels["app"] | destination.service.name | "unknown"
+    destinationVersion: destination.labels["version"] | "unknown"
+---
+apiVersion: config.istio.io/v1alpha2
+kind: QuotaSpec
+metadata:
+  name: request-count
+  namespace: istio-system
+spec:
+  rules:
+  - quotas:
+    - charge: 1
+      quota: requestcount
+---
+apiVersion: config.istio.io/v1alpha2
+kind: QuotaSpecBinding
+metadata:
+  name: request-count
+  namespace: istio-system
+spec:
+  quotaSpecs:
+  - name: request-count
+    namespace: istio-system
+  services:
+  - name: recommendation
+    namespace: istio-tutorial
+    #  - service: '*'  # Uncomment this to bind *all* services to request-count
+---
+apiVersion: config.istio.io/v1alpha2
+kind: rule
+metadata:
+  name: quota
+  namespace: istio-system
+spec:
+  # quota only applies if you are not logged in.
+  # match: match(request.headers["cookie"], "user=*") == false
+  actions:
+  - handler: handler.memquota
+    instances:
+    - requestcount.quota
+----
+
+Note that the memquota resource `handler` defaines a rate limit of 4 requests
+per 5 seconds for the `recommendation` destination. Next, deploy the rate
+limiting resources.
+
+[source,bash]
+----
+oc create -f https://raw.githubusercontent.com/thoraxe/istio-lab-summit-2019/master/src/istiofiles/recommendation_rate_limit.yml
+----
+
+You will see something like:
+
+----
+destinationrule.networking.istio.io/recommendation created
+memquota.config.istio.io/handler created
+quota.config.istio.io/requestcount created
+quotaspec.config.istio.io/request-count created
+quotaspecbinding.config.istio.io/request-count created
+rule.config.istio.io/quota created
+----
+
+Throw some requests at customer:
+
+[source, bash]
+----
+bash <(curl -s https://raw.githubusercontent.com/thoraxe/istio-lab-summit-2019/master/scripts/curl_customer.sh)
+----
+
+You should see some 429 errors indicating the quota has been exhausted.
+
+----
+customer => preference => recommendation v2 from '74f48f4cbc-j7rfm': 2944
+customer => preference => recommendation v3 from '588747fd55-m8mj9': 2962
+customer => preference => recommendation v1 from '7f8755bb79-vjwq2': 2960
+customer => preference => recommendation v3 from '588747fd55-m8mj9': 2963
+customer => preference => recommendation v1 from '7f8755bb79-vjwq2': 2961
+customer => preference => recommendation v2 from '74f48f4cbc-j7rfm': 2945
+customer => preference => recommendation v3 from '588747fd55-m8mj9': 2964
+customer => preference => recommendation v2 from '74f48f4cbc-j7rfm': 2946
+customer => preference => recommendation v3 from '588747fd55-m8mj9': 2965
+customer => preference => recommendation v2 from '74f48f4cbc-j7rfm': 2947
+customer => Error: 503 - preference => Error: 429 - RESOURCE_EXHAUSTED:Quota is exhausted for: requestcount
+customer => preference => recommendation v1 from '7f8755bb79-vjwq2': 2962
+customer => Error: 503 - preference => Error: 429 - RESOURCE_EXHAUSTED:Quota is exhausted for: requestcount
+customer => preference => recommendation v1 from '7f8755bb79-vjwq2': 2963
+customer => preference => recommendation v1 from '7f8755bb79-vjwq2': 2964
+customer => preference => recommendation v1 from '7f8755bb79-vjwq2': 2965
+customer => Error: 503 - preference => Error: 429 - RESOURCE_EXHAUSTED:Quota is exhausted for: requestcount
+----
+
+=== Kiali's Graph
+
+Within the Kiali UI select the *Graph* option from the left hand navigation
+and then choose
+
+* Namespace: istio-tutorial
+* Versioned app graph
+* Requests percentage
+* Last 1m
+* Every 10s
+
+[#img-503]
+.Kiali Graph Showing Rate Limited Failures
+image::rate.png[]
+
+Note the rate limited failure rate from preference to recommendation.
+
+=== Clean up
+
+[source,bash]
+----
+oc delete -f https://raw.githubusercontent.com/thoraxe/istio-lab-summit-2019/master/src/istiofiles/recommendation_rate_limit.yml
+----
+
+You will see something like:
+
+----
+destinationrule.networking.istio.io "recommendation" deleted
+memquota.config.istio.io "handler" deleted
+quota.config.istio.io "requestcount" deleted
+quotaspec.config.istio.io "request-count" deleted
+quotaspecbinding.config.istio.io "request-count" deleted
+rule.config.istio.io "quota" deleted
+----
+
+== What we learned in this module
+ServiceMesh provides a simple mechanism to dynamically limit the traffic to a
+particular service or version of a service. Kiali provides a rich console to
+visualize the service failures due to traffic exceeding those limits.

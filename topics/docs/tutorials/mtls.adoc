@@ -1,0 +1,307 @@
+---
+title: "Mutual TLS"
+type: "document"
+category: "tutorials"
+description: "Enabling Mutual TLS."
+weight: 2
+---
+:imagesdir: ../images
+
+= Mutual TLS
+
+Apply Mutual TLS to services in the cluster. 
+
+:toc:
+
+[IMPORTANT]
+.Before Start
+====
+You should have only the following virtualservices and destinationrules in
+the `istio-tutorial` namespace:
+
+[source,bash]
+----
+oc -n istio-tutorial get destinationrule
+oc -n istio-tutorial get virtualservice
+----
+
+And you should see something like the following:
+
+----
+No resources found.
+
+NAME       GATEWAYS             HOSTS   AGE
+customer   [customer-gateway]   [*]     18h
+----
+====
+
+[#enablemtls]
+== Enabling Mutual TLS
+For this example, we will take advantage of another pod that is outside of
+the service mesh. Let's grab that and the customer pod in a variable.
+
+Examine the traffic between the curl and customer services and the preference service:
+
+{{< snippet_markdown name="curl_customer_preference" >}}
+
+You will see something like:
+
+----
+Executing curl in curl pod
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:--  0:00:01 --:--:--     0preference => recommendation v3 from '6d4bf9cff8-5nvw2': 5
+
+100    60  100    60    0     0     23      0  0:00:02  0:00:02 --:--:--    23
+Executing curl in customer pod
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0preference => recommendation v2 from '7679d466f8-2hwcd': 6
+
+100    60  100    60    0     0   3454      0 --:--:-- --:--:-- --:--:--  3529
+Executing curl in curl pod
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0preference => recommendation v1 from '765d4bc49d-ddgg7': 6
+
+100    60  100    60    0     0   3529      0 --:--:-- --:--:-- --:--:--  3529
+
+----
+
+_Kiali’s Graph_
+
+Within the Kiali UI select the Graph option from the left hand navigation and
+then choose:
+
+* Namespace: istio-tutorial
+* Versioned app graph
+* Requests percentage
+* Last 1m
+* Every 10s
+* Security checked under display
+
+Notice that both requests were successful. In the Kiali graph, this can be
+seen from the green line.
+
+image::mtls_initial.png[]
+
+Now configure preference to use mutual TLS policy. 
+
+[source,bash,role="copypaste"]
+----
+oc -n istio-tutorial create -f https://raw.githubusercontent.com/thoraxe/istio-lab-summit-2019/master/src/istiofiles/authentication-enable-tls.yml
+----
+
+The Policy just created can be seen below:
+
+[source, yaml]
+----
+apiVersion: "authentication.istio.io/v1alpha1"
+kind: "Policy"
+metadata:
+  name: "preference-mutualtls"
+  namespace: istio-tutorial
+spec:
+  targets:
+  - name: preference
+  peers:
+  - mtls: 
+      mode: STRICT
+----
+
+And try the curl again.
+
+{{< snippet_markdown name="curl_customer_preference" >}}
+
+And again:
+
+----
+
+Executing curl in curl pod
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:--  0:00:02 --:--:--     0
+curl: (56) Recv failure: Connection reset by peer
+command terminated with exit code 56
+Executing curl in customer pod
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100    57  100    57    0     0   9463      0 --:--:-- --:--:-- --:--:-- 11400upstream connect error or disconnect/reset before headers                             
+Executing curl in curl pod
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+curl: (56) Recv failure: Connection reset by peer
+command terminated with exit code 56
+Executing curl in customer pod
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100    57  100    57    0     0   9780      0 --:--:-- --:--:-- --:--:-- 11400
+
+----
+
+This time, we can see that the curl failed with exit code 56. This is because
+preference is now requiring encrypted communication over mutual TLS, but
+neither customer nor curl are using it.
+
+We can see the same thing in Kiali. 
+
+image::mtls_no_destination_rule.png[]
+
+Now create a destination rule to make communication to customer use mutual
+TLS and run the curl again.
+
+[source,bash,role="copypaste"]
+----
+oc -n istio-tutorial create -f https://raw.githubusercontent.com/thoraxe/istio-lab-summit-2019/master/src/istiofiles/destination-rule-tls.yml
+----
+
+The yaml just created can be seen below.
+
+[source, yaml]
+----
+apiVersion: "networking.istio.io/v1alpha3"
+kind: "DestinationRule"
+metadata:
+  name: "preference-destination-rule"
+spec:
+  host: "preference.istio-tutorial.svc.cluster.local"
+  trafficPolicy:
+    tls:
+      mode: ISTIO_MUTUAL
+----
+
+Execute the curl script:
+
+{{< snippet_markdown name="curl_customer_preference" >}}
+
+
+And again:
+
+----
+
+Executing curl in customer pod
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100    62  100    62    0     0   6104    preference => recommendation v3 from '6d4bf9cff8-5nvw2': 115
+
+  0 --:--:-- --:--:-- --:--:--  6200
+Executing curl in curl pod
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+curl: (56) Recv failure: Connection reset by peer
+command terminated with exit code 56
+Executing curl in customer pod
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0preference => recommendation v2 from '7679d466f8-2hwcd': 116                
+
+100    62  100    62    0     0   5963      0 --:--:-- --:--:-- --:--:--  6200
+Executing curl in curl pod
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+curl: (56) Recv failure: Connection reset by peer
+command terminated with exit code 56
+Executing curl in customer pod
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100    62  100    62    0     0preference => recommendation v1 from '765d4bc49d-ddgg7': 117
+----
+
+This time, we can see that because customer is part of the mesh, the request
+is successful. Since preference isn't, that still fails.
+
+Looking at the Kiali graph, a lock is now present for communicationbetween
+customer and preference, indicating that this communication is secured via
+mTLS.
+
+image::mtls_policy_and_rule.png[]
+
+[#mtlsmigration]
+== mTLS migration
+
+Mutual TLS in OpenShift Service Mesh provides the ability to migrate to mTLS
+gradually rather than forcing all services to migrate to mTLS at once. Lets
+try that now.
+
+First, delete the policy we created above.
+
+[source,bash,role="copypaste"]
+----
+oc delete policy -n istio-tutorial preference-mutualtls
+----
+
+Now create a policy using permissive mode. 
+
+[source,bash,role="copypaste"]
+----
+oc -n istio-tutorial create -f https://raw.githubusercontent.com/thoraxe/istio-lab-summit-2019/master/src/istiofiles/policy-permissive-tls.yml
+----
+
+The contents of the file are displayed below:
+
+[source,yaml]
+----
+apiVersion: "authentication.istio.io/v1alpha1"
+kind: "Policy"
+metadata:
+  name: "preference-mutualtls"
+  namespace: istio-tutorial
+spec:
+  targets:
+  - name: preference
+  peers:
+  - mtls: 
+      mode: PERMISSIVE
+----
+
+If we try our curl commands again, we notice that this time they both pass:
+
+{{< snippet_markdown name="curl_customer_preference" >}}
+
+And again:
+
+----
+
+executing curl in curl pod
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current                                                                           
+                                 Dload  Upload   Total   Spent    Left  Speed                                                                             
+  0     0    0     0    0     0      0      0 --:--:--  0:00:02 --:--:--     0preference => recommendation v2 from '7679d466f8-2hwcd': 129                
+
+100    62  100    62    0     0     24      0  0:00:02  0:00:02 --:--:--    24                                                                            
+Executing curl in customer pod
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current                                                                           
+                                 Dload  Upload   Total   Spent    Left  Speed                                                                             
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0preference => recommendation v1 from '765d4bc49d-ddgg7': 129                
+
+100    62  100    62    0     0   3514      0 --:--:-- --:--:-- --:--:--  3647                                                                            
+Executing curl in curl pod
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current                                                                           
+                                 Dload  Upload   Total   Spent    Left  Speed                                                                             
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0preference => recommendation v3 from '6d4bf9cff8-5nvw2': 129                
+
+100    62  100    62    0     0   4769      0 --:--:-- --:--:-- --:--:--  4769                                                                            
+Executing curl in customer pod
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current                                                                           
+                                 Dload  Upload   Total   Spent    Left  Speed                                                                             
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0preference => recommendation v2 from '7679d466f8-2hwcd': 130
+----
+
+In Kiali, we can see that the lock is still shown, indicating the presence of
+mTLS. We see the curl pod labeled as unknown since it's not part of the mesh,
+and we can see that both customer and curl are succesful.
+
+image::mtls_permissive.png[]
+
+[#cleanup]
+== Cleanup
+
+To cleanup, delete both the policy and destination rule that we created. 
+
+[source,bash,role="copypaste"]
+----
+oc delete policy -n istio-tutorial preference-mutualtls
+oc delete destinationrule -n istio-tutorial preference-destination-rule
+----
