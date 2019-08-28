@@ -35,7 +35,7 @@ image::grafana-mesh-no-traffic.png[]
 Generate some traffic by accessing Bookinfo application:
 
 ```
-  curl -o /dev/null http://$GATEWAY_URL/productpage
+$ curl -o /dev/null http://$GATEWAY_URL/productpage
 ```
 
 The dashboard should reflect the traffic through the mesh, similarly to this:

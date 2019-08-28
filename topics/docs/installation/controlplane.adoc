@@ -38,8 +38,8 @@ Once you have modified the *ServiceMeshControlPlane* to suit your installation y
 substituting istio-system if appropriate.
 
 ```
-oc new-project istio-system
-oc create -n istio-system -f <name of file>
+$ oc new-project istio-system
+$ oc create -n istio-system -f <name of file>
 ```
 
 == Deploying a Maistra Control Plane using Catalog Web UI
@@ -50,7 +50,7 @@ Open the OpenShift web console in a Web browser. Create a new project. This exam
 * An Istio Service Mesh Control Plane
 * An Istio Service Mesh Member Roll
 
-In the *Istio Service Mesh Control Plane* box click *Create New*. This screen allows you to modify the minimal template of a `ServiceMeshControlPlane` object, such as the cluster size. Click *Create* to finalize. Create a `ServiceMeshMemberRoll` by choosing the *Istio Service Mesh Member Roll* box and repeating these actions. 
+In the *Istio Service Mesh Control Plane* box click *Create New*. This screen allows you to modify the minimal template of a `ServiceMeshControlPlane` object, such as the cluster size. Click *Create* to finalize. Create a `ServiceMeshMemberRoll` by choosing the *Istio Service Mesh Member Roll* box and repeating these actions.
 
 :leveloffset: -1
 
@@ -73,13 +73,13 @@ The following steps will remove Istio from an existing installation. It can be e
 
 To get the name of the installed *ServiceMeshControlPlane*, type:
 ```
-oc get servicemeshcontrolplanes -n istio-system
+$ oc get servicemeshcontrolplanes -n istio-system
 ```
 
 This resource can now be deleted as follows:
 ```
-oc delete smcp -n istio-system <name_of_cr>
-oc delete project istio-system
+$ oc delete smcp -n istio-system <name_of_cr>
+$ oc delete project istio-system
 ```
 
 The removal of the CustomResource will tell the Istio operator to begin uninstalling everything it installed.
