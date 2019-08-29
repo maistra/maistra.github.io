@@ -1,8 +1,8 @@
 ---
-title: "Creating Reproducible Configurations"
+title: "Control Plane Templates"
 type: "document"
 category: "Getting started"
-description: "This document describes how to take advantage of templates to create reproducible, extendable common configurations for groups of users."
+description: "This document describes how to take advantage of templates to create reusable, extendable common configurations for groups of users."
 weight: 4
 ---
 == Control Plane Templates
