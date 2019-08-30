@@ -24,8 +24,8 @@ link:{{< relref "automatic-injection.adoc" >}}[the automatic injection section].
 
 === Istio CNI
 
-The CNI plugin replaces proxy-init on OpenShift 4 clusters. Using CNI eliminates
-the need for the *NET_ADMIN* privilege on application containers.
+The _CNI plugin_ replaces proxy-init on OpenShift 4 clusters. Using CNI eliminates
+the need for the `NET_ADMIN` privilege on application containers.
 
 === Istio Operator
 
@@ -38,13 +38,13 @@ more detail during link:../installation/[installation]
 
 Upstream Istio has two cluster scoped resources that it relies on. The MeshPolicy and the ClusterRbacConfig. These are not compatible with a multitenant cluster and have been replaced as described below.
 
-* ServiceMeshPolicy replaces MeshPolicy for configuration of control-plane-wide authentication policies. This must be created in the same namespace as the control plane.
-* ClusterRbacConfig replaces ServicemeshRbacConfig for configuration of control-plane-wide role based access control. This must be created in the same namespace as the control plane.
+* _ServiceMeshPolicy_ replaces MeshPolicy for configuration of control-plane-wide authentication policies. This must be created in the same namespace as the control plane.
+* _ServicemeshRbacConfig_ replaces ClusterRbacConfig for configuration of control-plane-wide role based access control. This must be created in the same namespace as the control plane.
 
 === Component Modifications
 
 * Godebug has been removed from all templates
-* A *maistra-version* label has been added to all resources.
-* The *istio-multi* ServiceAccount and ClusterRoleBinding have been removed, as well as the *istio-reader* ClusterRole.
+* A _maistra-version_ label has been added to all resources.
+* The istio-multi ServiceAccount and ClusterRoleBinding have been removed, as well as the istio-reader ClusterRole.
 * All Ingress resources have been converted to OpenShift Route resources.
 * Grafana, Tracing (Jaeger), and Kiali are enabled by default and exposed via OpenShift routes.

@@ -7,34 +7,28 @@ weight: 2
 ---
 
 == Creating a Maistra Control Plane
-Maistra supports the deployment of multiple Istio control planes using *ServiceMeshMemberRoll*
-and *ServiceMeshControlPlane* resources. The *ServiceMeshMemberRoll* lists the projects belonging
-to the control plane while the *ServiceMeshControlPlane* lists the configuration to use during installation.
-*ServiceMeshControlPlane* can be shortened to `smcp` and *ServiceMeshMemberRoll* can be shortened to `smmr`.
+Maistra supports the deployment of multiple Istio control planes using `ServiceMeshMemberRoll`
+and `ServiceMeshControlPlane` resources. The _ServiceMeshMemberRoll_ lists the projects belonging
+to the control plane while the _ServiceMeshControlPlane_ lists the configuration to use during installation.
+`ServiceMeshControlPlane` can be shortened to `smcp` and `ServiceMeshMemberRoll` can be shortened to `smmr`.
 
 === ServiceMeshMemberRoll
-The *ServiceMeshMemberRoll* resource configures which projects belong to a control plane.
-Only projects listed in the *ServiceMeshMemberRoll* will be affected by the control plane.
+The `ServiceMeshMemberRoll` resource configures which projects belong to a control plane.
+Only projects listed in the `ServiceMeshMemberRoll` will be affected by the control plane.
 Any number of projects can be added, but a project may not exist in more than one control plane.
-This resource must be created in the same project as the *ServicemeshControlPlane* resource
+This resource must be created in the same project as the `ServicemeshControlPlane` resource
 and must be named default. An example resource can be seen below:
-
-{{% notice note %}}
-The control plane processes the *ServiceMeshMemberRoll* when: the *ServiceMeshMemberRoll* is created, updated, or deleted,
-the *ServicemeshControlPlane* in the same project is created or updated, or a project in the *ServiceMeshMemberRoll* is created or deleted.
-{{% /notice %}}
-
 
 {{< snippet_markdown name="istio_installation_smmr" >}}
 
 === ServiceMeshControlPlane
-In order to deploy the Istio Control Plane, create a *ServiceMeshControlPlane* such as the one in the following example.
+In order to deploy the Istio Control Plane, create a `ServiceMeshControlPlane` such as the one in the following example.
 The example below uses `istio-system` as the control plane project. For more information on the parameters and their
 configuration please see the link:../custom-install[custom installation documentation].
 
 {{< snippet_markdown name="istio_installation_minimal" >}}
 
-Once you have modified the *ServiceMeshControlPlane* to suit your installation you can deploy the resource using the following command,
+Once you have modified the `ServiceMeshControlPlane` to suit your installation you can deploy the resource using the following command,
 substituting istio-system if appropriate.
 
 ```
@@ -46,11 +40,17 @@ $ oc create -n istio-system -f <name of file>
 :leveloffset: +1
 Openshift web console can be used to create control plane and member roll custom resources. Please reference link:https://docs.openshift.com/container-platform/4.1/applications/operators/olm-creating-apps-from-installed-operators.html[documentation on creating applications from installed operators] for more details.
 
-Open the OpenShift web console in a Web browser. Create a new project. This example uses a project called `istio-system`. Navigate to *Catalogs* -> *Installed Operators*. Click *Copied* and click the Maistra Operator to view more actions. Under *Provided APIs* you will see that the Operator creates two resource types:
-* An Istio Service Mesh Control Plane
-* An Istio Service Mesh Member Roll
+To create a control plane, open the OpenShift web console in a Web browser and create a new project. This example uses a project called `istio-system`.
 
-In the *Istio Service Mesh Control Plane* box click *Create New*. This screen allows you to modify the minimal template of a `ServiceMeshControlPlane` object, such as the cluster size. Click *Create* to finalize. Create a `ServiceMeshMemberRoll` by choosing the *Istio Service Mesh Member Roll* box and repeating these actions.
+* Navigate to *Catalogs* -> *Installed Operators*.
+* Click *Copied* and click the `Maistra` operator to view more actions.
+* Under *Provided APIs*, you will see that the Operator creates two resource types:
+- An Istio Service Mesh Control Plane
+- An Istio Service Mesh Member Roll
+* In the *Istio Service Mesh Control Plane* box:
+- Click *Create New*. This screen allows you to modify the minimal template of a `ServiceMeshControlPlane` object, such as the cluster size.
+- Click *Create* to finalize.
+* Create a `ServiceMeshMemberRoll` by choosing the *Istio Service Mesh Member Roll* box and repeating these actions.
 
 :leveloffset: -1
 
@@ -66,12 +66,13 @@ In the *Istio Service Mesh Control Plane* box click *Create New*. This screen al
 === Removing a Control Plane
 
 {{% notice note %}}
-Subsitute the proper project below if the controlplane was created in a project other than istio-system.
+Subsitute the proper project below if the controlplane was created in a project other than `istio-system`.
 {{% /notice %}}
 
-The following steps will remove Istio from an existing installation. It can be executed by any user with access to delete the CustomResource.
+The following steps will remove Istio from an existing installation. It can be
+executed by any user in the `maistra-admin` `ClusterRoleBinding` for the control plane project.
 
-To get the name of the installed *ServiceMeshControlPlane*, type:
+To get the name of the installed `ServiceMeshControlPlane`, type:
 ```
 $ oc get servicemeshcontrolplanes -n istio-system
 ```
@@ -85,10 +86,17 @@ $ oc delete project istio-system
 The removal of the CustomResource will tell the Istio operator to begin uninstalling everything it installed.
 
 
-=== Removing the Control Plane using Catalog Web UI
+=== Removing a Control Plane using Catalog Web UI
 
 :leveloffset: +1
 
-Open the OpenShift web console in a Web browser and navigate to *Catalog* -> *Installed Operators*. Choose the `istio-system` from the Project menu. Click the menu on the `ServiceMeshMemberRoll` row. Click *Details* -> *Delete Service Mesh Member Roll*. Click the menu on the `ServiceMeshControlPlane` row. Click *Details* -> *Delete Service Mesh Control Plane*.
+To remove a control plane, open the OpenShift web console in a Web browser and:
+
+*  Navigate to *Catalog* -> *Installed Operators*.
+* Choose the `istio-system` from the Project menu.
+* Click the menu on the `ServiceMeshMemberRoll` row.
+* Click *Details* -> *Delete Service Mesh Member Roll*.
+* Click the menu on the `ServiceMeshControlPlane` row.
+* Click *Details* -> *Delete Service Mesh Control Plane*.
 
 :leveloffset: -1

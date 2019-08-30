@@ -18,7 +18,7 @@ $ oc get cm -n istio-system istio -o jsonpath='{.data.mesh}' | grep disablePolic
 * If you see `disablePolicyChecks: true`, policy checks have been disabled.
 
 ==== Enabling Policy Checks
-* Edit the Istio ConfigMap
+* Edit the Istio `ConfigMap`
 
 [source,bash]
 ----

@@ -13,10 +13,17 @@ Our source code can be found in the locations below.
 * Maistra.io -- https://github.com/maistra/maistra.github.io
 * Istio -- https://github.com/Maistra/istio
 * Operator -- https://github.com/Maistra/istio-operator
-* OC Application -- https://github.com/Maistra/origin
 * Proxy -- https://github.com/Maistra/proxy
+* CNI -- https://github.com/Maistra/istio-cni
+* Operator -- https://github.com/Maistra/istio-operator
 
 Upstream
 -------
 * Upstream Istio can be found at -- https://istio.io
 * A list of Istio working groups can be found at -- https://github.com/istio/community/blob/master/WORKING-GROUPS.md
+
+Documentation
+------------
+If you notice an issue in our documentation, please feel free to open a pull request or issue. Please note that we follow the
+OpenShift documentation style guide, located here: https://github.com/openshift/openshift-docs/blob/master/contributing_to_docs/doc_guidelines.adoc#writing-concepts.
+This allows us to create a common formatting standard across all of the documentation on the website. 

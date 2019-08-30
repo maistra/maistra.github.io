@@ -10,7 +10,7 @@ hidden: true
 
 
 {{% notice note %}}
-These instructions apply to OCP 3.11 on premises only.
+These instructions apply to `OpenShift 3.11` on premises only.
 {{% /notice %}}
 
 To access the private registry.redhat.io registry from OpenShift, please execute
@@ -22,7 +22,7 @@ $ docker login registry.redhat.io
 
 This will prompt you for your Red Hat username and password. After successfully
 entering your credentials, `~/.docker/config.json` will be generated with the
-credentials. Copy the config.json file to the /var/lib/origin/.docker directory
+credentials. Copy the `config.json` file to the `/var/lib/origin/.docker` directory
 on every node, creating the directory if it does not yet exist.
 
 
