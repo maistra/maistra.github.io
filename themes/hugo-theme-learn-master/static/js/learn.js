@@ -197,7 +197,7 @@ jQuery(document).ready(function () {
                                 return ""
                             }).filter(function (line) {
                                 return line != ""
-                            })
+                            }).join("\n")
                         return text;
                     }
                 });
