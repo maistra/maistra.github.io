@@ -8,7 +8,7 @@ hidden: true
 
 == Preparing the Installation
 
-Before Istio can be installed into an existing installation it is necessary to make a number of changes to the master configuration and each of the schedulable nodes.  These changes will enable features required within Istio and also ensure Elasticsearch will function correctly.
+Before Maistra can be installed into an existing installation it is necessary to make a number of changes to the master configuration and each of the schedulable nodes.  These changes will enable features required within Istio and also ensure Elasticsearch will function correctly.
 
 {{% notice info %}}
 The master/node updates discussed below are not necessary in OCP/OKD 4.1
