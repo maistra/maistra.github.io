@@ -6,16 +6,29 @@ description: "Service mesh provides features to applications through the istio-p
 weight: 3
 ---
 
-Upstream Istio community installations rely on the existence of a proxy sidecar within the application's pod to provide service mesh capabilities to the application. You can include the proxy sidecar by using a manual process before deployment. However, automatic injection ensures that your application contains the appropriate configuration for your service mesh at the time of its deployment.
+Istio installations rely on the existence of a proxy sidecar within the
+application's pod to provide service mesh capabilities to the application. 
+You can include the proxy sidecar by using a manual process before
+deployment. However, automatic injection ensures that your application contains
+the appropriate configuration for your service mesh at the time of its deployment.
 
 == Automatic Sidecar Injection
-Automatic injection of the sidecar is supported by using the _sidecar.istio.io/inject_ annotation within your application yaml file. Set the annotation's value to `true` for injection to occur.
+Automatic injection of the sidecar is supported by using the
+_sidecar.istio.io/inject_ annotation within your application
+yaml file as well as an entry in a `ServiceMeshMemberRoll`
+as defined in the link:../controlplane#servicemesh_member_roll[installation guide].
+
+=== Application Annotation
+
+Set the annotation's value to `true` for injection to occur.
 
 {{% notice info %}}
 Upstream Istio community installations require a specific label on the namespace after which all pods in that namespace are injected with the sidecar. The OpenShift Service Mesh approach requires you to opt in to injection using an annotation with no need to label namspaces. This method requires fewer privileges and does not conflict with other OpenShift capabilities such as builder pods.
 {{% /notice %}}
 
-This example shows the annotation used within the sleep test application. The additional proxy related containers are included when you create the application in the OpenShift cluster.
+This example shows the annotation used within the sleep test application. The
+additional proxy related containers are included when you create the application
+in the OpenShift cluster.
 
 [source,yaml]
 ----
