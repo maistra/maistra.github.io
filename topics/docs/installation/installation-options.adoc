@@ -306,9 +306,9 @@ If you intend to use a custom image, you must override all three values of `hub`
    tracing:
       enabled: true
       jaeger:
-        hub: jaegertracing
-        tag: v0.13.1
         template: all-in-one
+        memory:
+         max_traces: 100000
 ----
 
 [options="header"]
@@ -322,17 +322,43 @@ If you intend to use a custom image, you must override all three values of `hub`
 [options="header"]
 |======
 |Parameter |Description |Default
-|hub
+|`hub`
 |The hub that the Operator uses to pull Jaeger images
 |`jaegertracing/` or `registry.redhat.io/openshift-service-mesh/`
 |`tag`
 |The tag that the Operator uses to pull the Jaeger images
-|A valid container image tag.
 |`1.13.1`
 |`template`
 |The deployment template to use for Jaeger
 |`all-in-one`/`production-elasticsearch`
+|`memory->max_traces`
+| 100000
+| This sets the maximum number of traces.
 |======
+
+### [[Jaeger]] istio->tracing->jaeger->elasticSearch
+
+These parameters apply in the `production-elasticsearch` template only.
+[options="header"]
+|======
+|Parameter |Description |Default
+|`nodeCount`
+|The number of Elastic Search nodes to deploy
+|1
+|`resources->requests->memory`
+|The amount of memory to request
+|"16Gi"
+|`resources->requests->cpus`
+|The number of CPUs to request
+| "1"
+|`resources->limits->cpus`
+| The limit for the number of CPUs
+|
+|`resources->limits->memory`
+| The memory limit
+| "16Gi"
+|======
+
 ## 3scale
 {{% notice info %}}
 disablePolicyChecks must be false for 3scale to work.
