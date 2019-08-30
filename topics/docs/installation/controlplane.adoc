@@ -42,14 +42,14 @@ Openshift web console can be used to create control plane and member roll custom
 
 To create a control plane, open the OpenShift web console in a Web browser and create a new project. This example uses a project called `istio-system`.
 
-* Navigate to *Catalogs* -> *Installed Operators*. 
-* Click *Copied* and click the `Maistra` operator to view more actions. 
+* Navigate to *Catalogs* -> *Installed Operators*.
+* Click *Copied* and click the `Maistra` operator to view more actions.
 * Under *Provided APIs*, you will see that the Operator creates two resource types:
 - An Istio Service Mesh Control Plane
 - An Istio Service Mesh Member Roll
 * In the *Istio Service Mesh Control Plane* box:
-- Click *Create New*. This screen allows you to modify the minimal template of a `ServiceMeshControlPlane` object, such as the cluster size. 
-- Click *Create* to finalize. 
+- Click *Create New*. This screen allows you to modify the minimal template of a `ServiceMeshControlPlane` object, such as the cluster size.
+- Click *Create* to finalize.
 * Create a `ServiceMeshMemberRoll` by choosing the *Istio Service Mesh Member Roll* box and repeating these actions.
 
 :leveloffset: -1
@@ -69,7 +69,8 @@ To create a control plane, open the OpenShift web console in a Web browser and c
 Subsitute the proper project below if the controlplane was created in a project other than `istio-system`.
 {{% /notice %}}
 
-The following steps will remove Istio from an existing installation. It can be executed by any user with access to delete the CustomResource.
+The following steps will remove Istio from an existing installation. It can be
+executed by any user in the `maistra-admin` `ClusterRoleBinding` for the control plane project.
 
 To get the name of the installed `ServiceMeshControlPlane`, type:
 ```
@@ -91,11 +92,11 @@ The removal of the CustomResource will tell the Istio operator to begin uninstal
 
 To remove a control plane, open the OpenShift web console in a Web browser and:
 
-*  Navigate to *Catalog* -> *Installed Operators*. 
-* Choose the `istio-system` from the Project menu. 
-* Click the menu on the `ServiceMeshMemberRoll` row. 
-* Click *Details* -> *Delete Service Mesh Member Roll*. 
-* Click the menu on the `ServiceMeshControlPlane` row. 
+*  Navigate to *Catalog* -> *Installed Operators*.
+* Choose the `istio-system` from the Project menu.
+* Click the menu on the `ServiceMeshMemberRoll` row.
+* Click *Details* -> *Delete Service Mesh Member Roll*.
+* Click the menu on the `ServiceMeshControlPlane` row.
 * Click *Details* -> *Delete Service Mesh Control Plane*.
 
 :leveloffset: -1
