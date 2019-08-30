@@ -20,7 +20,7 @@ A route to access Grafana UI should already exist. Query openshift for details o
 
 ```
 
-Open http://grafana-istio-system.127.0.0.1.nip.io in a browser, you should see Grafana's home screen, similar to this:
+Open `http://grafana-istio-system.127.0.0.1.nip.io` in a browser. You should see Grafana's home screen, similar to this:
 
 image::grafana-home-screen.png[]
 
@@ -49,14 +49,14 @@ To see detailed metrics for a service click on a service name in the "Service" c
 
 image::grafana-services.png[]
 
-Note that "Tcp Bandwidth" metrics are empty, as Bookinfo uses http-based services only. Lower down on this dashboard are metrics for workloads that call this service (labeled "Client Workloads") and for worloads that process requests from the service (labeled "Service Workloads").
+Note that `Tcp Bandwidth` metrics are empty, as Bookinfo uses http-based services only. Lower down on this dashboard are metrics for workloads that call this service (labeled `Client Workloads`) and for worloads that process requests from the service (labeled `Service Workloads`).
 
 You can switch to a different service or filter metrics by client- and service-worloads by using drop-down lists at the top of the dashboard.
 
 
 == Istio Workload Metrics
 
-To switch to workloads dashboard, select "Istio Workload Dashboard" from the drop-down list in the top left corner of the screen. You should see a screen similar to this:
+To switch to workloads dashboard, select `Istio Workload Dashboard` from the drop-down list in the top left corner of the screen. You should see a screen similar to this:
 
 image::grafana-workloads.png[]
 

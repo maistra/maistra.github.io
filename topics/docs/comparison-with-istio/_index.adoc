@@ -47,4 +47,4 @@ Upstream Istio has two cluster scoped resources that it relies on. The MeshPolic
 * A *maistra-version* label has been added to all resources.
 * The *istio-multi* ServiceAccount and ClusterRoleBinding have been removed, as well as the *istio-reader* ClusterRole.
 * All Ingress resources have been converted to OpenShift Route resources.
-* Grafana, Tracing, and Kiali are enabled by default and exposed via OpenShift routes.
+* Grafana, Tracing (Jaeger), and Kiali are enabled by default and exposed via OpenShift routes.
