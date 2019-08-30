@@ -11,7 +11,8 @@ weight: 3
 
 == Customizing the Installation
 
-Maistra uses the istio-operator, a custom installer built around Istio's helm charts. Many of the parameters supported by the installer are shown below.
+Maistra uses the `istio-operator`, a custom installer built around Istio's helm
+charts. Many of the parameters supported by the installer are shown below.
 
 {{< snippet_markdown name="istio_installation_auth" >}}
 
@@ -71,7 +72,7 @@ disablePolicyChecks must be false for 3scale to work.
 |Parameter |Description |Default
 |image | This parameter controls the image to use for proxy-init.
 {{% notice info %}}
-This must be changed to proxy-init-centos7 if running on a RHEL7 host.
+This must be changed to proxy-init-centos7 if running on a RHEL 7 host.
 {{% /notice %}} 1.0.0 | proxy-init-ubi8
 |=======
 

@@ -1,4 +1,0 @@
-+++
-type = "customresource"
-title = "customresource"
-+++
