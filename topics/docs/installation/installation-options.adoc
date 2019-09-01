@@ -436,4 +436,4 @@ disablePolicyChecks must be false for 3scale to work.
 |=======
 
 
- For further options, see the link: https://istio.io/docs/reference/config/installation-options/[helm docs].
+For further options, see the link: https://istio.io/docs/reference/config/installation-options/[helm docs].
