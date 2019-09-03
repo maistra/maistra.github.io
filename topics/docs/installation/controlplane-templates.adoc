@@ -35,51 +35,63 @@ collection of `ServiceMeshControlPlane` files to use as templates. The name of t
 inherit from other templates until a template is reached which has an empty template field. Using a template name of `default` will override the
 default template for all control planes when no template is specified in a control plane.
 
-For example, create a ServiceMeshControlPlane and instead of using `oc apply` to create it in the cluster, save it in a
-directory called <templates-directory>. Follow the instructions below to create and configure a `ConfigMap` using this new
-template. Additional templates can be created the same way.
+For example, create a `ServiceMeshControlPlane` and instead of using `oc apply` to create it in the cluster, save it in a
+directory called `<templates-directory>`. Follow the instructions below to create and configure a `ConfigMap` containing this new
+template. Additional templates can be added to the `ConfigMap` as desired.
 
-```
- oc create configmap --from-file=templates-directory smcp-templates -n openshift-operators
-```
-Next, find and edit the operator deloyment in the operator cluster service version to
-instruct the operator to use the `smcp-templates` `ConfigMap`.
+----
+$ oc create configmap --from-file=<templates-directory> smcp-templates -n openshift-operators
+----
 
-```
-oc get clusterserviceversion -n openshift-operators | grep 'Service Mesh'
+Next, find the Maistra operator `ClusterServiceVersion` name. 
+
+----
+$ oc get clusterserviceversion -n openshift-operators | grep 'Service Mesh'
 maistra.v1.0.0            Red Hat OpenShift Service Mesh   1.0.0                Succeeded
+----
 
-oc edit clusterserviceversion -n openshift-operators maistra.v1.0.0
-```
+Edit the `ClusterServiceVersion` to instruct the operator to use the `smcp-templates` `ConfigMap`.
 
-In the editor, add a volume mount and volume as shown below.
+----
+$ oc edit clusterserviceversion -n openshift-operators maistra.v1.0.0
+----
 
-```
+In the editor, add a volume mount and volume to the deployments as shown below.
+
+[source, yaml]
+----
  deployments:
-        - name: istio-operator
-          spec:
-          ...
-                    volumeMounts:
-                      - mountPath: /home/istio-operator/.kube/cache/discovery
-                        name: discovery-cache
-                      - name: smcp-templates
-                        mountPath: /usr/local/share/istio-operator/templates/
-          ...
-                volumes:
-                  - emptyDir:
-                      medium: Memory
-                    name: discovery-cache
-                  - name: smcp-templates
-                    configMap:
-                      name: smcp-templates
-```
+    - name: istio-operator
+      spec:
+        template:
+          spec: 
+            containers:
+              volumeMounts:
+                - name: discovery-cache
+                  mountPath: /home/istio-operator/.kube/cache/discovery
+                - name: smcp-templates
+                  mountPath: /usr/local/share/istio-operator/templates/
+            volumes:
+              - name: discovery-cache
+                emptyDir:
+                  medium: Memory
+              - name: smcp-templates
+                configMap:
+                  name: smcp-templates
+  ...
+----
 
-Templates can now be referenced by adding a _template_ parameter to the `ServiceMeshControlPlane`.
-```
+You can now use templates in your `ServiceMeshControlPlane` by adding a
+`template` parameter to the `ServiceMeshControlPlane`. In the example below,
+we are including the `default` template, but you can use any template from the
+`smcp-templates` `ConfigMap` as well.
+
+[source, yaml]
+----
 apiVersion: maistra.io/v1
 kind: ServiceMeshControlPlane
 metadata:
   name: minimal-install
 spec:
   template: default
-```
+----

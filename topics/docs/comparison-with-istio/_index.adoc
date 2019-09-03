@@ -57,6 +57,11 @@ Upstream Istio has two cluster scoped resources that it relies on. The MeshPolic
 * _ServiceMeshPolicy_ replaces MeshPolicy for configuration of control-plane-wide authentication policies. This must be created in the same namespace as the control plane.
 * _ServicemeshRbacConfig_ replaces ClusterRbacConfig for configuration of control-plane-wide role based access control. This must be created in the same namespace as the control plane.
 
+For more information on how to use them, see these examples:
+
+- ServiceMeshPolicy: link:../../examples/mesh-wide_mtls/[Enabling Mesh-wide Strict mTLS]
+- ServiceMeshRbacConfig: link:../../examples/mesh-wide_rbac/[Enabling Mesh-wide RBAC Policy Enforcement].
+
 === Component Modifications
 
 * Godebug has been removed from all templates
