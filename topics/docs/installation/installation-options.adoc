@@ -20,7 +20,9 @@ charts. Many of the parameters supported by the installer are shown below.
 [options="header"]
 |=======
 |Parameter |Description |Default
-|template|A template references a ServiceMeshControlPlane referenced in the smcp-templates ConfigMap from which configuration should be inherited. | default
+|`template`
+|A template references a `ServiceMeshControlPlane` referenced in the `smcp-templates` `ConfigMap` from which configuration should be inherited. See link:{{< ref "controlplane-templates.adoc" >}}[template documentation] for details. 
+|default
 |=======
 
 ## [[istio_globals]] Istio Globals
@@ -29,15 +31,11 @@ charts. Many of the parameters supported by the installer are shown below.
 ----
   istio:
     global:
-      proxy_init:
-          image: proxy-init-ubi8
       hub: my-private-registry.com/custom-namespace
       tag: 1.0.0
       mtls:
         enabled: true
       proxy:
-        proxy_init:
-          image: maistra/proxy-init-ubi8
         resources:
           requests:
             cpu: 100m
@@ -55,34 +53,36 @@ charts. Many of the parameters supported by the installer are shown below.
 [options="header"]
 |=======
 |Parameter |Description |Default
-|disablePolicyChecks | This is a boolean indicating whether to enable policy checks. {{% notice info %}}
-disablePolicyChecks must be false for 3scale to work.
-{{% /notice %}} | true
-|policyCheckFailOpen | This is a boolean indicating wehther to traffic should be allowed through hwen the mixer policy service cannot be reached.  | false
-|hub| The hub to use to pull the Istio images.|maistra/ if deployment_type is origin and openshift-service-mesh/ if deployment_type is openshift
-|tag| The tag to use to pull the Istio images.| 1.0.0
-|imagePullSecrets|If access to the registry providing the Istio images is secure, then an link:https://kubernetes.io/docs/concepts/containers/images/#specifying-imagepullsecrets-on-a-pod[imagePullSecret] can be listed here.|none
-|dnsRefreshRate| The number of seconds to wait to refresn the DNS cache in an Envoy instance. | 300s
+|`disablePolicyChecks` 
+|This is a boolean indicating whether to enable policy checks. {{% notice info %}}
+`disablePolicyChecks` must be false for 3scale to work.
+{{% /notice %}} 
+| `true`
+|`policyCheckFailOpen` 
+|This is a boolean indicating wehther to traffic should be allowed through when the mixer policy service cannot be reached.  
+| false
+|`hub`
+|The hub to use to pull the Istio images.
+| `maistra/`
+|`tag`
+|The tag to use to pull the Istio images.
+| 1.0.0
+|`imagePullSecrets`
+|If access to the registry providing the Istio images is secure, then an link:https://kubernetes.io/docs/concepts/containers/images/#specifying-imagepullsecrets-on-a-pod[`imagePullSecret`] can be listed here.
+|none
+|`dnsRefreshRate`
+|The number of seconds to wait to refresn the DNS cache in an Envoy instance. 
+| 300s
 |=======
-
-### proxy_init
-
-[options="header"]
-|=======
-|Parameter |Description |Default
-|image | This parameter controls the image to use for proxy-init.
-{{% notice info %}}
-This must be changed to proxy-init-centos7 if running on a RHEL 7 host.
-{{% /notice %}} 1.0.0 | proxy-init-ubi8
-|=======
-
 
 ### mtls
 
 [options="header"]
 |=======
 |Parameter |Description |Default
-|enabled | This parameter controls whether to enable mTLS between services by default. | false
+|`enabled` 
+|This parameter controls whether to enable `mTLS` between services by default. 
+| false
 |=======
 
 ### proxy
@@ -92,8 +92,12 @@ These are the resources requested and may vary depending on your environment. Th
 [options="header"]
 |=======
 |Parameter |Description |Default
-|cpu | This is the number of CPUs that are requested in the environment.  | 100m
-|memory |This is the ammount of memory that is requested in the environment.  |128Mi
+|`cpu` 
+|This is the number of CPUs that are requested in the environment.  
+| 100m
+|`memory` 
+|This is the amount of memory that is requested in the environment.  
+|128Mi
 |=======
 
 #### resources -> limits
@@ -102,8 +106,12 @@ These are the resources requested and may vary depending on your environment. Th
 [options="header"]
 |=======
 |Parameter |Description |Default
-|cpu | This is the maximum number of CPUs that proxy is allowed to use.  | 2000m
-|memory |This is the ammount of memory that is requested in the environment.  |128Mi
+|`cpu` 
+|This is the maximum number of CPUs that proxy is allowed to use.  
+| 2000m
+|`memory` 
+|This is the amount of memory that is requested in the environment.  
+|128Mi
 |=======
 
 ## [[Gateways]] istio->gateways
@@ -128,9 +136,15 @@ These are the resources requested and may vary depending on your environment. Th
 [options="header"]
 |=======
 |Parameter |Description |Default
-|autoscaleEnabled | This parameter controls whether autoscaling is enabled. The example above disables it to allow running Maistra in a smaller environment. | true
-|autoscaleMin| This parameter controls the minimum pods to deploy based on the autoscaleEnabled setting. | 1
-|autoscaleMax| This parameter controls the minimum pods to deploy based on the autoscaleEnabled setting.| 5
+|`autoscaleEnabled` 
+|This parameter controls whether autoscaling is enabled. The example above disables it to allow running Maistra in a smaller environment. 
+| true
+|`autoscaleMin`
+|This parameter controls the minimum pods to deploy based on the `autoscaleEnabled` setting. 
+| 1
+|`autoscaleMax`
+|This parameter controls the minimum pods to deploy based on the `autoscaleEnabled` setting.
+| 5
 |=======
 
 ### istio-ingressgateway
@@ -138,10 +152,15 @@ These are the resources requested and may vary depending on your environment. Th
 [options="header"]
 |=======
 |Parameter |Description |Default
-|autoscaleEnabled | This parameter controls whether autoscaling is enabled. The example above disables it to allow running Maistra in a smaller environment. | true
-|autoscaleMin| This parameter controls the minimum pods to deploy based on the autoscaleEnabled setting. | 1
-|autoscaleMax| This parameter controls the minimum pods to deploy based on the autoscaleEnabled setting.| 5
-|ior_enabled| This parameter controls whether Istio routes should automatically be configured in OpenShift. | false
+|`autoscaleEnabled` 
+|This parameter controls whether autoscaling is enabled. The example above disables it to allow running Maistra in a smaller environment. 
+| true
+|`autoscaleMin`
+|This parameter controls the minimum pods to deploy based on the `autoscaleEnabled setting`. 
+| 1
+|`autoscaleMax`
+|This parameter controls the minimum pods to deploy based on the `autoscaleEnabled` setting.
+| 5
 |=======
 
 ## [[Mixer]] istio->mixer
@@ -167,8 +186,12 @@ These are the resources requested and may vary depending on your environment. Th
 [options="header"]
 |=======
 |Parameter |Description |Default
-|enabled| This parameter controls whether to enable Mixer.| true
-|autoscaleEnabled| This parameter controls whether autoscaling is enabled. The example above disables it to allow running Maistra in a smaller environment. | false
+|`enabled`
+|This parameter controls whether to enable Mixer.
+| `true`
+|`autoscaleEnabled`
+|This parameter controls whether autoscaling is enabled. The example above disables it to allow running Maistra in a smaller environment. 
+| `false`
 |=======
 
 ### telemetry
@@ -178,8 +201,12 @@ These are the resources requested and may vary depending on your environment. Th
 [options="header"]
 |=======
 |Parameter |Description |Default
-|cpu|This is the number of CPUs that are requested in the environment.  | 1000m
-|memory| This is the ammount of memory that is requested in the environment. | 1G
+|`cpu`
+|This is the number of CPUs that are requested in the environment.  
+| 1000m
+|`memory`
+|This is the amount of memory that is requested in the environment. 
+| 1G
 |=======
 
 #### resources -> limits
@@ -188,8 +215,12 @@ These are the resources requested and may vary depending on your environment. Th
 [options="header"]
 |=======
 |Parameter |Description |Default
-|cpu|This is the maximum number of CPUs that telemetry is allowed to use.  | 4800m
-|memory| This is the maximum ammount of memory that telemetry is allowed to use. | 4G
+|`cpu`
+|This is the maximum number of CPUs that telemetry is allowed to use.  
+| 4800m
+|`memory`
+|This is the maximum amount of memory that telemetry is allowed to use. 
+| 4G
 |=======
 
 ## [[Pilot]] istio->pilot
@@ -207,9 +238,15 @@ These are the resources requested and may vary depending on your environment.
 [options="header"]
 |=======
 |Parameter |Description |Default
-|cpu|This is the number of CPUs that are requested in the environment. | 500m
-|memory|This is the ammount of memory that is requested in the environment. | 2048Mi
-|traceSampling|This value controls how often random sampling should occur. Increase for development/testing.|1.0
+|`cpu`
+|This is the number of CPUs that are requested in the environment. 
+| 500m
+|`memory`
+|This is the amount of memory that is requested in the environment. 
+| 2048Mi
+|`traceSampling`
+|This value controls how often random sampling should occur. Increase for development/testing.
+|1.0
 |=======
 
 ## [[Kiali]] istio->kiali
@@ -228,14 +265,22 @@ These are the resources requested and may vary depending on your environment.
 [options="header"]
 |=======
 |Parameter |Description |Default
-|enabled|This enables or disables Kiali in the environment. | true
-|hub|The hub to use to pull the Kiali images.| Delegates to Kiali operator
-|image|The name of the Kiali image| Delegates to Kiali operator
-|tag| The tag to use to pull the Kiali images | Delegates to Kiali operator
+|`enabled`
+|This enables or disables Kiali in the environment. 
+| `true`
+|`hub`
+|The hub to use to pull the Kiali images.
+| Delegates to Kiali operator
+|`image`
+|The name of the Kiali image
+| Delegates to Kiali operator
+|`tag`
+|The tag to use to pull the Kiali images 
+| Delegates to Kiali operator
 |=======
 
 {{% notice tip %}}
-If you intend to use a custom image, you must override all three values of hub, image and tag above.
+If you intend to use a custom image, you must override all three values of `hub`, `image` and `tag` above.
 {{% /notice %}}
 
 ### istio->kiali->dashboard
@@ -243,9 +288,15 @@ If you intend to use a custom image, you must override all three values of hub, 
 [options="header"]
 |=======
 |Parameter |Description |Default
-|viewOnlyMode|Whether the Kiali dashboard should be in a view-only mode, not allowing any changes to the Service Mesh to be made | false
-|grafanaURL|Sets the URL for Grafana | none
-|jaegerURL|Sets the URL for Jaeger | none
+|`viewOnlyMode`
+|Whether the Kiali dashboard should be in a view-only mode, not allowing any changes to the Service Mesh to be made 
+| `false`
+|`grafanaURL`
+|Sets the URL for Grafana 
+| none
+|`jaegerURL`
+|Sets the URL for Jaeger 
+| none
 |=======
 
 ## [[Tracing]] istio->tracing
@@ -255,9 +306,9 @@ If you intend to use a custom image, you must override all three values of hub, 
    tracing:
       enabled: true
       jaeger:
-        hub: jaegertracing
-        tag: v0.13.1
         template: all-in-one
+        memory:
+         max_traces: 100000
 ----
 
 [options="header"]
@@ -271,17 +322,43 @@ If you intend to use a custom image, you must override all three values of hub, 
 [options="header"]
 |======
 |Parameter |Description |Default
-|hub
+|`hub`
 |The hub that the Operator uses to pull Jaeger images
 |`jaegertracing/` or `registry.redhat.io/openshift-service-mesh/`
 |`tag`
 |The tag that the Operator uses to pull the Jaeger images
-|A valid container image tag.
 |`1.13.1`
 |`template`
 |The deployment template to use for Jaeger
 |`all-in-one`/`production-elasticsearch`
+|`memory->max_traces`
+| 100000
+| This sets the maximum number of traces.
 |======
+
+### [[Jaeger]] istio->tracing->jaeger->elasticSearch
+
+These parameters apply in the `production-elasticsearch` template only.
+[options="header"]
+|======
+|Parameter |Description |Default
+|`nodeCount`
+|The number of Elastic Search nodes to deploy
+|1
+|`resources->requests->memory`
+|The amount of memory to request
+|"16Gi"
+|`resources->requests->cpus`
+|The number of CPUs to request
+| "1"
+|`resources->limits->cpus`
+| The limit for the number of CPUs
+|
+|`resources->limits->memory`
+| The memory limit
+| "16Gi"
+|======
+
 ## 3scale
 {{% notice info %}}
 disablePolicyChecks must be false for 3scale to work.
@@ -311,22 +388,52 @@ disablePolicyChecks must be false for 3scale to work.
 [options="header"]
 |=======
 |Parameter |Description |Default
-|enabled|This controls whether to enable 3scale. | false
-|PARAM_THREESCALE_LISTEN_ADDR|This sets the listen address for the gRPC server.|3333
-|PARAM_THREESCALE_LOG_LEVEL|This sets the minimum log output level. Accepted values are one of debug,info,warn,error,none|info
-|PARAM_THREESCALE_LOG_JSON|This controls whether the log is formatted as JSON|true
-|PARAM_THREESCALE_LOG_GRPC|This controls whether the log includes gRPC info|false
-|PARAM_THREESCALE_REPORT_METRICS|This controls whether the 3scale system and backend metrics are collected and reported to Prometheus.|true
-|PARAM_THREESCALE_METRICS_PORT|This sets the port which 3scale /metrics endpoint can be scraped from.|8080
-|PARAM_THREESCALE_CACHE_TTL_SECONDS|This is the time period, in seconds, to wait before purging expired items from the cache.|300
-|PARAM_THREESCALE_CACHE_REFRESH_SECONDS|This is the time period before expiry, when cache elements are attempted to be refreshed.|180
-|PARAM_THREESCALE_CACHE_ENTRIES_MAX|This is the ax number of items that can be stored in the cache at any time. Set to 0 to disable caching.|1000
-|PARAM_THREESCALE_CACHE_REFRESH_RETRIES|This sets the number of times unreachable hosts will be retried during a cache update loop.|1
-|PARAM_THREESCALE_ALLOW_INSECURE_CONN|This controls whether to allow certificate verification when calling 3scale APIs. Enabling is not recommended.| false
-|PARAM_THREESCALE_CLIENT_TIMEOUT_SECONDS|This sets the number of seconds to wait before terminating requests to 3scale System and the backend|10
-|PARAM_THREESCALE_GRPC_CONN_MAX_SECONDS|This sets the maximum amount of seconds (+/-10% jitter) a connection may exist before it will be closed|60
-|hub| The repository to use to pull 3Scale images. | `quay.io/3scale` or `registry.redhat.io/openshift-service-mesh`
+|`enabled`
+|This controls whether to enable 3scale. 
+| `false`
+|`PARAM_THREESCALE_LISTEN_ADDR`
+|This sets the listen address for the gRPC server.
+|3333
+|`PARAM_THREESCALE_LOG_LEVEL`
+|This sets the minimum log output level. Accepted values are one of `debug`, `info`, `warn`, `error`, and `none`
+|`info`
+|`PARAM_THREESCALE_LOG_JSON`
+|This controls whether the log is formatted as JSON
+|`true`
+|`PARAM_THREESCALE_LOG_GRPC`
+|This controls whether the log includes gRPC information
+|`false`
+|`PARAM_THREESCALE_REPORT_METRICS`
+|This controls whether the 3scale system and backend metrics are collected and reported to Prometheus.
+|`true`
+|`PARAM_THREESCALE_METRICS_PORT`
+|This sets the port which 3scale `/metrics` endpoint can be scraped from.
+|8080
+|`PARAM_THREESCALE_CACHE_TTL_SECONDS`
+|This is the time period, in seconds, to wait before purging expired items from the cache.
+|300
+|`PARAM_THREESCALE_CACHE_REFRESH_SECONDS`
+|This is the time period before expiry, when cache elements are attempted to be refreshed.
+|180
+|`PARAM_THREESCALE_CACHE_ENTRIES_MAX`
+|This is the max number of items that can be stored in the cache at any time. Set to 0 to disable caching.
+|1000
+|`PARAM_THREESCALE_CACHE_REFRESH_RETRIES`
+|This sets the number of times unreachable hosts will be retried during a cache update loop.
+|1
+|`PARAM_THREESCALE_ALLOW_INSECURE_CONN`
+|This controls whether to allow certificate verification when calling 3scale APIs. Enabling is not recommended.
+| `false`
+|`PARAM_THREESCALE_CLIENT_TIMEOUT_SECONDS`
+|This sets the number of seconds to wait before terminating requests to 3scale System and the backend
+|10
+|`PARAM_THREESCALE_GRPC_CONN_MAX_SECONDS`
+|This sets the maximum number of seconds (+/-10% jitter) a connection may exist before it will be closed
+|60
+|`hub`
+|The repository to use to pull 3Scale images. 
+| `quay.io/3scale` or `registry.redhat.io/openshift-service-mesh`
 |=======
 
 
- For further options, see the link: https://istio.io/docs/reference/config/installation-options/[helm docs].
+For further options, see the link: https://istio.io/docs/reference/config/installation-options/[helm docs].

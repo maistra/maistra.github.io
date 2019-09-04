@@ -13,12 +13,12 @@ Maistra requires the ElasticSearch, Jaeger, and Kiali operators to be installed 
 
 Open the OpenShift web console in a Web browser and:
 
-* Navigate to *Catalog* -> *OperatorHub*. 
-* Select the community Maistra Operator to display information about the Operator. 
-* Click *Install*. On the `Create Operator Subscription` page, selecting `All namespaces on the cluster (default)`. 
+* Navigate to *Catalog* -> *OperatorHub*.
+* Select the community Maistra Operator to display information about the Operator.
+* Click *Install*. On the `Create Operator Subscription` page, selecting `All namespaces on the cluster (default)`.
 * Select either `Automatic` or `Manual` approval strategy. Click *Subscribe*.
 
-This installs the Maistra operator and makes it available to all projects in the cluster. 
+This installs the Maistra operator and makes it available to all projects in the cluster.
 
 
 :leveloffset: -1
@@ -44,10 +44,23 @@ istio-operator-5cd6bcf645-fvb57   1/1       Running   0          1h
 
 Open the OpenShift web console in a Web browser and:
 
-* Navigate to *Catalog* -> *Operator Management*. 
-* Select the `openshift-operators` project from the `Projects` drop-down. 
-* Locate the `Maistra` operator and click *View Subscription*. 
+* Navigate to *Catalog* -> *Operator Management*.
+* Select the `openshift-operators` project from the `Projects` drop-down.
+* Locate the `Maistra` operator and click *View Subscription*.
 * Click the *More Operations* menu and select *Remove Subscription*.
+
+The Maistra operator creates a number of resources that are not managed by OLM
+(OperatorHub). These must be removed manually after uninstalling the Maistra
+operator.  As a cluster administrator, execute the following commands.
+
+[source, bash]
+----
+$ oc delete  validatingwebhookconfiguration/<operator-namespace>.servicemesh-resources.maistra.io
+$ oc delete -n <operator-namespace> daemonset/istio-node
+$ oc delete clusterrole/istio-admin
+$ oc get crds -o name | grep '.*\.istio\.io' |xargs -r -n 1 oc delete
+$ oc get crds -o name | grep '.*\.maistra\.io' |xargs -r -n 1 oc delete
+----
 
 :leveloffset: -1
 
@@ -57,9 +70,9 @@ Open the OpenShift web console in a Web browser and:
 
 Open the OpenShift web console in a Web browser and:
 
-* Navigate to *Catalog* -> *Operator Management*. 
-* Select the `openshift-operators` project from the `Projects` drop-down. 
-* Locate the `Kiali` operator and click *View Subscription*. 
+* Navigate to *Catalog* -> *Operator Management*.
+* Select the `openshift-operators` project from the `Projects` drop-down.
+* Locate the `Kiali` operator and click *View Subscription*.
 * Click the *More Operations* menu and select *Remove Subscription*.
 
 :leveloffset: -1
@@ -70,9 +83,9 @@ Open the OpenShift web console in a Web browser and:
 
 Open the OpenShift web console in a Web browser and:
 
-* Navigate to *Catalog* -> *Operator Management*. 
-* Select the `openshift-operators` project from the `Projects` drop-down. 
-* Locate the `Jaeger` operator and click *View Subscription*. 
+* Navigate to *Catalog* -> *Operator Management*.
+* Select the `openshift-operators` project from the `Projects` drop-down.
+* Locate the `Jaeger` operator and click *View Subscription*.
 * Click the *More Operations* menu and select *Remove Subscription*.
 
 :leveloffset: -1
@@ -83,9 +96,9 @@ Open the OpenShift web console in a Web browser and:
 
 Open the OpenShift web console in a Web browser and:
 
-* Navigate to *Catalog* -> *Operator Management*. 
+* Navigate to *Catalog* -> *Operator Management*.
 * Select the `openshift-operators` project from the `Projects` drop-down.
-* Locate the `Elasticsearch` operator and click *View Subscription*. 
+* Locate the `Elasticsearch` operator and click *View Subscription*.
 * Click the *More Operations* menu and select *Remove Subscription*.
 
 :leveloffset: -1

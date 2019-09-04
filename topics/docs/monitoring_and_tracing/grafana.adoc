@@ -49,13 +49,13 @@ To see detailed metrics for a service click on a service name in the "Service" c
 
 image::grafana-services.png[]
 
-Note that "Tcp Bandwidth" metrics are empty, as Bookinfo uses http-based 
+Note that `Tcp Bandwidth` metrics are empty, as Bookinfo uses http-based 
 services only. Lower down on this dashboard are metrics for workloads that
-call this service (labeled "Client Workloads") and for worloads that process
-requests from the service (labeled "Service Workloads").
+call this service (labeled `Client Workloads`) and for worloads that process
+requests from the service (labeled `Service Workloads`).
 
-You can switch to a different service or filter metrics by client- and
-service-worloads by using drop-down lists at the top of the dashboard.
+You can switch to a different service or filter metrics by `client-workloads` and
+`service-worloads` by using drop-down lists at the top of the dashboard.
 
 
 == Istio Workload Metrics
