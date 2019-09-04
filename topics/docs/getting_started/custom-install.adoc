@@ -277,12 +277,10 @@ These are the resources requested and may vary depending on your environment.
 |======
 |Parameter |Description |Default
 |hub
-|The hub that the Operator uses to pull Jaeger images
-|A valid image repo
+|The hub that the Operator uses to pull Jaeger images. Any valid image repo
 |`jaegertracing/` or `registry.redhat.io/openshift-istio-tech-preview/`
 |`tag`
-|The tag that the Operator uses to pull the Jaeger images
-|A valid container image tag.
+|The tag that the Operator uses to pull the Jaeger images. Any valid container image tag.
 |`1.13.1`
 |`template`
 |The deployment template to use for Jaeger
