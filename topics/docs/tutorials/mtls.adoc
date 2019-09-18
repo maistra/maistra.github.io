@@ -68,7 +68,7 @@ Executing curl in curl pod
 
 ----
 
-=== Kiali’s Graph
+=== Kiali's Graph
 
 Within the Kiali UI select the Graph option from the left hand navigation and
 then choose:
