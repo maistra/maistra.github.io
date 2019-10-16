@@ -100,3 +100,22 @@ To remove a control plane, open the OpenShift web console in a Web browser and:
 * Click *Details* -> *Delete Service Mesh Control Plane*.
 
 :leveloffset: -1
+
+== Upgrading a control plane
+
+If you installed the Maistra operator using the `Automatic Approval Strategy`,
+then the operator and control plane will update automatically. If not, then you
+will have to manually upgrade each of the operators.  In either case, the
+application sidecars must be updated separately from the control plane. 
+
+If your deployment is using using automatic injection, then the application
+only needs to be restarted in order to update the pod. Execute the following to
+update the deployment and trigger an update for all pods that are part of the
+deployment: 
+
+```
+$ oc patch deployment/<deployment> -p '{"spec":{"template":{"metadata":{"annotations":{"kubectl.kubernetes.io/restartedAt": "'`date -Iseconds`'"}}}}}'
+```
+
+If your deployment uses manual injection, you must manually update the sidecars
+by modifying the sidecar container image specified in the deployment or pod.
