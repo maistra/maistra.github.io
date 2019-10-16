@@ -183,19 +183,19 @@ oc delete project istio-operator
 
 == Upgrading from a Pre-Existing Installation
 
-To upgrade Istio, please <<remove_control_plane, remove *ServiceMeshControlPlane*>>  and then create a one. The operator will upgrade appropriately.
+If you installed the Maistra operator using the `Automatic Approval Strategy`,
+then the operator and control plane will update automatically. If not, then you
+will have to manually upgrade each of the operators.  In either case, the
+application sidecars must be updated separately from the control plane. 
 
-To upgrade the operator, please first <<remove_operator, remove the operator>> and then reinstall it. Note that Istio must be removed before the operator.
-
-{{% notice note %}}
-If the operator was removed before the *ServiceMeshControlPlane*, you can uninstall the control plane manually. Using the instructions below
-{{% /notice %}}
+If your deployment is using using automatic injection, then the application
+only needs to be restarted in order to update the pod. Execute the following to
+update the deployment and trigger an update for all pods that are part of the
+deployment: 
 
 ```
-oc delete csr istio-sidecar-injector.istio-system
-oc get crd  | grep istio | awk '{print $1}' | xargs oc delete crd
-oc get mutatingwebhookconfigurations  | grep istio | awk '{print $1}' | xargs oc delete mutatingwebhookconfigurations
-oc get validatingwebhookconfiguration  | grep istio | awk '{print $1}' | xargs oc delete validatingwebhookconfiguration
-oc get clusterroles  | grep istio | awk '{print $1}' | xargs oc delete clusterroles
-oc get clusterrolebindings  | grep istio | awk '{print $1}' | xargs oc delete clusterrolebindings
+$ oc patch deployment/<deployment> -p '{"spec":{"template":{"metadata":{"annotations":{"kubectl.kubernetes.io/restartedAt": "'`date -Iseconds`'"}}}}}'
 ```
+
+If your deployment uses manual injection, you must manually update the sidecars
+by modifying the sidecar container image specified in the deployment or pod.
