@@ -368,6 +368,9 @@ disablePolicyChecks must be false for 3scale to work.
 ----
     threeScale:
         enabled: false
+        hub: quay.io/3scale
+        image: 3scale-istio-adapter
+        tag: v1.0.0
         PARAM_THREESCALE_LISTEN_ADDR: 3333
         PARAM_THREESCALE_LOG_LEVEL: info
         PARAM_THREESCALE_LOG_JSON: true
@@ -381,8 +384,6 @@ disablePolicyChecks must be false for 3scale to work.
         PARAM_THREESCALE_ALLOW_INSECURE_CONN: false
         PARAM_THREESCALE_CLIENT_TIMEOUT_SECONDS: 10
         PARAM_THREESCALE_GRPC_CONN_MAX_SECONDS: 60
-        tag: v1.0.0
-        hub: quay.io/3scale
 ----
 
 [options="header"]
@@ -391,6 +392,15 @@ disablePolicyChecks must be false for 3scale to work.
 |`enabled`
 |This controls whether to enable 3scale. 
 | `false`
+|`hub`
+|The repository to use to pull 3Scale images. 
+| `quay.io/3scale` or `registry.redhat.io/openshift-service-mesh`
+|`image`
+|The image to use for the 3Scale adapter. 
+| `3scale-istio-adapter` or `3scale-istio-adapter-rhel8`
+|`tag`
+|The image tag to use.
+| `v1.0.0` (for community) or `1.0.0` (product)
 |`PARAM_THREESCALE_LISTEN_ADDR`
 |This sets the listen address for the gRPC server.
 |3333
@@ -430,9 +440,6 @@ disablePolicyChecks must be false for 3scale to work.
 |`PARAM_THREESCALE_GRPC_CONN_MAX_SECONDS`
 |This sets the maximum number of seconds (+/-10% jitter) a connection may exist before it will be closed
 |60
-|`hub`
-|The repository to use to pull 3Scale images. 
-| `quay.io/3scale` or `registry.redhat.io/openshift-service-mesh`
 |=======
 
 
