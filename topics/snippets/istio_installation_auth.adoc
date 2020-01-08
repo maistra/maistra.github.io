@@ -11,6 +11,12 @@ spec:
   # default values (i.e. no values will be specified for that element, not even
   # the defaults baked into the chart values.yaml).
   istio:
+    global:
+      # the following lines enable tls across the control and data planes
+      controlPlaneSecurityEnabled: true
+      mtls:
+        enabled: true
+        
   threeScale:
     enabled: false
     hub: quay.io/3scale
@@ -29,12 +35,6 @@ spec:
     PARAM_THREESCALE_ALLOW_INSECURE_CONN: false
     PARAM_THREESCALE_CLIENT_TIMEOUT_SECONDS: 10
     PARAM_THREESCALE_GRPC_CONN_MAX_SECONDS: 60
-    global:
-      # the following lines enable tls across the control and data planes
-      controlPlaneSecurityEnabled: true
-      mtls:
-        enabled: true
-
       proxy:
         # constrain resources for use in smaller environments
         resources:
