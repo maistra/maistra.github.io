@@ -161,6 +161,9 @@ These are the resources requested and may vary depending on your environment. Th
 |`autoscaleMax`
 |This parameter controls the minimum pods to deploy based on the `autoscaleEnabled` setting.
 | 5
+|`ior_enabled`
+|This parameter controls whether IOR is enabled. link:../../comparison-with-istio/ior/[Learn more about IOR].
+| false
 |=======
 
 ## [[Mixer]] istio->mixer
