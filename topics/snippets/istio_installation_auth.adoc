@@ -81,9 +81,5 @@ spec:
         # if required. only one instance may use agentStrategy=DaemonSet
         #agentStrategy: DaemonSet
 
-  threeScale:
-    enabled: false
-    hub: quay.io/3scale
-    image: 3scale-istio-adapter
-    tag: v1.0.0
+  threeScale: enabled: false
 ----
