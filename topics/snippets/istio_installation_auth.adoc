@@ -81,5 +81,6 @@ spec:
         # if required. only one instance may use agentStrategy=DaemonSet
         #agentStrategy: DaemonSet
 
-  threeScale: enabled: false
+  threeScale:
+    enabled: false
 ----
