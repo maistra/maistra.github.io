@@ -21,7 +21,7 @@ Creating the following resource in your control plane's namespace will enable RB
 
 [source,yaml]
 ----
-apiVersion: "maistra/v1"
+apiVersion: "rbac.maistra.io/v1"
 kind: ServiceMeshRbacConfig
 metadata:
   name: default
