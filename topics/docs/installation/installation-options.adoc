@@ -296,6 +296,9 @@ These are the resources requested and may vary depending on your environment.
 |`tag`
 |The tag to use to pull the Kiali images 
 | Delegates to Kiali operator
+|`jaegerInClusterURL`
+|The URL used by Kiali to query Jaeger. This will be automatically set by the operator if you deploy Jaeger using `tracing.enabled: true`
+| none
 |=======
 
 {{% notice tip %}}
