@@ -12,15 +12,6 @@ and `ServiceMeshControlPlane` resources. The _ServiceMeshMemberRoll_ lists the p
 to the control plane while the _ServiceMeshControlPlane_ lists the configuration to use during installation.
 `ServiceMeshControlPlane` can be shortened to `smcp` and `ServiceMeshMemberRoll` can be shortened to `smmr`.
 
-=== ServiceMeshMemberRoll
-The `ServiceMeshMemberRoll` resource configures which projects belong to a control plane.
-Only projects listed in the `ServiceMeshMemberRoll` will be affected by the control plane.
-Any number of projects can be added, but a project may not exist in more than one control plane.
-This resource must be created in the same project as the `ServicemeshControlPlane` resource
-and must be named default. An example resource can be seen below:
-
-{{< snippet_markdown name="istio_installation_smmr" >}}
-
 === ServiceMeshControlPlane
 In order to deploy the Istio Control Plane, create a `ServiceMeshControlPlane` such as the one in the following example.
 The example below uses `istio-system` as the control plane project. For more information on the parameters and their
