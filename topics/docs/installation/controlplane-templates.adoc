@@ -3,7 +3,7 @@ title: "Control Plane Templates"
 type: "document"
 category: "Getting started"
 description: "This document describes how to take advantage of templates to create reusable, extendable common configurations for groups of users."
-weight: 4
+weight: 6
 ---
 == Control Plane Templates
 Templates allow a cluster administrator to create reusable configurations that users may extend with their own customizations.

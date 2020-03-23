@@ -1,0 +1,53 @@
+---
+title: "Adding projects to the service mesh"
+type: "document"
+category: "Getting started"
+description: "These instructions will show you how to add an application project/namespace to the service mesh."
+weight: 3
+---
+
+== Introduction
+
+To associate a project that contains your application with a Maistra Control Plane,
+two methods are supported:
+
+* Specify the project in a `ServiceMeshMemberRoll` object.
+* Add a `ServiceMeshMember` object to the project.
+
+=== ServiceMeshMemberRoll
+The `ServiceMeshMemberRoll` resource configures which projects belong to a control plane.
+Only projects listed in the `ServiceMeshMemberRoll` will be affected by the control plane.
+Any number of projects can be added, but a project may not exist in more than one control plane.
+This resource must be created in the same project as the `ServicemeshControlPlane` resource
+and must be named default. An example resource can be seen below:
+
+{{< snippet_markdown name="istio_installation_smmr" >}}
+
+=== ServiceMeshMember
+The `ServiceMeshMember` resource marks the project in which it is created as a
+member of the service mesh it references. Creating the `ServiceMeshMember` resource
+causes the namespace to be added to the `ServiceMeshMemberRoll`.
+
+An example resource can be seen below:
+
+{{< snippet_markdown name="istio_installation_smm" >}}
+
+Unlike the `ServiceMeshMemberRoll` resource, which is created by the service mesh
+administrator, `ServiceMeshMember` resources are created by service mesh users.
+While project administrators are automatically given permission to create the
+`ServiceMeshMember` resource in their project, they are not allowed to point it
+to any `ServiceMeshControlPlane` until the service mesh administrator explicitly
+grants access to the service mesh via RBAC. This is done by modifying the
+`mesh-users` `RoleBinding` in the control plane project.
+
+The `RoleBinding` is created by the operator after the administrator creates the
+`ServiceMeshControlPlane` resource, but the administrator can also create
+it beforehand (at the same time as the `ServiceMeshControlPlane` resource, for
+example).
+
+An example of the `RoleBinding` is shown below:
+
+{{< snippet_markdown name="istio_installation_rolebinding" >}}
+
+
+

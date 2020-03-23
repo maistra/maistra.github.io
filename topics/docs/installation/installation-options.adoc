@@ -3,7 +3,7 @@ title: "Installation Options"
 type: "document"
 category: "Getting started"
 description: "This is a full listing of additional options available for a Maistra installation."
-weight: 3
+weight: 5
 ---
 
 
