@@ -18,7 +18,7 @@ two methods are supported:
 The `ServiceMeshMemberRoll` resource configures which projects belong to a control plane.
 Only projects listed in the `ServiceMeshMemberRoll` will be affected by the control plane.
 Any number of projects can be added, but a project may not exist in more than one control plane.
-This resource must be created in the same project as the `ServicemeshControlPlane` resource
+This resource must be created in the same project as the `ServiceMeshControlPlane` resource
 and must be named default. An example resource can be seen below:
 
 {{< snippet_markdown name="istio_installation_smmr" >}}
@@ -26,7 +26,8 @@ and must be named default. An example resource can be seen below:
 === ServiceMeshMember
 The `ServiceMeshMember` resource marks the project in which it is created as a
 member of the service mesh it references. Creating the `ServiceMeshMember` resource
-causes the namespace to be added to the `ServiceMeshMemberRoll`.
+causes the project to be added to the `ServiceMeshMemberRoll` that resides in
+the same project as the referenced `ServiceMeshControlPlane`.
 
 An example resource can be seen below:
 
@@ -40,10 +41,10 @@ to any `ServiceMeshControlPlane` until the service mesh administrator explicitly
 grants access to the service mesh via RBAC. This is done by modifying the
 `mesh-users` `RoleBinding` in the control plane project.
 
-The `RoleBinding` is created by the operator after the administrator creates the
-`ServiceMeshControlPlane` resource, but the administrator can also create
-it beforehand (at the same time as the `ServiceMeshControlPlane` resource, for
-example).
+The `RoleBinding` is created by the Maistra operator after the administrator
+creates the `ServiceMeshControlPlane` resource, but the administrator can also
+create it beforehand (at the same time as the `ServiceMeshControlPlane` resource,
+for example).
 
 An example of the `RoleBinding` is shown below:
 
