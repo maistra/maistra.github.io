@@ -16,7 +16,7 @@ charts. Many of the parameters supported by the installer are shown below.
 
 {{< snippet_markdown name="istio_installation_auth" >}}
 
-## General Parameters
+== General Parameters
 [options="header"]
 |=======
 |Parameter |Description |Default
@@ -25,7 +25,8 @@ charts. Many of the parameters supported by the installer are shown below.
 |default
 |=======
 
-## [[istio_globals]] Istio Globals
+[[istio_globals]]
+== Istio Globals
 
 [source,yaml]
 ----
@@ -75,7 +76,7 @@ charts. Many of the parameters supported by the installer are shown below.
 | 300s
 |=======
 
-### mtls
+=== mtls
 
 [options="header"]
 |=======
@@ -85,8 +86,11 @@ charts. Many of the parameters supported by the installer are shown below.
 | false
 |=======
 
-### proxy
-#### resources->requests
+=== proxy
+
+[[proxy_resources_requests]]
+==== resources->requests
+
 These are the resources requested and may vary depending on your environment. The example above allows Maistra to run in a smaller environment.
 
 [options="header"]
@@ -100,7 +104,9 @@ These are the resources requested and may vary depending on your environment. Th
 |128Mi
 |=======
 
-#### resources -> limits
+[[proxy_resources_limits]]
+==== resources -> limits
+
 These are the resources requested and may vary depending on your environment. The example above allows Maistra to run in a smaller environment.
 
 [options="header"]
@@ -114,24 +120,25 @@ These are the resources requested and may vary depending on your environment. Th
 |128Mi
 |=======
 
-## [[Gateways]] istio->gateways
+[[Gateways]]
+== istio->gateways
 
 [source,yaml]
 ----
- gateways:
-      istio-egressgateway:
-        autoscaleEnabled: false
-        autoscaleMin: 1
-        autoscaleMax: 5
-      istio-ingressgateway:
-        autoscaleEnabled: false
-        autoscaleMin: 1
-        autoscaleMax: 5
-        ior_enabled: false
+  gateways:
+    istio-egressgateway:
+      autoscaleEnabled: false
+      autoscaleMin: 1
+      autoscaleMax: 5
+    istio-ingressgateway:
+      autoscaleEnabled: false
+      autoscaleMin: 1
+      autoscaleMax: 5
+      ior_enabled: false
 
 ----
 
-### istio-egressgateway
+=== istio-egressgateway
 
 [options="header"]
 |=======
@@ -147,7 +154,7 @@ These are the resources requested and may vary depending on your environment. Th
 | 5
 |=======
 
-### istio-ingressgateway
+=== istio-ingressgateway
 
 [options="header"]
 |=======
@@ -166,24 +173,25 @@ These are the resources requested and may vary depending on your environment. Th
 | false
 |=======
 
-## [[Mixer]] istio->mixer
+[[Mixer]]
+== istio -> mixer
 
 [source,yaml]
 ----
- mixer:
-      enabled: true
-      policy:
-        autoscaleEnabled: false
+  mixer:
+    enabled: true
+    policy:
+      autoscaleEnabled: false
 
-      telemetry:
-        autoscaleEnabled: false
-        resources:
-          requests:
-            cpu: 100m
-            memory: 1G
-          limits:
-            cpu: 500m
-            memory: 4G
+    telemetry:
+      autoscaleEnabled: false
+      resources:
+        requests:
+          cpu: 100m
+          memory: 1G
+        limits:
+          cpu: 500m
+          memory: 4G
 ----
 
 [options="header"]
@@ -197,8 +205,11 @@ These are the resources requested and may vary depending on your environment. Th
 | `false`
 |=======
 
-### telemetry
-#### resources->requests
+=== telemetry
+
+[[telemetry_resources_requests]]
+==== resources->requests
+
 These are the resources requested and may vary depending on your environment. The example above allows Maistra to run in a smaller environment.
 
 [options="header"]
@@ -212,7 +223,9 @@ These are the resources requested and may vary depending on your environment. Th
 | 1G
 |=======
 
-#### resources -> limits
+[[telemetry_resources_limits]]
+==== resources -> limits
+
 These are the resources requested and may vary depending on your environment. The example above allows Maistra to run in a smaller environment.
 
 [options="header"]
@@ -226,16 +239,18 @@ These are the resources requested and may vary depending on your environment. Th
 | 4G
 |=======
 
-## [[Pilot]] istio->pilot
+[[Pilot]]
+== istio->pilot
 
 [source,yaml]
 ----
-   pilot:
-      autoscaleEnabled: false
-      traceSampling: 100.0
+  pilot:
+    autoscaleEnabled: false
+    traceSampling: 100.0
 ----
 
-### resources->requests
+[[pilot_resources_requests]]
+=== resources->requests
 These are the resources requested and may vary depending on your environment.
 
 [options="header"]
@@ -252,17 +267,18 @@ These are the resources requested and may vary depending on your environment.
 |1.0
 |=======
 
-## [[Kiali]] istio->kiali
+[[Kiali]]
+== istio->kiali
 
 [source,yaml]
 ----
-   kiali:
-      enabled: true
-      hub: docker.io/kiali
-      image: kiali
-      tag: v1.0.5
-      dashboard:
-        viewOnlyMode: true
+  kiali:
+    enabled: true
+    hub: docker.io/kiali
+    image: kiali
+    tag: v1.0.5
+    dashboard:
+      viewOnlyMode: true
 ----
 
 [options="header"]
@@ -286,7 +302,8 @@ These are the resources requested and may vary depending on your environment.
 If you intend to use a custom image, you must override all three values of `hub`, `image` and `tag` above.
 {{% /notice %}}
 
-### istio->kiali->dashboard
+[[kiali_dashboard]]
+=== istio->kiali->dashboard
 
 [options="header"]
 |=======
@@ -302,16 +319,17 @@ If you intend to use a custom image, you must override all three values of `hub`
 | none
 |=======
 
-## [[Tracing]] istio->tracing
+[[Tracing]]
+== istio->tracing
 
 [source,yaml]
 ----
-   tracing:
-      enabled: true
-      jaeger:
-        template: all-in-one
-        memory:
-         max_traces: 100000
+  tracing:
+    enabled: true
+    jaeger:
+      template: all-in-one
+      memory:
+        max_traces: 100000
 ----
 
 [options="header"]
@@ -320,7 +338,8 @@ If you intend to use a custom image, you must override all three values of `hub`
 |enabled|This enables or disables tracing in the environment. | true
 |=======
 
-### [[Jaeger]] istio->tracing->jaeger
+[[Jaeger]]
+=== istio->tracing->jaeger
 
 [options="header"]
 |======
@@ -339,7 +358,8 @@ If you intend to use a custom image, you must override all three values of `hub`
 | This sets the maximum number of traces.
 |======
 
-### [[Jaeger]] istio->tracing->jaeger->elasticSearch
+[[jaeger_es]]
+=== istio->tracing->jaeger->elasticSearch
 
 These parameters apply in the `production-elasticsearch` template only.
 [options="header"]
@@ -362,31 +382,32 @@ These parameters apply in the `production-elasticsearch` template only.
 | "16Gi"
 |======
 
-## 3scale
+== 3scale
+
 {{% notice info %}}
 disablePolicyChecks must be false for 3scale to work.
 {{% /notice %}}
 
 [source,yaml]
 ----
-    threeScale:
-        enabled: false
-        hub: quay.io/3scale
-        image: 3scale-istio-adapter
-        tag: v1.0.0
-        PARAM_THREESCALE_LISTEN_ADDR: 3333
-        PARAM_THREESCALE_LOG_LEVEL: info
-        PARAM_THREESCALE_LOG_JSON: true
-        PARAM_THREESCALE_LOG_GRPC: false
-        PARAM_THREESCALE_REPORT_METRICS: true
-        PARAM_THREESCALE_METRICS_PORT: 8080
-        PARAM_THREESCALE_CACHE_TTL_SECONDS: 300
-        PARAM_THREESCALE_CACHE_REFRESH_SECONDS: 180
-        PARAM_THREESCALE_CACHE_ENTRIES_MAX: 1000
-        PARAM_THREESCALE_CACHE_REFRESH_RETRIES: 1
-        PARAM_THREESCALE_ALLOW_INSECURE_CONN: false
-        PARAM_THREESCALE_CLIENT_TIMEOUT_SECONDS: 10
-        PARAM_THREESCALE_GRPC_CONN_MAX_SECONDS: 60
+  threeScale:
+    enabled: false
+    hub: quay.io/3scale
+    image: 3scale-istio-adapter
+    tag: v1.0.0
+    PARAM_THREESCALE_LISTEN_ADDR: 3333
+    PARAM_THREESCALE_LOG_LEVEL: info
+    PARAM_THREESCALE_LOG_JSON: true
+    PARAM_THREESCALE_LOG_GRPC: false
+    PARAM_THREESCALE_REPORT_METRICS: true
+    PARAM_THREESCALE_METRICS_PORT: 8080
+    PARAM_THREESCALE_CACHE_TTL_SECONDS: 300
+    PARAM_THREESCALE_CACHE_REFRESH_SECONDS: 180
+    PARAM_THREESCALE_CACHE_ENTRIES_MAX: 1000
+    PARAM_THREESCALE_CACHE_REFRESH_RETRIES: 1
+    PARAM_THREESCALE_ALLOW_INSECURE_CONN: false
+    PARAM_THREESCALE_CLIENT_TIMEOUT_SECONDS: 10
+    PARAM_THREESCALE_GRPC_CONN_MAX_SECONDS: 60
 ----
 
 [options="header"]
