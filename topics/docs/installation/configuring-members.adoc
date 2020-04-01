@@ -19,15 +19,13 @@ The `ServiceMeshMemberRoll` resource configures which projects belong to a contr
 Only projects listed in the `ServiceMeshMemberRoll` will be affected by the control plane.
 Any number of projects can be added, but a project may not exist in more than one control plane.
 This resource must be created in the same project as the `ServiceMeshControlPlane` resource
-and must be named default. An example resource can be seen below:
+and must be named `default`. An example resource can be seen below:
 
 {{< snippet_markdown name="istio_installation_smmr" >}}
 
 === ServiceMeshMember
-The `ServiceMeshMember` resource marks the project in which it is created as a
-member of the service mesh it references. Creating the `ServiceMeshMember` resource
-causes the project to be added to the `ServiceMeshMemberRoll` that resides in
-the same project as the referenced `ServiceMeshControlPlane`.
+When the `ServiceMeshMember` is created, it causes the project to be added to
+the `ServiceMeshMemberRoll` within the control plane project it references.
 
 An example resource can be seen below:
 
@@ -39,12 +37,13 @@ While project administrators are automatically given permission to create the
 `ServiceMeshMember` resource in their project, they are not allowed to point it
 to any `ServiceMeshControlPlane` until the service mesh administrator explicitly
 grants access to the service mesh via RBAC. This is done by modifying the
-`mesh-users` `RoleBinding` in the control plane project.
+`mesh-users` `RoleBinding` in the control plane project to specify the users and
+groups which should be granted access.
 
-The `RoleBinding` is created by the Maistra operator after the administrator
+The `mesh-users` `RoleBinding` is created by the Maistra operator after the administrator
 creates the `ServiceMeshControlPlane` resource, but the administrator can also
-create it beforehand (at the same time as the `ServiceMeshControlPlane` resource,
-for example).
+create it beforehand (for example, in the same `oc apply` operation as the
+`ServiceMeshControlPlane` resource).
 
 An example of the `RoleBinding` is shown below:
 
