@@ -115,7 +115,7 @@ These are the resources requested and may vary depending on your environment. Th
 | 2000m
 |`memory` 
 |This is the amount of memory that is requested in the environment.  
-|1024mi
+|1024Mi
 |=======
 
 [[Gateways]]
