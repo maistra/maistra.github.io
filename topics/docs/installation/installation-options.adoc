@@ -186,7 +186,7 @@ These are the resources requested and may vary depending on your environment. Th
       resources:
         requests:
           cpu: 10m
-          memory: 128mi
+          memory: 128Mi
         limits:
 ----
 
