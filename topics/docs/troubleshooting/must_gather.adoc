@@ -18,7 +18,7 @@ However, it does not get Service Mesh data. In order to dump those as well, you 
 
 [source,bash]
 ----
-$ oc adm must-gather --image=docker.io/maistra/istio-must-gather:1.0.0
+$ oc adm must-gather --image=docker.io/maistra/istio-must-gather:1.1.0
 ----
 
 By using the Maistra image as specified above, you will get all the Service Mesh data (deployments, config maps, virtual services, gateways, etc) dumped so that you can investigate any issue in your cluster.

@@ -47,13 +47,13 @@ Next, find the Maistra operator `ClusterServiceVersion` name.
 
 ----
 $ oc get clusterserviceversion -n openshift-operators | grep 'Service Mesh'
-maistra.v1.0.0            Red Hat OpenShift Service Mesh   1.0.0                Succeeded
+maistra.v1.1.0            Red Hat OpenShift Service Mesh   1.1.0                Succeeded
 ----
 
 Edit the `ClusterServiceVersion` to instruct the operator to use the `smcp-templates` `ConfigMap`.
 
 ----
-$ oc edit clusterserviceversion -n openshift-operators maistra.v1.0.0
+$ oc edit clusterserviceversion -n openshift-operators maistra.v1.1.0
 ----
 
 In the editor, add a volume mount and volume to the deployments as shown below.
@@ -67,14 +67,9 @@ In the editor, add a volume mount and volume to the deployments as shown below.
           spec: 
             containers:
               volumeMounts:
-                - name: discovery-cache
-                  mountPath: /home/istio-operator/.kube/cache/discovery
                 - name: smcp-templates
                   mountPath: /usr/local/share/istio-operator/templates/
             volumes:
-              - name: discovery-cache
-                emptyDir:
-                  medium: Memory
               - name: smcp-templates
                 configMap:
                   name: smcp-templates

@@ -52,7 +52,7 @@ At this point Bookinfo project is part of the Service Mesh, meaning that when po
 . Deploy the Bookinfo application in the bookinfo project:
 +
 ```sh
-$ oc -n ${BOOKINFO_NS} apply -f https://raw.githubusercontent.com/Maistra/bookinfo/maistra-1.0/bookinfo.yaml
+$ oc -n ${BOOKINFO_NS} apply -f https://raw.githubusercontent.com/Maistra/bookinfo/maistra-1.1/bookinfo.yaml
 service/details created
 deployment.extensions/details-v1 created
 service/ratings created
@@ -68,7 +68,7 @@ deployment.extensions/productpage-v1 created
 . Create the ingress gateway for Bookinfo:
 +
 ```sh
-$ oc -n ${BOOKINFO_NS} apply -f https://raw.githubusercontent.com/Maistra/bookinfo/maistra-1.0/bookinfo-gateway.yaml
+$ oc -n ${BOOKINFO_NS} apply -f https://raw.githubusercontent.com/Maistra/bookinfo/maistra-1.1/bookinfo-gateway.yaml
 gateway.networking.istio.io/bookinfo-gateway created
 virtualservice.networking.istio.io/bookinfo created
 ```

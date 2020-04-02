@@ -33,17 +33,15 @@ charts. Many of the parameters supported by the installer are shown below.
   istio:
     global:
       hub: my-private-registry.com/custom-namespace
-      tag: 1.0.0
+      tag: 1.1.0
       mtls:
         enabled: true
       proxy:
         resources:
           requests:
-            cpu: 100m
+            cpu: 10m
             memory: 128Mi
           limits:
-            cpu: 500m
-            memory: 128Mi
       disablePolicyChecks: true
       policyCheckFailOpen: false
       imagePullSecrets:
@@ -67,7 +65,7 @@ charts. Many of the parameters supported by the installer are shown below.
 | `maistra/`
 |`tag`
 |The tag to use to pull the Istio images.
-| 1.0.0
+| 1.1.0
 |`imagePullSecrets`
 |If access to the registry providing the Istio images is secure, then an link:https://kubernetes.io/docs/concepts/containers/images/#specifying-imagepullsecrets-on-a-pod[`imagePullSecret`] can be listed here.
 |none
@@ -98,7 +96,7 @@ These are the resources requested and may vary depending on your environment. Th
 |Parameter |Description |Default
 |`cpu` 
 |This is the number of CPUs that are requested in the environment.  
-| 100m
+| 10m
 |`memory` 
 |This is the amount of memory that is requested in the environment.  
 |128Mi
@@ -117,7 +115,7 @@ These are the resources requested and may vary depending on your environment. Th
 | 2000m
 |`memory` 
 |This is the amount of memory that is requested in the environment.  
-|128Mi
+|1024mi
 |=======
 
 [[Gateways]]
@@ -187,11 +185,9 @@ These are the resources requested and may vary depending on your environment. Th
       autoscaleEnabled: false
       resources:
         requests:
-          cpu: 100m
-          memory: 1G
+          cpu: 10m
+          memory: 128mi
         limits:
-          cpu: 500m
-          memory: 4G
 ----
 
 [options="header"]
@@ -217,10 +213,10 @@ These are the resources requested and may vary depending on your environment. Th
 |Parameter |Description |Default
 |`cpu`
 |This is the number of CPUs that are requested in the environment.  
-| 1000m
+|10m
 |`memory`
 |This is the amount of memory that is requested in the environment. 
-| 1G
+|128Mi
 |=======
 
 [[telemetry_resources_limits]]
@@ -258,10 +254,10 @@ These are the resources requested and may vary depending on your environment.
 |Parameter |Description |Default
 |`cpu`
 |This is the number of CPUs that are requested in the environment. 
-| 500m
+| 10m
 |`memory`
 |This is the amount of memory that is requested in the environment. 
-| 2048Mi
+| 128Mi
 |`traceSampling`
 |This value controls how often random sampling should occur. Increase for development/testing.
 |1.0
@@ -276,7 +272,6 @@ These are the resources requested and may vary depending on your environment.
     enabled: true
     hub: docker.io/kiali
     image: kiali
-    tag: v1.0.5
     dashboard:
       viewOnlyMode: true
 ----
@@ -293,16 +288,13 @@ These are the resources requested and may vary depending on your environment.
 |`image`
 |The name of the Kiali image
 | Delegates to Kiali operator
-|`tag`
-|The tag to use to pull the Kiali images 
-| Delegates to Kiali operator
 |`jaegerInClusterURL`
 |The URL used by Kiali to query Jaeger. This will be automatically set by the operator if you deploy Jaeger using `tracing.enabled: true`
 | none
 |=======
 
 {{% notice tip %}}
-If you intend to use a custom image, you must override all three values of `hub`, `image` and `tag` above.
+If you intend to use a custom image, you must override all three values of `hub` and `image`. The tag must match that expected by Kiali.
 {{% /notice %}}
 
 [[kiali_dashboard]]
@@ -348,11 +340,11 @@ If you intend to use a custom image, you must override all three values of `hub`
 |======
 |Parameter |Description |Default
 |`hub`
-|The hub that the Operator uses to pull Jaeger images
+|delegates to Jaeger operator
 |`jaegertracing/` or `registry.redhat.io/openshift-service-mesh/`
 |`tag`
 |The tag that the Operator uses to pull the Jaeger images
-|`1.13.1`
+|delegates to Jaeger operator
 |`template`
 |The deployment template to use for Jaeger
 |`all-in-one`/`production-elasticsearch`

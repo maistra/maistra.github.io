@@ -1,5 +1,5 @@
 ---
-title: "Installing the sidecar within your Service Mesh Applications"
+title: "Adding applications to the mesh"
 type: "document"
 category: "Getting started"
 description: "Service mesh provides features to applications through the istio-proxy sidecar within your application's pod, created through automatic injection of the configuration."
