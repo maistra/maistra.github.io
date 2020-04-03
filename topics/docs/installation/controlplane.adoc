@@ -14,8 +14,8 @@ to the control plane while the _ServiceMeshControlPlane_ lists the configuration
 
 === ServiceMeshControlPlane
 To deploy the Istio Control Plane, create a `ServiceMeshControlPlane` such as the one in the following example.
-The example below uses `istio-system` as the control plane project. For more information about the parameters and their
-configuration please see the link:../installation-options[installation options].
+The example uses `istio-system` as the control plane project. For more information about the parameters and their
+configuration, see the link:../installation-options[installation options].
 
 {{< snippet_markdown name="istio_installation_minimal" >}}
 
