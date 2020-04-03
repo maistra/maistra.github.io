@@ -10,22 +10,22 @@ description: "Bookinfo is an example application that shows you how to set up an
 The following steps describe the deployment of the Bookinfo application on Maistra.
 
 === Before you Begin
-Install Maistra by following the instructions link:/docs/installation/install[here].
+Install Maistra by following the link:/docs/installation[installation instructions].
 
 === Create the Bookinfo project
-Maistra takes a multi-tenant approach, meaning that you can have more than one 
-control plane in your OpenShift cluster. Please substitute <namespace> with
-the namespace of your control plane and <bookinfo> with the name of the project to
-use for the Bookinfo example. 
+Maistra takes a multi-tenant approach, meaning that you can have more than one
+control plane in your OpenShift cluster. Substitute <project> with
+the project of your control plane and <bookinfo> with the name of the project to
+use for the Bookinfo example.
 
 ```sh
-$ export CONTROL_PLANE_NS=<namespace>
+$ export CONTROL_PLANE_NS=<project>
 $ export BOOKINFO_NS=bookinfo
 $ oc new-project ${BOOKINFO_NS}
 ```
 
 {{% notice info %}}
-In OpenShift 3, Security Context Constraints (SCC) must be configured for the Bookinfo application. Additional information can be found link:../../getting_started/application-requirements/[here].
+In OpenShift 3, Security Context Constraints (SCC) must be configured for the Bookinfo application. Additional information can be found link:../../installation/application-requirements/[here].
 {{% /notice %}}
 
 === Add Bookinfo project to the Service Mesh
@@ -44,7 +44,7 @@ servicemeshmemberroll.maistra.io/default edited
 ```
 
 {{% notice tip %}}
-At this point Bookinfo project is part of the Service Mesh, meaning that when pods (link:../../getting_started/automatic-injection/[with the proper annotation], which is the case of our Bookinfo deployment below) are deployed in Bookinfo project they will get the sidecar attached and thus will become part of the mesh.
+At this point Bookinfo project is part of the Service Mesh, meaning that when pods (link:../../installation/automatic-injection/[with the proper annotation], which is the case of our Bookinfo deployment below) are deployed in Bookinfo project they will get the sidecar attached and thus will become part of the mesh.
 {{% /notice %}}
 
 === Deploy Bookinfo Application
@@ -52,7 +52,7 @@ At this point Bookinfo project is part of the Service Mesh, meaning that when po
 . Deploy the Bookinfo application in the bookinfo project:
 +
 ```sh
-$ oc -n ${BOOKINFO_NS} apply -f https://raw.githubusercontent.com/Maistra/bookinfo/maistra-1.0/bookinfo.yaml
+$ oc -n ${BOOKINFO_NS} apply -f https://raw.githubusercontent.com/Maistra/bookinfo/maistra-1.1/bookinfo.yaml
 service/details created
 deployment.extensions/details-v1 created
 service/ratings created
@@ -68,7 +68,7 @@ deployment.extensions/productpage-v1 created
 . Create the ingress gateway for Bookinfo:
 +
 ```sh
-$ oc -n ${BOOKINFO_NS} apply -f https://raw.githubusercontent.com/Maistra/bookinfo/maistra-1.0/bookinfo-gateway.yaml
+$ oc -n ${BOOKINFO_NS} apply -f https://raw.githubusercontent.com/Maistra/bookinfo/maistra-1.1/bookinfo-gateway.yaml
 gateway.networking.istio.io/bookinfo-gateway created
 virtualservice.networking.istio.io/bookinfo created
 ```
@@ -114,6 +114,7 @@ destinationrule.networking.istio.io/ratings configured
 destinationrule.networking.istio.io/details configured
 ```
 
+[[cleanup]]
 === Cleanup
 Delete the bookinfo project - this will wipe everything we created above:
 ```sh

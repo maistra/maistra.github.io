@@ -21,29 +21,27 @@ charts. Many of the parameters supported by the installer are shown below.
 |=======
 |Parameter |Description |Default
 |`template`
-|A template references a `ServiceMeshControlPlane` referenced in the `smcp-templates` `ConfigMap` from which configuration should be inherited. See link:{{< ref "controlplane-templates.adoc" >}}[template documentation] for details. 
+|A template references a `ServiceMeshControlPlane` referenced in the `smcp-templates` `ConfigMap` from which configuration should be inherited. See link:{{< ref "controlplane-templates.adoc" >}}[template documentation] for details.
 |default
 |=======
 
-[[istio_globals]]
-== Istio Globals
+[[istio_global_values]]
+== Istio Global Values
 
 [source,yaml]
 ----
   istio:
     global:
       hub: my-private-registry.com/custom-namespace
-      tag: 1.0.0
+      tag: 1.1.0
       mtls:
         enabled: true
       proxy:
         resources:
           requests:
-            cpu: 100m
+            cpu: 10m
             memory: 128Mi
           limits:
-            cpu: 500m
-            memory: 128Mi
       disablePolicyChecks: true
       policyCheckFailOpen: false
       imagePullSecrets:
@@ -54,35 +52,35 @@ charts. Many of the parameters supported by the installer are shown below.
 [options="header"]
 |=======
 |Parameter |Description |Default
-|`disablePolicyChecks` 
+|`disablePolicyChecks`
 |This is a boolean indicating whether to enable policy checks. {{% notice info %}}
 `disablePolicyChecks` must be false for 3scale to work.
-{{% /notice %}} 
+{{% /notice %}}
 | `true`
-|`policyCheckFailOpen` 
-|This is a boolean indicating wehther to traffic should be allowed through when the mixer policy service cannot be reached.  
+|`policyCheckFailOpen`
+|This is a boolean indicating whether to traffic should be allowed through when the mixer policy service cannot be reached.
 | false
 |`hub`
 |The hub to use to pull the Istio images.
 | `maistra/`
 |`tag`
 |The tag to use to pull the Istio images.
-| 1.0.0
+| 1.1.0
 |`imagePullSecrets`
 |If access to the registry providing the Istio images is secure, then an link:https://kubernetes.io/docs/concepts/containers/images/#specifying-imagepullsecrets-on-a-pod[`imagePullSecret`] can be listed here.
 |none
 |`dnsRefreshRate`
-|The number of seconds to wait to refresn the DNS cache in an Envoy instance. 
+|The number of seconds to wait to refresh the DNS cache in an Envoy instance.
 | 300s
 |=======
 
-=== mtls
+=== mTLS
 
 [options="header"]
 |=======
 |Parameter |Description |Default
-|`enabled` 
-|This parameter controls whether to enable `mTLS` between services by default. 
+|`enabled`
+|This parameter controls whether to enable `mTLS` between services by default.
 | false
 |=======
 
@@ -96,11 +94,11 @@ These are the resources requested and may vary depending on your environment. Th
 [options="header"]
 |=======
 |Parameter |Description |Default
-|`cpu` 
-|This is the number of CPUs that are requested in the environment.  
-| 100m
-|`memory` 
-|This is the amount of memory that is requested in the environment.  
+|`cpu`
+|This is the number of CPUs that are requested in the environment.
+| 10m
+|`memory`
+|This is the amount of memory that is requested in the environment.
 |128Mi
 |=======
 
@@ -112,12 +110,12 @@ These are the resources requested and may vary depending on your environment. Th
 [options="header"]
 |=======
 |Parameter |Description |Default
-|`cpu` 
-|This is the maximum number of CPUs that proxy is allowed to use.  
+|`cpu`
+|This is the maximum number of CPUs that proxy is allowed to use.
 | 2000m
 |`memory` 
 |This is the amount of memory that is requested in the environment.  
-|128Mi
+|1024Mi
 |=======
 
 [[Gateways]]
@@ -143,11 +141,11 @@ These are the resources requested and may vary depending on your environment. Th
 [options="header"]
 |=======
 |Parameter |Description |Default
-|`autoscaleEnabled` 
-|This parameter controls whether autoscaling is enabled. The example above disables it to allow running Maistra in a smaller environment. 
+|`autoscaleEnabled`
+|This parameter controls whether auto scaling is enabled. The example above disables it to allow running Maistra in a smaller environment.
 | true
 |`autoscaleMin`
-|This parameter controls the minimum pods to deploy based on the `autoscaleEnabled` setting. 
+|This parameter controls the minimum pods to deploy based on the `autoscaleEnabled` setting.
 | 1
 |`autoscaleMax`
 |This parameter controls the minimum pods to deploy based on the `autoscaleEnabled` setting.
@@ -159,11 +157,11 @@ These are the resources requested and may vary depending on your environment. Th
 [options="header"]
 |=======
 |Parameter |Description |Default
-|`autoscaleEnabled` 
-|This parameter controls whether autoscaling is enabled. The example above disables it to allow running Maistra in a smaller environment. 
+|`autoscaleEnabled`
+|This parameter controls whether auto scaling is enabled. The example above disables it to allow running Maistra in a smaller environment.
 | true
 |`autoscaleMin`
-|This parameter controls the minimum pods to deploy based on the `autoscaleEnabled setting`. 
+|This parameter controls the minimum pods to deploy based on the `autoscaleEnabled setting`.
 | 1
 |`autoscaleMax`
 |This parameter controls the minimum pods to deploy based on the `autoscaleEnabled` setting.
@@ -187,11 +185,9 @@ These are the resources requested and may vary depending on your environment. Th
       autoscaleEnabled: false
       resources:
         requests:
-          cpu: 100m
-          memory: 1G
+          cpu: 10m
+          memory: 128Mi
         limits:
-          cpu: 500m
-          memory: 4G
 ----
 
 [options="header"]
@@ -201,7 +197,7 @@ These are the resources requested and may vary depending on your environment. Th
 |This parameter controls whether to enable Mixer.
 | `true`
 |`autoscaleEnabled`
-|This parameter controls whether autoscaling is enabled. The example above disables it to allow running Maistra in a smaller environment. 
+|This parameter controls whether auto scaling is enabled. The example above disables it to allow running Maistra in a smaller environment.
 | `false`
 |=======
 
@@ -216,11 +212,11 @@ These are the resources requested and may vary depending on your environment. Th
 |=======
 |Parameter |Description |Default
 |`cpu`
-|This is the number of CPUs that are requested in the environment.  
-| 1000m
+|This is the number of CPUs that are requested in the environment.
+|10m
 |`memory`
-|This is the amount of memory that is requested in the environment. 
-| 1G
+|This is the amount of memory that is requested in the environment.
+|128Mi
 |=======
 
 [[telemetry_resources_limits]]
@@ -232,10 +228,10 @@ These are the resources requested and may vary depending on your environment. Th
 |=======
 |Parameter |Description |Default
 |`cpu`
-|This is the maximum number of CPUs that telemetry is allowed to use.  
+|This is the maximum number of CPUs that telemetry is allowed to use.
 | 4800m
 |`memory`
-|This is the maximum amount of memory that telemetry is allowed to use. 
+|This is the maximum amount of memory that telemetry is allowed to use.
 | 4G
 |=======
 
@@ -257,11 +253,11 @@ These are the resources requested and may vary depending on your environment.
 |=======
 |Parameter |Description |Default
 |`cpu`
-|This is the number of CPUs that are requested in the environment. 
-| 500m
+|This is the number of CPUs that are requested in the environment.
+| 10m
 |`memory`
-|This is the amount of memory that is requested in the environment. 
-| 2048Mi
+|This is the amount of memory that is requested in the environment.
+| 128Mi
 |`traceSampling`
 |This value controls how often random sampling should occur. Increase for development/testing.
 |1.0
@@ -276,7 +272,6 @@ These are the resources requested and may vary depending on your environment.
     enabled: true
     hub: docker.io/kiali
     image: kiali
-    tag: v1.0.5
     dashboard:
       viewOnlyMode: true
 ----
@@ -285,7 +280,7 @@ These are the resources requested and may vary depending on your environment.
 |=======
 |Parameter |Description |Default
 |`enabled`
-|This enables or disables Kiali in the environment. 
+|This enables or disables Kiali in the environment.
 | `true`
 |`hub`
 |The hub to use to pull the Kiali images.
@@ -293,16 +288,13 @@ These are the resources requested and may vary depending on your environment.
 |`image`
 |The name of the Kiali image
 | Delegates to Kiali operator
-|`tag`
-|The tag to use to pull the Kiali images 
-| Delegates to Kiali operator
 |`jaegerInClusterURL`
 |The URL used by Kiali to query Jaeger. This will be automatically set by the operator if you deploy Jaeger using `tracing.enabled: true`
 | none
 |=======
 
 {{% notice tip %}}
-If you intend to use a custom image, you must override all three values of `hub`, `image` and `tag` above.
+If you intend to use a custom image, you must override all three values of `hub` and `image`. The tag must match that expected by Kiali.
 {{% /notice %}}
 
 [[kiali_dashboard]]
@@ -312,13 +304,13 @@ If you intend to use a custom image, you must override all three values of `hub`
 |=======
 |Parameter |Description |Default
 |`viewOnlyMode`
-|Whether the Kiali dashboard should be in a view-only mode, not allowing any changes to the Service Mesh to be made 
+|Whether the Kiali dashboard should be in a view-only mode, not allowing any changes to the Service Mesh to be made
 | `false`
 |`grafanaURL`
-|Sets the URL for Grafana 
+|Sets the URL for Grafana
 | none
 |`jaegerURL`
-|Sets the URL for Jaeger 
+|Sets the URL for Jaeger
 | none
 |=======
 
@@ -348,11 +340,11 @@ If you intend to use a custom image, you must override all three values of `hub`
 |======
 |Parameter |Description |Default
 |`hub`
-|The hub that the Operator uses to pull Jaeger images
+|delegates to Jaeger operator
 |`jaegertracing/` or `registry.redhat.io/openshift-service-mesh/`
 |`tag`
 |The tag that the Operator uses to pull the Jaeger images
-|`1.13.1`
+|delegates to Jaeger operator
 |`template`
 |The deployment template to use for Jaeger
 |`all-in-one`/`production-elasticsearch`
@@ -417,13 +409,13 @@ disablePolicyChecks must be false for 3scale to work.
 |=======
 |Parameter |Description |Default
 |`enabled`
-|This controls whether to enable 3scale. 
+|This controls whether to enable 3scale.
 | `false`
 |`hub`
-|The repository to use to pull 3Scale images. 
+|The repository to use to pull 3Scale images.
 | `quay.io/3scale` or `registry.redhat.io/openshift-service-mesh`
 |`image`
-|The image to use for the 3Scale adapter. 
+|The image to use for the 3Scale adapter.
 | `3scale-istio-adapter` or `3scale-istio-adapter-rhel8`
 |`tag`
 |The image tag to use.

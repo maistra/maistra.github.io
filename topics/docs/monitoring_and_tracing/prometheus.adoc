@@ -35,7 +35,7 @@ image::prometheus-home-screen.png[]
 image::prometheus-metrics.png[]
 
 
-. It is possible to narrow down queries by using selectors. For example `istio_request_duration_seconds_count{destination_workload="reviews-v2"}` will only show counters with matching "destination_workload" label. For more information on using queries, please see link:https://prometheus.io/docs/prometheus/latest/querying/basics/#instant-vector-selectors[Prometheus documentation].
+. It is possible to narrow down queries by using selectors. For example `istio_request_duration_seconds_count{destination_workload="reviews-v2"}` will only show counters with matching "destination_workload" label. For more information about using queries, please see link:https://prometheus.io/docs/prometheus/latest/querying/basics/#instant-vector-selectors[Prometheus documentation].
 
 
 . To list all available Prometheus metrics:
@@ -48,4 +48,4 @@ Note that returned metric names need to be prepended with `istio_` when used in 
 
 == Cleanup
 
-Follow link:../examples/bookinfo/#cleanup[Bookinfo cleanup instructions] to remove the application.
+Follow link:/docs/examples/bookinfo/#cleanup[Bookinfo cleanup instructions] to remove the application.

@@ -13,14 +13,14 @@ to the control plane while the _ServiceMeshControlPlane_ lists the configuration
 `ServiceMeshControlPlane` can be shortened to `smcp` and `ServiceMeshMemberRoll` can be shortened to `smmr`.
 
 === ServiceMeshControlPlane
-In order to deploy the Istio Control Plane, create a `ServiceMeshControlPlane` such as the one in the following example.
-The example below uses `istio-system` as the control plane project. For more information on the parameters and their
-configuration please see the link:../custom-install[custom installation documentation].
+To deploy the Istio Control Plane, create a `ServiceMeshControlPlane` such as the one in the following example.
+The example uses `istio-system` as the control plane project. For more information about the parameters and their
+configuration, see the link:../installation-options[installation options].
 
 {{< snippet_markdown name="istio_installation_minimal" >}}
 
 Once you have modified the `ServiceMeshControlPlane` to suit your installation you can deploy the resource using the following command,
-substituting istio-system if appropriate.
+substituting `istio-system`if appropriate.
 
 ```
 $ oc new-project istio-system
@@ -29,7 +29,7 @@ $ oc create -n istio-system -f <name of file>
 
 == Deploying a Maistra Control Plane using Catalog Web UI
 :leveloffset: +1
-Openshift web console can be used to create control plane and member roll custom resources. Please reference link:https://docs.openshift.com/container-platform/4.1/applications/operators/olm-creating-apps-from-installed-operators.html[documentation on creating applications from installed operators] for more details.
+OpenShift web console can be used to create control plane and member roll custom resources. Please reference link:https://docs.openshift.com/container-platform/4.1/applications/operators/olm-creating-apps-from-installed-operators.html[documentation on creating applications from installed operators] for more details.
 
 To create a control plane, open the OpenShift web console in a Web browser and create a new project. This example uses a project called `istio-system`.
 
@@ -57,7 +57,7 @@ To create a control plane, open the OpenShift web console in a Web browser and c
 === Removing a Control Plane
 
 {{% notice note %}}
-Subsitute the proper project below if the controlplane was created in a project other than `istio-system`.
+Substitute the proper project below if the controlplane was created in a project other than `istio-system`.
 {{% /notice %}}
 
 The following steps will remove Istio from an existing installation. It can be
@@ -97,12 +97,12 @@ To remove a control plane, open the OpenShift web console in a Web browser and:
 If you installed the Maistra operator using the `Automatic Approval Strategy`,
 then the operator and control plane will update automatically. If not, then you
 will have to manually upgrade each of the operators.  In either case, the
-application sidecars must be updated separately from the control plane. 
+application sidecars must be updated separately from the control plane.
 
-If your deployment is using using automatic injection, then the application
-only needs to be restarted in order to update the pod. Execute the following to
+If your deployment is using automatic injection, then the application
+only needs to be restarted to update the pod. Execute the following to
 update the deployment and trigger an update for all pods that are part of the
-deployment: 
+deployment:
 
 ```
 $ oc patch deployment/<deployment> -p '{"spec":{"template":{"metadata":{"annotations":{"kubectl.kubernetes.io/restartedAt": "'`date -Iseconds`'"}}}}}'

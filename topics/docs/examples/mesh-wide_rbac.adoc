@@ -6,7 +6,7 @@ description: "Configure Maistra to enforce RBAC rules for all communication insi
 ---
 
 {{% notice info %}}
-Using RBAC policies requires mTLS strict mode. For information on how to enable it, see link:../mesh-wide_mtls/[Enabling Mesh-wide Strict mTLS].
+Using RBAC policies requires mTLS strict mode. For information about how to enable it, see link:../mesh-wide_mtls/[Enabling Mesh-wide Strict mTLS].
 {{% /notice %}}
 
 == Introduction
@@ -17,7 +17,7 @@ The following example will enable RBAC policy enforcement in your Maistra mesh. 
 
 === Creating the ServiceMeshRbacConfig
 
-Creating the following resource in your control plane's namespace will enable RBAC policy enforcement in your mesh:
+Creating the following resource in your control plane's project will enable RBAC policy enforcement in your mesh:
 
 [source,yaml]
 ----
@@ -31,7 +31,7 @@ spec:
 ----
 
 {{% notice tip %}}
-This resource does not exist in upstream Istio, it has been added to Maistra. It replaces the upstream ClusterRbacConfig, which is cluster-scoped. For more information, see the link:../../comparison-with-istio/#_cluster_scoped_resources[comparison of Maistra and upstream Istio].
+This resource does not exist in upstream Istio, it has been added to Maistra. It replaces the upstream ClusterRbacConfig, which is cluster-scoped. For more information, see the link:../../comparison-with-istio/#cluster_scoped_resources[comparison of Maistra and upstream Istio].
 {{% /notice %}}
 
 === See also

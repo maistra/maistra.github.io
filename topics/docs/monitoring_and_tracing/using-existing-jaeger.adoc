@@ -9,9 +9,9 @@ description: "See how to use an existing Jaeger instance for trace collection an
 
 == Configuring Jaeger
 
-=== Deploy to the Control Plane Namespace
+=== Deploy to the Control Plane Project
 
-In order for a custom Jaeger instance to work with a Maistra control plane, it has to be deployed to the same namespace. When using the Jaeger Operator, this is achieved by creating the Jaeger resource in the same namespace as the `ServiceMeshControlPlane` resource.
+In order for a custom Jaeger instance to work with a Maistra control plane, it has to be deployed to the same project. When using the Jaeger Operator, this is achieved by creating the Jaeger resource in the same project as the `ServiceMeshControlPlane` resource.
 
 === Set Up Authentication
 
@@ -29,13 +29,13 @@ metadata:
   namespace: istio-system
 spec:
   # Set Up Authentication
-  ingress: 
+  ingress:
     enabled: true
     security: oauth-proxy
     openshift:
       # This limits user access to the Jaeger instance to users who have access
       # to the control plane namespace. Make sure to set the correct namespace here
-      sar: '{"namespace": "istio-system", "resource": "pods", "verb": "get"}' 
+      sar: '{"namespace": "istio-system", "resource": "pods", "verb": "get"}'
       htpasswdFile: /etc/proxy/htpasswd/auth
 
   volumeMounts:
@@ -56,7 +56,7 @@ By default, the Maistra operator will deploy a Jaeger instance for you, using th
 
 === Set Endpoint for Trace Collection
 
-Maistra gateways and sidecars send traces to Mixer (the `istio-telemetry` pod in the control plane namespace), which then passes them on to a `jaeger-collector` endpoint in your cluster. When using a custom Jaeger instance, you will have to make sure to supply the correct endpoint for Mixer to use. This is achieved by setting `spec.istio.global.tracer.zipkin.address` to the hostname and port of your `jaeger-collector` service. The hostname of that service is usually `<jaeger-instance-name>-collector.<namespace>.svc`.
+Maistra gateways and sidecars send traces to Mixer (the `istio-telemetry` pod in the control plane project), which then passes them on to a `jaeger-collector` endpoint in your cluster. When using a custom Jaeger instance, you will have to make sure to supply the correct endpoint for Mixer to use. This is achieved by setting `spec.istio.global.tracer.zipkin.address` to the hostname and port of your `jaeger-collector` service. The hostname of that service is usually `<jaeger-instance-name>-collector.<namespace>.svc`.
 
 === Set Endpoint for Trace Querying
 
@@ -64,7 +64,7 @@ If you're using Kiali to visualize traces and metrics across your mesh, you will
 
 === Set Jaeger dashboard URL
 
-You will have to provide the dashboard URL of your Jaeger instance so that Kiali can link to it from its user interface. You can retrieve the URL from the OpenShift route that is created by the Jaeger Operator. So if your Jaeger resource is called `external-jaeger` and resides in the `istio-system` namespace, you can retrieve it using the following command:
+You will have to provide the dashboard URL of your Jaeger instance so that Kiali can link to it from its user interface. You can retrieve the URL from the OpenShift route that is created by the Jaeger Operator. So if your Jaeger resource is called `external-jaeger` and resides in the `istio-system` project, you can retrieve it using the following command:
 
 ```bash
 $ oc get route -n istio-system external-jaeger

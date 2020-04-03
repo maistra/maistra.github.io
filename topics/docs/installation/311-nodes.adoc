@@ -8,7 +8,7 @@ hidden: true
 
 == Preparing the Installation
 
-Before Maistra can be installed into an existing installation it is necessary to make a number of changes to the master configuration and each of the schedulable nodes.  These changes will enable features required within Istio and also ensure Elasticsearch will function correctly.
+Before Maistra can be installed into an existing installation it is necessary to make several changes to the master configuration and each of the schedulable nodes.  These changes will enable features required within Istio and also ensure Elasticsearch will function correctly.
 
 {{% notice info %}}
 The master/node updates discussed below are not necessary in OCP/OKD 4.1
@@ -24,7 +24,7 @@ Then each individual Deployment requiring automatic injection needs to be modifi
 First, make the following changes on each master within your installation.
 
 - Change to the directory containing the master configuration file (e.g. /etc/origin/master/master-config.yaml)
-- Create a file named master-config.patch with the following contents
+- Create a file named `master-config.patch` with the following contents
 
 [source,yaml]
 ----
@@ -53,7 +53,7 @@ master-restart controllers
 
 ==== Updating the Nodes
 
-In order to run the Elasticsearch application it is necessary to make a change to the kernel configuration on each node, this change will be handled through the *sysctl* service.
+To run the Elasticsearch application, it is necessary to make a change to the kernel configuration on each node. This change will be handled through the *sysctl* service.
 
 Make the following changes on each node within your installation
 

@@ -64,7 +64,7 @@ When prompted to login use your OpenShift credentials.
 
 === Kiali's Graph
 
-Within the Kiali UI select the *Graph* option from the left-hand navigation
+Within the Kiali UI select the *Graph* option from the navigation on the left
 and then
 
 * `bookinfo` from the `Select a namespace` dropdown

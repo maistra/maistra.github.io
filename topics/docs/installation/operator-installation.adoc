@@ -49,7 +49,7 @@ Open the OpenShift web console in a Web browser and:
 * Locate the `Maistra` operator and click *View Subscription*.
 * Click the *More Operations* menu and select *Remove Subscription*.
 
-The Maistra operator creates a number of resources that are not managed by OLM
+The Maistra operator creates several resources that are not managed by OLM
 (OperatorHub). These must be removed manually after uninstalling the Maistra
 operator.  As a cluster administrator, execute the following commands.
 
