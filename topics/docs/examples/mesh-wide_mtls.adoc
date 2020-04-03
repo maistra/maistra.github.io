@@ -38,7 +38,7 @@ spec:
 This will instruct all sidecars in the mesh to only accept mTLS connections. Note that this resource has to be named 'default' and it has to be created in your control plane's namespace.
 
 {{% notice tip %}}
-This resource does not exist in upstream Istio, it has been added to Maistra. It replaces the upstream MeshPolicy, which is cluster-scoped. For more information, see the link:../../comparison-with-istio/#_cluster_scoped_custom_resources[comparison of Maistra and upstream Istio].
+This resource does not exist in upstream Istio, it has been added to Maistra. It replaces the upstream MeshPolicy, which is cluster-scoped. For more information, see the link:../../comparison-with-istio/#cluster_scoped_resources[comparison of Maistra and upstream Istio].
 {{% /notice %}}
 
 === Creating the DestinationRule
@@ -65,4 +65,4 @@ As you can see, using the wildcard "*.local" in `spec.host` we are matching all 
 === See also
 
 - https://istio.io/docs/tasks/security/authn-policy/[Istio Task: Authentication Policy]
-- https://istio.io/docs/tasks/security/mutual-tls/[Istio Task: Mutual TLS Deep Dive]
+- https://archive.istio.io/v1.4/docs/tasks/security/mutual-tls/[Istio Task: Mutual TLS Deep Dive]

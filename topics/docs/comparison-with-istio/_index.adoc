@@ -50,6 +50,7 @@ Whereas upstream Istio takes a single tenant approach, Maistra supports
 multiple independent control planes within the cluster. This is discussed in
 more detail during link:../installation/[installation]
 
+[[cluster_scoped_resources]]
 === Cluster Scoped Resources
 
 Upstream Istio has two cluster scoped resources that it relies on. The MeshPolicy and the ClusterRbacConfig. These are not compatible with a multitenant cluster and have been replaced as described below.
@@ -59,8 +60,8 @@ Upstream Istio has two cluster scoped resources that it relies on. The MeshPolic
 
 For more information on how to use them, see these examples:
 
-- ServiceMeshPolicy: link:../../examples/mesh-wide_mtls/[Enabling Mesh-wide Strict mTLS]
-- ServiceMeshRbacConfig: link:../../examples/mesh-wide_rbac/[Enabling Mesh-wide RBAC Policy Enforcement].
+- ServiceMeshPolicy: link:../examples/mesh-wide_mtls/[Enabling Mesh-wide Strict mTLS]
+- ServiceMeshRbacConfig: link:../examples/mesh-wide_rbac/[Enabling Mesh-wide RBAC Policy Enforcement].
 
 === Component Modifications
 

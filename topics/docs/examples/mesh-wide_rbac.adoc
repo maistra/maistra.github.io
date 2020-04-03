@@ -31,7 +31,7 @@ spec:
 ----
 
 {{% notice tip %}}
-This resource does not exist in upstream Istio, it has been added to Maistra. It replaces the upstream ClusterRbacConfig, which is cluster-scoped. For more information, see the link:../../comparison-with-istio/#_cluster_scoped_resources[comparison of Maistra and upstream Istio].
+This resource does not exist in upstream Istio, it has been added to Maistra. It replaces the upstream ClusterRbacConfig, which is cluster-scoped. For more information, see the link:../../comparison-with-istio/#cluster_scoped_resources[comparison of Maistra and upstream Istio].
 {{% /notice %}}
 
 === See also

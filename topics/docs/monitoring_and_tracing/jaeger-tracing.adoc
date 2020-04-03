@@ -50,4 +50,4 @@ The trace also shows calls to `istio-policy` which reflect authorization checks 
 
 == Cleanup
 
-Follow the link:../examples/bookinfo/#cleanup[Bookinfo cleanup instructions] to remove the application.
+Follow the link:/docs/examples/bookinfo/#cleanup[Bookinfo cleanup instructions] to remove the application.

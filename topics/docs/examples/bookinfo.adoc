@@ -10,7 +10,7 @@ description: "Bookinfo is an example application that shows you how to set up an
 The following steps describe the deployment of the Bookinfo application on Maistra.
 
 === Before you Begin
-Install Maistra by following the instructions link:/docs/installation/install[here].
+Install Maistra by following the instructions link:/docs/installation[here].
 
 === Create the Bookinfo project
 Maistra takes a multi-tenant approach, meaning that you can have more than one 
@@ -25,7 +25,7 @@ $ oc new-project ${BOOKINFO_NS}
 ```
 
 {{% notice info %}}
-In OpenShift 3, Security Context Constraints (SCC) must be configured for the Bookinfo application. Additional information can be found link:../../getting_started/application-requirements/[here].
+In OpenShift 3, Security Context Constraints (SCC) must be configured for the Bookinfo application. Additional information can be found link:../../installation/application-requirements/[here].
 {{% /notice %}}
 
 === Add Bookinfo project to the Service Mesh
@@ -44,7 +44,7 @@ servicemeshmemberroll.maistra.io/default edited
 ```
 
 {{% notice tip %}}
-At this point Bookinfo project is part of the Service Mesh, meaning that when pods (link:../../getting_started/automatic-injection/[with the proper annotation], which is the case of our Bookinfo deployment below) are deployed in Bookinfo project they will get the sidecar attached and thus will become part of the mesh.
+At this point Bookinfo project is part of the Service Mesh, meaning that when pods (link:../../installation/automatic-injection/[with the proper annotation], which is the case of our Bookinfo deployment below) are deployed in Bookinfo project they will get the sidecar attached and thus will become part of the mesh.
 {{% /notice %}}
 
 === Deploy Bookinfo Application
@@ -114,6 +114,7 @@ destinationrule.networking.istio.io/ratings configured
 destinationrule.networking.istio.io/details configured
 ```
 
+[[cleanup]]
 === Cleanup
 Delete the bookinfo project - this will wipe everything we created above:
 ```sh
