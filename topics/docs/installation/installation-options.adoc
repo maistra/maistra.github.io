@@ -113,9 +113,9 @@ These are the resources requested and may vary depending on your environment. Th
 |`cpu`
 |This is the maximum number of CPUs that proxy is allowed to use.
 | 2000m
-|`memory`
-|This is the amount of memory that is requested in the environment.
-|1024mi
+|`memory` 
+|This is the amount of memory that is requested in the environment.  
+|1024Mi
 |=======
 
 [[Gateways]]
@@ -186,7 +186,7 @@ These are the resources requested and may vary depending on your environment. Th
       resources:
         requests:
           cpu: 10m
-          memory: 128mi
+          memory: 128Mi
         limits:
 ----
 
