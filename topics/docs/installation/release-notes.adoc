@@ -1,0 +1,24 @@
+---
+title: "Releases"
+type: "document"
+category: "Getting started"
+description: "This lists the Maistra releases."
+weight: 0
+---
+
+We suggest using the latest release, but the following table lists the versions of our components in different releases. 
+
+[options="header"]
+|=======
+|Maistra Version | Istio Version
+|1.1.0 (link:https://maistra-1-1.maistra.io/[website]) |1.4.6 (link:https://istio.io/news/releases/1.4.x/announcing-1.4.6/[release notes])
+|1.0.10 (link:http://maistra-1-0.maistra.io/[website]) |1.1.17 (link:https://istio.io/news/releases/1.1.x/announcing-1.1.17/[release notes])
+|=======
+
+[[maistra-1.1.0]]
+== Maistra 1.1.0
+* Updated to Istio 1.4.6
+* Support for Kiali `tag` field has been removed
+* Operator dependencies removed. Kiali, Jaeger, and ElasticSearch must be installed independently.
+
+
