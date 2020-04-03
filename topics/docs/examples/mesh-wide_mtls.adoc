@@ -35,7 +35,7 @@ spec:
   - mtls: {}
 ----
 
-This will instruct all sidecars in the mesh to only accept mTLS connections. Note that this resource has to be named 'default' and it has to be created in your control plane's namespace.
+This will instruct all sidecars in the mesh to only accept mTLS connections. Note that this resource has to be named 'default' and it has to be created in your control plane's project.
 
 {{% notice tip %}}
 This resource does not exist in upstream Istio, it has been added to Maistra. It replaces the upstream MeshPolicy, which is cluster-scoped. For more information, see the link:../../comparison-with-istio/#cluster_scoped_resources[comparison of Maistra and upstream Istio].
@@ -59,7 +59,7 @@ spec:
       mode: ISTIO_MUTUAL
 ----
 
-As you can see, using the wildcard "*.local" in `spec.host` we are matching all services in the same cluster. By creating the resource in the control plane's namespace, we're making sure it is applied to all services in the mesh. It is called 'default' again, but this time the name is not important; you can create as many DestinationRules as you like, as opposed to the singleton ServiceMeshPolicy. The `spec.traffiPolicy.tls.mode` of ISTIO_MUTUAL instructs Envoy to use mTLS for outgoing requests, and to use the certificates that are deployed by Istio's Citadel component.
+As you can see, using the wildcard "*.local" in `spec.host` we are matching all services in the same cluster. By creating the resource in the control plane's project, we're making sure it is applied to all services in the mesh. It is called 'default' again, but this time the name is not important; you can create as many DestinationRules as you like, as opposed to the singleton ServiceMeshPolicy. The `spec.traffiPolicy.tls.mode` of ISTIO_MUTUAL instructs Envoy to use mTLS for outgoing requests, and to use the certificates that are deployed by Istio's Citadel component.
 
 
 === See also

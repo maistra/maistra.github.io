@@ -26,4 +26,4 @@ Documentation
 ------------
 If you notice an issue in our documentation, please feel free to open a pull request or issue. Please note that we follow the
 OpenShift documentation style guide, located here: https://github.com/openshift/openshift-docs/blob/master/contributing_to_docs/doc_guidelines.adoc#writing-concepts.
-This allows us to create a common formatting standard across all of the documentation on the website. 
+This allows us to create a common formatting standard across all of the documentation on the website.

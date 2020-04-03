@@ -29,7 +29,7 @@ the `ServiceMeshMemberRoll` within the control plane project it references.
 
 An example resource can be seen below:
 
-{{< snippet_markdown name="istio_installation_smm" >}}
+{{< snippet_markdown name="istio_installation_smmr" >}}
 
 Unlike the `ServiceMeshMemberRoll` resource, which is created by the service mesh
 administrator, `ServiceMeshMember` resources are created by service mesh users.

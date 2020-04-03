@@ -17,7 +17,7 @@ The following example will enable RBAC policy enforcement in your Maistra mesh. 
 
 === Creating the ServiceMeshRbacConfig
 
-Creating the following resource in your control plane's namespace will enable RBAC policy enforcement in your mesh:
+Creating the following resource in your control plane's project will enable RBAC policy enforcement in your mesh:
 
 [source,yaml]
 ----

@@ -13,13 +13,13 @@ The following steps describe the deployment of the Bookinfo application on Maist
 Install Maistra by following the instructions link:/docs/installation[here].
 
 === Create the Bookinfo project
-Maistra takes a multi-tenant approach, meaning that you can have more than one 
-control plane in your OpenShift cluster. Please substitute <namespace> with
-the namespace of your control plane and <bookinfo> with the name of the project to
-use for the Bookinfo example. 
+Maistra takes a multi-tenant approach, meaning that you can have more than one
+control plane in your OpenShift cluster. Please substitute <project> with
+the project of your control plane and <bookinfo> with the name of the project to
+use for the Bookinfo example.
 
 ```sh
-$ export CONTROL_PLANE_NS=<namespace>
+$ export CONTROL_PLANE_NS=<project>
 $ export BOOKINFO_NS=bookinfo
 $ oc new-project ${BOOKINFO_NS}
 ```

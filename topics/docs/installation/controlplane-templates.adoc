@@ -7,7 +7,7 @@ weight: 6
 ---
 == Control Plane Templates
 Templates allow a cluster administrator to create reusable configurations that users may extend with their own customizations.
-Templates may also inerhit from other templates. As an example, if there are two teams with different control planes, say an
+Templates may also inherit from other templates. As an example, if there are two teams with different control planes, say an
 accounting team and a website team, with a development and production configuration, then there could be a template called development
 and one called production and individual templates for the accounting and development teams that extend these two configurations with
 their own customizations. Individual control planes in the teams can customize these for the actual deployment.
@@ -43,7 +43,7 @@ template. Additional templates can be added to the `ConfigMap` as desired.
 $ oc create configmap --from-file=<templates-directory> smcp-templates -n openshift-operators
 ----
 
-Next, find the Maistra operator `ClusterServiceVersion` name. 
+Next, find the Maistra operator `ClusterServiceVersion` name.
 
 ----
 $ oc get clusterserviceversion -n openshift-operators | grep 'Service Mesh'
@@ -64,7 +64,7 @@ In the editor, add a volume mount and volume to the deployments as shown below.
     - name: istio-operator
       spec:
         template:
-          spec: 
+          spec:
             containers:
               volumeMounts:
                 - name: smcp-templates
