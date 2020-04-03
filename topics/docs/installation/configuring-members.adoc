@@ -36,7 +36,7 @@ administrator, `ServiceMeshMember` resources are created by service mesh users.
 While project administrators are automatically given permission to create the
 `ServiceMeshMember` resource in their project, they are not allowed to point it
 to any `ServiceMeshControlPlane` until the service mesh administrator explicitly
-grants access to the service mesh via RBAC. This is done by modifying the
+grants access to the service mesh using RBAC. This is done by modifying the
 `mesh-users` `RoleBinding` in the control plane project to specify the users and
 groups which should be granted access.
 

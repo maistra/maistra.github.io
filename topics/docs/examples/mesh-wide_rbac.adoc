@@ -6,7 +6,7 @@ description: "Configure Maistra to enforce RBAC rules for all communication insi
 ---
 
 {{% notice info %}}
-Using RBAC policies requires mTLS strict mode. For information on how to enable it, see link:../mesh-wide_mtls/[Enabling Mesh-wide Strict mTLS].
+Using RBAC policies requires mTLS strict mode. For information about how to enable it, see link:../mesh-wide_mtls/[Enabling Mesh-wide Strict mTLS].
 {{% /notice %}}
 
 == Introduction

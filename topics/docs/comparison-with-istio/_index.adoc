@@ -58,7 +58,7 @@ Upstream Istio has two cluster scoped resources that it relies on. The MeshPolic
 * _ServiceMeshPolicy_ replaces MeshPolicy for configuration of control-plane-wide authentication policies. This must be created in the same project as the control plane.
 * _ServicemeshRbacConfig_ replaces ClusterRbacConfig for configuration of control-plane-wide role based access control. This must be created in the same project as the control plane.
 
-For more information on how to use them, see these examples:
+For more information about how to use them, see these examples:
 
 - ServiceMeshPolicy: link:../examples/mesh-wide_mtls/[Enabling Mesh-wide Strict mTLS]
 - ServiceMeshRbacConfig: link:../examples/mesh-wide_rbac/[Enabling Mesh-wide RBAC Policy Enforcement].
@@ -69,4 +69,4 @@ For more information on how to use them, see these examples:
 * A _maistra-version_ label has been added to all resources.
 * The istio-multi ServiceAccount and ClusterRoleBinding have been removed, as well as the istio-reader ClusterRole.
 * All Ingress resources have been converted to OpenShift Route resources.
-* Grafana, Tracing (Jaeger), and Kiali are enabled by default and exposed via OpenShift routes.
+* Grafana, Tracing (Jaeger), and Kiali are enabled by default and exposed through OpenShift routes.

@@ -6,7 +6,7 @@ description: "This document describes common issues experienced with regards to 
 ---
 
 === Policies Not Working
-The update and release of Maistra 0.9 introduced a significant change in behaviour related to policy enforcement via Mixer.  In older versions of the product, Mixer's policy enforcement was enabled by default. However, from release 0.9 onward, the policy enforcement is now disabled.
+The update and release of Maistra 0.9 introduced a significant change in behaviour related to policy enforcement using Mixer.  In older versions of the product, Mixer's policy enforcement was enabled by default. However, from release 0.9 onward, the policy enforcement is now disabled.
 
 * To see whether policy checks are disabled, execute:
 

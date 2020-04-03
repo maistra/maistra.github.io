@@ -35,7 +35,7 @@ collection of `ServiceMeshControlPlane` files to use as templates. The name of t
 inherit from other templates until a template is reached which has an empty template field. Using a template name of `default` will override the
 default template for all control planes when no template is specified in a control plane.
 
-For example, create a `ServiceMeshControlPlane` and instead of using `oc apply` to create it in the cluster, save it in a
+For example, create a `ServiceMeshControlPlane` and rather than using `oc apply` to create it in the cluster, save it in a
 directory called `<templates-directory>`. Follow the instructions below to create and configure a `ConfigMap` containing this new
 template. Additional templates can be added to the `ConfigMap` as desired.
 
