@@ -13,4 +13,3 @@ Maistra
 multitenant
 Multitenancy
 nftables
-YAML

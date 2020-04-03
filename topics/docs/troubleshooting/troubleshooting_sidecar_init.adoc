@@ -11,7 +11,7 @@ The current default Maistra images are designed to on top of RHEL 8 and are no l
 compatible with iptables based systems. If the host operating system is based on
 iptables instead of nftables, the proxy-init image must be set to the CentOS 7 version instead.
 
-To fix this issue, add the following change to your cr.yaml and redeploy your pod.
+To fix this issue, add the following change to your `ServiceMeshControlPlane` and redeploy your pod.
 
 [source,yaml]
 ----

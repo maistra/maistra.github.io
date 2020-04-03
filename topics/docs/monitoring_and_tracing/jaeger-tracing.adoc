@@ -37,7 +37,7 @@ Click on one of the traces in the list to open a detailed view of that trace:
 image::jaeger-spans.png[]
 
 The trace above consists of a few nested spans, each corresponding to a Bookinfo
-service call, all performed in response to a /productpage request. Overall
+service call, all performed in response to a `/productpage` request. Overall
 processing time was 2.62s, with the "details" service taking 3.56ms, "reviews"
 service taking 2.6s, and "ratings" service -- 5.32ms. Each of the calls to the
 remote services is represented by a client-side and server-side spans. For
