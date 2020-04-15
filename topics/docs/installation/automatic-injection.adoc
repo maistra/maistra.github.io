@@ -15,7 +15,7 @@ the appropriate configuration for your service mesh at the time of its deploymen
 == Automatic Sidecar Injection
 Automatic injection of the sidecar is supported by using the
 _sidecar.istio.io/inject_ annotation within your application
-yaml file as well as an entry in a `ServiceMeshMemberRoll` or `ServiceMeshMember`
+deployment as well as an entry in a `ServiceMeshMemberRoll` or `ServiceMeshMember`
 as defined link:../configuring-members[here].
 
 === Application Annotation

@@ -5,7 +5,12 @@ category: "Troubleshooting"
 description: "This document describes common issues experienced with regards to sidecar init."
 ---
 
-=== iptables v1.6.0: can't initialize iptables table `nat': Table does not exist (do you need to insmod?)
+pass:[<!-- vale Vale.Spelling = NO -->] 
+
+== iptables v1.6.0: can't initialize iptables table `nat': Table does not exist (do you need to insmod?)
+
+pass:[<!-- vale Vale.Spelling = YES -->]
+
 With the release of Red Hat Enterprise Linux (RHEL) 8, the firewall has been migrated from iptables to nftables.
 The current default Maistra images are designed to on top of RHEL 8 and are no longer
 compatible with iptables based systems. If the host operating system is based on

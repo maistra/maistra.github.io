@@ -20,11 +20,9 @@ A route to access Grafana UI should already exist. Query OpenShift for details o
 
 ```
 
-Open `http://grafana-istio-system.127.0.0.1.nip.io` in a browser. You should see Grafana's home screen, similar to this:
+Open `\http://grafana-istio-system.127.0.0.1.nip.io` in a browser. You should see Grafana's home screen, similar to this:
 
 image::grafana-home-screen.png[]
-
-
 
 == Istio Mesh Metrics
 
