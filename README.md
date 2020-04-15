@@ -1,6 +1,8 @@
 
 # OpenShift Service Mesh
 
+thisisspelledwrongbecauseIwnatittobe!Somepeoplejustliketowatchtheworldburn
+
 This repository contains documentation for the community release of OpenShift Service Mesh, based on the upstream Istio project.  This README provides information about this documentation repository. The site can be viewed at maistra.io.
 
 ## Getting Started
@@ -19,8 +21,8 @@ This repository uses the following directory structure:
 ```
 ├── [archetypes] - Can be used to define content, for example you can set default tags or categories and define types such as a post, tutorial or product here.
 ├── [topics] - Contains all the content files.
-|   ├── Blog -- This directory is used to render the Maistra blog, which is rendered on the fly from a collection of RSS feeds. 
-|   ├── Docs -- This directory contains 
+|   ├── Blog -- This directory is used to render the Maistra blog, which is rendered on the fly from a collection of RSS feeds.
+|   ├── Docs -- This directory contains
 │   │   ├── .adoc (AsciiDoc topic files)
 │   ├── DRAFTS - This directory is intended for topic stubs, topics that need to be written, and in-progress drafts. The Hugo config file is set to ignore this directory and its contents.
 │   │   ├── .adoc (AsciiDoc topic files)
@@ -51,7 +53,7 @@ or
 $ hugo new ./overviews/about.adoc
 ```
 
-You can also create new .adoc files using a text editor. 
+You can also create new .adoc files using a text editor.
 
 ### Docs Header
 Content in the docs directory require the following headers to be populated in order to be listed in the docs:
