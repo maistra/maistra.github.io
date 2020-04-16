@@ -11,9 +11,6 @@ languageCOde = "en-US"
 # Disqus Username
 disqusShortname = "disqus_shortname"
 
-# Google Analytics UA number
-googleAnalytics = "UA-XXXXXXXX-X"
-
 # Copyright of your post
 copyright = "© This post is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License，please give source if you wish to quote or reproduce."
 
@@ -52,13 +49,12 @@ copyright = "© This post is licensed under a Creative Commons Attribution-NonCo
 
 [params]
   themeVariant="blue"
-  editURL="https://github.com/Maistra/maistra.github.io/edit/maistra-1.1/topics/"
   ordersectionsby="weight"
   disableBreadcrumb = true
   disableNextPrev = true
   showVisitedLinks = false
   disableInlineCopyToClipBoard = true
-  
+
 
   accent = "#006264"
   backgroundColor = "#f5f5f5"
