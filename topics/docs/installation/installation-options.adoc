@@ -6,6 +6,7 @@ description: "This is a full listing of additional options available for a Maist
 weight: 5
 ---
 
+include::vars.adoc[]
 
 :toc:
 
@@ -28,12 +29,13 @@ charts. Many of the parameters supported by the installer are shown below.
 [[istio_global_values]]
 == Istio Global Values
 
-[source,yaml]
+
+[source,yaml,subs="attributes"]
 ----
   istio:
     global:
-      hub: my-private-registry.com/custom-namespace
-      tag: 1.1.0
+      hub: {defaultMaistraHub}
+      tag: {defaultMaistraTag}
       mtls:
         enabled: true
       proxy:
@@ -62,10 +64,10 @@ charts. Many of the parameters supported by the installer are shown below.
 | false
 |`hub`
 |The hub to use to pull the Istio images.
-| `maistra/`
+| `{defaultMaistraHub}`
 |`tag`
 |The tag to use to pull the Istio images.
-| 1.1.0
+| {defaultMaistraTag}
 |`imagePullSecrets`
 |If access to the registry providing the Istio images is secure, then an link:https://kubernetes.io/docs/concepts/containers/images/#specifying-imagepullsecrets-on-a-pod[`imagePullSecret`] can be listed here.
 |none
@@ -113,15 +115,15 @@ These are the resources requested and may vary depending on your environment. Th
 |`cpu`
 |This is the maximum number of CPUs that proxy is allowed to use.
 | 2000m
-|`memory` 
-|This is the amount of memory that is requested in the environment.  
+|`memory`
+|This is the amount of memory that is requested in the environment.
 |1024Mi
 |=======
 
 [[Gateways]]
 == istio->gateways
 
-[source,yaml]
+[source,yaml,subs="attributes"]
 ----
   gateways:
     istio-egressgateway:
@@ -132,7 +134,7 @@ These are the resources requested and may vary depending on your environment. Th
       autoscaleEnabled: false
       autoscaleMin: 1
       autoscaleMax: 5
-      ior_enabled: false
+      ior_enabled: {defaultMaistraIOREnabled}
 
 ----
 
@@ -168,13 +170,13 @@ These are the resources requested and may vary depending on your environment. Th
 | 5
 |`ior_enabled`
 |This parameter controls whether IOR is enabled. link:../../comparison-with-istio/ior/[Learn more about IOR].
-| false
+| {defaultMaistraIOREnabled}
 |=======
 
 [[Mixer]]
 == istio -> mixer
 
-[source,yaml]
+[source,yaml,subs="attributes"]
 ----
   mixer:
     enabled: true
@@ -185,8 +187,8 @@ These are the resources requested and may vary depending on your environment. Th
       autoscaleEnabled: false
       resources:
         requests:
-          cpu: 10m
-          memory: 128Mi
+          cpu: {defaultMaistraMixerRequestsCPU}
+          memory: {defaultMaistraMixerRequestsMemory}
         limits:
 ----
 
@@ -213,10 +215,10 @@ These are the resources requested and may vary depending on your environment. Th
 |Parameter |Description |Default
 |`cpu`
 |This is the number of CPUs that are requested in the environment.
-|10m
+|{defaultMaistraMixerRequestsCPU}
 |`memory`
 |This is the amount of memory that is requested in the environment.
-|128Mi
+|{defaultMaistraMixerRequestsMemory}
 |=======
 
 [[telemetry_resources_limits]]
@@ -341,13 +343,13 @@ If you intend to use a custom image, you must override all three values of `hub`
 |Parameter |Description |Default
 |`hub`
 |delegates to Jaeger operator
-|`jaegertracing/` or `registry.redhat.io/openshift-service-mesh/`
+|`jaegertracing/` or `{defaultServiceMeshHub}`
 |`tag`
 |The tag that the Operator uses to pull the Jaeger images
 |delegates to Jaeger operator
 |`template`
 |The deployment template to use for Jaeger
-|`all-in-one`/`production-elasticsearch`
+|`{defaultMaistraJaegerTemplate}`/`{defaultServiceMeshJaegerTemplate}`
 |`memory->max_traces`
 | 100000
 | This sets the maximum number of traces.
@@ -383,7 +385,7 @@ These parameters apply in the `production-elasticsearch` template only.
 disablePolicyChecks must be false for 3scale to work.
 {{% /notice %}}
 
-[source,yaml]
+[source,yaml,subs="attributes"]
 ----
   threeScale:
     enabled: false
@@ -413,13 +415,13 @@ disablePolicyChecks must be false for 3scale to work.
 | `false`
 |`hub`
 |The repository to use to pull 3Scale images.
-| `quay.io/3scale` or `registry.redhat.io/openshift-service-mesh`
+| `{defaultMaistraThreeScaleHub}` or `{defaultServiceMeshThreeScaleHub}`
 |`image`
 |The image to use for the 3Scale adapter.
-| `3scale-istio-adapter` or `3scale-istio-adapter-rhel8`
+| `{defaultMaistraThreeScaleImage}` or `{defaultServiceMeshThreeScaleHub}`
 |`tag`
 |The image tag to use.
-| `v1.0.0` (for community) or `1.0.0` (product)
+| `{defaultMaistraThreeScaleTag}` (for community) or `{defaultServiceMeshThreeScaleTag}` (product)
 |`PARAM_THREESCALE_LISTEN_ADDR`
 |This sets the listen address for the gRPC server.
 |3333
