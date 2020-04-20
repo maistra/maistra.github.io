@@ -9,7 +9,7 @@ description: "See how Istio allows you to monitor the health of your Service Mes
 
 {{< snippet_markdown name="before_you_begin_bookinfo" >}}
 
-== Accessing Grafana UI
+== Accessing the Grafana user interface
 
 A route to access Grafana UI should already exist. Query OpenShift for details of the route:
 

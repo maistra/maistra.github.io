@@ -6,7 +6,16 @@ description: "This lists the Maistra releases."
 weight: 0
 ---
 
-We suggest using the latest release, but the following table lists the versions of our components in different releases. 
+
+== Security Issues
+
+{{% notice warning %}}
+Occasionally, security issues are found in Maistra. When issues are discovered, a new release
+of OpenShift Service Mesh is made to include fixes for these vulnerabilities. However,
+these fixes are not included in a Maistra release until the next general release. 
+{{% /notice %}}
+
+The following table lists the versions of components in different releases. 
 
 [options="header"]
 |=======

@@ -9,7 +9,7 @@ description: "Use Istio and Prometheus to collect and examine metrics in your se
 
 {{< snippet_markdown name="before_you_begin_bookinfo" >}}
 
-== Querying Metrics
+== Querying metrics
 
 . Generate network traffic by accessing the Bookinfo application:
 +

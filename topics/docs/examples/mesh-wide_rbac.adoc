@@ -11,13 +11,13 @@ Using RBAC policies requires mTLS strict mode. For information about how to enab
 
 == Introduction
 
-Istio supports policies that define Role-based Access Control rules (RBAC) to specify which services can communicate within the mesh. Role-based means that you first create a role that defines a set of actions that can legally be performed on a set of resources, and then map the defined role to a set of services. The ServiceRole can define e.g. legal HTTP verbs and endpoints for HTTP services, or access to certain ports for TCP services. The resources resemble the https://kubernetes.io/docs/reference/access-authn-authz/rbac/[Kubernetes RBAC objects]. If you are familiar with those, you should be able to get started quickly with using Maistra's RBAC functionality.
+Istio supports policies that define Role-based Access Control rules (RBAC) to specify which services can communicate within the mesh. Role-based means that you first create a role that defines a set of actions that can legally be performed on a set of resources, and then map the defined role to a set of services. The ServiceRole can define e.g. legal HTTP verbs and endpoints for HTTP services, or access to certain ports for TCP services. The resources resemble the https://kubernetes.io/docs/reference/access-authn-authz/rbac/[Kubernetes RBAC objects]. If you are familiar with those, you should be able to get started quickly with using Maistra's RBAC capabilities.
 
-The following example will enable RBAC policy enforcement in your Maistra mesh. Note that without any further action, this will make communication between your services impossible, because by default, _Istio's RBAC functionality will deny all requests that are not explicitly permitted_.
+The following example enables RBAC policy enforcement in your Maistra mesh. Note that by default, Istio's RBAC functionality _denies all requests that are not explicitly permitted_. Without any further action, this makes communication between your services impossible.
 
 === Creating the ServiceMeshRbacConfig
 
-Creating the following resource in your control plane's project will enable RBAC policy enforcement in your mesh:
+Creating the following resource in your control plane's project enables RBAC policy enforcement in your mesh:
 
 [source,yaml]
 ----
@@ -36,6 +36,6 @@ This resource does not exist in upstream Istio, it has been added to Maistra. It
 
 === See also
 
-- https://istio.io/docs/tasks/security/authz-http/[Istio Task: Authorization for HTTP Services]
-- https://istio.io/docs/tasks/security/authz-tcp/[Istio Task: Authorization for TCP Services]
-- https://kubernetes.io/docs/reference/access-authn-authz/rbac/[Kubernetes Docs: Using RBAC Authorization]
+- https://istio.io/docs/tasks/security/authz-http/[Istio Task: authorization for HTTP Services]
+- https://istio.io/docs/tasks/security/authz-tcp/[Istio Task: authorization for TCP Services]
+- https://kubernetes.io/docs/reference/access-authn-authz/rbac/[Kubernetes documentation: using RBAC authorization]

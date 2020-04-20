@@ -6,9 +6,9 @@ description: "Configure Maistra to use mTLS encryption for all communication ins
 ---
 == Introduction
 
-When using mutual Transport Layer Security (mTLS), client and server can verify each other's identity and encrypt traffic using distinct certificates for both parties. This is different from 'simple' TLS, where usually only the server will provide a certificate.
+When using mutual Transport Layer Security (mTLS), client and server can verify each other's identity and encrypt traffic using distinct certificates for both parties. This is different from 'simple' TLS, where usually only the server provides a certificate.
 
-By default, Maistra is configured in permissive mode: the sidecars in a Maistra mesh will accept both plain-text traffic and connections that are encrypted using mTLS. For outgoing traffic, the sidecars will default to plain-text, unencrypted connections. By using Istio configuration objects, the behaviour can be fine-tuned to your needs. One of the possible configurations is strict mTLS mode. This means that sidecars only accept incoming traffic if it is encrypted, and they will default to using encrypted connections to talk to other services in the mesh.
+By default, Maistra is configured in permissive mode: the sidecars in a Maistra mesh accept both plain-text traffic and connections that are encrypted using mTLS. For outgoing traffic, the sidecars default to plain-text, unencrypted connections. By using Istio configuration objects, the behaviour can be fine-tuned to your needs. One of the possible configurations is strict mTLS mode. This means that sidecars only accept incoming traffic if it is encrypted, and they will default to using encrypted connections to talk to other services in the mesh.
 
 {{% notice tip %}}
 This article explains the role and setup of the required Istio and Maistra resources to enable strict mTLS across your service mesh. If you just want to set strict mode quickly, you can achieve the same result by setting `.Spec.istio.global.mtls.enabled` to `true` in your ServiceMeshControlPlane resource. The operator will then create the required resources for you.

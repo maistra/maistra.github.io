@@ -8,7 +8,7 @@ weight: 1
 
 Maistra requires the ElasticSearch, Jaeger, and Kiali operators to be installed before Maistra operator itself can be installed. Please reference link:https://docs.openshift.com/container-platform/4.1/applications/operators/olm-adding-operators-to-cluster.html[documentation on adding operators to a cluster] for detailed instructions on how to install operators using OLM.
 
-== Installing the Maistra Operator
+== Installing the Maistra operator
 :leveloffset: +1
 
 Open the OpenShift web console in a Web browser and:
@@ -23,22 +23,9 @@ This installs the Maistra operator and makes it available to all projects in the
 
 :leveloffset: -1
 
-=== Verifying Installation
+=== Removing the operator
 
-The above instructions will create a new deployment within the istio-operator project, executing the operator responsible for managing the state of the Istio control plane through the `ServiceMeshControlPlane`.
-
-To verify the operator is installed correctly, wait for the operator to reach the running state
-
-```
-$ oc get pods -n openshift-operators -l name=istio-operator
-
-NAME                              READY     STATUS    RESTARTS   AGE
-istio-operator-5cd6bcf645-fvb57   1/1       Running   0          1h
-```
-
-=== Removing the Operator
-
-==== Removing the Maistra Operator
+==== Removing the Maistra operator
 
 :leveloffset: +1
 
@@ -51,7 +38,7 @@ Open the OpenShift web console in a Web browser and:
 
 The Maistra operator creates several resources that are not managed by OLM
 (OperatorHub). These must be removed manually after uninstalling the Maistra
-operator.  As a cluster administrator, execute the following commands.
+operator. As a cluster administrator, execute the following commands.
 
 [source, bash]
 ----
@@ -64,7 +51,7 @@ $ oc get crds -o name | grep '.*\.maistra\.io' |xargs -r -n 1 oc delete
 
 :leveloffset: -1
 
-==== Removing the Kiali Operator
+==== Removing the Kiali operator
 
 :leveloffset: +1
 
@@ -77,7 +64,7 @@ Open the OpenShift web console in a Web browser and:
 
 :leveloffset: -1
 
-==== Removing the Jaeger Operator
+==== Removing the Jaeger operator
 
 :leveloffset: +1
 
@@ -90,7 +77,7 @@ Open the OpenShift web console in a Web browser and:
 
 :leveloffset: -1
 
-==== Removing the Elasticsearch Operator
+==== Removing the Elasticsearch operator
 
 :leveloffset: +1
 
