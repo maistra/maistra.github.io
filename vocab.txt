@@ -1,7 +1,10 @@
+anyuid
+bookinfo
 Bookinfo
 CentOS
 configMaps
 controlplane
+Godebug
 Grafana
 hostname
 hostnames
@@ -13,3 +16,6 @@ Maistra
 multitenant
 Multitenancy
 nftables
+productpage
+unencrypted
+schedulable

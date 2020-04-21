@@ -5,11 +5,11 @@ category: "Examples"
 description: "Bookinfo is an example application that shows you how to set up and monitor a service mesh using Istio."
 ---
 
-== Bookinfo Application
+== Bookinfo application
 
 The following steps describe the deployment of the Bookinfo application on Maistra.
 
-=== Before you Begin
+=== Before you begin
 Install Maistra by following the link:/docs/installation[installation instructions].
 
 === Create the Bookinfo project
@@ -22,7 +22,7 @@ use for the Bookinfo example.
 $ export CONTROL_PLANE_NS=<project>
 $ export BOOKINFO_NS=bookinfo
 $ oc new-project ${BOOKINFO_NS}
-```
+````
 
 {{% notice info %}}
 In OpenShift 3, Security Context Constraints (SCC) must be configured for the Bookinfo application. Additional information can be found link:../../installation/application-requirements/[here].
@@ -116,7 +116,7 @@ destinationrule.networking.istio.io/details configured
 
 [[cleanup]]
 === Cleanup
-Delete the bookinfo project - this will wipe everything we created above:
+Delete the bookinfo project to remove the Bookinfo resources.
 ```sh
 $ oc delete project ${BOOKINFO_NS}
 project.project.openshift.io "bookinfo" deleted

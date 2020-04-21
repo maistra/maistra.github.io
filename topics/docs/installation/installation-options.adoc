@@ -55,12 +55,12 @@ charts. Many of the parameters supported by the installer are shown below.
 |=======
 |Parameter |Description |Default
 |`disablePolicyChecks`
-|This is a boolean indicating whether to enable policy checks. {{% notice info %}}
+|This parameter enables/disables policy checks. {{% notice info %}}
 `disablePolicyChecks` must be false for 3scale to work.
 {{% /notice %}}
 | `true`
 |`policyCheckFailOpen`
-|This is a boolean indicating whether to traffic should be allowed through when the mixer policy service cannot be reached.
+|This parameter indicates whether traffic should be allowed to pass through Envoy when the mixer policy service cannot be reached.
 | false
 |`hub`
 |The hub to use to pull the Istio images.

@@ -54,7 +54,7 @@ To create a control plane, open the OpenShift web console in a Web browser and c
 
 [[remove_control_plane]]
 
-=== Removing a Control Plane
+=== Removing a control plane
 
 {{% notice note %}}
 Substitute the proper project below if the controlplane was created in a project other than `istio-system`.
@@ -77,7 +77,7 @@ $ oc delete project istio-system
 The removal of the CustomResource will tell the Istio operator to begin uninstalling everything it installed.
 
 
-=== Removing a Control Plane using Catalog Web UI
+=== Removing a control plane with the web console
 
 :leveloffset: +1
 
@@ -95,8 +95,8 @@ To remove a control plane, open the OpenShift web console in a Web browser and:
 == Upgrading a control plane
 
 If you installed the Maistra operator using the `Automatic Approval Strategy`,
-then the operator and control plane will update automatically. If not, then you
-will have to manually upgrade each of the operators.  In either case, the
+then the operator and control plane update automatically. If not, then you
+will have to manually upgrade each of the operators. In either case, the
 application sidecars must be updated separately from the control plane.
 
 If your deployment is using automatic injection, then the application

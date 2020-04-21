@@ -10,12 +10,12 @@ description: "See how to use Istio to collect traces and send them to Jaeger to 
 {{< snippet_markdown name="before_you_begin_bookinfo" >}}
 
 
-== Generate Traces
+== Generate traces
 
-Once Bookinfo application has been deployed, generate traces by accessing `http://$GATEWAY_URL/productpage` a few times.
+Once Bookinfo application has been deployed, generate traces by accessing `\http://$GATEWAY_URL/productpage` a few times.
 
 
-== Analyze Tracing Data using Jaeger
+== Analyze tracing data using Jaeger
 
 The Maistra operator should have created a route to access Jaeger dashboard. Query OpenShift for details of the route:
 
@@ -26,7 +26,7 @@ The Maistra operator should have created a route to access Jaeger dashboard. Que
 
 ```
 
-Point your browser to `https://jaeger-query-istio-system.127.0.0.1.nip.io`,
+Point your browser to `\https://jaeger-query-istio-system.127.0.0.1.nip.io`,
 select *productpage* from the "Service" drop-down list, and click 
 *Find Traces*. You should see a list of available traces similar to one below:
 

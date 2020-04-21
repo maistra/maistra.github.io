@@ -42,8 +42,8 @@ distributed tracing information.
 
 === Generating load
 
-Before we take a look at the Kiali console lets first generate some load on
-the Service Mesh. From within a new terminal enter the following commands
+Before looking at the Kiali console, generate some load on
+the Service Mesh. From within a new terminal enter the following commands:
 
 [source,bash,role="copypaste"]
 ----
