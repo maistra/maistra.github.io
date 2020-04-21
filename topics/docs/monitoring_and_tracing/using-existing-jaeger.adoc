@@ -9,15 +9,15 @@ description: "See how to use an existing Jaeger instance for trace collection an
 
 == Configuring Jaeger
 
-=== Deploy to the Control Plane Project
+=== Deploy to the control plane project
 
 In order for a custom Jaeger instance to work with a Maistra control plane, it has to be deployed to the same project. When using the Jaeger Operator, this is achieved by creating the Jaeger resource in the same project as the `ServiceMeshControlPlane` resource.
 
-=== Set Up Authentication
+=== Set up authentication
 
-Maistra uses a secret called `htpasswd` to facilitate communication between dependant services like Grafana, Kiali and Jaeger. To enable secure communication between services, you should enable the oauth-proxy, which secures communication to your Jaeger instance, and make sure the secret is mounted into your Jaeger instance so Kiali can communicate with it.
+Maistra uses a secret called `htpasswd` to facilitate communication between dependant services like Grafana, Kiali, and Jaeger. To enable secure communication between services, you should enable the oauth-proxy, which secures communication to your Jaeger instance, and make sure the secret is mounted into your Jaeger instance so Kiali can communicate with it.
 
-=== Example Jaeger Resource
+=== Example Jaeger resource
 
 [source, yaml]
 ----
@@ -50,21 +50,21 @@ spec:
 
 == Configuring the ServiceMeshControlPlane
 
-=== Disable Jaeger Deployment
+=== Disable Jaeger deployment
 
-By default, the Maistra operator will deploy a Jaeger instance for you, using the Jaeger operator. If you want to use a custom or already existing Jaeger instance for tracing, you will have to disable the deployment of a Jaeger instance by setting `spec.istio.tracing.enabled` to `false`.
+By default, the Maistra operator deploys a Jaeger instance for you, using the Jaeger operator. If you want to use a custom or already existing Jaeger instance for tracing, setting `spec.istio.tracing.enabled` to `false` to disable the deployment of a Jaeger instance.
 
-=== Set Endpoint for Trace Collection
+=== Set endpoint for trace collection
 
 Maistra gateways and sidecars send traces to Mixer (the `istio-telemetry` pod in the control plane project), which then passes them on to a `jaeger-collector` endpoint in your cluster. When using a custom Jaeger instance, you will have to make sure to supply the correct endpoint for Mixer to use. This is achieved by setting `spec.istio.global.tracer.zipkin.address` to the hostname and port of your `jaeger-collector` service. The hostname of that service is usually `<jaeger-instance-name>-collector.<namespace>.svc`.
 
-=== Set Endpoint for Trace Querying
+=== Set endpoint for trace querying
 
 If you're using Kiali to visualize traces and metrics across your mesh, you will have to make sure that Kiali knows from which Jaeger instance it should gather traces. You do this by setting `spec.istio.kiali.jaegerInClusterURL` to the hostname of your `jaeger-query` service - the port is normally not required, as it uses 443 by default. As above, the hostname of that service is usually `<jaeger-instance-name>-query.<namespace>.svc`.
 
 === Set Jaeger dashboard URL
 
-You will have to provide the dashboard URL of your Jaeger instance so that Kiali can link to it from its user interface. You can retrieve the URL from the OpenShift route that is created by the Jaeger Operator. So if your Jaeger resource is called `external-jaeger` and resides in the `istio-system` project, you can retrieve it using the following command:
+In order to use Jaeger, from the Kiali user interface, you need to provide the dashboard URL of your Jaeger instance. You can retrieve the URL from the OpenShift route that is created by the Jaeger Operator. If your Jaeger resource is called `external-jaeger` and resides in the `istio-system` project, you can retrieve the route using the following command:
 
 ```bash
 $ oc get route -n istio-system external-jaeger
@@ -74,7 +74,7 @@ external-jaeger        external-jaeger-istio-system.apps-crc.testing        exte
 
 The value under `HOST/PORT` is the externally accessible URL of the Jaeger dashboard.
 
-=== Example SMCP Resource
+=== Example SMCP resource
 
 The following `ServiceMeshControlPlane` object assumes that you have deployed Jaeger using the Jaeger Operator and the above Jaeger resource.
 

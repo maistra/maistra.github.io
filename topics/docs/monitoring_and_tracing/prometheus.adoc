@@ -9,7 +9,7 @@ description: "Use Istio and Prometheus to collect and examine metrics in your se
 
 {{< snippet_markdown name="before_you_begin_bookinfo" >}}
 
-== Querying Metrics
+== Querying metrics
 
 . Generate network traffic by accessing the Bookinfo application:
 +
@@ -25,7 +25,7 @@ NAME         HOST/PORT                                  PATH      SERVICES     P
 prometheus   prometheus-istio-system.127.0.0.1.nip.io             prometheus   http-prometheus                 None
 ```
 
-. Open http://prometheus-istio-system.127.0.0.1.nip.io in a browser, you should see Prometheus' home screen, similar to this:
+. Open `\http://prometheus-istio-system.127.0.0.1.nip.io` in a browser, you should see Prometheus' home screen, similar to this:
 +
 image::prometheus-home-screen.png[]
 
@@ -44,7 +44,8 @@ image::prometheus-metrics.png[]
 $ oc get prometheus -n istio-system -o jsonpath='{.items[*].spec.metrics[*].name}'
 requests_total request_duration_seconds request_bytes response_bytes tcp_sent_bytes_total tcp_received_bytes_total
 ```
-Note that returned metric names need to be prepended with `istio_` when used in queries, e.g. `requests_total` will become `istio_requests_total`.
+
+Note that returned metric names reported by Istio start with `istio_` when used in queries. For example,  `requests_total` will become `istio_requests_total`.
 
 == Cleanup
 

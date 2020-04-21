@@ -1,15 +1,15 @@
 
 # OpenShift Service Mesh
 
-This repository contains documentation for the community release of OpenShift Service Mesh, based on the upstream Istio project.  This README provides information about this documentation repository. The site can be viewed at maistra.io.
+This repository contains documentation for the community release of OpenShift Service Mesh, based on the upstream Istio project. This README provides information about this documentation repository. The site can be viewed at maistra.io.
 
 ## Getting Started
 
-The OpenShift Service mesh documentation is written in [Asciidoc](http://asciidoctor.org/docs/asciidoc-syntax-quick-reference/).  This structure of this repository has been designed to work with both the upstream and downstream toolsets.  To generate the documentation, you should install the following tools:
+The OpenShift Service mesh documentation is written in [AsciiDoc](http://asciidoctor.org/docs/asciidoc-syntax-quick-reference/). This structure of this repository has been designed to work with both the upstream and downstream toolsets. To generate the documentation, you should install the following tools:
 
 * [Hugo](https://gohugo.io/)
-* [Asciidoctor](http://asciidoctor.org/docs/install-toolchain/). The downstream (product) documentation toolset requires asciidoc, and while the main content format for Hugo is markdown, Hugo also [supports asciidoc files](https://gohugo.io/content-management/formats/#additional-formats-through-external-helpers) by calling Asciidoctor.
-* Text editor of your choice, for example the [Atom](https://atom.io/) text editor has several useful [packages](https://atom.io/packages) that make it easier to work with asciidoc and Hugo.
+* [Asciidoctor](http://asciidoctor.org/docs/install-toolchain/). The downstream (product) documentation toolset requires AsciiDoc, and while the main content format for Hugo is markdown, Hugo also [supports AsciiDoc files](https://gohugo.io/content-management/formats/#additional-formats-through-external-helpers) by calling Asciidoctor.
+* Text editor of your choice, for example the [Atom](https://atom.io/) text editor has several useful [packages](https://atom.io/packages) that make it easier to work with AsciiDoc and Hugo.
 
 ## Repository Structure
 Hugo assumes that the same structure that organizes your source content is used to organize the rendered site.
@@ -36,7 +36,7 @@ This repository uses the following directory structure:
 
 ### Creating New Content
 
-The documentation is written in asciidoc.  You can create new files from the command line, or by creating .adoc files in your favorite text editor.
+The documentation is written in AsciiDoc.  You can create new files from the command line, or by creating .adoc files in your favorite text editor.
 
 To create a new file from the command line:
 ```

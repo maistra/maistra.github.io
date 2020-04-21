@@ -22,20 +22,20 @@ Maistra configures each member project to ensure network access between itself, 
 
 * `NetworkPolicy`: Maistra creates a `NetworkPolicy` resource in each member project allowing ingress to all pods from the other members and the control plane. If you remove a member from mesh, this `NetworkPolicy` resource is deleted from the project.
 
-NOTE: This also restricts ingress to only member projects. If ingress from non-member projects is required, you need to create a `NetworkPolicy` to allow that traffic through.
+NOTE: This also restricts ingress to only member projects. If you require ingress from non-member projects, you need to create a `NetworkPolicy` to allow that traffic through.
 
 * `Multitenant`: Maistra joins the `NetNamespace` for each member project to the `NetNamespace` of the control plane project (for example, invoking `oc adm pod-network join-projects --to istio-system myproject`). If you remove a member from the mesh, its `NetNamespace` is isolated from the control plane (for example, invoking `oc adm pod-network isolate-projects myproject`).
 
-* `Subnet`: No additional configuration is performed.
+* `Subnet`: no additional configuration is performed.
 
 === Automatic Injection
 
 Enabling automatic injection for your deployments differs between the upstream
-Istio releases and the Maistra releases.  The upstream sidecar injector will
-inject all deployments within specifically labeled projects whereas the
+Istio releases and the Maistra releases. The upstream sidecar injector
+injects all deployments within labeled projects whereas the
 Maistra version relies on presence of the
 `sidecar.istio.io/inject` annotation and the project being listed in the
-`ServiceMeshMemberRoll`.  For more information please refer to the
+`ServiceMeshMemberRoll`. For more information please refer to the
 link:{{< relref "automatic-injection.adoc" >}}[the automatic injection section].
 
 === Istio CNI
@@ -43,7 +43,7 @@ link:{{< relref "automatic-injection.adoc" >}}[the automatic injection section].
 The _CNI plugin_ replaces proxy-init on OpenShift 4 clusters. Using CNI eliminates
 the need for the `NET_ADMIN` privilege on application containers.
 
-=== Istio Operator
+=== Istio operator
 
 Maistra uses a multi-tenant operator to manage the control plane lifecycle.
 Whereas upstream Istio takes a single tenant approach, Maistra supports
@@ -51,7 +51,7 @@ multiple independent control planes within the cluster. This is discussed in
 more detail during link:../installation/[installation]
 
 [[cluster_scoped_resources]]
-=== Cluster Scoped Resources
+=== Cluster scoped resources
 
 Upstream Istio has two cluster scoped resources that it relies on. The MeshPolicy and the ClusterRbacConfig. These are not compatible with a multitenant cluster and have been replaced as described below.
 
@@ -63,7 +63,7 @@ For more information about how to use them, see these examples:
 - ServiceMeshPolicy: link:../examples/mesh-wide_mtls/[Enabling Mesh-wide Strict mTLS]
 - ServiceMeshRbacConfig: link:../examples/mesh-wide_rbac/[Enabling Mesh-wide RBAC Policy Enforcement].
 
-=== Component Modifications
+=== Component modifications
 
 * Godebug has been removed from all templates
 * A _maistra-version_ label has been added to all resources.
