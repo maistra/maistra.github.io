@@ -43,12 +43,12 @@
               {{if not .IsHome}}
               <div>
                 <div id="top-bar">
-                {{ if and (or .IsPage .IsSection) .Site.Params.editURL }}
+                {{ if and (or .IsPage .IsSection) .Site.Data.release.maistraBranch }}
                   {{ $File := .File }}
                   {{ $Site := .Site }}
                   {{with $File.Path }}
                   <div id="top-github-link">
-                    <a class="github-link" title='{{T "Edit-this-page"}}' href="{{ $Site.Params.editURL }}{{ replace $File.Dir "\\" "/" }}{{ $File.LogicalName }}" target="blank">
+                    <a class="github-link" title='{{T "Edit-this-page"}}' href="https://github.com/Maistra/maistra.github.io/edit/{{ $Site.Data.release.maistraBranch }}/{{ replace $File.Dir "\\" "/" }}{{ $File.LogicalName }}" target="blank">
                       <i class="fas fa-code-branch"></i>
                       <span id="top-github-link-text">{{T "Edit-this-page"}}</span>
                     </a>
@@ -70,7 +70,7 @@
                  {{if $showBreadcrumb}}
                     {{ template "breadcrumb" dict "page" . "value" .Title }}
                  {{ else }}
-                   {{ .Title }} 
+                   {{ .Title }}
                  {{ end }}
                   </span>
                 </div>
@@ -93,7 +93,7 @@
           {{$parent := .page.Parent }}
           {{ if $parent }}
             {{ $value := (printf "<a href='%s'>%s</a> > %s" $parent.URL $parent.Title .value) }}
-            {{ template "breadcrumb" dict "page" $parent "value" $value }} 
+            {{ template "breadcrumb" dict "page" $parent "value" $value }}
           {{else}}
             {{.value|safeHTML}}
           {{end}}
