@@ -1,4 +1,5 @@
 anyuid
+Asciidoctor
 bookinfo
 Bookinfo
 CentOS
@@ -8,6 +9,7 @@ Godebug
 Grafana
 hostname
 hostnames
+html-proofer
 iptables
 Kiali
 Istio

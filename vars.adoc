@@ -47,5 +47,18 @@
 //Value servicemesh spec.istio.gateways.istio-ingressgateway.ior_enabled
 :defaultServiceMeshIOREnabled: false
 
+//Value maistra spec.istio.global.proxy.resources.requests.cpu
+:defaultMaistraProxyRequestsCpu: 10m
+
+//Value maistra spec.istio.global.proxy.resources.requests.memory
+:defaultMaistraProxyRequestsMemory: 128Mi
+
+//Value servicemesh spec.istio.global.proxy.resources.requests.cpu
+:defaultServiceMeshProxyRequestsCpu: 10m
+
+//Value servicemesh spec.istio.global.proxy.resources.requests.memory
+:defaultServiceMeshProxyRequestsMemory: 128Mi
+
+
 //Value kiali spec.external_services.istio.istio_identity_domain
 :defaultKialiIstioIdentityDomain: svc.cluster.local
