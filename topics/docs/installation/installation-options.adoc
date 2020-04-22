@@ -98,10 +98,10 @@ These are the resources requested and may vary depending on your environment. Th
 |Parameter |Description |Default
 |`cpu`
 |This is the number of CPUs that are requested in the environment.
-| 10m
+| {{defaultMaistraProxyRequestsCpu}}
 |`memory`
 |This is the amount of memory that is requested in the environment.
-|128Mi
+| {{defaultMaistraProxyRequestsMemory}}
 |=======
 
 [[proxy_resources_limits]]

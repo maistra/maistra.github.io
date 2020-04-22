@@ -3,15 +3,28 @@
 
 This repository contains documentation for the community release of OpenShift Service Mesh, based on the upstream Istio project. This README provides information about this documentation repository. The site can be viewed at maistra.io.
 
-## Getting Started
+== Tooling
+Maistra has a variety of tooling located in the tools directory. 
 
-The OpenShift Service mesh documentation is written in [AsciiDoc](http://asciidoctor.org/docs/asciidoc-syntax-quick-reference/). This structure of this repository has been designed to work with both the upstream and downstream toolsets. To generate the documentation, you should install the following tools:
+* CheckLinks.sh
+CheckLinks is a wrapper around the html-proofer tool that runs on pull requests to make sure that links are valid. 
 
-* [Hugo](https://gohugo.io/)
-* [Asciidoctor](http://asciidoctor.org/docs/install-toolchain/). The downstream (product) documentation toolset requires AsciiDoc, and while the main content format for Hugo is markdown, Hugo also [supports AsciiDoc files](https://gohugo.io/content-management/formats/#additional-formats-through-external-helpers) by calling Asciidoctor.
-* Text editor of your choice, for example the [Atom](https://atom.io/) text editor has several useful [packages](https://atom.io/packages) that make it easier to work with AsciiDoc and Hugo.
+* RunLinter.sh
+We use the Vale linter to validate our documentation. This script is a wrapper that runs on pull requests to verify documentation. 
 
-## Repository Structure
+* updateFields.sh
+Maistra ties together several different tools and exposes the ability to configure all of them through the `ServiceMeshControlPlane`.
+This script keeps everything in sync. 
+
+== Getting Started
+
+The Maistra documentation is written in [AsciiDoc](http://asciidoctor.org/docs/asciidoc-syntax-quick-reference/). To generate the documentation, you should install the following tools:
+
+* link:gohugo.io/[Hugo]
+* link:asciidoctor.org/docs/install-toolchain/[Asciidoctor]
+* Text editor of your choice, for example the link:atom.io/[Atom] text editor has several useful link:atom.io/packages[packages] that make it easier to work with AsciiDoc and Hugo.
+
+== Repository Structure
 Hugo assumes that the same structure that organizes your source content is used to organize the rendered site.
 
 
@@ -34,9 +47,9 @@ This repository uses the following directory structure:
 ├── README.md (This file)
 ```
 
-### Creating New Content
+== Creating New Content
 
-The documentation is written in AsciiDoc.  You can create new files from the command line, or by creating .adoc files in your favorite text editor.
+The documentation is written in AsciiDoc.  You can create new files from the command line, or by creating `.adoc` files in your favorite text editor.
 
 To create a new file from the command line:
 ```
@@ -51,9 +64,9 @@ or
 $ hugo new ./overviews/about.adoc
 ```
 
-You can also create new .adoc files using a text editor. 
+You can also create new `.adoc` files using a text editor. 
 
-### Docs Header
+=== Docs Header
 Content in the docs directory require the following headers to be populated in order to be listed in the docs:
 
 ```
@@ -65,10 +78,10 @@ description: "Bookinfo is an example application that shows you how to set up an
 ---
 ```
 
-For more information about writing modular documentation, see the [Modular Documentation Reference Guide](https://redhat-documentation.github.io/modular-docs/).
+For more information about writing modular documentation, see the [Modular Documentation Reference Guide](redhat-documentation.github.io/modular-docs/).
 
-### Previewing Changes Locally
-Hugo provides its own webserver which builds and serves the site.  By default Hugo will also watch your files for any changes you make and automatically rebuild the site. It will then live reload any open browser pages and push the latest content to them.
+=== Previewing Changes Locally
+Hugo provides its own web server which builds and serves the site.  By default Hugo will also watch your files for any changes you make and automatically rebuild the site. It will then live reload any open browser pages and push the latest content to them.
 
 To start the Hugo server run the following command:
 ````
@@ -91,11 +104,11 @@ To generate the site output files:
 $ hugo
 ```
 
-For more information about Hugo commands, see the [Hugo Web site](https://gohugo.io/getting-started/usage/).
+For more information about Hugo commands, see the link:gohugo.io/getting-started/usage/[Hugo Web site].
 
-## Submitting a Pull Request
+== Submitting a Pull Request
 
-You can close a GitHub issue from a Pull Request.  All you have to do is include the [special keyword syntax] (https://help.github.com/articles/closing-issues-using-keywords/) (for example, “fixes #5) in the body of your Pull Request.  When the pull request is merged into your repository's default branch, the corresponding issue is automatically closed.
+You can close a GitHub issue from a Pull Request.  All you have to do is include the [special keyword syntax] (help.github.com/articles/closing-issues-using-keywords/) (for example, “fixes #5) in the body of your Pull Request.  When the pull request is merged into your repository's default branch, the corresponding issue is automatically closed.
 
 Commit messages against Jira should start with the project name associated with the PR. If the PR is to address MAISTRA-123 then the commit message for the PR must start with "MAISTRA-123 " and then followed by the detailed commit message (no semi-column or dash between the Jira ID and text, no brackets... just a space).
 
