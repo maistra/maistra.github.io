@@ -3,7 +3,7 @@ set -x
 
 mkdir -p out
 maistraBranch=$(yq read data/release.yaml maistraBranch)
-maistraVersion=$(yq read data/release.yaml maistraVersion)
+maistraVersion=$(yq read data/release.yaml maistraOperatorVersion)
 
 wget https://raw.githubusercontent.com/Maistra/istio-operator/${maistraBranch}/resources/smcp-templates/v${maistraVersion}/base -O out/base
 wget https://raw.githubusercontent.com/Maistra/istio-operator/${maistraBranch}/resources/smcp-templates/v${maistraVersion}/servicemesh -O out/servicemesh

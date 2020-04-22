@@ -5,6 +5,9 @@
   <div id="header-wrapper">
     <div id="header">
       {{ partial "logo.html" . }}
+      <font style="color:#fff">
+       {{ .Site.Data.release.maistraVersion}}
+      </font>
     </div>
     {{if not .Site.Params.disableSearch}}
     {{ partial "search.html" . }}
