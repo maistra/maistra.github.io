@@ -4,17 +4,17 @@
 This repository contains documentation for the community release of OpenShift Service Mesh, based on the upstream Istio project. This README provides information about this documentation repository. The site can be viewed at maistra.io.
 
 == Tooling
-Maistra has a variety of tooling located in the tools directory. 
+Maistra has a variety of tooling located in the tools directory.
 
-* CheckLinks.sh
-CheckLinks is a wrapper around the html-proofer tool that runs on pull requests to make sure that links are valid. 
+* checkLinks.sh
+CheckLinks is a wrapper around the html-proofer tool that runs on pull requests to make sure that links are valid.
 
-* RunLinter.sh
-We use the Vale linter to validate our documentation. This script is a wrapper that runs on pull requests to verify documentation. 
+* runLinter.sh
+We use the Vale linter to validate our documentation. This script is a wrapper that runs on pull requests to verify documentation.
 
 * updateFields.sh
 Maistra ties together several different tools and exposes the ability to configure all of them through the `ServiceMeshControlPlane`.
-This script keeps everything in sync. 
+This script keeps everything in sync.
 
 == Getting Started
 
@@ -32,8 +32,8 @@ This repository uses the following directory structure:
 ```
 ├── [archetypes] - Can be used to define content, for example you can set default tags or categories and define types such as a post, tutorial or product here.
 ├── [topics] - Contains all the content files.
-|   ├── Blog -- This directory is used to render the Maistra blog, which is rendered on the fly from a collection of RSS feeds. 
-|   ├── Docs -- This directory contains 
+|   ├── Blog -- This directory is used to render the Maistra blog, which is rendered on the fly from a collection of RSS feeds.
+|   ├── Docs -- This directory contains
 │   │   ├── .adoc (AsciiDoc topic files)
 │   ├── DRAFTS - This directory is intended for topic stubs, topics that need to be written, and in-progress drafts. The Hugo config file is set to ignore this directory and its contents.
 │   │   ├── .adoc (AsciiDoc topic files)
@@ -64,7 +64,7 @@ or
 $ hugo new ./overviews/about.adoc
 ```
 
-You can also create new `.adoc` files using a text editor. 
+You can also create new `.adoc` files using a text editor.
 
 === Docs Header
 Content in the docs directory require the following headers to be populated in order to be listed in the docs:
