@@ -1,13 +1,12 @@
 contentDir="topics"
 baseURL = "/"
-languageCode = "en"
 title = "Maistra.io"
 theme = "hugo-theme-learn-master"
 enableRobotsTXT = true
 PygmentsCodeFences = true
 canonifyurls = false
 ignorefiles=["DRAFTS/.*"]
-languageCOde = "en-US"
+languageCode = "en-US"
 # Disqus Username
 disqusShortname = "disqus_shortname"
 
