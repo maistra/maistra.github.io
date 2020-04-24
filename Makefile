@@ -12,13 +12,13 @@
 ## See the License for the specific language governing permissions and
 ## limitations under the License.
 
-lint:
+.Phony lint:
 	./tools/runLinter.sh
-check-links:
+.Phony check-links:
 	./tools/checkLinks.sh
-gen-install-options:
+.Phony gen-install-options:
 	./tools/updateFields.sh vars.adoc
-serve: gen-install-options
+.Phony serve: gen-install-options
 	hugo serve
-build: gen-install-options lint check-links
+.Phony build: gen-install-options lint check-links
 	hugo -D
