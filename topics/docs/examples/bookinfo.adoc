@@ -130,7 +130,6 @@ destinationrule.networking.istio.io/details created
 
 [source, bash,subs="attributes"]
 ----
-$ oc -n ${BOOKINFO_NS} apply -f https://raw.githubusercontent.com/Maistra/istio/{{< maistraBranch >}}/samples/bookinfo/networking/destination-rule-all-mtls.yaml
 destinationrule.networking.istio.io/productpage configured
 destinationrule.networking.istio.io/reviews configured
 destinationrule.networking.istio.io/ratings configured
