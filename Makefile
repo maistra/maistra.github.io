@@ -27,3 +27,10 @@ serve:
 .PHONY build: gen-install-options lint check-links
 build:
 	hugo -D
+.PHONY verify-install-options:
+verify-install-options: gen-install-options
+	./tools/check-git-status.sh
+.PHONY clean:
+clean:
+	rm -r out
+	rm -r public
