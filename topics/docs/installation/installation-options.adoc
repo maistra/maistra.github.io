@@ -246,6 +246,19 @@ These are the resources requested and may vary depending on your environment. Th
     autoscaleEnabled: false
     traceSampling: 100.0
 ----
+[options="header"]
+|=======
+|Parameter |Description |Default
+|`autoscaleEnabled`
+|This parameter controls whether auto scaling is enabled. The example above disables it to allow running Maistra in a smaller environment.
+| `false`
+|`traceSampling`
+|This value controls how often random sampling should occur. Increase for development/testing.
+|1.0
+|`jwksResolverExtraRootCA`
+| Additional root certificates for JWKSResolver. To define additional certificates, add certificates as pem file format to this key. It is required for self signed jwksUri in Istio Policies.
+|none
+|=======
 
 [[pilot_resources_requests]]
 === resources->requests
@@ -260,9 +273,6 @@ These are the resources requested and may vary depending on your environment.
 |`memory`
 |This is the amount of memory that is requested in the environment.
 | 128Mi
-|`traceSampling`
-|This value controls how often random sampling should occur. Increase for development/testing.
-|1.0
 |=======
 
 [[Kiali]]
