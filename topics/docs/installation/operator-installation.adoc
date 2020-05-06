@@ -6,7 +6,7 @@ description: "Follow these instructions to install the Jaeger, Kiali, and Maistr
 weight: 1
 ---
 
-Maistra requires the ElasticSearch, Jaeger, and Kiali operators to be installed before Maistra operator itself can be installed. Please reference link:https://docs.openshift.com/container-platform/4.1/applications/operators/olm-adding-operators-to-cluster.html[documentation on adding operators to a cluster] for detailed instructions on how to install operators using OLM.
+Maistra requires the ElasticSearch, Jaeger, and Kiali operators to be installed before Maistra operator itself can be installed. Please reference link:https://docs.openshift.com/container-platform/4.4/operators/olm-adding-operators-to-cluster.html[documentation on adding operators to a cluster] for detailed instructions on how to install operators using OLM.
 
 == Installing the Maistra operator
 :leveloffset: +1

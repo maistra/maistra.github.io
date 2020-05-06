@@ -47,25 +47,6 @@ This repository uses the following directory structure:
 ├── README.md (This file)
 ```
 
-== Creating New Content
-
-The documentation is written in AsciiDoc.  You can create new files from the command line, or by creating `.adoc` files in your favorite text editor.
-
-To create a new file from the command line:
-```
-$ hugo new <section-name>/<new-content-lowercase>.adoc.
-```
-For example
-```
-$ hugo new product-overview.adoc
-```
-or
-```
-$ hugo new ./overviews/about.adoc
-```
-
-You can also create new `.adoc` files using a text editor.
-
 === Docs Header
 Content in the docs directory require the following headers to be populated in order to be listed in the docs:
 
@@ -85,26 +66,24 @@ Hugo provides its own web server which builds and serves the site.  By default H
 
 To start the Hugo server run the following command:
 ````
-$ hugo server
+$ make serve
 ````
-To start the Hugo server with draft files enabled run the following command:
-```
-$ hugo server -D
-```
-To start the Hugo server with live reload enabled, so that you can view changes immediately in your browser, run the following command:
-```
-$ hugo server --watch
-```
-To shut down the local server, use `CTRL + C`.
 
-When your site is ready to ship, you can shut down your preview server and issue a command to build the actual pages of the site. In Hugo, that would be just `hugo`. Hugo puts the completed site in the `public` directory.
+Content can be verified using the linter and link checker: 
+````
+$ make check-links lint
+````
 
-To generate the site output files:
-```
-$ hugo
-```
+The full site output can be produced using the following command: 
+````
+$ make build
+````
 
-For more information about Hugo commands, see the link:gohugo.io/getting-started/usage/[Hugo Web site].
+=== Releases
+Release content in Maistra.io is driven by a combination of two files in the `data` directory: 
+
+* `data/release.yaml` selects the latest release of Maistra to generate content from
+* `data/releases/release.yaml`, where `release.yaml` is the Maistra version, contains common information about the release. It contains the following fields: 
 
 == Submitting a Pull Request
 

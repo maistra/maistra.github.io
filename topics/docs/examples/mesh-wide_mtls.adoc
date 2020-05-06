@@ -25,7 +25,7 @@ To enforce mTLS encryption on incoming connections, you need to create the follo
 
 [source,yaml]
 ----
-apiVersion: "maistra.io/v1"
+apiVersion: "authentication.maistra.io/v1"
 kind: "ServiceMeshPolicy"
 metadata:
   name: "default"

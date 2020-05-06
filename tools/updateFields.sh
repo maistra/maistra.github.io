@@ -4,8 +4,9 @@ set -e -x
 mkdir -p out
 
 getMaistra() {
-    maistraBranch=$(yq read data/release.yaml maistraBranch)
-    maistraVersion=$(yq read data/release.yaml maistraOperatorVersion)
+		maistraVersion=$(yq read data/release.yaml maistraVersion)
+    maistraBranch=$(yq read "data/releases/${maistraVersion}.yaml" maistraBranch)
+    maistraVersion=$(yq read "data/releases/${maistraVersion}.yaml" maistraOperatorVersion)
 
     wget "https://raw.githubusercontent.com/Maistra/istio-operator/${maistraBranch}/resources/smcp-templates/v${maistraVersion}/base" -O out/base
     wget "https://raw.githubusercontent.com/Maistra/istio-operator/${maistraBranch}/resources/smcp-templates/v${maistraVersion}/servicemesh" -O out/servicemesh
@@ -57,7 +58,7 @@ updateValuesFile() {
 
             replace=""
         fi
-        
+
         #use posix substring to work across shells.
         #this checks to see if ${line} contains "//Value"
         if [ "${line#*//Value}" != "${line}" ]; then
