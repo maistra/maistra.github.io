@@ -1,0 +1,24 @@
+<table>
+  <tr>
+    <th>Maistra</th>
+    <th>Istio</th>
+    <th>Kiali</th>
+    <th>Jaeger</th>
+    <th>Verified</th>
+  </tr>
+  {{ range sort .Site.Data.releases "version" "desc" }}
+  <tr>
+    <td><a href="{{ .maistraURL }}"> {{ .version }}</a> </td>
+    <td><a href="{{ .istioURL }}"> {{ .istioVersion }}</a> </td>
+
+    {{ if .kialiURL }}
+    <td><a href="{{ .kialiURL }}"> {{ .kialiVersion }}</a> </td>
+    {{ else }}
+    <td>{{ .kialiVersion }}
+    {{ end}}
+
+    <td><a href="{{ .jaegerURL }}"> {{ .jaegerVersion }}</a> </td>
+    <td>{{ .verifiedAgainst }}</td>
+  </tr>
+  {{ end }}
+</table>

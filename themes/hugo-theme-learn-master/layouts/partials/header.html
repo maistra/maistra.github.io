@@ -43,18 +43,14 @@
               {{if not .IsHome}}
               <div>
                 <div id="top-bar">
-                {{ if and (or .IsPage .IsSection) .Site.Data.release.maistraBranch }}
                   {{ $File := .File }}
                   {{ $Site := .Site }}
-                  {{with $File.Path }}
                   <div id="top-github-link">
-                    <a class="github-link" title='{{T "Edit-this-page"}}' href="https://github.com/Maistra/maistra.github.io/edit/{{ $Site.Data.release.maistraBranch }}/topics/{{ replace $File.Dir "\\" "/" }}{{ $File.LogicalName }}" target="blank">
+                    <a class="github-link" title='{{T "Edit-this-page"}}' href="https://github.com/Maistra/maistra.github.io/edit/{{ partial "maistraBranch.html" . }}/topics/{{ replace $File.Dir "\\" "/" }}{{ $File.LogicalName }}" target="blank">
                       <i class="fas fa-code-branch"></i>
                       <span id="top-github-link-text">{{T "Edit-this-page"}}</span>
                     </a>
                   </div>
-                  {{ end }}
-                {{ end }}
                 {{$toc := (and (not .Params.disableToc) (not .Params.chapter))}}
                 <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
                     <span id="sidebar-toggle-span">
