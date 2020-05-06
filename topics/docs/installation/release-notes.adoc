@@ -26,8 +26,8 @@ The following table lists the versions of components in different releases.
 |=======
 
 
-[[maistra-1.1.0]]
-== Maistra 1.1.0
+[[maistra-1.1.1]]
+== Maistra 1.1.1
 * Added support for disconnected installs. This feature is only available on OpenShift Service Mesh.
 
 [[maistra-1.1.0]]
