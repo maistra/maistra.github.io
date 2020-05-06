@@ -19,9 +19,9 @@ The following table lists the versions of components in different releases.
 
 [options="header"]
 |=======
-|Maistra Version | Istio Version | Kiali Version | Jaeger Version 
-|1.1.0 (link:https://maistra-1-1.maistra.io/[website]) |1.4.6 (link:https://istio.io/news/releases/1.4.x/announcing-1.4.6/[release notes])| 1.12.7 | 1.17
-|1.0.8 (link:http://maistra-1-0.maistra.io/[website]) |1.1.17 (link:https://istio.io/news/releases/1.1.x/announcing-1.1.17/[release notes])|1.0.9 | 1.13.1
+|Maistra Version | Istio Version | Kiali Version | Jaeger Version | Test Status
+|1.1.0 (link:https://maistra-1-1.maistra.io/[website]) |1.4.6 (link:https://istio.io/news/releases/1.4.x/announcing-1.4.6/[release notes])| 1.12.7 | 1.17 | image::https://prow.maistra.io/badge.svg?jobs=tests,unittests[]
+|1.0.8 (link:http://maistra-1-0.maistra.io/[website]) |1.1.17 (link:https://istio.io/news/releases/1.1.x/announcing-1.1.17/[release notes])|1.0.9 | 1.13.1 | image::https://prow.maistra.io/badge.svg?jobs=tests,unittests[]
 |=======
 
 [[maistra-1.1.0]]
