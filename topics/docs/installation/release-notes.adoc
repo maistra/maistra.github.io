@@ -12,17 +12,23 @@ weight: 0
 {{% notice warning %}}
 Occasionally, security issues are found in Maistra. When issues are discovered, a new release
 of OpenShift Service Mesh is made to include fixes for these vulnerabilities. However,
-these fixes are not included in a Maistra release until the next general release. 
+these fixes are not included in a Maistra release until the next general release.
 {{% /notice %}}
 
-The following table lists the versions of components in different releases. 
+The following table lists the versions of components in different releases.
 
 [options="header"]
 |=======
-|Maistra Version | Istio Version | Kiali Version | Jaeger Version 
+|Maistra Version | Istio Version | Kiali Version | Jaeger Version
+|1.1.1 (link:https://maistra-1-1.maistra.io/[website]) |1.4.6 (link:https://istio.io/news/releases/1.4.x/announcing-1.4.6/[release notes])| 1.12.7 | 1.17
 |1.1.0 (link:https://maistra-1-1.maistra.io/[website]) |1.4.6 (link:https://istio.io/news/releases/1.4.x/announcing-1.4.6/[release notes])| 1.12.7 | 1.17
 |1.0.8 (link:http://maistra-1-0.maistra.io/[website]) |1.1.17 (link:https://istio.io/news/releases/1.1.x/announcing-1.1.17/[release notes])|1.0.9 | 1.13.1
 |=======
+
+
+[[maistra-1.1.0]]
+== Maistra 1.1.0
+* Added support for disconnected installs. This feature is only available on OpenShift Service Mesh.
 
 [[maistra-1.1.0]]
 == Maistra 1.1.0
