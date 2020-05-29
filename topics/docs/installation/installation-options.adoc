@@ -21,6 +21,9 @@ charts. Many of the parameters supported by the installer are shown below.
 [options="header"]
 |=======
 |Parameter |Description |Default
+|`version`
+|Maistra version that should be deployed in this control plane installation. Maistra operator supports installing different versions of a control plane. This means that you can have multiple service meshes in your cluster with different Maistra versions. If this field is not present, Maistra operator will install the latest version it supports. For Maistra operator `{{< maistraOperatorVersion >}}` one of the following values are allowed in this field: [`{{< maistraOperatorInstallableVersions >}}`].
+|Latest supported by Maistra operator in use.
 |`template`
 |A template references a `ServiceMeshControlPlane` referenced in the `smcp-templates` `ConfigMap` from which configuration should be inherited. See link:{{< ref "controlplane-templates.adoc" >}}[template documentation] for details.
 |default
