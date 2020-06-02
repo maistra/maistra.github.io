@@ -1,0 +1,19 @@
+---
+title: "Network Policy Issues"
+type: "document"
+category: "Troubleshooting"
+description: "This document describes common issues experienced with regards to Network Policies."
+---
+
+
+=== Routes Not Working
+If you add a project to the data plane, pods of this project might be no longer accessible from the OpenShift Ingress or Router, depending on your network polices. Since adding a project to a data plane, a netwok rule will also be added that allows the OpenShift Ingress or Router to access only pods with the label `maistra.io/expose-route: 'true'`.
+
+For deployments you add the label `maistra.io/expose-route: 'true' `to the pods with the following command:
+
+[source,bash]
+----
+oc patch deployment <deployment name> -p '{"spec":{"template":{"metadata":{"labels":{"maistra.io/expose-route":"true"}}}}}'
+----
+
+In certain cases i.e run the OpenShift cluster on VMWare, you might need to add the label `network.openshift.io/policy-group: ingress` to the default namespace. A detailed description can be found here: https://docs.openshift.com/container-platform/4.4/networking/configuring-networkpolicy.html

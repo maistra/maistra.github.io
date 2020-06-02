@@ -23,6 +23,10 @@ and must be named `default`. An example resource can be seen below:
 
 {{< snippet_markdown name="istio_installation_smmr" >}}
 
+{{% notice tip %}}
+There might be configurations where routes to pods are no longer working after adding a project to a control plan. Please see the {{< relref "troubleshooting_network_policy.adoc" >}}[network policy trouble shooting guide] to solve the problem.
+{{% /notice %}}
+
 === ServiceMeshMember
 When the `ServiceMeshMember` is created, it causes the project to be added to
 the `ServiceMeshMemberRoll` within the control plane project it references.
@@ -48,6 +52,3 @@ create it beforehand (for example, in the same `oc apply` operation as the
 An example of the `RoleBinding` is shown below:
 
 {{< snippet_markdown name="istio_installation_rolebinding" >}}
-
-
-
