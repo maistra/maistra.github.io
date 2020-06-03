@@ -7,7 +7,7 @@ description: "This document describes common issues experienced with regards to 
 
 
 === Routes Not Working
-If you add a project to the data plane, pods of this project might be no longer accessible from the OpenShift Ingress or Router, depending on your network polices. Since adding a project to a data plane, a netwok rule will also be added that allows the OpenShift Ingress or Router to access only pods with the label `maistra.io/expose-route: 'true'`.
+If you add a project to the data plane, pods of this project might be no longer accessible from the OpenShift Ingress or Router, depending on your network polices. Since adding a project to a data plane, a network rule will also be added that allows the OpenShift Ingress or Router to access only pods with the label `maistra.io/expose-route: 'true'`.
 
 For deployments you add the label `maistra.io/expose-route: 'true'` to the pods with the following command:
 
