@@ -10,7 +10,7 @@ maistraBranch=$(yq read "data/releases/${maistraVersion}.yaml" maistraBranch)
 #get number of commits on branch so that we can detect new files even past the current commit
 commitsOnBranch=$(git rev-list --count --bisect "${maistraBranch}")
 
-#
+#list both added and renamed files
 newFiles=$(git diff --diff-filter=AR HEAD~"${commitsOnBranch}" --name-only)
 echo "Link checker detected the following new files: ${newFiles}. Edit links for these will be ignored."
 
