@@ -24,7 +24,7 @@ gen-install-options:
 .PHONY: serve
 serve: gen-install-options
 	hugo serve
-.PHONY: build 
+.PHONY: build
 build: gen-install-options lint check-links
 	hugo -D
 .PHONY: verify-install-options
@@ -32,5 +32,5 @@ verify-install-options: gen-install-options
 	./tools/check-git-status.sh
 .PHONY: clean
 clean:
-	rm -r out
-	rm -r public
+	-rm -r out
+	-rm -r public
