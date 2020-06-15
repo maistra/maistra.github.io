@@ -16,4 +16,4 @@ For deployments you add the label `maistra.io/expose-route: 'true'` to the pods 
 oc patch deployment <deployment name> -p '{"spec":{"template":{"metadata":{"labels":{"maistra.io/expose-route":"true"}}}}}'
 ----
 
-In certain cases i.e run the OpenShift cluster on VMWare, you might need to add the label `network.openshift.io/policy-group: ingress` to the default namespace. A detailed description can be found here: https://docs.openshift.com/container-platform/4.4/networking/configuring-networkpolicy.html
+In certain cases (e.g. when running the OpenShift cluster on VMWare), your ingress controller is running on the host network. In this case, ingress traffic will appear to originate in the `default` namespace. In this case you might want to add the label `network.openshift.io/policy-group: ingress` to the default namespace. A detailed description can be found here: https://docs.openshift.com/container-platform/4.4/networking/configuring-networkpolicy.html
