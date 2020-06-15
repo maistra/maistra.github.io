@@ -17,7 +17,6 @@ Jira
 Maistra
 multitenant
 Multitenancy
-namespace
 nftables
 productpage
 unencrypted
