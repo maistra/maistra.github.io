@@ -24,7 +24,7 @@ and must be named `default`. An example resource can be seen below:
 {{< snippet_markdown name="istio_installation_smmr" >}}
 
 {{% notice tip %}}
-There might be configurations where routes to pods are no longer working after adding a project to a control plan. Please see the link:../../troubleshooting/troubleshooting_network_policy[network policy trouble shooting guide] to solve the problem.
+There might be configurations where routes to pods are no longer working after adding a project to a control plane. Please see the link:../../troubleshooting/troubleshooting_network_policy[network policy trouble shooting guide] to solve the problem.
 {{% /notice %}}
 
 === ServiceMeshMember
