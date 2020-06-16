@@ -16,4 +16,4 @@ This guide provides instructions for installing Maistra into an existing `OpenSh
 - We do not yet run within an OpenShift Online or OpenShift Dedicated environment.
 
 === Installing Maistra
-{{% children description="true"   %}}
+{{< children description="true"   >}}

@@ -1,6 +1,6 @@
 // SMCP defaults
 //Value maistra spec.istio.global.tag
-:defaultMaistraTag: 1.2.0
+:defaultMaistraTag: 1.1.2
 
 //Value maistra spec.istio.global.hub
 :defaultMaistraHub: docker.io/maistra

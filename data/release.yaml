@@ -1,5 +1,5 @@
 #this is the latest release of Maistra
-maistraVersion: '1.1.0'
+maistraVersion: '1.1.1'
 
 #this is the version Maistra uses to refer to resources in the istio-operator repo.
 maistraOperatorVersion: '1.1'
@@ -8,4 +8,3 @@ maistraOperatorVersion: '1.1'
 maistraBranch: 'maistra-1.1'
 
 googleAnalytics: UA-163911219-1
-
