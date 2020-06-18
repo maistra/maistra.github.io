@@ -19,6 +19,21 @@ The following table lists the versions of components in different releases.
 {{< release-notes-table >}}
 
 
+[[maistra-1.1.3]]
+== Maistra 1.1.3
+* Removed cert-manager CRDs (Custom Resource Definitions) from control plane installation.  These were being installed
+  by mistake.  These CRDs need to be removed manually if cert-manager is not being used within the Kubernetes cluster.
+  To remove the CRDs, run the following commands:
+
+[source,bash]
+----
+$ kubectl delete crd clusterissuers.certmanager.k8s.io
+$ kubectl delete crd issuers.certmanager.k8s.io
+$ kubectl delete crd certificates.certmanager.k8s.io
+$ kubectl delete crd orders.certmanager.k8s.io
+$ kubectl delete crd challenges.certmanager.k8s.io
+----
+
 [[maistra-1.1.1]]
 == Maistra 1.1.1
 * Added support for disconnected installs. This feature is only available on OpenShift Service Mesh.
