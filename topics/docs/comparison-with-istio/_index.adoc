@@ -40,8 +40,40 @@ link:{{< relref "automatic-injection.adoc" >}}[the automatic injection section].
 
 === Istio CNI
 
-The _CNI plugin_ replaces proxy-init on OpenShift 4 clusters. Using CNI eliminates
+The _Istio CNI plugin_ replaces proxy-init on OpenShift 4 clusters. Using CNI eliminates
 the need for the `NET_ADMIN` privilege on application containers.
+
+The Istio CNI plugin is enabled through Multus CNI. The Istio operator creates a
+`NetworkAttachmentDefinition` object in each project that is part of the mesh.
+This object is referenced in the `k8s.v1.cni.cncf.io/networks` annotation, which
+is added to a pod during injection.
+
+==== Using Istio CNI with other Multus CNI plugins
+
+By default, if a pod contains an existing `k8s.v1.cni.cncf.io/networks` annotation,
+such as when using Multus CNI to add a macvlan network to the pod, the value of
+the annotation is overwritten. To preserve the value and instead append Istio CNI
+to the end, the field `spec.istio.sidecarInjectorWebhook.injectPodRedirectAnnot`
+must be set to `true` in the `ServiceMeshControlPlane` object as shown in the
+following example.
+
+```
+kind: ServiceMeshControlPlane
+...
+spec:
+  istio:
+    sidecarInjectorWebhook:
+      injectPodRedirectAnnot: true
+...
+```
+
+{{% notice info %}}
+In previous Maistra versions, only the link:https://intel.github.io/multus-cni/doc/how-to-use.html#lauch-pod-with-text-annotation-with-interface-name[text form]
+of the `k8s.v1.cni.cncf.io/networks` annotation was supported.
+The link:https://intel.github.io/multus-cni/doc/how-to-use.html#lauch-pod-with-json-annotation[JSON form] support was
+introduced in version 1.1.5.
+{{% /notice %}}
+
 
 === Istio operator
 
