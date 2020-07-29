@@ -18,7 +18,7 @@ copyright = "© This post is licensed under a Creative Commons Attribution-NonCo
   name = "Docs"
   weight = 1
   identifier = "docs"
-  url = "/docs/"
+  url = "/docs2/"
 
 [[menu.main]]
   name = "Blog"

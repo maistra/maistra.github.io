@@ -16,8 +16,8 @@
 
   <div class="highlightable">
     <ul class="topics">
-      {{/* Get the pages below /docs for the navigation instead of starting at the root */}}
-      {{ $docsPage := .Site.GetPage "/docs" }}
+      {{/* Get the pages below /docs2 for the navigation instead of starting at the root */}}
+      {{ $docsPage := .Site.GetPage "/docs2" }}
       {{ $sections := $docsPage.Sections }}
 
       {{if eq .Site.Params.ordersectionsby "title"}}
@@ -106,7 +106,7 @@
 {{with .sect}}
 {{if .IsSection}}
 {{safeHTML .Params.head}}
-<li data-nav-id="{{.URL}}" title="{{.Title}}" class="dd-item
+<li data-nav-id="{{.URL}}" title="untitled" class="dd-item
         {{if .IsAncestor $currentNode }}parent{{end}}
         {{if eq .UniqueID $currentNode.UniqueID}}active{{end}}
         {{if .Params.alwaysopen}}parent{{end}}
@@ -147,7 +147,7 @@
 {{ if not .Params.Hidden }}
 <li data-nav-id="{{.URL}}" title="{{.Title}}" class="dd-item {{if eq .UniqueID $currentNode.UniqueID}}active{{end}}">
   <a href="{{ .RelPermalink}}">
-    {{safeHTML .Params.Pre}}{{or .Params.menuTitle .LinkTitle .Title}}{{safeHTML .Params.Post}}
+    {{safeHTML .Params.Pre}}{{or .Params.menuTitle .LinkTitle .Title "untitled"}}{{safeHTML .Params.Post}}
     {{ if $showvisitedlinks}}<i class="fas fa-check read-icon"></i>{{end}}
   </a>
 </li>
