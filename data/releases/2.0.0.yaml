@@ -1,8 +1,8 @@
-version: 1.2.0
-maistraOperatorVersion: '1.2'
-maistraOperatorInstallableVersions: "v1.0, v1.1, v1.2"
-maistraBranch: 'maistra-1.2'
-maistraURL: "https://maistra-1-2.maistra.io/"
+version: 2.0.0
+maistraOperatorVersion: '2.0'
+maistraOperatorInstallableVersions: "v1.0, v1.1, v2.0"
+maistraBranch: 'maistra-2.0'
+maistraURL: "https://maistra-2-0.maistra.io/"
 kialiVersion: 1.12.7
 kialiURL: ""
 istioVersion: 1.4.6
