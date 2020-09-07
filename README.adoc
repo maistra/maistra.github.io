@@ -79,6 +79,33 @@ The full site output can be produced using the following command:
 $ make build
 ````
 
+=== Previewing Changes Locally in a running container
+If you want to test your changes without installing Hugo, you can verify the Maistra website in a docker container. You can build and test your changes similar to the local installation. The commands are a little different.
+
+In order to run the container, the container image needs to build it with the command:
+````
+$ docker-build-image:
+````
+This is only required if the image is not available on your local computer.
+
+
+To start the Hugo server run the following command:
+````
+$ make docker-serve
+````
+
+Content can be verified using the linter and link checker: 
+````
+$ make docker-check-links docker-lint
+````
+
+The full site output can be produced using the following command: 
+````
+$ make docker-build
+````
+
+The goal "docker-run" is used for internal purpose to avoid creating a script file to run tests and Hugo in the container. The container image is designed for testing purposes and not for productive use cases.
+
 === Releases
 Release content in Maistra.io is driven by a combination of two files in the `data` directory: 
 

@@ -34,3 +34,15 @@ verify-install-options: gen-install-options
 clean:
 	-rm -r out
 	-rm -r public
+docker-run: gen-install-options
+	hugo serve --bind 0.0.0.0	
+docker-build-image:
+	docker build -t=maistra/maistradoc .
+docker-serve:
+	docker run --rm -v $(shell pwd):/doc-root -p 1313:1313 -it --entrypoint /bin/bash maistra/maistradoc -c 'cd /doc-root && make docker-run'
+docker-lint:
+	docker run --rm -v $(shell pwd):/doc-root -p 1313:1313 -it --entrypoint /bin/bash maistra/maistradoc -c 'cd /doc-root/ && ./tools/runLinter.sh'
+docker-check-links:
+	docker run --rm -v $(shell pwd):/doc-root -p 1313:1313 -it --entrypoint /bin/bash maistra/maistradoc -c 'cd /doc-root/ && ./tools/checkLinks.sh lint'
+docker-build:
+	docker run --rm -v $(shell pwd):/doc-root -p 1313:1313 -it --entrypoint /bin/bash maistra/maistradoc -c 'cd /doc-root/ && ./tools/runLinter.sh && ./tools/checkLinks.sh lint && make docker-run'
