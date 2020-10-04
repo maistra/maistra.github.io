@@ -18,11 +18,12 @@ This script keeps everything in sync.
 
 == Getting Started
 
-The Maistra documentation is written in [AsciiDoc](http://asciidoctor.org/docs/asciidoc-syntax-quick-reference/). To generate the documentation, you should install the following tools:
+The Maistra documentation is written in link:https://asciidoctor.org/docs/asciidoc-syntax-quick-reference[AsciiDoc]. To generate the documentation, you should install the following tools:
 
-* link:gohugo.io/[Hugo]
-* link:asciidoctor.org/docs/install-toolchain/[Asciidoctor]
-* Text editor of your choice, for example the link:atom.io/[Atom] text editor has several useful link:atom.io/packages[packages] that make it easier to work with AsciiDoc and Hugo.
+* link:https://gohugo.io/[Hugo]
+* link:https://asciidoctor.org/docs/install-toolchain/[Asciidoctor]
+* link:https://github.com/mikefarah/yq/releases[yq]
+* Text editor of your choice, for example the link:https://atom.io/[Atom] text editor has several useful link:https://atom.io/packages[packages] that make it easier to work with AsciiDoc and Hugo.
 
 == Repository Structure
 Hugo assumes that the same structure that organizes your source content is used to organize the rendered site.
