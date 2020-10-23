@@ -60,7 +60,7 @@ copyright = "© This post is licensed under a Creative Commons Attribution-NonCo
   highlightLanguages = ["r", "bash", "go", "yaml"]
 
   # Sets the meta tag description
-  description          = "HTML5 UP theme, Future Imperfect with some extra goodies, ported by Julio Pescador. Powered by Hugo"
+  description          = "Maistra - Red Hat's community version of Istio for the OpenShift platform"
   # Sets the navbarTitle that appears in the top left of the navigation bar
   navbarTitle          = "Maistra"
   # Sets where "View More Posts" links
