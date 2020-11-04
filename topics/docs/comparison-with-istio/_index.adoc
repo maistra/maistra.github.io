@@ -74,6 +74,9 @@ The link:https://intel.github.io/multus-cni/doc/how-to-use.html#lauch-pod-with-j
 introduced in version 1.1.5.
 {{% /notice %}}
 
+=== Istioctl
+
+Maistra does not package any version of the `istioctl` utility. Some of this functionality is available in Kiali. 
 
 === Istio operator
 
@@ -82,18 +85,21 @@ Whereas upstream Istio takes a single tenant approach, Maistra supports
 multiple independent control planes within the cluster. This is discussed in
 more detail during link:../installation/[installation]
 
-[[cluster_scoped_resources]]
-=== Cluster scoped resources
+=== External Workloads
 
-Upstream Istio has two cluster scoped resources that it relies on. The MeshPolicy and the ClusterRbacConfig. These are not compatible with a multitenant cluster and have been replaced as described below.
+Maistra does not yet support external workloads (virtual machines).
 
-* _ServiceMeshPolicy_ replaces MeshPolicy for configuration of control-plane-wide authentication policies. This must be created in the same project as the control plane.
-* _ServicemeshRbacConfig_ replaces ClusterRbacConfig for configuration of control-plane-wide role based access control. This must be created in the same project as the control plane.
+=== WebAssembly Extensions
 
-For more information about how to use them, see these examples:
+Maistra 2.0 introduces WebAssembly extensions to Envoy proxy as a link:https://access.redhat.com/support/offerings/techpreview/[Technology Preview]. Note that the upstream Istio built-in WASM extensions are not supported in Maistra 2.0.
 
-- ServiceMeshPolicy: link:../examples/mesh-wide_mtls/[Enabling Mesh-wide Strict mTLS]
-- ServiceMeshRbacConfig: link:../examples/mesh-wide_rbac/[Enabling Mesh-wide RBAC Policy Enforcement].
+=== Federation and Multicluster
+
+Maistra does not yet support federated or multicluster service meshes. 
+
+* *Federated* service meshes are a set of service mesh control planes which interact with each other but are configured independently. 
+* *Clustered* service meshes are a a set of service mesh control planes which act as a single control plane and are configured as signle entity. 
+
 
 === Component modifications
 
@@ -102,3 +108,4 @@ For more information about how to use them, see these examples:
 * The istio-multi ServiceAccount and ClusterRoleBinding have been removed, as well as the istio-reader ClusterRole.
 * All Ingress resources have been converted to OpenShift Route resources.
 * Grafana, Tracing (Jaeger), and Kiali are enabled by default and exposed through OpenShift routes.
+
