@@ -98,7 +98,7 @@ Maistra 2.0 introduces WebAssembly extensions to Envoy proxy as a link:https://a
 Maistra does not yet support federated or multicluster service meshes. 
 
 * *Federated* service meshes are a set of service mesh control planes which interact with each other but are configured independently. 
-* *Clustered* service meshes are a a set of service mesh control planes which act as a single control plane and are configured as signle entity. 
+* *Clustered* service meshes are a set of service mesh control planes which act as a single control plane and are configured as single entity. 
 
 
 === Component modifications

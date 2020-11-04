@@ -11,7 +11,7 @@ Profiles allow a cluster administrator to create reusable configurations that us
 Profiles may also inherit from other profiles. As an example, if there are two teams with different control planes, say an
 accounting team and a website team with a development and production configuration, then there could be a profile called development
 and one called production.  Individual profile would be created for the accounting and development teams that extend these two configurations with
-their own customizations. Individual deployments can further customize these configurations. For additional extensability, multiple profiles can be inherted in a single profile.
+their own customizations. Individual deployments can further customize these configurations. For additional extensibility, multiple profiles can be inherited in a single profile.
 
 {{<mermaid align="left">}}
 graph LR;
