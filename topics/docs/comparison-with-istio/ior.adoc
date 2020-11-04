@@ -57,5 +57,14 @@ Subdomains (e.g.: "*.domain.com") are supported. However this ability doesn't co
 === TLS
 TLS is supported as well. This means that, if the Gateway contains a `tls` section, the OpenShift Route will be configured to support TLS.
 
-=== Enabling this feature
-This Gateway Route synchronization is done by a Maistra control plane component called _IOR_. It can deployed as part of the control plane by the Maistra installation process. Refer to link:../../installation/installation-options/#_istio_ingressgateway[installation options page] to learn how to enable *IOR*.
+== Disabling Automatic Route Creation
+
+By default, Maistra control plane automatically synchronizes the gateway resources with OpenShift routes. If you do not wish this integration between Istio gateways and OpenShift Routes to happen, you can disable it by setting the `gateways.openshiftRoute.enabled` field to `false` in your `ServiceMeshControlPlane`. For example, see the following snippet: 
+
+[source,yaml]
+----
+spec:
+  gateways:
+    openshiftRoute:
+      enabled: false
+----
