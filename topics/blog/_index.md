@@ -1,4 +1,0 @@
-+++
-type = "blog"
-title = "Blog"
-+++
