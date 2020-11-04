@@ -12,10 +12,12 @@ hostname
 hostnames
 html-proofer
 iptables
+istioctl
 Kiali
 Istio
 Jira
 Maistra
+multicluster
 multitenant
 Multitenancy
 namespace

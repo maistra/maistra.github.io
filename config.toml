@@ -57,8 +57,6 @@ copyright = "© This post is licensed under a Creative Commons Attribution-NonCo
   description          = "HTML5 UP theme, Future Imperfect with some extra goodies, ported by Julio Pescador. Powered by Hugo"
   # Sets the navbarTitle that appears in the top left of the navigation bar
   navbarTitle          = "Maistra"
-  # Sets where "View More Posts" links
-  viewMorePostLink     = "/blog/"
 
 [Languages]
 [Languages.en]
@@ -71,12 +69,6 @@ name = "<i class='fab fa-fw fa-github'></i> Github repo"
 identifier = "ds"
 url = "https://github.com/maistra/istio"
 weight = 10
-
-[[Languages.en.menu.shortcuts]]
-name = "<i class='fas fa-fw fa-bookmark'></i> Blog"
-identifier = "hugodoc"
-url = "/blog"
-weight = 20
 
 [[Languages.en.menu.shortcuts]]
 name = "<i class='fas fa-fw fa-bullhorn'></i> Contribute"
