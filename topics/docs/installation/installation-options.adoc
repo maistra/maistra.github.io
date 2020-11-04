@@ -15,7 +15,7 @@ include::vars.adoc[]
 Maistra uses the `istio-operator`, a custom installer built around Istio's helm
 charts. Many of the parameters supported by the installer are shown below.
 
-{{< snippet_markdown name="istio_installation_auth" >}}
+{{< snippet_markdown name="istio_installation_minimal" >}}
 
 == General Parameters
 [options="header"]
