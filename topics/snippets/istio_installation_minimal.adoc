@@ -1,76 +1,125 @@
-[source,yaml]
+[source, yaml]
 ----
-apiVersion: maistra.io/v1
+apiVersion: maistra.io/v2
 kind: ServiceMeshControlPlane
 metadata:
-  name: minimal-install
+  name: basic
 spec:
-  istio:
-    global:
-      proxy:
-        # constrain resources for use in smaller environments
-        resources:
-          requests:
-            cpu: 100m
-            memory: 128Mi
-          limits:
-            cpu: 500m
-            memory: 128Mi
+  proxy:
+    resources:
+      requests:
+        cpu: 100m
+        memory: 128Mi
+      limits:
+        cpu: 500m
+        memory: 128Mi
+  tracing:
+    type: Jaeger
+  gateways:
+    ingress: # istio-ingressgateway
+      service:
+        type: ClusterIP
+        ports:
+        - name: status-port
+          port: 15020
+        - name: http2
+          port: 80
+          targetPort: 8080
+        - name: https
+          port: 443
+          targetPort: 8443
+      meshExpansionPorts: []
+    egress: # istio-egressgateway
+      service:
+        type: ClusterIP
+        ports:
+        - name: status-port
+          port: 15020
+        - name: http2
+          port: 80
+          targetPort: 8080
+        - name: https
+          port: 443
+          targetPort: 8443
+    additionalIngress:
+      some-other-ingress-gateway: {}
+    additionalEgress:
+      some-other-egress-gateway: {}
 
-    gateways:
-      istio-egressgateway:
-        # disable autoscaling for use in smaller environments
-        autoscaleEnabled: false
-      istio-ingressgateway:
-        # disable autoscaling for use in smaller environments
-        autoscaleEnabled: false
-        # set to true to enable IOR
-        ior_enabled: false
-    mixer:
-      policy:
-        # disable autoscaling for use in smaller environments
-        autoscaleEnabled: false
+  policy:
+    type: Istiod # or Mixer
+    mixer: # only applies if policy.type: Mixer
+      enableChecks: false 
+      failOpen: false 
 
-      telemetry:
-        # disable autoscaling for use in smaller environments
-        autoscaleEnabled: false
-        # constrain resources for use in smaller environments
-        resources:
-          requests:
-            cpu: 100m
-            memory: 1G
-          limits:
-            cpu: 500m
-            memory: 4G
-
-    pilot:
-      # disable autoscaling for use in smaller environments
-      autoscaleEnabled: false
-      # increase random sampling rate for development/testing
-      traceSampling: 100.0
-
-    kiali:
-      # to disable kiali
-      enabled: false
-
-      # create a secret for accessing kiali dashboard with the following credentials
-      # dashboard:
-      #   user: admin
-      #   passphrase: admin
-
-    # disable grafana
+  telemetry:
+    type: Istiod # or Mixer
+    mixer: # only applies if telemetry.type: Mixer, for v1 telemetry
+      sessionAffinity: false
+      batching:
+        maxEntries: 100
+        maxTime: 1s
+      adapters:
+        kubernetesenv: true
+        stdio:
+          enabled: true
+          outputAsJSON: true
+  addons:
     grafana:
-      enabled: false
-
-    # to disable tracing (i.e. jaeger)
-    tracing:
-      enabled: false
-      jaeger:
-        tag: 1.13.1
-        # simple, all-in-one strategy
-        template: all-in-one
-        # production strategy, utilizing elasticsearch
-        #template: production-elasticsearch
-        # if required. only one instance may use agentStrategy=DaemonSet
-        #agentStrategy: DaemonSet
+      enabled: true
+      install: 
+        config:
+          env: {} 
+          envSecrets: {} 
+        persistence:
+          storageClassName: ""
+          accessMode: ReadWriteOnce
+          capacity: 5Gi 
+        service: 
+          ingress:
+            contextPath: /grafana
+            tls:
+              termination: reencrypt
+    kiali:
+      name: kiali
+      enabled: true
+      install: # install kiali CR if not present
+        dashboard:
+          viewOnly: false
+          enableGrafana: true
+          enableTracing: true
+          enablePrometheus: true
+      service: 
+        ingress:
+          contextPath: /kiali
+    jaeger:
+      name: jaeger
+      install:
+        storage:
+          type: Memory # or Elasticsearch
+          memory:
+            maxTraces: 100000
+          elasticsearch:
+            nodeCount: 3
+            storage: {}
+            redundancyPolicy: SingleRedundancy
+            indexCleaner: {}
+        ingress: {} # jaeger ingress configuration
+  runtime:
+    components:
+      pilot:
+        deployment:
+          replicas: 2
+        pod:
+          affinity: {}
+        container:
+          resources:
+          limits: {}
+          requirements: {}
+      grafana:
+        deployment: {}
+        pod: {}
+      kiali:
+        deployment: {}
+        pod: {}
 ----
