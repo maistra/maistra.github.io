@@ -89,5 +89,6 @@ kind: ServiceMeshControlPlane
 metadata:
   name: minimal-install
 spec:
-   profile: default
+   profiles:
+   - default
 ----
