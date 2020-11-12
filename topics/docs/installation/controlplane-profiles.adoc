@@ -80,7 +80,7 @@ In the editor, add a volume mount and volume to the deployments as shown below.
 You can now use profiles in your `ServiceMeshControlPlane` by adding a
 `profile` parameter to the `ServiceMeshControlPlane`. In the example below,
 we are including the `default` profile, but you can use any profile from the
-`smcp-profiles` `ConfigMap` as well.
+`smcp-templates` `ConfigMap` as well.
 
 [source, yaml]
 ----
