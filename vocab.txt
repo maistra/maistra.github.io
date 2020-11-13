@@ -3,6 +3,7 @@ Asciidoctor
 bookinfo
 Bookinfo
 CentOS
+config
 configMaps
 controlplane
 Godebug
@@ -19,8 +20,10 @@ Maistra
 multicluster
 multitenant
 Multitenancy
+namespace
 nftables
 productpage
+tetratelabs
 unencrypted
 schedulable
 Multus
