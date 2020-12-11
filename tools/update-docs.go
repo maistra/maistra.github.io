@@ -33,14 +33,28 @@ func getRegexStringReplacer(entry *regexp.Regexp, replaceWith string) docsReplac
 }
 
 func getHeaderReplacer(title string, weight int) docsReplacer {
-	return func(body string) string {
-		return `---
+	return getPrependReplacer(getHeader(title, weight))
+}
+
+func getHeader(title string, weight int) string {
+	return `---
 title: ` + title + `
 type: "document"
 weight: ` + fmt.Sprintf("%d", weight) + `
 ---
 
-` + body
+`
+}
+
+func getPrependReplacer(content string) docsReplacer {
+	return func(body string) string {
+		return content + body
+	}
+}
+
+func getAppendReplacer(content string) docsReplacer {
+	return func(body string) string {
+		return body + content
 	}
 }
 
@@ -66,6 +80,7 @@ func convertExternalURLs(body string) string {
 var (
 	baseURL         string = "https://raw.githubusercontent.com/openshift/openshift-docs/master/"
 	modulesPath     string = baseURL
+	imagePath       string = baseURL + "images/"
 	docsPath        string = baseURL + "service_mesh/v2x/"
 	docsFilePath    string
 	modulesFilePath string
@@ -74,6 +89,12 @@ var (
 		getStringReplacer("[source,terminal]", "[source,bash]"),
 		convertExternalURLs,
 	}
+
+	includesRegexp *regexp.Regexp = regexp.MustCompile("include::[A-Za-z\\/\\-.]*")
+	imageRegexp    *regexp.Regexp = regexp.MustCompile("image::[A-Za-z\\/\\-.]*")
+
+	//kebab is a special case. Doesn't really match anything else and doing a match of just image: would also fetch docker image content
+	kebabImageRegexp *regexp.Regexp = regexp.MustCompile("::kebab: image:[A-Za-z\\/\\-.]*")
 )
 
 func init() {
@@ -97,41 +118,58 @@ func main() {
 		return
 	}
 
-	//question: are there recursive matches?
 	i := 1
 	for _, topic := range topics {
 		fileName := topic.File + ".adoc"
 		fmt.Printf("downloading:%+v\n\n\n", fileName)
 		topicURL := docsPath + fileName
-
-		includesRegexp := regexp.MustCompile("include::[A-Za-z\\/\\-.]*")
-		imageRegexp := regexp.MustCompile("image::[A-Za-z\\/\\-.]*\\[")
 		var matches []string = make([]string, 0, 0)
-		if matches, err = downloadDoc(topicURL, topic.Name, i, path.Join(docsFilePath, fileName), []regexp.Regexp{*includesRegexp, *imageRegexp}); err != nil {
+		if matches, err = downloadFile("doc", topic.Name, i, topicURL, path.Join(docsFilePath, fileName), []regexp.Regexp{*includesRegexp, *imageRegexp}); err != nil {
 			fmt.Printf("failed to download %s: %s\n", topicURL, err.Error())
 		}
 
+		processIncludes(matches)
+		fmt.Printf("matches: %+v\n\n", matches)
 		i++
 
-		for _, match := range matches {
+	}
+}
+
+func processIncludes(matches []string) {
+	for _, match := range matches {
+		//todo: fix warnings
+		var matches []string
+		var err error
+		fmt.Printf("checking %s\n", match)
+		if strings.Contains(match, "image::") || strings.Contains(match, "::kebab: image:") {
+			if strings.Contains(match, "image::") {
+				match = match[len("image::"):]
+			} else if strings.Contains(match, "::kebab: image:::") {
+				match = match[len("::kebab: image:"):]
+			}
+
+			imageURL := imagePath + match
+			downloadPath := path.Join(docsFilePath, match)
+			fmt.Printf("downloading image: %s\n\tfrom %s \n\tto %s \n", match, imageURL, downloadPath)
+			if _, err := downloadFile("image", "", 0, imageURL, downloadPath, []regexp.Regexp{}); err != nil {
+				fmt.Printf("failed to download %s: %s\n", imageURL, err.Error())
+				panic("image failed")
+			}
+		} else if strings.Contains(match, "include::") {
 			match := match[len("include::"):]
 			moduleURL := modulesPath + match
 			downloadPath := path.Join(modulesFilePath, match)
-			//todo: refactor to be recursive
-			//todo: refactor to use single function for image, doc, module
-			//todo: fix warnings
+
 			fmt.Printf("downloading module %s \n\tfrom %s \n\tto %s \n", match, moduleURL, match)
-			if strings.Contains(match, "image::") {
-				fmt.Printf("downloading image: %s", downloadPath)
-				if _, err := downloadImage(moduleURL, downloadPath, []regexp.Regexp{}); err != nil {
-					fmt.Printf("failed to download %s: %s\n", moduleURL, err.Error())
-				}
-			} else if matches, err = downloadModule(moduleURL, downloadPath, []regexp.Regexp{*includesRegexp, *imageRegexp}); err != nil {
+			if matches, err = downloadFile("module", "", 0, moduleURL, downloadPath, []regexp.Regexp{*includesRegexp, *imageRegexp, *kebabImageRegexp}); err != nil {
 				fmt.Printf("failed to download %s: %s\n", moduleURL, err.Error())
+				panic("module failed")
 			}
-			fmt.Printf("matches: %+v\n\n", matches)
 		}
+		fmt.Printf("matches: %+v\n\n", matches)
+		processIncludes(matches)
 	}
+
 }
 
 func getFile(url string) ([]byte, error) {
@@ -168,71 +206,40 @@ func findDocReferences(body string, toMatch []regexp.Regexp) ([]string, error) {
 	return matches, nil
 }
 
-func downloadDoc(url string, title string, weight int, filename string, toMatch []regexp.Regexp) ([]string, error) {
+func downloadFile(fileType string, title string, weight int, url string, filename string, toMatch []regexp.Regexp) ([]string, error) {
 
 	body, err := getFile(url)
 	if err != nil {
 		return []string{}, err
 	}
-	bodyAsString := string(body)
 
-	//convert doc as necessary to meet differences between Maistra and OSSM
-	bodyAsString = convertDoc(bodyAsString, docsReplacers)
+	fileDocsReplacers := docsReplacers
+	if fileType == "module" && path.Base(filename) == "ossm-document-attributes.adoc" {
+		fileDocsReplacers = append(docsReplacers, []docsReplacer{
+			getAppendReplacer(":product-version: 4.6"),
+			getRegexStringReplacer(regexp.MustCompile(":ProductShortName:.*"), ":ProductShortName: Maistra"),
+			getRegexStringReplacer(regexp.MustCompile(":ProductName:.*"), ":ProductName: Maistra Service Mesh"),
+			getRegexStringReplacer(regexp.MustCompile(":Install_BookName:.*"), ":Install_BookName: Installing Maistra"),
+			getRegexStringReplacer(regexp.MustCompile(":RN_BookName:.*"), ":RN_BookName: Installing Maistra"),
+			getRegexStringReplacer(regexp.MustCompile(":DocInfoProductName:.*"), ":DocInfoProductName: Maistra"),
+		}...)
+	} else if fileType == "doc" {
+		fileDocsReplacers = append(docsReplacers, getHeaderReplacer(strings.Replace(title, "Service Mesh", "Maistra", -1), weight))
+	}
 
-	//add header
-	bodyAsString = getHeaderReplacer(strings.Replace(title, "Service Mesh", "Maistra", -1), weight)(bodyAsString)
+	matches := []string{}
+	if fileType == "doc" || fileType == "module" {
+		bodyAsString := string(body)
+		//convert doc as necessary to meet differences between Maistra and OSSM
+		bodyAsString = convertDoc(bodyAsString, fileDocsReplacers)
+		body = []byte(bodyAsString)
+		matches, err = findDocReferences(bodyAsString, toMatch)
+	}
 
-	err = ioutil.WriteFile(filename, []byte(bodyAsString), 0644)
+	err = ioutil.WriteFile(filename, body, 0644)
 	if err != nil {
 		return []string{}, fmt.Errorf("failed to write file: %s", err)
 	}
 
-	return findDocReferences(bodyAsString, toMatch)
-
-}
-
-func downloadImage(url string, filename string, toMatch []regexp.Regexp) ([]string, error) {
-	body, err := getFile(url)
-	if err != nil {
-		return []string{}, err
-	}
-
-	err = ioutil.WriteFile(filename, []byte(body), 0644)
-	if err != nil {
-		return []string{}, fmt.Errorf("failed to write file: %s", err)
-	}
-	return []string{}, nil
-
-}
-
-func downloadModule(url string, filename string, toMatch []regexp.Regexp) ([]string, error) {
-
-	body, err := getFile(url)
-	if err != nil {
-		return []string{}, err
-	}
-	bodyAsString := string(body)
-
-	//hacky but populates it
-	fmt.Printf("module filename: %s", path.Base(filename))
-	if path.Base(filename) == "ossm-document-attributes.adoc" {
-		fmt.Printf("Found a match")
-		bodyAsString += ":product-version: 4.6"
-		bodyAsString = getRegexStringReplacer(regexp.MustCompile(":ProductShortName:.*"), ":ProductShortName: Maistra")(bodyAsString)
-		bodyAsString = getRegexStringReplacer(regexp.MustCompile(":ProductName:.*"), ":ProductName: Maistra Service Mesh")(bodyAsString)
-		bodyAsString = getRegexStringReplacer(regexp.MustCompile(":Install_BookName:.*"), ":Install_BookName: Installing Maistra")(bodyAsString)
-		bodyAsString = getRegexStringReplacer(regexp.MustCompile(":RN_BookName:.*"), ":RN_BookName: Installing Maistra")(bodyAsString)
-		bodyAsString = getRegexStringReplacer(regexp.MustCompile(":DocInfoProductName:.*"), ":DocInfoProductName: Maistra")(bodyAsString)
-
-	}
-
-	//convert doc as necessary to meet differences between Maistra and OSSM
-	bodyAsString = convertDoc(bodyAsString, docsReplacers)
-
-	err = ioutil.WriteFile(filename, []byte(bodyAsString), 0644)
-	if err != nil {
-		return []string{}, fmt.Errorf("failed to write file: %s", err)
-	}
-
-	return findDocReferences(bodyAsString, toMatch)
+	return matches, err
 }
