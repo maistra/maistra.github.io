@@ -43,6 +43,11 @@ To create a control plane, open the OpenShift web console in a Web browser and c
 - Click *Create* to finalize.
 * Create a `ServiceMeshMemberRoll` by choosing the *Istio Service Mesh Member Roll* box and repeating these actions.
 
+{{% notice tip %}}
+Due to a link:https://bugzilla.redhat.com/show_bug.cgi?id=1884613[bug] in some versions of the OpenShift Management Console, a blank screen may appear when you click on "Create ServiceMeshControlPlane". To work around this problem, create the ServiceMeshControlPlane object with the `oc apply` command.
+{{% /notice %}}
+
+
 :leveloffset: -1
 
 === Verifying Installation

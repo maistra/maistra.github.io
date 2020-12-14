@@ -15,7 +15,7 @@ include::vars.adoc[]
 Maistra uses the `istio-operator`, a custom installer built around Istio's helm
 charts. Many of the parameters supported by the installer are shown below.
 
-{{< snippet_markdown name="istio_installation_auth" >}}
+{{< snippet_markdown name="istio_installation_minimal" >}}
 
 == General Parameters
 [options="header"]
@@ -25,7 +25,7 @@ charts. Many of the parameters supported by the installer are shown below.
 |Maistra version that should be deployed in this control plane installation. Maistra operator supports installing different versions of a control plane. This means that you can have multiple service meshes in your cluster with different Maistra versions. If this field is not present, Maistra operator will install the latest version it supports. For Maistra operator `{{< maistraOperatorVersion >}}` one of the following values are allowed in this field: [`{{< maistraOperatorInstallableVersions >}}`].
 |Latest supported by Maistra operator in use.
 |`template`
-|A template references a `ServiceMeshControlPlane` referenced in the `smcp-templates` `ConfigMap` from which configuration should be inherited. See link:{{< ref "controlplane-templates.adoc" >}}[template documentation] for details.
+|A template references a `ServiceMeshControlPlane` referenced in the `smcp-templates` `ConfigMap` from which configuration should be inherited. See link:{{< ref "controlplane-profiles.adoc" >}}[template documentation] for details.
 |default
 |=======
 
