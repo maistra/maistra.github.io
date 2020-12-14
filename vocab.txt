@@ -3,6 +3,7 @@ Asciidoctor
 bookinfo
 Bookinfo
 CentOS
+config
 configMaps
 controlplane
 Godebug
@@ -11,14 +12,18 @@ hostname
 hostnames
 html-proofer
 iptables
+istioctl
 Kiali
 Istio
 Jira
 Maistra
+multicluster
 multitenant
 Multitenancy
+namespace
 nftables
 productpage
+tetratelabs
 unencrypted
 schedulable
 Multus

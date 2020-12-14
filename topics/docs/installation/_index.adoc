@@ -12,7 +12,7 @@ This guide provides instructions for installing Maistra into an existing `OpenSh
 
 === Tested Configurations
 
-- OpenShift Container Platform (OCP) 4.2+
+- OpenShift Container Platform (OCP) 4.6+
 - We do not yet run within an OpenShift Online or OpenShift Dedicated environment.
 
 === Installing Maistra
