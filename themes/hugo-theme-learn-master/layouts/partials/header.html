@@ -82,7 +82,11 @@
         {{ end }}
         <div id="body-inner">
           {{if and (not .IsHome) (not .Params.chapter) }}
+            {{if .Params.id}}
+            <h1 id="{{.Params.id}}">{{.Title}}</h1>
+            {{ else }}
             <h1>{{.Title}}</h1>
+            {{ end }}
           {{end}}
 
         {{define "breadcrumb"}}

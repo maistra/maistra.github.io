@@ -1,6 +1,7 @@
 ---
 title: Customizing the installation
 type: "document"
+id: "customize-installation-ossm-v2x"
 weight: 7
 ---
 

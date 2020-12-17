@@ -1,6 +1,7 @@
 ---
 title: Custom resources
 type: "document"
+id: "ossm-custom-resources"
 weight: 12
 ---
 

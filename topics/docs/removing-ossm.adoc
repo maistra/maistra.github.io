@@ -1,6 +1,7 @@
 ---
 title: Removing Maistra
 type: "document"
+id: "removing-ossm"
 weight: 15
 ---
 

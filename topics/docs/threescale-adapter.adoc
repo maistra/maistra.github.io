@@ -1,6 +1,7 @@
 ---
 title: Using the 3scale Istio adapter
 type: "document"
+id: "threescale-adapter"
 weight: 14
 ---
 

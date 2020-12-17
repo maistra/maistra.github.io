@@ -1,6 +1,7 @@
 ---
 title: Maistra 2.x release notes
 type: "document"
+id: "service-mesh-release-notes"
 weight: 1
 ---
 

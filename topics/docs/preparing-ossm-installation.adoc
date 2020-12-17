@@ -1,6 +1,7 @@
 ---
 title: Preparing to install Maistra
 type: "document"
+id: "preparing-ossm-installation"
 weight: 4
 ---
 

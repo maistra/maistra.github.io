@@ -1,6 +1,7 @@
 ---
 title: Installing Maistra
 type: "document"
+id: "installing-ossm"
 weight: 5
 ---
 

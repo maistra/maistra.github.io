@@ -1,6 +1,7 @@
 ---
 title: Upgrading from 1.1 to 2.0
 type: "document"
+id: "upgrading-ossm"
 weight: 6
 ---
 

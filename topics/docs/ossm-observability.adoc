@@ -1,6 +1,7 @@
 ---
 title: Data visualization and observability
 type: "document"
+id: "ossm-observability"
 weight: 9
 ---
 

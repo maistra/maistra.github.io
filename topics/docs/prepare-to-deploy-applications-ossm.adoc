@@ -1,6 +1,7 @@
 ---
 title: Deploying applications on Maistra
 type: "document"
+id: "deploying-applications-ossm"
 weight: 8
 ---
 

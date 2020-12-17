@@ -1,6 +1,7 @@
 ---
 title: Maistra architecture
 type: "document"
+id: "ossm-architecture"
 weight: 2
 ---
 

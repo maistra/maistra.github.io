@@ -32,18 +32,28 @@ func getRegexStringReplacer(entry *regexp.Regexp, replaceWith string) docsReplac
 	}
 }
 
-func getHeaderReplacer(title string, weight int) docsReplacer {
-	return getPrependReplacer(getHeader(title, weight))
+func getHeaderReplacer(title string, id string, weight int) docsReplacer {
+	return getPrependReplacer(getHeader(title, id, weight))
 }
 
-func getHeader(title string, weight int) string {
+func getHeader(title string, id string, weight int) string {
 	return `---
 title: ` + title + `
 type: "document"
+id: ` + id + `
 weight: ` + fmt.Sprintf("%d", weight) + `
 ---
 
-`
+  `
+}
+
+func getDocID(body string) string {
+	idRegex := regexp.MustCompile("\\[id=.*\\]")
+	id := idRegex.FindString(body)
+	if id != "" {
+		return id[4 : len(id)-1]
+	}
+	return ""
 }
 
 func getPrependReplacer(content string) docsReplacer {
@@ -94,7 +104,7 @@ var (
 	imageRegexp    *regexp.Regexp = regexp.MustCompile("image::[A-Za-z\\/\\-.]*")
 
 	//kebab is a special case. Doesn't really match anything else and doing a match of just image: would also fetch docker image content
-	kebabImageRegexp *regexp.Regexp = regexp.MustCompile("::kebab: image:[A-Za-z\\/\\-.]*")
+	kebabImageRegexp *regexp.Regexp = regexp.MustCompile(":kebab:[ ]*image:[A-Za-z\\.\\/-]*")
 )
 
 func init() {
@@ -125,7 +135,7 @@ func main() {
 		topicURL := docsPath + fileName
 		var matches []string = make([]string, 0, 0)
 		if matches, err = downloadFile("doc", topic.Name, i, topicURL, path.Join(docsFilePath, fileName), []regexp.Regexp{*includesRegexp, *imageRegexp}); err != nil {
-			fmt.Printf("failed to download %s: %s\n", topicURL, err.Error())
+			fmt.Printf("failed to download (%s): %s\n", topicURL, err.Error())
 		}
 
 		processIncludes(matches)
@@ -141,18 +151,18 @@ func processIncludes(matches []string) {
 		var matches []string
 		var err error
 		fmt.Printf("checking %s\n", match)
-		if strings.Contains(match, "image::") || strings.Contains(match, "::kebab: image:") {
+		if strings.Contains(match, "image::") || strings.Contains(match, ":kebab: image:") {
 			if strings.Contains(match, "image::") {
 				match = match[len("image::"):]
-			} else if strings.Contains(match, "::kebab: image:::") {
-				match = match[len("::kebab: image:"):]
+			} else if strings.Contains(match, ":kebab: image:") {
+				match = match[len(":kebab: image:"):]
 			}
 
 			imageURL := imagePath + match
 			downloadPath := path.Join(docsFilePath, match)
 			fmt.Printf("downloading image: %s\n\tfrom %s \n\tto %s \n", match, imageURL, downloadPath)
 			if _, err := downloadFile("image", "", 0, imageURL, downloadPath, []regexp.Regexp{}); err != nil {
-				fmt.Printf("failed to download %s: %s\n", imageURL, err.Error())
+				fmt.Printf("failed to download (%s): %s\n", imageURL, err.Error())
 				panic("image failed")
 			}
 		} else if strings.Contains(match, "include::") {
@@ -162,7 +172,7 @@ func processIncludes(matches []string) {
 
 			fmt.Printf("downloading module %s \n\tfrom %s \n\tto %s \n", match, moduleURL, match)
 			if matches, err = downloadFile("module", "", 0, moduleURL, downloadPath, []regexp.Regexp{*includesRegexp, *imageRegexp, *kebabImageRegexp}); err != nil {
-				fmt.Printf("failed to download %s: %s\n", moduleURL, err.Error())
+				fmt.Printf("failed to download (%s): %s\n", moduleURL, err.Error())
 				panic("module failed")
 			}
 		}
@@ -224,7 +234,7 @@ func downloadFile(fileType string, title string, weight int, url string, filenam
 			getRegexStringReplacer(regexp.MustCompile(":DocInfoProductName:.*"), ":DocInfoProductName: Maistra"),
 		}...)
 	} else if fileType == "doc" {
-		fileDocsReplacers = append(docsReplacers, getHeaderReplacer(strings.Replace(title, "Service Mesh", "Maistra", -1), weight))
+		fileDocsReplacers = append(docsReplacers, getHeaderReplacer(strings.Replace(title, "Service Mesh", "Maistra", -1), getDocID(string(body)), weight))
 	}
 
 	matches := []string{}
