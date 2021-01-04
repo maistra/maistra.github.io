@@ -1,11 +1,15 @@
-#!/bin/sh
+#!/bin/bash
 set -e -x
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+# shellcheck disable=SC1090
+source "${DIR}/check-yq.sh"
 
 export LC_ALL=C.UTF-8
 
 #note that release information must be checked before cding to the generated site data
-maistraVersion=$(yq read data/release.yaml maistraVersion)
-maistraBranch=$(yq read "data/releases/${maistraVersion}.yaml" maistraBranch)
+maistraVersion=$(${YQ} read data/release.yaml maistraVersion)
+maistraBranch=$(${YQ} read "data/releases/${maistraVersion}.yaml" maistraBranch)
 
 #get number of commits on branch so that we can detect new files even past the current commit
 commitsOnBranch=$(git rev-list --count --bisect "${maistraBranch}")
