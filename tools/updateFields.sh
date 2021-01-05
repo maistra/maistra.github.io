@@ -1,18 +1,22 @@
-#!/bin/sh
+#!/bin/bash
 set -e -x
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+# shellcheck disable=SC1090
+source "${DIR}/check-yq.sh"
 
 mkdir -p out
 
 getMaistra() {
-		maistraVersion=$(yq read data/release.yaml maistraVersion)
-    maistraBranch=$(yq read "data/releases/${maistraVersion}.yaml" maistraBranch)
-    maistraVersion=$(yq read "data/releases/${maistraVersion}.yaml" maistraOperatorVersion)
+		maistraVersion=$(${YQ} read data/release.yaml maistraVersion)
+    maistraBranch=$(${YQ} read "data/releases/${maistraVersion}.yaml" maistraBranch)
+    maistraVersion=$(${YQ} read "data/releases/${maistraVersion}.yaml" maistraOperatorVersion)
 
     wget "https://raw.githubusercontent.com/Maistra/istio-operator/${maistraBranch}/resources/smcp-templates/v${maistraVersion}/base" -O out/base
     wget "https://raw.githubusercontent.com/Maistra/istio-operator/${maistraBranch}/resources/smcp-templates/v${maistraVersion}/servicemesh" -O out/servicemesh
     wget "https://raw.githubusercontent.com/Maistra/istio-operator/${maistraBranch}/resources/smcp-templates/v${maistraVersion}/maistra" -O out/maistra
-    yq merge out/base out/maistra > out/maistra.rendered.yaml
-    yq merge out/base out/servicemesh > out/servicemesh.rendered.yaml
+    ${YQ} merge out/base out/maistra > out/maistra.rendered.yaml
+    ${YQ} merge out/base out/servicemesh > out/servicemesh.rendered.yaml
 }
 
 getKiali() {
@@ -41,7 +45,7 @@ getKiali() {
 }
 
 getValue() {
-    yq read "out/${1}.rendered.yaml" "${2}"
+    ${YQ} read "out/${1}.rendered.yaml" "${2}"
 }
 
 updateValuesFile() {
