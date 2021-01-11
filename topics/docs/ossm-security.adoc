@@ -5,7 +5,7 @@ id: "ossm-security"
 weight: 10
 ---
 
-[id="ossm-security"]
+  [id="ossm-security"]
 = Customizing security in a Service Mesh
 include::modules/ossm-document-attributes.adoc[]
 :context: ossm-security

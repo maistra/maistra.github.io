@@ -5,7 +5,7 @@ id: "customize-installation-ossm-v2x"
 weight: 7
 ---
 
-[id="customize-installation-ossm-v2x"]
+  [id="customize-installation-ossm-v2x"]
 = Configuring the {ProductName} installation
 include::modules/ossm-document-attributes.adoc[]
 :context: customizing-installation-ossm-v2x

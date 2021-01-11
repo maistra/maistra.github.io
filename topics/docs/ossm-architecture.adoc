@@ -5,7 +5,7 @@ id: "ossm-architecture"
 weight: 2
 ---
 
-[id="ossm-architecture"]
+  [id="ossm-architecture"]
 include::modules/ossm-document-attributes.adoc[]
 = Understanding {ProductName}
 :context: ossm-architecture

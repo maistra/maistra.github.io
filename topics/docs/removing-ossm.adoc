@@ -5,7 +5,7 @@ id: "removing-ossm"
 weight: 15
 ---
 
-[id="removing-ossm"]
+  [id="removing-ossm"]
 = Removing {ProductName}
 include::modules/ossm-document-attributes.adoc[]
 :context: removing-ossm

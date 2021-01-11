@@ -5,7 +5,7 @@ id: "preparing-ossm-installation"
 weight: 4
 ---
 
-[id="preparing-ossm-installation"]
+  [id="preparing-ossm-installation"]
 = Preparing to install {ProductName}
 include::modules/ossm-document-attributes.adoc[]
 :context: preparing-ossm-installation

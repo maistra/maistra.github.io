@@ -5,7 +5,7 @@ id: "ossm-routing-traffic"
 weight: 11
 ---
 
-[id="ossm-routing-traffic"]
+  [id="ossm-routing-traffic"]
 = Traffic management
 include::modules/ossm-document-attributes.adoc[]
 :context: routing-traffic

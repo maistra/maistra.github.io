@@ -5,7 +5,7 @@ id: "ossm-observability"
 weight: 9
 ---
 
-[id="ossm-observability"]
+  [id="ossm-observability"]
 = Data visualization and observability
 include::modules/ossm-document-attributes.adoc[]
 :context: observability
