@@ -5,7 +5,7 @@ id: "threescale-adapter"
 weight: 14
 ---
 
-  [id="threescale-adapter"]
+[id="threescale-adapter"]
 = Using the 3scale Istio adapter
 include::modules/ossm-document-attributes.adoc[]
 :context: threescale-adapter

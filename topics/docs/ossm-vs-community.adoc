@@ -5,7 +5,7 @@ id: "ossm-vs-community"
 weight: 3
 ---
 
-  [id="ossm-vs-community"]
+[id="ossm-vs-community"]
 = Service Mesh and Istio differences
 include::modules/ossm-document-attributes.adoc[]
 :context: ossm-vs-istio

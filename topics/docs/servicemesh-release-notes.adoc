@@ -5,7 +5,7 @@ id: "service-mesh-release-notes"
 weight: 1
 ---
 
-  [id="service-mesh-release-notes"]
+[id="service-mesh-release-notes"]
 = Service Mesh Release Notes
 include::modules/ossm-document-attributes.adoc[]
 :context: ossm-release-notes

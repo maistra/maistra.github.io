@@ -44,7 +44,7 @@ id: ` + id + `
 weight: ` + fmt.Sprintf("%d", weight) + `
 ---
 
-  `
+`
 }
 
 func getDocID(body string) string {

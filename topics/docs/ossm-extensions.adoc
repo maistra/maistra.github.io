@@ -5,7 +5,7 @@ id: "ossm-extensions"
 weight: 13
 ---
 
-  [id="ossm-extensions"]
+[id="ossm-extensions"]
 = Extensions
 include::modules/ossm-document-attributes.adoc[]
 :context: ossm-extensions

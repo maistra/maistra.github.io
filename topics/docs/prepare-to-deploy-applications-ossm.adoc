@@ -5,7 +5,7 @@ id: "deploying-applications-ossm"
 weight: 8
 ---
 
-  [id="deploying-applications-ossm"]
+[id="deploying-applications-ossm"]
 = Deploying applications on {ProductName}
 include::modules/ossm-document-attributes.adoc[]
 :context: deploying-applications-ossm
