@@ -68,9 +68,9 @@ spec:
 ```
 
 {{% notice info %}}
-In previous Maistra versions, only the link:https://intel.github.io/multus-cni/doc/how-to-use.html#lauch-pod-with-text-annotation-with-interface-name[text form]
+In previous Maistra versions, only the link:https://intel.github.io/multus-cni/docs/how-to-use.html#lauch-pod-with-text-annotation-with-interface-name[text form]
 of the `k8s.v1.cni.cncf.io/networks` annotation was supported.
-The link:https://intel.github.io/multus-cni/doc/how-to-use.html#lauch-pod-with-json-annotation[JSON form] support was
+The link:https://intel.github.io/multus-cni/docs/how-to-use.html#lauch-pod-with-json-annotation[JSON form] support was
 introduced in version 1.1.5.
 {{% /notice %}}
 
