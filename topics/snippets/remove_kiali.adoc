@@ -1,6 +1,0 @@
-After all control planes have been removed, the Kiali operator can be removed as follows.
-
-[source, bash]
-----
-$ bash <(curl -L https://git.io/getLatestKialiOperator) --uninstall-mode true
-----

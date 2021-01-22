@@ -1,0 +1,18 @@
+////
+Module included in the following assemblies:
+* jaeger-release-notes.adoc
+* service_mesh/v1x/servicemesh-release-notes.adoc
+* service_mesh/v2x/servicemesh-release-notes.adoc
+////
+
+[id="jaeger-rn-fixed-issues_{context}"]
+= Jaeger Fixed issues
+////
+Provide the following info for each issue if possible:
+Consequence - What user action or situation would make this problem appear  (If you have the foo option enabled and did x)? What did the customer experience as a result of the issue? What was the symptom?
+Cause - Why did this happen?
+Fix - What did we change to fix the problem?
+Result - How has the behavior changed as a result?  Try to avoid “It is fixed” or “The issue is resolved” or “The error no longer presents”.
+////
+
+* link:https://issues.jboss.org/browse/TRACING-1631[TRACING-1631] Multiple Jaeger production instances, using same name but within different namespaces, causing Elasticsearch certificate issue.  When multiple service meshes were installed, all of the Jaeger Elasticsearch instances had the same Elasticsearch secret instead of individual secrets, which prevented the Elasticsearch Operator from communicating with all of the Elasticsearch clusters.

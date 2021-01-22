@@ -17,7 +17,7 @@
   <div class="highlightable">
     <ul class="topics">
       {{/* Get the pages below /docs for the navigation instead of starting at the root */}}
-      {{ $docsPage := .Site.GetPage "/docs" }}
+      {{ $docsPage := .Site.GetPage "/" }}
       {{ $sections := $docsPage.Sections }}
 
       {{if eq .Site.Params.ordersectionsby "title"}}

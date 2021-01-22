@@ -1,0 +1,45 @@
+---
+title: Preparing to install Maistra
+type: "document"
+id: "preparing-ossm-installation"
+weight: 4
+---
+
+[id="preparing-ossm-installation"]
+= Preparing to install {ProductName}
+include::modules/ossm-document-attributes.adoc[]
+:context: preparing-ossm-installation
+toc::[]
+
+Before you can install {ProductName}, review the installation activities, ensure that you meet the prerequisites:
+
+== Prerequisites
+
+* Possess an active {product-title} subscription on your Red Hat account. If you do not have a subscription, contact your sales representative for more information.
+* Review the link:https://docs.openshift.com/container-platform/4.6/architecture/architecture-installation.html#installation-overview_architecture-installation[{product-title} {product-version} overview].
+* Install {product-title} {product-version}.
+** link:https://docs.openshift.com/container-platform/4.6/installing/installing_aws/installing-aws-account.html#installing-aws-account[Install {product-title} {product-version} on AWS]
+** link:https://docs.openshift.com/container-platform/4.6/installing/installing_aws/installing-aws-user-infra.html#installing-aws-user-infra[Install {product-title} {product-version} on user-provisioned AWS]
+** link:https://docs.openshift.com/container-platform/4.6/installing/installing_bare_metal/installing-bare-metal.html#installing-bare-metal[Install {product-title} {product-version} on bare metal]
+** link:https://docs.openshift.com/container-platform/4.6/installing/installing_vsphere/installing-vsphere.html#installing-vsphere[Install {product-title} {product-version} on vSphere]
++
+[NOTE]
+====
+If you are installing {ProductName} on a link:https://docs.openshift.com/container-platform/4.6/installing/install_config/installation-types.html[restricted network], follow the instructions for your chosen {product-title} infrastructure.
+====
++
+* Install the version of the {product-title} command line utility (the `oc` client tool) that matches your {product-title} version and add it to your path.
+** If you are using {product-title} {product-version}, see link:https://docs.openshift.com/container-platform/4.6/cli_reference/openshift_cli/getting-started-cli.html#cli-about-cli_cli-developer-commands[About the CLI].
+
+include::modules/ossm-supported-configurations.adoc[leveloffset=+1]
+
+include::modules/ossm-installation-activities.adoc[leveloffset=+1]
+
+[WARNING]
+====
+Please see link:https://docs.openshift.com/container-platform/4.6/logging/config/cluster-logging-log-store.html[Configuring the log store] for details on configuring the default Jaeger parameters for Elasticsearch in a production environment.
+====
+
+== Next steps
+
+* xref:/docs/installing-ossm.adoc#installing-ossm[Install {ProductName}] in your {product-title} environment.

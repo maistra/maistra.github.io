@@ -7,9 +7,13 @@ PygmentsCodeFences = true
 canonifyurls = false
 ignorefiles=["DRAFTS/.*"]
 languageCode = "en-US"
+alwaysopen=true
+
+# make URLs ending in .html
+uglyurls = true
+
 # Disqus Username
 disqusShortname = "disqus_shortname"
-
 # Copyright of your post
 copyright = "© This post is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License，please give source if you wish to quote or reproduce."
 

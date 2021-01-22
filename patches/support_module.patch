@@ -1,0 +1,24 @@
+diff --git a/modules/support.adoc b/modules/support.adoc
+index a197a24..7fdf70e 100644
+--- a/modules/support.adoc
++++ b/modules/support.adoc
+@@ -7,17 +7,8 @@
+ [id="support_{context}"]
+ = Getting support
+ 
+-If you experience difficulty with a procedure described in this documentation, or with {product-title} in general, visit the link:http://access.redhat.com[Red Hat Customer Portal]. From the Customer Portal, you can:
+-
+-* Search or browse through the Red Hat Knowledgebase of articles and solutions relating to Red Hat products.
+-* Submit a support case to Red Hat Support.
+-// TODO: xref
+-* Access other product documentation.
+-
+-To identify issues with your cluster, you can use Insights in {cloud-redhat-com}. Insights provides details about issues and, if available, information on how to solve a problem.
++If you experience difficulty with a procedure described in this documentation, or with {product-title} in general, please open an link:https://issues.jboss.org/projects/MAISTRA[issue].
+ 
+ // TODO: verify that these settings apply for Service Mesh and OpenShift virtualization, etc.
+ If you have a suggestion for improving this documentation or have found an
+-error, please submit a link:http://bugzilla.redhat.com[Bugzilla report] against the
+-*OpenShift Container Platform* product for the *Documentation* component. Please
+-provide specific details, such as the section name and {product-title} version.
++error, please see the link:https://maistra.io/contribute/[contributors guide] or open an issue.
