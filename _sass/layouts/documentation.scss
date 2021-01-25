@@ -1,0 +1,49 @@
+.documentation-archive > .content {
+  padding-top: 0;
+}
+
+.documentation {
+  .content {
+    padding-bottom: 0;
+  }
+
+  .contrib-block {
+    margin: .5rem 0;
+
+    h4 {
+      margin-top: 0;
+    }
+    ul {
+      display: block;
+      text-align: left;
+      max-width: 200px;
+      margin: 0 auto;
+    }
+  }
+
+  .documentation-guides-band {
+    h4 {
+      font-size: 1.5rem;
+      line-height: 2rem;
+      margin-bottom: 1rem;
+    }
+    ul {
+      padding-left: 1rem;
+    }
+
+    @media screen and (min-width: 1024px) {
+      ul {
+        columns: 2;
+        -webkit-columns: 2;
+        -moz-columns: 2;
+      }
+    }
+  }
+}
+
+.documentation-archive-band {
+  table {
+    width: 100%;
+    overflow: scroll;
+  }
+}

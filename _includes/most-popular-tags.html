@@ -1,0 +1,9 @@
+<ul id="dataList">
+{% assign sorted_tags_by_posts_count = site.tags | sort_tags_by_posts_count %}
+{% for tag in sorted_tags_by_posts_count %}
+  <li>
+    <a href="{{site.baseurl}}/blog/tag/{{tag[0]}}">{{ tag[0] }}
+    </a>
+  </li>
+{% endfor %}
+</ul><span class="see-all">See All</span>

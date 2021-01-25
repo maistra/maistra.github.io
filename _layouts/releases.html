@@ -1,0 +1,23 @@
+---
+layout: base
+---
+
+<div class="grid-wrapper">
+  <div class="width-10-12 width-12-12-m">
+    <h1>{{ page.title }}</h1>
+  </div>
+</div>
+<div class="width-12-12 margin-tb-xs">
+      <div class="alert alert-danger margin-tb-0">
+        <div class="grid-wrapper">
+          <div class="width-1-12 justify-self-center align-self-center">
+            <i class="fas fa-exclamation-circle fa-3x"></i>
+          </div>
+          <div class="width-11-12 align-self-center">
+            <p>Occasionally, security issues are found in Maistra. When issues are discovered, a new release of OpenShift Service Mesh is made to include fixes for these vulnerabilities. However, these fixes are not included in a Maistra release until the next general release.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+      
+{% include releases-band.html %}

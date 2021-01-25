@@ -1,0 +1,48 @@
+#!/usr/bin/env ruby
+
+require_relative "../lib/jekyll-timeago"
+
+help_message = <<~HELP_MESSAGE
+  Usage:
+
+    jekyll-timeago <from_date> [to_date]
+
+  Notes:
+          [to_date] Optional, defaults to current date
+
+  Options:
+          --help, -h      Prints this message
+          --version, -v   Prints the current version
+          --console, -c   Starts an interactive IRB session with jekyll-timeago included
+          --locale, -l    Uses the provided locale
+HELP_MESSAGE
+
+if ARGV.empty? || ARGV.include?("--help") || ARGV.include?("-h")
+  puts help_message
+elsif ARGV.include?("--version") || ARGV.include?("-v")
+  puts "v#{Jekyll::Timeago::VERSION}"
+elsif ARGV.include?("--console") || ARGV.include?("-c")
+  require "irb"
+  include Jekyll::Timeago
+
+  ARGV.clear
+  IRB.start
+else
+  custom_locale = "--locale" if ARGV.include?("--locale")
+  custom_locale = "-l" if ARGV.include?("-l")
+
+  if custom_locale
+    index = ARGV.index(custom_locale)
+    locale = ARGV.delete_at(index + 1)
+    ARGV.delete_at(index)
+
+    options = { locale: locale }
+    ARGV << options
+  end
+
+  begin
+    puts Jekyll::Timeago.timeago *ARGV
+  rescue ArgumentError => e
+    puts "Error! #{e}"
+  end
+end

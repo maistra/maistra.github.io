@@ -1,0 +1,20 @@
+pt:
+  today: 'hoje'
+  yesterday: 'ontem'
+  tomorrow: 'amanhã'
+  past: '%{date_range} atrás'
+  future: 'em %{date_range}'
+  last_word_connector: 'e'
+  words_connector: ', '
+  years:
+    one: '1 ano'
+    other: '%{count} anos'
+  months:
+    one: '1 mês'
+    other: '%{count} meses'
+  weeks:
+    one: '1 semana'
+    other: '%{count} semanas'
+  days:
+    one: '1 dia'
+    other: '%{count} dias'

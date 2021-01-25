@@ -1,0 +1,36 @@
+<div class="nav-wrapper">
+  <div class="grid-wrapper">
+    <div class="width-12-12">
+      <input type="checkbox" id="checkbox" />
+      <nav id="main-nav" class="main-nav">
+  <div class="container">
+    <div class="logo-wrapper">
+        <a href="{{site.baseurl}}/"><img src="{{site.baseurl}}/assets/images/maistra_logo.png" class="project-logo" title="Maistra Logo"></a>
+    </div>
+    <label class="nav-toggle" for="checkbox">
+      <i class="fa fa-bars"></i>
+    </label>
+    <ul id="menu" class="menu">
+      <li>
+        <a href="{{site.baseurl}}/get-started/" class="{% if page.url contains '/get-started/' %}active{% endif %}">Get Started</a>
+      </li>
+      <li class="dropdown">
+        <span href="{{site.baseurl}}/resources/">Resources <i class="fas fa-chevron-down"></i></span>
+        <ul class="submenu">
+          <li><a href="{{site.baseurl}}/documentation" class="{% if page.url contains '/documentation' %}active{% endif %}">Documentation</a></li>
+          <li><a href="{{site.baseurl}}/releases" class="{% if page.url contains '/releases' %}active{% endif %}">Releases</a></li>
+          <li><a href="{{site.baseurl}}/interactive-courses" class="{% if page.url contains '/interactive-courses' %}active{% endif %}">Interactive Courses</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="{{site.baseurl}}/community/" class="{% if page.url contains '/community/' %}active{% endif %}">Community</a>
+      </li>
+      <li>
+        <a href="{{site.baseurl}}/blog/" class="{% if page.url contains '/blog/' %}active{% endif %}">Blog</a>
+      </li>
+    </ul>
+  </div>
+      </nav>
+    </div>
+  </div>
+</div>

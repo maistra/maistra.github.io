@@ -1,0 +1,26 @@
+---
+layout: documentation_toc
+title: Documentation Details with TOC
+---
+
+{% assign documentation_github_url = "http://www.starwars.com" %}
+{% assign @toc_steps = "Page 1, Page 2, Page 3, Page 4, Page 5" | split: ", " %}
+{% assign toc_step = -1 %}
+
+<div class="grid-wrapper">
+  <div class="width-3-12 width-12-12-m">
+    {% include toc-menu-docs.html toc_steps=toc_steps toc_step=toc_step %}
+  </div>
+  <div class="width-9-12 width-12-12-m">
+    <h4>{{page.title}}</h4>
+    <h5>This is the step 4</h5>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce a facilisis quam, vel faucibus diam. Donec id pulvinar magna, quis vehicula ex. Nam ut diam suscipit, luctus sapien sit amet, rutrum ligula. Ut pharetra ipsum ut turpis vehicula condimentum. Fusce magna metus, rutrum sed lectus tincidunt, porta tempor arcu. Quisque quis gravida lectus. Aliquam rhoncus hendrerit lacus a auctor. Ut ullamcorper pretium neque ut dapibus. Duis blandit laoreet quam, at placerat neque suscipit sit amet. Quisque convallis luctus ullamcorper. Maecenas hendrerit felis eget sem tincidunt, ac euismod leo fermentum.</p>
+    <h5>This is a subhead</h5>
+    <p>Nullam porta commodo volutpat. Curabitur cursus facilisis molestie. Suspendisse tellus elit, condimentum eget elit sed, interdum feugiat nisi. Praesent dapibus mi ut est ultrices tincidunt. Aliquam sagittis lorem et mauris pellentesque, vitae laoreet lorem volutpat. Praesent pharetra velit condimentum lacus pellentesque mattis. Interdum et malesuada fames ac ante ipsum primis in faucibus. Integer bibendum ex vitae dolor imperdiet rhoncus. In pellentesque metus id commodo sollicitudin. Mauris sagittis, sem non lobortis auctor, felis neque tristique erat, at eleifend risus neque vel mi. In porta vitae sem eget vehicula. Cras commodo malesuada hendrerit. Nullam finibus consequat viverra. Vivamus consequat ante nulla, ac facilisis urna tristique ultricies. Vestibulum euismod ipsum sed arcu scelerisque, lobortis rutrum velit sollicitudin. Sed fringilla eros auctor, hendrerit nunc vitae, maximus mauris.</p>
+    <p>Vivamus ut purus sed sem tristique finibus. Curabitur ac metus commodo, semper arcu ac, dapibus magna. Morbi turpis orci, tempor non condimentum vel, tristique et magna. Vivamus leo turpis, semper in eleifend id, interdum sed diam. Nunc augue turpis, faucibus eget erat sit amet, ullamcorper ultricies erat. Donec tristique suscipit justo, vel pharetra augue porta vitae. Integer sed euismod elit. Donec sed magna in metus imperdiet sollicitudin fermentum a massa. Curabitur id interdum dolor. Mauris finibus libero sit amet tortor interdum, imperdiet ultrices quam imperdiet. Etiam dignissim pulvinar ultrices.</p>
+    <h5>This is a subhead</h5>
+    <p>Fusce elementum condimentum urna, imperdiet vulputate dolor consequat et. Aenean condimentum, ligula ac hendrerit consequat, ipsum augue vehicula justo, id dictum ante felis at turpis. Aenean ullamcorper eget diam nec maximus. Pellentesque a magna dictum, sodales nisl sed, ultrices elit. Nullam in ipsum nisi. Morbi sollicitudin mauris mi, quis mollis lacus laoreet a. Duis ex diam, varius sit amet enim ac, dapibus dictum nisi. Sed at mattis tortor.</p>
+    <p>Mauris condimentum, neque non tincidunt posuere, purus purus luctus sapien, nec dictum diam velit in mi. Vivamus ultrices quam sapien, in imperdiet est consectetur ac. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Ut porttitor risus eros, vel auctor dui accumsan a. Phasellus id sapien eget elit tincidunt cursus quis eget lorem. Aliquam et consectetur dolor, in venenatis massa. Morbi molestie cursus lectus ut aliquam. Nullam sed urna a quam vestibulum consectetur non vel lorem.</p>
+
+  </div>
+</div>

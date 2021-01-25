@@ -1,0 +1,40 @@
+<div class="component-wrapper">
+  <div class="grid__item width-9-12 width-12-12-m">
+    {% for post in paginator.posts %}
+      <div class="blog-list-item grid-wrapper">
+        <div class="post-title grid__item width-12-12">
+          <h6><a href="{{site.baseurl}}{{ post.url }}">{{ post.title }}</a></h6>
+        </div>
+        <div class="grid__item width-8-12 width-12-12-m">
+          <p class="margin-tb-0">
+            <small>{{ post.date | date: '%B %d, %Y' }} &nbsp;&nbsp;&nbsp;Tags: {% for tag in post.tags %}<a href="{{site.baseurl}}/blog/tag/{{tag}}">{{ tag}}</a> {% endfor %}</small>
+          </p>
+          <p class="byline margin-tb-sm">By {{ post.author }}</p>
+        </div>
+        <div class="grid__item width-12-12">
+          {% if post.synopsis %}
+            <p class="margin-tb-0">{{ post.synopsis | strip_html }}</p>
+          {% else %}
+            <p class="margin-tb-0">{{ post.content | strip_html | truncate: 280 }}</p>
+          {% endif %}
+        </div>
+        <div class="grid__item width-12-12"><a href="{{site.baseurl}}{{ post.url }}">Read More ></a></div>
+      </div>
+    {% endfor %}
+    {% if paginator.total_pages > 1 %}
+      <div class="paginator-btns">
+        {% if paginator.next_page %}
+          <a href="{{ paginator.next_page_path | prepend: site.baseurl }}" class="button-cta">Older Posts</a>
+        {% endif %}
+        {% if paginator.previous_page %}
+          <a href="{{ paginator.previous_page_path | prepend: site.baseurl }}" class="button-cta">Newer Posts</a>
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
+  <div class="grid__item width-2-12 side-nav">
+    <a href="{{site.baseurl}}/feed.xml"><i class="fas fa-rss-square"></i></a>
+    <h5 class="margin-tb-sm">Tags</h5>
+    {% include most-popular-tags.html %}
+  </div>
+</div>

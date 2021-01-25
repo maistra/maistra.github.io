@@ -1,0 +1,532 @@
+// PROJECT styles to overwrite global.scss
+@import url('https://fonts.googleapis.com/css2?family=Mulish:wght@400;700;800&family=Trirong&display=swap');
+
+html,
+body {
+  font-family: 'Trirong', serif;
+}
+
+* {
+  font-family: 'trirong', serif;
+  line-height: 1.1rem;
+  color: $text-base-color;
+}
+
+.grid-wrapper,
+.component-wrapper {
+  grid-gap: 2em;
+  grid-row-gap: 1em;
+  @media screen and (max-width: 768px) {
+    grid-gap: 0;
+  }
+}
+
+h1 {
+  font-family: 'Mulish', sans-serif;
+  font-size: 3.35rem;
+  line-height: 3.5rem;
+  font-weight: 800;
+  @media screen and (max-width: 768px) {
+    font-size: 1.5rem;
+    line-height: 1.5rem;    
+  }
+}
+
+h2 {
+  font-family: 'Mulish', sans-serif;
+  font-size: 2.5rem;
+  line-height: 3.0rem;
+  font-weight: 400;
+  @media screen and (max-width: 768px) {
+    font-size: 1rem;
+    line-height: 1rem;    
+  }
+}
+
+h3 {
+  font-family: 'Mulish', sans-serif;
+  font-size: 2.25rem;
+  line-height: 2.75rem;
+  font-weight: 800;
+  @media screen and (max-width: 768px) {
+    font-size: 1.2rem;
+    line-height: 1.2rem;    
+  }
+}
+
+h4 {
+  font-family: 'Mulish', sans-serif;
+  font-size: 1.5rem;
+  line-height: 2.0rem;
+  font-weight: 400;
+  @media screen and (max-width: 768px) {
+    font-size: 1.125rem;
+    line-height: 1.5rem;    
+  }
+}
+
+h5 {
+  font-family: 'Mulish', sans-serif;
+  font-size: 1.15rem;
+  line-height: 1.25rem;
+  font-weight: 600;
+}
+
+h6 {
+  font-family: 'Mulish', sans-serif;
+  font-size: 1rem;
+  line-height: 1.35rem;
+  font-weight: 800;
+}
+
+p {
+
+  font-size: 1rem;
+  line-height: 1.25rem;
+  font-weight: 400;
+}
+
+.styled-logo {
+  font-size: 4rem;
+  line-height: 4rem;
+  color: $blue;
+  font-weight: 300;
+  text-transform: uppercase;
+  text-decoration: none;
+  letter-spacing: 10px;
+  margin: 0;
+  @media screen and (max-width: 1024px) {
+    font-size: 2rem;
+    line-height: 2rem;    
+  }
+}
+
+a {
+  line-height: 1.5rem;
+  font-weight: 400;
+  cursor: pointer;
+  text-decoration: underline;
+  color: $link;
+  &:hover, &:active, &:focus {
+    color: $link-hover;
+  }
+}
+
+a.button-cta,
+a.button-cta.primary,
+button,
+input[type="submit"] {
+  font-family: 'Mulish', sans-serif;
+  color: $white;
+  background-color: $red;
+  border: 1px solid $white;
+  font-size: 1.3rem;
+  font-weight: 400;
+  line-height: 2;
+  transition: background .2s ease-in 0s;
+  text-decoration: none;
+  padding: 0 3rem;
+  display: inline-block;
+  white-space: normal;
+  &:hover, &:active, &:focus {
+    background-color: $darkred;
+    border-color: $white;
+    color: $white !important;
+  }
+  @media screen and (max-width: 768px) {
+    font-size: 1rem;
+    line-height: 1rem;
+    padding: .75rem 1rem;
+  }
+
+  &.btn-sm {
+    font-size: 1rem;
+    line-height: 1.2rem;
+    font-weight: 400;
+    padding: .5rem 1.2rem;
+  }
+}
+
+a.button-cta.secondary {
+  color: $white;
+  background-color: $medblue;
+  border: 2px solid $white;
+  &:hover, &:active, &:focus {
+    background-color: $darkblue;
+    border-color: $darkblue;
+    color: $white !important;
+  }
+}
+
+a.button-cta.tertiary {
+  color: $darkblue !important;
+  background-color: $white;
+  border: 2px solid $darkblue;
+  &:visited {
+    // color: $link !important;
+  }
+  &:hover, &:active, &:focus {
+    background-color: $lightblue;
+    color: $darkblue !important;
+  }
+}
+
+form input[type="submit"] {
+  border: 2px solid $white;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+table {
+  border-collapse: collapse;
+
+  thead th,
+  tbody th {
+    font-family: 'Mulish', sans-serif;
+    font-size: 1.125rem;
+    line-height: 1.5rem;
+    color: $white;
+    font-weight: 600;
+    text-align: left;
+    padding: 1rem;
+    background-color: $gray-2;
+    border: 1px solid $gray-2;
+    > div,
+    > div > span {
+      color: $white;
+          font-family: 'Mulish', sans-serif;
+          font-size: 1.125rem;
+          line-height: 1.5rem;
+    }
+  }
+
+  a {
+    font-family: 'Mulish', sans-serif;
+    font-weight: 600;
+  }
+  
+  
+  tbody td {
+    padding: .5rem 1rem;
+    border: 1px solid $gray-0;
+  }
+
+  tbody tr {
+    &:nth-child(even) {
+      background-color: $gray-0;
+    }
+    td p {
+       margin: 0;
+
+    }
+  }
+}
+
+mark {
+  background-color: $yellow;
+}
+
+dl dt {
+  font-weight: 700;
+}
+
+code, pre {
+  background-color: $gray-0;
+  a {
+    text-decoration: none;
+    color: $white;
+  }
+}
+
+pre {
+  padding: .5rem 1rem;
+  border: 1px solid $gray-2;
+}
+
+pre > code,
+table code {
+  border: none;
+  background-color: transparent;
+}
+
+hr {
+  border-width: 1px;
+  border-color: $lightblue;
+}
+
+.full-width-bg {
+  margin: 0 -13rem;
+  padding: 0 13rem;
+  @media screen and (max-width: 1170px) {
+    margin: 0 -6rem;
+    padding: 0 6rem;
+  }
+  @media screen and (max-width: 480px) {
+    margin: 0 -2rem;
+    padding: 0 2rem;
+  }
+}
+
+.component {
+  padding-top: 4rem;
+  padding-bottom: 6rem;
+}
+
+.component-slim {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+
+.gray-bg {
+  background-color: $gray-0;
+}
+
+// Changes type to readable color on a dark background
+
+.breadcrumb-band {
+    background-color: $medblue;
+
+  *, p, h2 {
+    color: $white;
+    font-family: 'Mulish', sans-serif;
+  }
+
+  a, a i {
+    color: $white !important;
+    &:hover, &:active, &:focus {
+      color: $white !important;
+    }
+    &:visited {
+      // color: $white !important;
+    }
+  }
+}
+
+
+// Changes type to readable color on a dark background
+.dark-bg {
+  background-color: $gray-3;
+
+}
+
+.dark-bg {
+  *, p, h2 {
+    color: $white;
+  }
+
+  a, a i {
+    color: $white !important;
+    &:hover, &:active, &:focus {
+      color: $link-hover-dark-bg !important;
+    }
+    &:visited {
+      // color: $link-visited-dark-bg !important;
+    }
+  }
+}
+
+.alt-type {
+  font-family: 'Mulish', sans-serif;
+}
+
+.alt-type-b {
+  @extend .alt-type;
+  font-weight: 600;
+}
+
+.text-centered {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-caps {
+  text-transform: uppercase;
+}
+
+.hide-mobile {
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
+}
+
+.text-darkred {
+  color: $darkred;
+}
+
+ul.dashed {
+  list-style-type: none;
+  > li:before {
+    content: "–";
+    position: absolute;
+    margin-left: -1.1em; 
+    margin-top: 2px;
+    color: $blue;
+  }
+}
+
+ul.chevron {
+  list-style-type: none;
+  > li:before {    
+    content: '\203A';
+    margin:0 5px 0 -15px;
+    font-size: 1.5rem;
+  }
+
+  &.darkred {
+    > li:before {
+      color: $darkred;
+    }
+  }
+}
+
+.margin-tb-0 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.margin-tb-xs {
+  margin-top: .5rem;
+  margin-bottom: .5rem;
+}
+
+.margin-tb-sm {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.margin-tb-md {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.margin-tb-lg {
+  margin-top: 4rem;
+  margin-bottom: 4rem;
+}
+
+.margin-tb-xl {
+  margin-top: 5rem;
+  margin-bottom: 5rem;
+}
+
+.padding-tb-0 {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.padding-tb-sm {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.padding-tb-md {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.padding-tb-lg {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+.padding-tb-xl {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+
+.alert {
+  padding: 30px;
+  margin-bottom: 20px;
+  border: 1px solid transparent;
+}
+
+.alert p {
+    font-family: 'Mulish', sans-serif;
+    font-size: 1.25rem;
+    line-height: 1.5rem;
+    margin: 0;
+}
+
+.alert-info {
+  background-color: #d9edf7;
+  border-color: #bce8f1;
+  color: #31708f;
+}
+
+.alert-warning {
+  background-color: #fcf8e3;
+  border-color: #faebcc;
+  color: #8a6d3b;
+}
+
+.alert-danger {
+  background-color: #fee5ec;
+  border-color: #ebccd1;
+  color: #a94442;
+}
+
+.alert-success {
+  background-color: #dff0d8;
+  border-color: #d6e9c6;
+  color: #3c763d;
+}
+
+.justify-self {
+  &-start {
+    justify-self: start !important;
+  }
+  &-center {
+    justify-self: center !important;
+  }
+  &-end {
+    justify-self: end !important;
+  }
+}
+
+.align-self {
+  &-start {
+    align-self: start !important;
+  }
+  &-center {
+    align-self: center !important;
+  }
+  &-end {
+    align-self: end !important;
+  }
+}
+
+.callout {
+  padding: 2rem;
+
+  &-slim {
+    padding: .5rem;
+  }
+}
+
+.callout,
+.callout-slim {
+  &.orange {
+    border: 1px solid $orange;
+  }
+  &.blue {
+    border: 1px solid $blue;
+  }
+}
+
+.docs-archive-subnav {
+  .img-caption {
+    background-color: $medblue;
+  }
+}
+
+

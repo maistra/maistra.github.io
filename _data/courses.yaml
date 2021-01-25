@@ -1,0 +1,25 @@
+---  # document start
+
+categories:
+  - category:
+    courses:
+      - title: Title of the course
+        url: https://www.starwars.com/
+        timer: 10 Minutes | Beginner
+        description: This is the example of a description that can be of varying length but should be concise.
+      - title: Title of the course
+        url: https://www.starwars.com/
+        timer: 10 Minutes | Beginner       
+        description: This is the example of a description that can be of varying length but should be concise.
+      - title: Title of the course
+        url: https://www.starwars.com/
+        timer: 10 Minutes | Beginner
+        description: This is the example of a description that can be of varying length but should be concise.
+      - title: Title of the course
+        url: https://www.starwars.com/
+        timer: 10 Minutes | Beginner
+        description: This is the example of a description that can be of varying length but should be concise.
+      - title: Title of the course
+        url: https://www.starwars.com/
+        timer: 10 Minutes | Beginner
+        description: This is the example of a description that can be of varying length but should be concise.

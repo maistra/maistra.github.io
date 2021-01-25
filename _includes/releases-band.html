@@ -1,0 +1,56 @@
+<div class="component-slim documentation-archive-band">
+  <div class="component">
+    <div class="width-12-12">
+      <p>The following table lists the versions of components in different releases.</p> 
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Maistra</th>
+              <th>Istio</th>
+              <th>Kiali</th>
+              <th>Jaeger</th>
+              <th>Verified</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for versions_hash in site.data.releases %}
+              {% assign version = versions_hash[1] %}
+              {% assign doc = version.docs %}
+              <tr>
+                <td>
+                  {% if doc.maistraurl %}
+                    <a href="{{ doc.maistraurl }}">{{ doc.maistraversion }}</a>
+                  {% endif %} | 
+                  {% if doc.maistranotesurl %}
+                    <a href="{{ doc.maistranotesurl }}">Release Notes</a>
+                  {% endif %}
+                </td>
+                <td>
+                  {% if doc.istiourl %}
+                    <a href="{{ doc.istiourl }}">{{ doc.istioversion }}</a>
+                  {% endif %}
+                </td>
+                <td>
+                  {% if doc.kialiurl %}
+                    <a href="{{ doc.kialiurl }}">{{ doc.kialiversion }}</a>
+                  {% endif %}
+                </td>
+                <td>
+                  {% if doc.jaegerurl %}
+                    <a href="{{ doc.jaegerurl }}">{{ doc.jaegerversion }}</a>
+                  {% endif %}
+                </td>
+                <td>
+                  {% if doc.verifiedurl %}
+                    <a href="{{ doc.verified }}">{{ doc.verifiedtitle }}</a>
+                  {% endif %}
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+    </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,20 @@
+fr:
+  today: "aujourd'hui"
+  yesterday: 'hier'
+  tomorrow: 'demain'
+  past: 'il y a environ %{date_range}'
+  future: 'dans %{date_range}'
+  last_word_connector: 'et'
+  words_connector: ', '
+  years:
+    one: '1 année'
+    other: '%{count} années'
+  months:
+    one: '1 mois'
+    other: '%{count} mois'
+  weeks:
+    one: '1 semaine'
+    other: '%{count} semaines'
+  days:
+    one: '1 jour'
+    other: '%{count} jours'

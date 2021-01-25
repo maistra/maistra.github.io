@@ -1,0 +1,67 @@
+################################################################################################
+#####
+##### This section controls what to publish, WRT. Maistra.  There are 5 sections.  Please
+##### inspect and update *each one* before publishing the website.
+#####
+################################################################################################
+
+# -----------------------------
+# 1.  Main Releases
+#     This section covers the artifacts being made available
+# -----------------------------
+2.0.0:
+  docs:
+    maistraversion: 2.0.0
+    maistraurl: https://starwars.com
+    maistranotesurl: https://starwars.com
+    istioversion: 1.6.5
+    istiourl: https://starwars.com
+    kialiversion: 1.12.7
+    kialiurl: https://starwars.com
+    jaegerversion: 1.17
+    jaegerurl: https://starwars.com
+    verifiedtitle: Verified
+    verifiedurl: https://www.starwars.com
+
+1.1.1:
+  docs:
+    maistraversion: 1.1.1
+    maistraurl: https://starwars.com
+    maistranotesurl: https://starwars.com
+    istioversion: 1.4.6
+    istiourl: https://starwars.com
+    kialiversion: 1.12.7
+    kialiurl: https://starwars.com
+    jaegerversion: 1.17
+    jaegerurl: https://starwars.com
+    verifiedtitle: Verified
+    verifiedurl: https://www.starwars.com
+
+1.1.0:
+  docs:
+    maistraversion: 1.1.0
+    maistraurl: https://starwars.com
+    maistranotesurl: https://starwars.com
+    istioversion: 1.4.6
+    istiourl: https://starwars.com
+    kialiversion: 1.12.7
+    kialiurl: https://starwars.com
+    jaegerversion: 1.17
+    jaegerurl: https://starwars.com
+    verifiedtitle: Verified
+    verifiedurl: https://www.starwars.com
+
+1.0.8:
+  docs:
+    maistraversion: 1.0.8
+    maistraurl: https://starwars.com
+    maistranotesurl: https://starwars.com
+    istioversion: 1.1.17
+    istiourl: https://starwars.com
+    kialiversion: 1.0.9
+    kialiurl: https://starwars.com
+    jaegerversion: 1.13.1
+    jaegerurl: https://starwars.com
+    verifiedtitle: Verified
+    verifiedurl: https://www.starwars.com
+    

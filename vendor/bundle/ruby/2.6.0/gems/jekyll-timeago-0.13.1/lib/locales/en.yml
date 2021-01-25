@@ -1,0 +1,20 @@
+en:
+  today: 'today'
+  yesterday: 'yesterday'
+  tomorrow: 'tomorrow'
+  past: '%{date_range} ago'
+  future: 'in %{date_range}'
+  last_word_connector: 'and'
+  words_connector: ', '
+  years:
+    one: '1 year'
+    other: '%{count} years'
+  months:
+    one: '1 month'
+    other: '%{count} months'
+  weeks:
+    one: '1 week'
+    other: '%{count} weeks'
+  days:
+    one: '1 day'
+    other: '%{count} days'

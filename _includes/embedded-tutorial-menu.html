@@ -1,0 +1,31 @@
+{% assign tutorial_step = page.tutorial_step %}
+{% assign @tutorial_steps = page.tutorial_steps %}
+
+{% if tutorial_step < 0 %}
+  {% assign step_prefix = "" %}
+{% else %}
+  {% assign step_prefix = "../" %}
+{% endif %}
+
+
+<h4>Tutorial Steps</h4>
+<a href="index.html">Introduction</a>
+<ol start="0">
+  <li> <a href="step-0">The Weather Application</a> </li>
+  <li> <a href="step-1">Initializing the CacheManager</a> </li>
+  <li> <a href="step-2">Putting stuff in the cache</a> </li>
+  <li> <a href="step-3">Making entries expire</a> </li>
+  <li> <a href="step-4">Configuring the cache</a> </li>
+  <li> <a href="step-5">Clustering the application</a> </li>
+  <li> <a href="step-6">Listen to changes in the cluster</a> </li>
+  <li> <a href="step-7">Listen to changes in the cache</a> </li>
+  <li> <a href="step-8">Grouping entries together</a> </li>
+  <li> <a href="step-9">Temperature averages with streams</a> </li>
+  <li> <a href="step-10">Declarative configuration</a> </li> </ol>
+</ol>
+
+<!-- 
+%ol{:start => "0" }
+  - @tutorial_steps.each_with_index do |step, index|
+    %li
+      %a{:href => step_prefix + "step-" + (index).to_s } #{step} -->

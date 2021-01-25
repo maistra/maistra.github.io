@@ -1,0 +1,22 @@
+<div class="component interactive-courses">
+  <div class=" width-12-12 course-cards">
+    <ul id="list">
+    {% for item in site.data.courses.categories %}
+      <li>
+        <ul class="grid-wrapper list-item">
+        {% for course in item.courses %}
+          <li class="card">
+              <a href="{{site.baseurl}}{{ course.url }}"></a>
+              <p class="title">{{ course.title }}</p>
+              <p class="timer">{{ course.timer }}</p>
+              <div class="description">{{ course.description | markdownify }}
+              </div>
+              <p class="starter">Start Course</p>
+          </li>
+        {% endfor %}
+        </ul>
+      </li>
+    {% endfor %}
+  </ul>
+</div>
+</div>

@@ -1,0 +1,50 @@
+footer_text: "This website built with <a href='https://jekyllrb.com/' target='_blank'>Jekyll</a> is hosted on <a href='https://pages.github.com/' target='_blank'>Github Pages</a> and is completely open source. If you want to make it better, <a href='https://github.com/maistra/maistra.github.io' target='_blank'>fork the website</a> and show us what you’ve got."
+
+links:
+  - title: Navigation
+    subfolderitems:
+      - page: Home
+        url: /
+      - page: Get Started
+        url: /get-started
+      - page: Docs
+        url: /documentation
+      - page: Community
+        url: /community
+      - page: Blog
+        url: /blog
+  - title: Contribute
+    subfolderitems:
+      - page: Submit a bug
+        url: https://issues.jboss.org/projects/MAISTRA
+      - page: Write code
+        url: /contribute
+  - title: Follow
+    subfolderitems:
+      - page: Github
+        url: https://github.com/maistra/maistra.github.io
+      - page: Twitter
+        url: https://twitter.com/maistraio
+
+
+more_links:
+  - title: Maistra is made with and used by community projects
+    subfolderitems:
+      - page: Apache Camel
+        url: https://camel.apache.org/
+      - page: Eclipse Microprofile
+        url: https://projects.eclipse.org/proposals/eclipse-microprofile
+      - page: Eclipse Vert.x
+        url: https://vertx.io/
+      - page: Hibernate
+        url: http://hibernate.org/
+      - page: Netty
+        url: https://netty.io/
+      - page: RESTEasy
+        url: https://resteasy.github.io/
+      - page: Thorntail
+        url: https://thorntail.io/generator/
+      - page: WildFly
+        url: https://www.wildfly.org/
+      - page: Drools
+        url: https://www.drools.org/

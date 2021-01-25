@@ -1,0 +1,57 @@
+.blog, .post > .content {
+  padding-top: 0;
+}
+
+.blog-index,
+.blog,
+.post {
+  .blog-list-item {
+    margin-bottom: 5rem;
+
+    .post-title {
+      h6 {
+        margin: 0;
+        a{
+          font-family: inherit;
+          font-weight: 600;
+          font-size: 1.5rem;
+          line-height: 2rem;
+        }
+      }
+    }
+  }
+  .headshot, .byline {
+    display: inline;
+        font-size: 1rem;
+    line-height: 1.25rem;
+  }
+  .headshot {
+    max-width: 2.5rem;
+    border-radius: 1.5rem;
+    margin-right: .5rem;
+  }
+
+  .doc-content {
+    padding-top: 3rem;
+  }
+
+  .side-nav {
+    i.fa-rss-square {
+      color: $orange;
+      font-size: 1.5rem;
+    }
+    h5 {
+      font-weight: 400;
+    }
+  }
+}
+
+@media screen and (max-width: $breakpoint-m) {
+  .blog-list-item .share-page {
+    text-align: left;
+  }
+  .blog p.byline {
+    font-size: 1rem;
+    line-height: 1.25rem;
+  }
+}

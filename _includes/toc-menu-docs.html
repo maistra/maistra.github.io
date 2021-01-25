@@ -1,0 +1,19 @@
+{% assign tutorial_step = page.tutorial_step %}
+{% assign @tutorial_steps = page.tutorial_steps %}
+
+{% if tutorial_step < 0 %}
+  {% assign step_prefix = "" %}
+{% else %}
+  {% assign step_prefix = "../" %}
+{% endif %}
+
+
+<h4>Table of Contents</h4>
+<a href="index.html">Introduction</a>
+<ol start="0">
+  <li> <a href="step-0">Step 1</a> </li>
+  <li> <a href="step-1">Step 2</a> </li>
+  <li> <a href="step-2">Step 3</a> </li>
+  <li> <a href="step-3">Step 4</a> </li>
+  <li> <a href="step-4">Step 5</a> </li>
+</ol>
