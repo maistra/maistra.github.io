@@ -72,10 +72,10 @@ If your environment has specific requirements for encrypted traffic in your serv
 ----
 kind: ServiceMeshControlPlane
 spec:
-  istio:
-    global:
+  security:
+    controlPlane:
       tls:
-        minProtocolVersion: TLSv1_0
+        minProtocolVersion: TLSv1_2
 ----
 
 The default is `TLS_AUTO` and does not specify a version of TLS.
