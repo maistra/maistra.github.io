@@ -1,0 +1,14 @@
+// Module included in the following assemblies:
+//
+// * support/getting-support.adoc
+// * service_mesh/v1x/servicemesh-release-notes.adoc
+// * service_mesh/v2x/servicemesh-release-notes.adoc
+
+[id="support_{context}"]
+= Getting support
+
+If you experience difficulty with a procedure described in this documentation, or with {product-title} in general, please open an link:https://issues.jboss.org/projects/MAISTRA[issue].
+
+// TODO: verify that these settings apply for Service Mesh and OpenShift virtualization, etc.
+If you have a suggestion for improving this documentation or have found an
+error, please see the link:https://maistra.io/contribute/[contributors guide] or open an issue.

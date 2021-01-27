@@ -1,4 +1,0 @@
-//Hugo requires ascii content required before {{
-{{% notice info %}}
-Policy enforcement is disabled by default. Instructions to enable it are link:/docs/troubleshooting/troubleshooting_policy[here]
-{{% /notice %}}

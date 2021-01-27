@@ -30,6 +30,9 @@ build: gen-install-options lint check-links
 .PHONY: verify-install-options
 verify-install-options: gen-install-options
 	./tools/check-git-status.sh
+.PHONY: update-docs
+update-docs:
+	./tools/update-docs.sh
 .PHONY: clean
 clean:
 	-rm -r out
