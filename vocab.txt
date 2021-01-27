@@ -26,6 +26,8 @@ dst
 hostname
 hostnames
 html-proofer
+http
+https
 ingester
 iptables
 istioctl
@@ -33,6 +35,7 @@ knowledgebase
 lds
 libcrypto
 libssl
+maistra
 macvlan
 millicores
 multicluster
