@@ -37,3 +37,11 @@ update-docs:
 clean:
 	-rm -r out
 	-rm -r public
+docker-serve:
+	docker run --rm -v $(shell pwd):/work -p 1313:1313 -it --entrypoint /bin/bash quay.io/maistra-dev/maistra-builder:2.0 -c 'make serve'
+docker-lint:
+	docker run --rm -v $(shell pwd):/work -p 1313:1313 -it --entrypoint /bin/bash quay.io/maistra-dev/maistra-builder:2.0 -c 'make lint'
+docker-check-links:
+	docker run --rm -v $(shell pwd):/work -p 1313:1313 -it --entrypoint /bin/bash quay.io/maistra-dev/maistra-builder:2.0 -c 'make check-links'
+docker-build:
+	docker run --rm -v $(shell pwd):/work -p 1313:1313 -it --entrypoint /bin/bash quay.io/maistra-dev/maistra-builder:2.0 -c 'make build'
