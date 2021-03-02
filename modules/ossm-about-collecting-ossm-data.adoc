@@ -13,5 +13,27 @@ To collect {ProductName} data with `must-gather`, you must specify the {ProductN
 
 [source,bash]
 ----
-$ oc adm must-gather --image=registry.redhat.io/openshift-service-mesh/istio-must-gather-rhel7
+$ oc adm must-gather --image=registry.redhat.io/openshift-service-mesh/istio-must-gather-rhel8
 ----
+
+== Collecting data of specific service mesh instances
+If your cluster contains many control plane instances, the information collection process might take long and the resulting data files might be large.
+To collect data of a specific instance, you must specify the namespace(s) of the `ServiceMeshControlPlane`(s) that should be collected. The data of all the member namespaces associated with the specified control planes is collected automatically. You do not need to specify the member namespaces.
+For example, if control planes are deployed in namespaces `istio-system1`, `istio-system2` and `istio-system3`, but you only want to collect the information about the first two, run the following command:
+
+[source,bash]
+----
+$ oc adm must-gather --image=registry.redhat.io/openshift-service-mesh/istio-must-gather-rhel8 gather istio-system1 istio-system2
+----
+
+[NOTE]
+====
+Note the additional word `gather` after the image name.
+====
+
+[NOTE]
+====
+This option is available from version 2.0.3.
+====
+
+
