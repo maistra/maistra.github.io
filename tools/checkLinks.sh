@@ -12,7 +12,7 @@ maistraVersion=$(${YQ} read data/release.yaml maistraVersion)
 maistraBranch=$(${YQ} read "data/releases/${maistraVersion}.yaml" maistraBranch)
 
 #get number of commits on branch so that we can detect new files even past the current commit
-commitsOnBranch=$(git rev-list --count --bisect "${maistraBranch}")
+commitsOnBranch=$(git rev-list --count --bisect "${PULL_BASE_REF:-${maistraBranch}}")
 
 #list both added and renamed files
 newFiles=$(git diff --diff-filter=AR HEAD~"${commitsOnBranch}" --name-only)
