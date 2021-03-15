@@ -13,7 +13,7 @@ cat _topic_map.yml | yq 'select(.Name=="Service Mesh").Topics[] | select (.Name 
 rm _topic_map.yml
 go run "${DIR}/tools/update-docs.go" --docsPath "${DIR}/topics/docs" --modulesPath "${DIR}"
 
-for file in patches/*
-do
-    git apply "${DIR}/${file}"
-done
+#for file in patches/*
+#do
+#    git apply "${DIR}/../${file}"
+#done
