@@ -5,7 +5,9 @@ azp
 bookinfo
 centos
 cron
+daemonset
 datagram
+dagre
 diffie
 godebug
 grafana
@@ -55,6 +57,7 @@ rebalancing
 subnet
 quarkus
 schedulable
+Strimzi
 tetratelabs
 thorntail
 unencrypted

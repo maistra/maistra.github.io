@@ -1,6 +1,6 @@
 // SMCP defaults
 //Value maistra spec.istio.global.tag
-:defaultMaistraTag: 2.0.0
+:defaultMaistraTag: 2.1.0
 
 //Value maistra spec.istio.global.hub
 :defaultMaistraHub: docker.io/maistra
@@ -59,6 +59,3 @@
 //Value servicemesh spec.istio.global.proxy.resources.requests.memory
 :defaultServiceMeshProxyRequestsMemory: 128Mi
 
-
-//Value kiali spec.external_services.istio.istio_identity_domain
-:defaultKialiIstioIdentityDomain: svc.cluster.local

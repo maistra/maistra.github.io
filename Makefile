@@ -23,7 +23,7 @@ gen-install-options:
 	./tools/updateFields.sh vars.adoc
 .PHONY: serve
 serve: gen-install-options
-	hugo serve
+	hugo serve --bind 0.0.0.0
 .PHONY: build
 build: gen-install-options lint check-links
 	hugo -D

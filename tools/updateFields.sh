@@ -8,7 +8,7 @@ source "${DIR}/check-yq.sh"
 mkdir -p out
 
 getMaistra() {
-		maistraVersion=$(${YQ} read data/release.yaml maistraVersion)
+    maistraVersion=$(${YQ} read data/release.yaml maistraVersion)
     maistraBranch=$(${YQ} read "data/releases/${maistraVersion}.yaml" maistraBranch)
     maistraVersion=$(${YQ} read "data/releases/${maistraVersion}.yaml" maistraOperatorVersion)
 
@@ -53,7 +53,7 @@ updateValuesFile() {
     replace=""
     while IFS= read -r line
     do
-        if [ $replace ]; then
+        if [ "$replace" ]; then
             echo "replacing: ${line} with: ${replace}"
             echo ""
 

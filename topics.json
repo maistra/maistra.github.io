@@ -1,0 +1,82 @@
+[
+  {
+    "Name": "Service Mesh 2.x release notes",
+    "File": "servicemesh-release-notes"
+  },
+  {
+    "Name": "Service Mesh architecture",
+    "File": "ossm-architecture"
+  },
+  {
+    "Name": "Service Mesh and Istio differences",
+    "File": "ossm-vs-community"
+  },
+  {
+    "Name": "Preparing to install Service Mesh",
+    "File": "preparing-ossm-installation"
+  },
+  {
+    "Name": "Installing Service Mesh",
+    "File": "installing-ossm"
+  },
+  {
+    "Name": "Create SMCP",
+    "File": "ossm-create-smcp"
+  },
+  {
+    "Name": "Create Mesh",
+    "File": "ossm-create-mesh"
+  },
+  {
+    "Name": "Upgrading from 1.1 to 2.0",
+    "File": "upgrading-ossm"
+  },
+  {
+    "Name": "Customizing the installation",
+    "File": "customizing-installation-ossm"
+  },
+  {
+    "Name": "Profiles",
+    "File": "ossm-profiles-users"
+  },
+  {
+    "Name": "Deploying applications on Service Mesh",
+    "File": "prepare-to-deploy-applications-ossm"
+  },
+  {
+    "Name": "Data visualization and observability",
+    "File": "ossm-observability"
+  },
+  {
+    "Name": "Security",
+    "File": "ossm-security"
+  },
+  {
+    "Name": "Traffic management",
+    "File": "ossm-traffic-manage"
+  },
+  {
+    "Name": "Custom resources",
+    "File": "ossm-custom-resources"
+  },
+  {
+    "Name": "Extensions",
+    "File": "ossm-extensions"
+  },
+  {
+    "Name": "Federation",
+    "File": "ossm-federation"
+  },
+  {
+    "Name": "Performance & Scalability",
+    "File": "ossm-performance-scalability"
+  },
+  {
+    "Name": "3scale WebAssembly Module",
+    "File": "ossm-threescale-webassembly-module"
+  },
+  {
+    "Name": "Removing Service Mesh",
+    "File": "removing-ossm"
+  }
+]
