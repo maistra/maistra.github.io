@@ -2,28 +2,36 @@
 title: Data visualization and observability
 type: "document"
 id: "ossm-observability"
-weight: 9
+weight: 12
 ---
 
 [id="ossm-observability"]
-= Data visualization and observability
+= Metrics, logs, and traces
 include::modules/ossm-document-attributes.adoc[]
 :context: observability
 
 toc::[]
 
-You can view your application's topology, health and metrics in the Kiali console. If your service is having issues, the Kiali console offers ways to visualize the data flow through your service. You can view insights about the mesh components at different levels, including abstract applications, services, and workloads. It also provides an interactive graph view of your namespace in real time.
+Once you have added your application to the mesh, you can observe the data flow through your application. If you do not have your own application installed, you can see how observability works in {ProductName} by installing the xref:/docs/prepare-to-deploy-applications-ossm.adoc#ossm-tutorial-bookinfo-overview_ossm-create-mesh[Bookinfo sample application].
 
-You can observe the data flow through your application if you have one installed. If you don't have your own application installed, you can see how observability works in {ProductName} by installing the xref:/docs/prepare-to-deploy-applications-ossm.adoc#ossm-tutorial-bookinfo-overview_deploying-applications-ossm[Bookinfo sample application].
+include::modules/ossm-observability-addresses.adoc[leveloffset=+1]
 
-After installing the Bookinfo sample application, send traffic to the mesh. Enter the following command a few times:
-
-----
-$ curl http://$GATEWAY_URL/productpage
-----
-
-If your sample application is configured correctly, this command simulates a user visiting the `productpage` microservice of the application.
-
-include::modules/ossm-observability-access.adoc[leveloffset=+1]
+include::modules/ossm-kiali-accessing-console.adoc[leveloffset=+1]
 
 include::modules/ossm-observability-visual.adoc[leveloffset=+1]
+
+include::modules/ossm-kiali-viewing-logs.adoc[leveloffset=+2]
+
+include::modules/ossm-kiali-viewing-metrics.adoc[leveloffset=+2]
+
+include::modules/ossm-distr-tracing.adoc[leveloffset=+1]
+
+include::modules/ossm-config-external-jaeger.adoc[leveloffset=+2]
+
+include::modules/ossm-jaeger-accessing-console.adoc[leveloffset=+1]
+
+For more information about configuring Jaeger, see the link:https://docs.openshift.com/container-platform/4.9/distr_tracing/distr_tracing_install/distr-tracing-deploying.html#distr-tracing-deploy-default_deploying-distributed-tracing[distributed tracing documentation].
+
+include::modules/ossm-access-grafana.adoc[leveloffset=+1]
+
+include::modules/ossm-access-prometheus.adoc[leveloffset=+1]

@@ -75,7 +75,7 @@ func convertExternalURLs(body string) string {
 	results := urlRegexp.FindAllString(body, -1)
 	for _, result := range results {
 		//convert docs to use OpenShift URL
-		replacement := strings.Replace(result, "xref:../../", "link:https://docs.openshift.com/container-platform/4.6/", -1)
+		replacement := strings.Replace(result, "xref:../../", "link:https://docs.openshift.com/container-platform/4.9/", -1)
 
 		//replace .adoc with .html
 		replacement = strings.Replace(replacement, ".adoc", ".html", 1)
@@ -116,7 +116,7 @@ func init() {
 func main() {
 	fmt.Printf("docsFilePath is %s\n", docsFilePath)
 	fmt.Printf("modulesFilePath is %s\n", modulesFilePath)
-	data, err := ioutil.ReadFile("topics.yml")
+	data, err := ioutil.ReadFile("topics.json")
 	if err != nil {
 		fmt.Printf("Unable to process topics.yml:%s\n", err.Error())
 		return
