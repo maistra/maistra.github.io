@@ -17,9 +17,9 @@ If your service mesh application is constructed with a complex array of microser
 
 .Before you begin
 
-If you have a project, add your project to the xref:/docs/installing-ossm.adoc#ossm-member-roll-modify_ossm-create-mesh[`ServiceMeshMemberRoll` resource].
+If you have a project, add your project to the xref:/docs/ossm-create-mesh.adoc#ossm-member-roll-create_ossm-create-mesh[`ServiceMeshMemberRoll` resource].
 
-If you don't have a project, install the xref:/docs/prepare-to-deploy-applications-ossm.adoc#ossm-tutorial-bookinfo-overview_ossm-create-mesh[Bookinfo sample application] and add it to the `ServiceMeshMemberRoll` resource. The sample application helps illustrate security concepts.
+If you don't have a project, install the xref:/docs/ossm-create-mesh.adoc#ossm-tutorial-bookinfo-overview_ossm-create-mesh[Bookinfo sample application] and add it to the `ServiceMeshMemberRoll` resource. The sample application helps illustrate security concepts.
 
 include::modules/ossm-security-mtls.adoc[leveloffset=+1]
 
