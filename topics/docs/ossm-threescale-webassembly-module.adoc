@@ -38,7 +38,7 @@ Because of its self-contained design, it is possible to configure this module to
 [id="prerequisites_ossm-threescale-webassembly-module"]
 == Prerequisites
 
-* The module works with all supported 3scale releases except when configuring a service to use link:https://docs.openshift.com/container-platform/4.9/authentication/identity_providers/configuring-oidc-identity-provider.html#configuring-oidc-identity-provider[OpenID Connect (OIDC)].
+* The module works with all supported 3scale releases except when configuring a service to use link:https://docs.openshift.com/container-platform/4.9/authentication/identity_providers/configuring-oidc-identity-provider.html[OpenID Connect (OIDC)].
 * For this WebAssembly configuration, you will need 3scale 2.11 or later.
 
 include::modules/ossm-configuring-the-threescale-wasm-auth-module.adoc[leveloffset=+1]

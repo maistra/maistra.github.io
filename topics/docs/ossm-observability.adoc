@@ -12,7 +12,7 @@ include::modules/ossm-document-attributes.adoc[]
 
 toc::[]
 
-Once you have added your application to the mesh, you can observe the data flow through your application. If you do not have your own application installed, you can see how observability works in {ProductName} by installing the xref:/docs/prepare-to-deploy-applications-ossm.adoc#ossm-tutorial-bookinfo-overview_ossm-create-mesh[Bookinfo sample application].
+Once you have added your application to the mesh, you can observe the data flow through your application. If you do not have your own application installed, you can see how observability works in {ProductName} by installing the xref:/docs/ossm-create-mesh.adoc#ossm-tutorial-bookinfo-overview_ossm-create-mesh[Bookinfo sample application].
 
 include::modules/ossm-observability-addresses.adoc[leveloffset=+1]
 
