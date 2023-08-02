@@ -21,7 +21,7 @@ When deploying an application, you must opt-in to injection by setting the `side
 $ oc get deployment sleep -o yaml
 ----
 
-. Add `sidecar.istio.io/inject` to the configuration YAML with a value of `"true"` in the `spec.template.metadata.annotations.sidecar.istio/inject` field. See the following example for an app called `sleep`.
+. Add `sidecar.istio.io/inject` to the configuration YAML with a value of `"true"` in the `spec.template.metadata.annotations` field. See the following example for an app called `sleep`.
 +
 .Sleep test application example sleep.yaml
 [source,yaml]
